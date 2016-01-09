@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if ! /usr/bin/lockf -s -t 30 /tmp/config.lock /usr/bin/true; then
+	echo "Þu anda bir yazma iþlemi yapýldýðýndan dolayý sistem kapatýlamýyor."
+	exit -1
+fi
+
+stty status '^T'
+
+trap : 2
+
+HOME=/; export HOME
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+export PATH
+
+find -x /tmp/* -type f -exec rm -f {} \;

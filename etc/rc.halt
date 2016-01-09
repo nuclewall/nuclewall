@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# $Id$
+
+if ! /usr/bin/lockf -s -t 30 /tmp/config.lock /usr/bin/true; then
+	echo "Þu anda bir yazma iþlemi yapýldýðýndan dolayý sistem kapatýlamýyor."
+	exit -1
+fi
+
+sleep 1
+
+/sbin/shutdown -p now
+

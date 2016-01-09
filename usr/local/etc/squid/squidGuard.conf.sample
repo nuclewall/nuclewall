@@ -1,0 +1,85 @@
+#
+# SAMPLE CONFIG FILE FOR SQUIDGUARD
+# (for further configuration options see the
+# documentation and http://www.squidguard.org/)
+#
+dbhome /var/db/squidGuard
+logdir /var/log
+
+#
+# TIME RULES:
+# abbrev for weekdays:
+# s = sun, m = mon, t =tue, w = wed, h = thu, f = fri, a = sat
+time workhours {
+     weekly mtwhf 08:00 - 16:30
+     date *-*-01  08:00 - 16:30
+}
+
+#
+# SOURCE ADDRESSES
+#
+source sample-clients {
+     ip 10.0.0.0/24
+}
+
+#
+# DESTINATION CLASSES
+#
+dest hacking {
+	domainlist hacking/domains
+	urllist hacking/urls
+}
+dest violence {
+	domainlist violence/domains
+	urllist violence/urls
+	expressionlist violence/expressions
+}
+dest proxy {
+	domainlist proxy/domains
+	urllist proxy/urls
+}
+dest porn {
+	domainlist porn/domains
+	urllist porn/urls
+	expressionlist porn/expressions
+}
+dest mail {
+	domainlist mail/domains
+}
+dest warez {
+	domainlist warez/domains
+	urllist warez/urls
+}
+dest gambling {
+	domainlist gambling/domains
+	urllist gambling/urls
+}
+dest drugs {
+	domainlist drugs/domains
+	urllist drugs/urls
+}
+dest audio-video {
+	domainlist audio-video/domains
+	urllist audio-video/urls
+}
+dest aggressive {
+	domainlist aggressive/domains
+	urllist aggressive/urls
+}
+dest ads {
+	domainlist ads/domains
+	urllist ads/urls
+}
+
+acl {
+     sample-clients within workhours {
+         pass     !hacking !violence !proxy !porn !mail !warez !gambling !drugs !audio-video !aggressive !ads !in-addr any
+     } else {
+         pass     any
+     }
+
+     default {
+         pass     none
+         redirect http://admin.foo.bar.no/cgi/blocked?clientaddr=%a+clientname=%n+clientident=%i+srcclass=%s+targetclass=%t+url=%u
+     }
+}

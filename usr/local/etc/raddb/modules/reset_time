@@ -1,0 +1,3 @@
+perl reset_time {
+	module = ${confdir}/scripts/reset_time.pl
+}

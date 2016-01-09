@@ -1,0 +1,104 @@
+#!/bin/sh
+
+# /etc/rc.initial
+# part of pfSense by Scott Ullrich
+# Copyright (C) 2004-2011 Scott Ullrich, All rights reserved.
+# originally based on m0n0wall (http://neon1.net/m0n0wall)
+# Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
+# All rights reserved.
+
+# make sure the user can't kill us by pressing Ctrl-C,
+# ctrl-z, etc.
+#trap : 2
+#trap : 3
+#trap : 4
+
+# If recovery console shell option has been specified
+if [ -f "/tmp/donotbootup" ]; then
+	/usr/bin/env prompt="%B[%n@%m]%b%/(%h)||RecoveryConsoleShell: " /bin/tcsh
+	rm "/tmp/donotbootup"
+	echo "5 saniye sonra yeniden başlatılacak. İptal için: Ctrl+c"
+	sleep 5
+	/etc/rc.reboot
+	exit
+fi
+
+# Set our operating platform
+PLATFORM=`cat /etc/platform`
+
+# endless loop
+while : ; do
+
+if [ -f /tmp/ttybug ]; then
+	rm /tmp/ttybug
+	exit && exit && logout
+fi
+
+cat /etc/banner
+
+/etc/rc.banner
+
+F_SSHPORT="/var/run/sshport"
+
+if [ -f "$F_SSHPORT" ]; then
+	SSHPORT=`head -1 /var/run/sshport`
+fi
+
+# Check to see if SSH is listening.
+SSHD=`/usr/bin/sockstat -4l | grep "*.$SSHPORT" | wc -l`
+if [ "$SSHD" -gt 0 ]; then
+	sshd_option="8) SSHD(Port: ${SSHPORT}) servisini kapat";
+else
+	sshd_option="8) SSHD(Port: ${SSHPORT}) servisini aç";
+fi
+
+# display a cheap menu
+echo ""
+echo ""
+echo ""
+echo "    ETHERNET KARTLARI		WEB ARAYÜZÜ"
+echo "      1) İlişkilendir		  3) Yeniden başlat"
+echo "      2) IP adreslerini belirle"
+echo ""
+echo "    NUCLEWALL			DİĞER"
+echo "      5) Yeniden başlat		  0) SSH oturumu kapat"
+echo "      6) Kapat			  ${sshd_option}"
+echo "      7) Ayarları sıfırla         9) Kabuk"
+echo ""
+
+echo
+read -p "    Seçim > " opmode
+echo
+
+# see what the user has chosen
+case ${opmode} in
+0)
+        exit && exit && logout
+        ;;
+1)
+        /etc/rc.initial.setports.utf
+        ;;
+2)
+        /etc/rc.initial.setlanip.utf
+        ;;
+3)
+		/usr/bin/killall -9 php; /usr/bin/killall -9 lighttpd; /etc/rc.restart_webgui.utf
+		;;
+5)
+        /etc/rc.initial.reboot.utf
+        ;;
+6)
+        /etc/rc.initial.halt.utf
+        ;;
+7)
+        /etc/rc.initial.defaults.utf
+        ;;
+8) 
+		php -f /etc/rc.initial.toggle_sshd.utf
+		;;	
+9)
+        /bin/tcsh
+        ;;
+esac
+
+done

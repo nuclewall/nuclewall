@@ -1,0 +1,740 @@
+<?xml version="1.0"?>
+<nuclewall>
+	<version>8.0</version>
+	<lastchange></lastchange>
+	<theme>nuclewall</theme>
+	<sysctl>
+		<item>
+			<descr><![CDATA[Disable the pf ftp proxy handler.]]></descr>
+			<tunable>debug.pfftpproxy</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Increase UFS read-ahead speeds to match current state of hard drives and NCQ. More information here: http://ivoras.sharanet.org/blog/tree/2010-11-19.ufs-read-ahead.html]]></descr>
+			<tunable>vfs.read_max</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Set the ephemeral port range to be lower.]]></descr>
+			<tunable>net.inet.ip.portrange.first</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Drop packets to closed TCP ports without returning a RST]]></descr>
+			<tunable>net.inet.tcp.blackhole</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Do not send ICMP port unreachable messages for closed UDP ports]]></descr>
+			<tunable>net.inet.udp.blackhole</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Randomize the ID field in IP packets (default is 0: sequential IP IDs)]]></descr>
+			<tunable>net.inet.ip.random_id</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Drop SYN-FIN packets (breaks RFC1379, but nobody uses it anyway)]]></descr>
+			<tunable>net.inet.tcp.drop_synfin</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Enable sending IPv4 redirects]]></descr>
+			<tunable>net.inet.ip.redirect</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Enable sending IPv6 redirects]]></descr>
+			<tunable>net.inet6.ip6.redirect</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Generate SYN cookies for outbound SYN-ACK packets]]></descr>
+			<tunable>net.inet.tcp.syncookies</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Maximum incoming/outgoing TCP datagram size (receive)]]></descr>
+			<tunable>net.inet.tcp.recvspace</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Maximum incoming/outgoing TCP datagram size (send)]]></descr>
+			<tunable>net.inet.tcp.sendspace</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[IP Fastforwarding]]></descr>
+			<tunable>net.inet.ip.fastforwarding</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Do not delay ACK to try and piggyback it onto a data packet]]></descr>
+			<tunable>net.inet.tcp.delayed_ack</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Maximum outgoing UDP datagram size]]></descr>
+			<tunable>net.inet.udp.maxdgram</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Handling of non-IP packets which are not passed to pfil (see if_bridge(4))]]></descr>
+			<tunable>net.link.bridge.pfil_onlyip</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Set to 0 to disable filtering on the incoming and outgoing member interfaces.]]></descr>
+			<tunable>net.link.bridge.pfil_member</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Set to 1 to enable filtering on the bridge interface]]></descr>
+			<tunable>net.link.bridge.pfil_bridge</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Allow unprivileged access to tap(4) device nodes]]></descr>
+			<tunable>net.link.tap.user_open</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Randomize PID's (see src/sys/kern/kern_fork.c: sysctl_kern_randompid())]]></descr>
+			<tunable>kern.randompid</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Maximum size of the IP input queue]]></descr>
+			<tunable>net.inet.ip.intr_queue_maxlen</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Disable CTRL+ALT+Delete reboot from keyboard.]]></descr>
+			<tunable>hw.syscons.kbd_reboot</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Enable TCP Inflight mode]]></descr>
+			<tunable>net.inet.tcp.inflight.enable</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Enable TCP extended debugging]]></descr>
+			<tunable>net.inet.tcp.log_debug</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Set ICMP Limits]]></descr>
+			<tunable>net.inet.icmp.icmplim</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[TCP Offload Engine]]></descr>
+			<tunable>net.inet.tcp.tso</tunable>
+			<value>default</value>
+		</item>
+		<item>
+			<descr><![CDATA[Maximum socket buffer size]]></descr>
+			<tunable>kern.ipc.maxsockbuf</tunable>
+			<value>default</value>
+		</item>
+	</sysctl>
+	<system>
+		<optimization>normal</optimization>
+		<hostname>nuclewall</hostname>
+		<domain>localdomain</domain>
+		<dnsserver/>
+		<dnsallowoverride/>
+		<group>
+			<name>all</name>
+			<description><![CDATA[All Users]]></description>
+			<scope>system</scope>
+			<gid>1998</gid>
+			<member>0</member>
+		</group>
+		<group>
+			<name>admins</name>
+			<description><![CDATA[System Administrators]]></description>
+			<scope>system</scope>
+			<gid>1999</gid>
+			<member>0</member>
+			<priv>page-all</priv>
+		</group>
+		<user>
+			<name>admin</name>
+			<descr><![CDATA[System Administrator]]></descr>
+			<scope>system</scope>
+			<groupname>admins</groupname>
+			<uid>0</uid>
+			<priv>user-shell-access</priv>
+		</user>
+		<nextuid>2000</nextuid>
+		<nextgid>2000</nextgid>
+		<timezone>Asia/Istanbul</timezone>
+		<time-update-interval>300</time-update-interval>
+		<timeservers>0.tr.pool.ntp.org</timeservers>
+		<webgui>
+			<protocol>https</protocol>
+			<max_procs>2</max_procs>
+			<port>8080</port>
+			<ssl-certref>54d0fcf097967</ssl-certref>
+			<disablehttpredirect/>
+		</webgui>
+		<disablenatreflection>yes</disablenatreflection>
+		<!-- <disableconsolemenu/> -->
+		<!-- <disablefirmwarecheck/> -->
+		<!-- <shellcmd></shellcmd> -->
+		<!-- <earlyshellcmd></earlyshellcmd> -->
+		<!-- <harddiskstandby></harddiskstandby> -->
+		<disablesegmentationoffloading/>
+		<disablelargereceiveoffloading/>
+		<enablesshd>enabled</enablesshd>
+		<ssh>
+			<port>2020</port>
+		</ssh>
+	</system>
+	<interfaces>
+		<wan>
+			<enable/>
+			<if>vr1</if>
+			<mtu></mtu>
+			<ipaddr>dhcp</ipaddr>
+			<!-- *or* ipv4-address *or* 'pppoe' *or* 'pptp' *or* 'bigpond' -->
+			<subnet></subnet>
+			<gateway></gateway>
+			<blockpriv/>
+			<blockbogons/>
+			<dhcphostname></dhcphostname>
+			<media></media>
+			<mediaopt></mediaopt>
+			<!--
+			<wireless>
+				*see below (opt[n])*
+			</wireless>
+			-->
+		</wan>
+		<lan>
+			<enable/>
+			<if>vr0</if>
+			<ipaddr>10.0.0.1</ipaddr>
+			<subnet>24</subnet>
+			<media></media>
+			<mediaopt></mediaopt>
+			<!--
+			<wireless>
+				*see below (opt[n])*
+			</wireless>
+			-->
+		</lan>
+		<!--
+		<opt[n]>
+			<enable/>
+			<descr></descr>
+			<if></if>
+			<ipaddr></ipaddr>
+			<subnet></subnet>
+			<media></media>
+			<mediaopt></mediaopt>
+			<bridge>lan|wan|opt[n]</bridge>
+			<wireless>
+				<mode>hostap *or* bss *or* ibss</mode>
+				<ssid></ssid>
+				<channel></channel>
+				<wep>
+					<enable/>
+					<key>
+						<txkey/>
+						<value></value>
+					</key>
+				</wep>
+			</wireless>
+		</opt[n]>
+		-->
+	</interfaces>
+	<!--
+	<vlans>
+		<vlan>
+			<tag></tag>
+			<if></if>
+			<descr></descr>
+		</vlan>
+	</vlans>
+	-->
+	<staticroutes>
+		<!--
+		<route>
+			<interface>lan|opt[n]|pptp</interface>
+			<network>xxx.xxx.xxx.xxx/xx</network>
+			<gateway>xxx.xxx.xxx.xxx</gateway>
+			<descr></descr>
+		</route>
+		-->
+	</staticroutes>
+	<dhcpd>
+		<lan>
+			<enable/>
+			<range>
+				<from>10.0.0.2</from>
+				<to>10.0.0.254</to>
+			</range>
+		</lan>
+	</dhcpd>
+	<pptpd>
+		<mode><!-- off *or* server *or* redir --></mode>
+		<redir/>
+		<localip/>
+		<remoteip/>
+		<!-- <accounting/> -->
+		<!--
+		<user>
+			<name></name>
+			<password></password>
+		</user>
+		-->
+	</pptpd>
+	<dnsmasq>
+		<enable/>
+		<!--
+		<hosts>
+			<host></host>
+			<domain></domain>
+			<ip></ip>
+			<descr></descr>
+		</hosts>
+		-->
+	</dnsmasq>
+	<snmpd>
+		<!-- <enable/> -->
+		<syslocation/>
+		<syscontact/>
+		<rocommunity>public</rocommunity>
+	</snmpd>
+	<diag>
+		<ipv6nat>
+			<!-- <enable/> -->
+			<ipaddr/>
+		</ipv6nat>
+	</diag>
+	<bridge>
+		<!-- <filteringbridge/> -->
+	</bridge>
+	<syslog>
+		<reverse/>
+		<nentries>100</nentries>
+	</syslog>
+	<!--
+	<captiveportal>
+		<enable/>
+		<interface>lan|opt[n]</interface>
+		<idletimeout>minutes</idletimeout>
+		<timeout>minutes</timeout>
+		<page>
+			<htmltext></htmltext>
+			<errtext></errtext>
+		</page>
+		<httpslogin/>
+		<httpsname></httpsname>
+		<certificate></certificate>
+		<private-key></private-key>
+		<redirurl></redirurl>
+		<radiusip></radiusip>
+		<radiusport></radiusport>
+		<radiuskey></radiuskey>
+		<nomacfilter/>
+	</captiveportal>
+	-->
+	<nat>
+		<ipsecpassthru>
+			<enable/>
+		</ipsecpassthru>
+		<!--
+		<rule>
+			<interface></interface>
+			<external-address></external-address>
+			<protocol></protocol>
+			<external-port></external-port>
+			<target></target>
+			<local-port></local-port>
+			<descr></descr>
+		</rule>
+		-->
+		<!--
+		<onetoone>
+			<interface></interface>
+			<external>xxx.xxx.xxx.xxx</external>
+			<internal>xxx.xxx.xxx.xxx</internal>
+			<subnet></subnet>
+			<descr></descr>
+		</onetoone>
+		-->
+		<!--
+		<advancedoutbound>
+			<enable/>
+			<rule>
+				<interface></interface>
+				<source>
+					<network>xxx.xxx.xxx.xxx/xx</network>
+				</source>
+				<destination>
+					<not/>
+					<any/>
+					*or*
+					<network>xxx.xxx.xxx.xxx/xx</network>
+				</destination>
+				<target>xxx.xxx.xxx.xxx</target>
+				<descr></descr>
+			</rule>
+		</advancedoutbound>
+		-->
+		<!--
+		<servernat>
+			<ipaddr></ipaddr>
+			<descr></descr>
+		</servernat>
+		-->
+	</nat>
+	<filter>
+		<!-- <tcpidletimeout></tcpidletimeout> -->
+		<rule>
+			<type>pass</type>
+			<descr><![CDATA[TEFOIGVyacWfaW0gaXpuaQ==]]></descr>
+			<interface>lan</interface>
+			<source>
+				<network>lan</network>
+			</source>
+			<destination>
+				<any/>
+			</destination>
+		</rule>
+		<!-- rule syntax:
+		<rule>
+			<disabled/>
+			<id>[0-9]*</id>
+			<type>pass|block|reject</type>
+			<descr>...</descr>
+			<interface>lan|opt[n]|wan|pptp</interface>
+			<protocol>tcp|udp|tcp/udp|...</protocol>
+			<icmptype></icmptype>
+			<source>
+				<not/>
+
+				<address>xxx.xxx.xxx.xxx(/xx) or alias</address>
+				*or*
+				<network>lan|opt[n]|pptp</network>
+				*or*
+				<any/>
+
+				<port>a[-b]</port>
+			</source>
+			<destination>
+				*same as for source*
+			</destination>
+			<frags/>
+			<log/>
+		</rule>
+		-->
+	</filter>
+	<shaper>
+		<!-- <enable/> -->
+		<!-- <schedulertype>hfsc</schedulertype> -->
+		<!-- rule syntax:
+		<rule>
+			<disabled/>
+			<descr></descr>
+
+			<targetpipe>number (zero based)</targetpipe>
+			*or*
+			<targetqueue>number (zero based)</targetqueue>
+
+			<interface>lan|wan|opt[n]|pptp</interface>
+			<protocol>tcp|udp</protocol>
+			<direction>in|out</direction>
+			<source>
+				<not/>
+
+				<address>xxx.xxx.xxx.xxx(/xx)</address>
+				*or*
+				<network>lan|opt[n]|pptp</network>
+				*or*
+				<any/>
+
+				<port>a[-b]</port>
+			</source>
+			<destination>
+				*same as for source*
+			</destination>
+
+			<iplen>from[-to]</iplen>
+			<iptos>(!)lowdelay,throughput,reliability,mincost,congestion</iptos>
+			<tcpflags>(!)fin,syn,rst,psh,ack,urg</tcpflags>
+		</rule>
+		<pipe>
+			<descr></descr>
+			<bandwidth></bandwidth>
+			<delay></delay>
+			<mask>source|destination</mask>
+		</pipe>
+		<queue>
+			<descr></descr>
+			<targetpipe>number (zero based)</targetpipe>
+			<weight></weight>
+			<mask>source|destination</mask>
+		</queue>
+		-->
+	</shaper>
+	<ipsec>
+		<!-- <enable/> -->
+		<!-- syntax:
+		<tunnel>
+			<disabled/>
+			<auto/>
+			<descr></descr>
+			<interface>lan|wan|opt[n]</interface>
+			<local-subnet>
+				<address>xxx.xxx.xxx.xxx(/xx)</address>
+				*or*
+				<network>lan|opt[n]</network>
+			</local-subnet>
+			<remote-subnet>xxx.xxx.xxx.xxx/xx</remote-subnet>
+			<remote-gateway></remote-gateway>
+			<p1>
+				<mode></mode>
+				<myident>
+					<myaddress/>
+					*or*
+					<address>xxx.xxx.xxx.xxx</address>
+					*or*
+					<fqdn>the.fq.dn</fqdn>
+				</myident>
+				<encryption-algorithm></encryption-algorithm>
+				<hash-algorithm></hash-algorithm>
+				<dhgroup></dhgroup>
+				<lifetime></lifetime>
+				<pre-shared-key></pre-shared-key>
+			</p1>
+			<p2>
+				<protocol></protocol>
+				<encryption-algorithm-option></encryption-algorithm-option>
+				<hash-algorithm-option></hash-algorithm-option>
+				<pfsgroup></pfsgroup>
+				<lifetime></lifetime>
+			</p2>
+		</tunnel>
+		<mobileclients>
+			<enable/>
+			<p1>
+				<mode></mode>
+				<myident>
+					<myaddress/>
+					*or*
+					<address>xxx.xxx.xxx.xxx</address>
+					*or*
+					<fqdn>the.fq.dn</fqdn>
+				</myident>
+				<encryption-algorithm></encryption-algorithm>
+				<hash-algorithm></hash-algorithm>
+				<dhgroup></dhgroup>
+				<lifetime></lifetime>
+			</p1>
+			<p2>
+				<protocol></protocol>
+				<encryption-algorithm-option></encryption-algorithm-option>
+				<hash-algorithm-option></hash-algorithm-option>
+				<pfsgroup></pfsgroup>
+				<lifetime></lifetime>
+			</p2>
+		</mobileclients>
+		<mobilekey>
+			<ident></ident>
+			<pre-shared-key></pre-shared-key>
+		</mobilekey>
+		-->
+	</ipsec>
+	<aliases>
+		<!--
+		<alias>
+			<name></name>
+			<address>xxx.xxx.xxx.xxx(/xx)</address>
+			<descr></descr>
+		</alias>
+		-->
+	</aliases>
+	<proxyarp>
+		<!--
+		<proxyarpnet>
+			<network>xxx.xxx.xxx.xxx/xx</network>
+			*or*
+			<range>
+				<from>xxx.xxx.xxx.xxx</from>
+				<to>xxx.xxx.xxx.xxx</to>
+			</range>
+		</proxyarpnet>
+		-->
+	</proxyarp>
+	<cron>
+		<item>
+			<minute>0</minute>
+			<hour>11</hour>
+			<mday>*</mday>
+			<month>*</month>
+			<wday>*</wday>
+			<who>root</who>
+			<command>/usr/local/bin/log_rotater</command>
+		</item>
+		<item>
+			<minute>*/50</minute>
+			<hour>*</hour>
+			<mday>*</mday>
+			<month>*</month>
+			<wday>*</wday>
+			<who>root</who>
+			<command>/usr/local/sbin/ntpdate_sync_once.sh</command>
+		</item>
+		<item>
+			<minute>0</minute>
+			<hour>0</hour>
+			<mday>*</mday>
+			<month>*</month>
+			<wday>*</wday>
+			<who>root</who>
+			<command>/usr/bin/nice -n20 /usr/local/bin/blacklist_updater</command>
+		</item>
+		<item>
+			<minute>0</minute>
+			<hour>*</hour>
+			<mday>*</mday>
+			<month>*</month>
+			<wday>*</wday>
+			<who>root</who>
+			<command>/usr/bin/nice -n20 newsyslog</command>
+		</item>
+		<item>
+			<minute>1,31</minute>
+			<hour>0-5</hour>
+			<mday>*</mday>
+			<month>*</month>
+			<wday>*</wday>
+			<who>root</who>
+			<command>/usr/bin/nice -n20 adjkerntz -a</command>
+		</item>
+		<item>
+			<minute>1</minute>
+			<hour>3</hour>
+			<mday>1</mday>
+			<month>*</month>
+			<wday>*</wday>
+			<who>root</who>
+			<command>/usr/bin/nice -n20 /etc/rc.update_bogons.sh</command>
+		</item>
+		<item>
+			<minute>*/60</minute>
+			<hour>*</hour>
+			<mday>*</mday>
+			<month>*</month>
+			<wday>*</wday>
+			<who>root</who>
+			<command>/usr/bin/nice -n20 /usr/local/sbin/expiretable -v -t 3600 sshlockout</command>
+		</item>
+		<item>
+			<minute>*/60</minute>
+			<hour>*</hour>
+			<mday>*</mday>
+			<month>*</month>
+			<wday>*</wday>
+			<who>root</who>
+			<command>/usr/bin/nice -n20 /usr/local/sbin/expiretable -v -t 3600 virusprot</command>
+		</item>
+		<item>
+			<minute>30</minute>
+			<hour>12</hour>
+			<mday>*</mday>
+			<month>*</month>
+			<wday>*</wday>
+			<who>root</who>
+			<command>/usr/bin/nice -n20 /etc/rc.update_urltables</command>
+		</item>
+	</cron>
+	<widgets>
+		<sequence>system-container:col1:show,gateways-container:col1:show,interfaces-container:col1:show,services_status-container:col2:show,interface_statistics-container:col2:show</sequence>
+	</widgets>
+	<installedpackages>
+		<squid>
+			<config>
+				<startup/>
+				<active_interface>lan</active_interface>
+				<defined_ip_proxy_off/>
+				<defined_ip_proxy_off_dest/>
+				<log_enabled>on</log_enabled>
+				<log_dir>/var/squid/logs</log_dir>
+				<log_rotate>5</log_rotate>
+				<proxy_port>3128</proxy_port>
+				<visible_hostname>nuclewall</visible_hostname>
+				<admin_email>admin@nuclewall</admin_email>
+				<error_language>Turkish</error_language>
+				<custom_options>tcp_outgoing_address 127.0.0.1</custom_options>
+			</config>
+		</squid>
+		<squidcache>
+			<config>
+				<harddisk_cache_size>4096</harddisk_cache_size>
+				<harddisk_cache_location>/var/squid/cache</harddisk_cache_location>
+				<memory_cache_size>256</memory_cache_size>
+				<minimum_object_size>0</minimum_object_size>
+				<maximum_object_size>512</maximum_object_size>
+				<maximum_objsize_in_mem>1024</maximum_objsize_in_mem>
+				<level1_subdirs>16</level1_subdirs>
+			</config>
+		</squidcache>
+		<squidguardgeneral>
+			<config>
+				<squidguard_enable/>
+				<enable_guilog/>
+				<enable_log/>
+				<log_rotation/>
+				<adv_blankimg/>
+				<blacklist>on</blacklist>
+				<blacklist_proxy/>
+			</config>
+		</squidguardgeneral>
+		<squidguarddefault>
+			<config>
+				<dest>all</dest>
+				<notallowingip/>
+				<deniedmessage/>
+				<redirect_mode>rmod_int</redirect_mode>
+				<redirect/>
+				<safesearch/>
+				<rewrite/>
+				<enablelog/>
+			</config>
+		</squidguarddefault>
+	</installedpackages>
+	<cert>
+		<refid>54d0fcf097967</refid>
+		<descr><![CDATA[nuclewall-cert]]></descr>
+		<crt>LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUQwVENDQXJtZ0F3SUJBZ0lKQUpxOFEzNnFYRmlSTUEwR0NTcUdTSWIzRFFFQkRRVUFNSDh4Q3pBSkJnTlYKQkFZVEFsUlNNUkV3RHdZRFZRUUhEQWhKYzNSaGJtSjFiREVTTUJBR0ExVUVDZ3dKVG5WamJHVjNZV3hzTVJJdwpFQVlEVlFRTERBbE9kV05zWlhkaGJHd3hFakFRQmdOVkJBTU1DVzUxWTJ4bGQyRnNiREVoTUI4R0NTcUdTSWIzCkRRRUpBUllTYVc1bWIwQnVkV05zWlhkaGJHd3VZMjl0TUI0WERURTFNVEl6TURJd01qSXlNMW9YRFRJMU1USXkKTnpJd01qSXlNMW93ZnpFTE1Ba0dBMVVFQmhNQ1ZGSXhFVEFQQmdOVkJBY01DRWx6ZEdGdVluVnNNUkl3RUFZRApWUVFLREFsT2RXTnNaWGRoYkd3eEVqQVFCZ05WQkFzTUNVNTFZMnhsZDJGc2JERVNNQkFHQTFVRUF3d0piblZqCmJHVjNZV3hzTVNFd0h3WUpLb1pJaHZjTkFRa0JGaEpwYm1adlFHNTFZMnhsZDJGc2JDNWpiMjB3Z2dFaU1BMEcKQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURXNHFRS1FVcVlNSGZYOExNOWI5Y09ONmtzU0szbAp0ZG5oQnNPRHJhV0RCTGtYclVoK29Ta1ZuUm5KbDRLN2xKaFJpd2FrRmQwNmdXV1h1RWtYSVdtZ1lSMHlXdEhPClA2OXluSzQ4WTcwUTFFajg3eVU0YUlIRE15Wm1NSGpLUEs3YXpHSHZCTVRJUXByVlVjQlFSbjc0VTlZWFppMnAKZ3VGbGpnU2dlNjFkWnU1RTNEUm5xN2tVN29FTmk5eEVzcElLcFhBL3dYNVhjbm1KODh0bkxqKy9PcDhyeEZJTgozOVRwam41VHltVFBSMy9RcGV6ZVQzWFFOQXRqWlBiYXlnVmRTMDVHWFB1U1Q0VUtJRkZ1aTFBQXlyMVdyMis5CkxNOHdPeFM0NEhGSkFNdk01eTk1dmN1WTFmN25XQXVPU2xuUEZPMGROVlJ4TG8vY1d5VDkxeU9YQWdNQkFBR2oKVURCT01CMEdBMVVkRGdRV0JCUlJBeGdFajY3NFNOdUxPVk4yRmhJbm5VZFVDekFmQmdOVkhTTUVHREFXZ0JSUgpBeGdFajY3NFNOdUxPVk4yRmhJbm5VZFVDekFNQmdOVkhSTUVCVEFEQVFIL01BMEdDU3FHU0liM0RRRUJEUVVBCkE0SUJBUUROdmZXbUdIMlpuMG9HeXFwZVF4TFpienJpcnZFUi85VGlJR2R4ZHJCT2JWQXFRQWlRQ2hpOThHOFIKZ3FiSDF1Vk45Y2RzOTBPaHpNanVvU2Q4MDhHbjV1WFl2cy84RmluTXlxbTE3dm5HZ0t1MEZFdVZDT3VNNlhJYwpqNlYvUVJxRUkvN0RraGlHdkJZUnpzWlZpNVo5bEpmMTFBSHVDWSthb0ZBbWJidGEvbGNmcnY4dU5ob25HWmkyCkJMTzNhWnJHSXhQRTFnNUlEWUhQaHRoZVJvK0hYTXR1MTBML1lKZFNlTGJRdVdVZk9TdG5OclJQQ01Nd3AydjgKTUVaVTkzTTJobmVwOUhqb0hXUUdzdVBuY3orQXRERWZ1SWpqdlU0dC9aUzJqdGIwTHNVVkppOVhHUk5sVUlwbgpEQXBoUFljOUpKaXdmYWFJSkNXYVlPaEZaQStOCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0=</crt>
+		<prv>LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2UUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktjd2dnU2pBZ0VBQW9JQkFRRFc0cVFLUVVxWU1IZlgKOExNOWI5Y09ONmtzU0szbHRkbmhCc09EcmFXREJMa1hyVWgrb1NrVm5SbkpsNEs3bEpoUml3YWtGZDA2Z1dXWAp1RWtYSVdtZ1lSMHlXdEhPUDY5eW5LNDhZNzBRMUVqODd5VTRhSUhETXlabU1IaktQSzdhekdIdkJNVElRcHJWClVjQlFSbjc0VTlZWFppMnBndUZsamdTZ2U2MWRadTVFM0RSbnE3a1U3b0VOaTl4RXNwSUtwWEEvd1g1WGNubUoKODh0bkxqKy9PcDhyeEZJTjM5VHBqbjVUeW1UUFIzL1FwZXplVDNYUU5BdGpaUGJheWdWZFMwNUdYUHVTVDRVSwpJRkZ1aTFBQXlyMVdyMis5TE04d094UzQ0SEZKQU12TTV5OTV2Y3VZMWY3bldBdU9TbG5QRk8wZE5WUnhMby9jCld5VDkxeU9YQWdNQkFBRUNnZ0VBTm16cTdXb0NFYS9jK3NXTk1GZGVXY3lCUGFVZTNscUQxN25WMVVrcTdaZEoKcGhTT2t2d1FvdGZLaTBPanFnMEYwMGxxSWk4amZFai95VUMweW5YOUFkRDNDeVR6bE5DT2lISGtzNGp6ZndxMQpmZEs0VTZRc2tac244NlA5UkFQQXFjd3dWZENZWXJ4ejZPbXUwdVk0REg5M2J5L0RDdmNLVGFWOXlJUHFzZ2dFCktWbVFpT1NjdzhGTTYxUTlXWmwxbHNtd1Nybi82OE1HMVVVM0wxbVZFUUJ2WmJlalA5cG5WQ3Z3M0l3eUlWYm8KL1luOVJXblY2ZG9ZNzQ3RGxydTNPVW1OcjVIaUl2WEgvaXhWNFJwRURjeDdaSVhWTWF4MXFXN2hQSmpmelJjNAozNWp2Y1U1aVlnM3hrNzM1akdQbEJkRCttak84Vy9YK2dKSEZwbjVSeVFLQmdRRHRoM1RNRDZOT2lDZTRWdW53CnhUSlpjS0xlWG9TTnBLSEs4TXluSXhUNklqZEQwU1p3bjVCSTF2ekFtOEF2b3FtUWRTMG9aV2FucjlkYVNrUmQKQVdKNXRrbjJJSzZ1cThGenRGVVJOSG9tMXBOekFDSXY2Z1pFWkU3R0RsRHljL3VoVzhmR1EvZWRLNzdsZEVlQgp6YVJwdmNSTE5JelBKaG5QcCtzVTNBVkovUUtCZ1FEbm1HaklNRG1PMVdxQUNFY0NMK3hRdUFDejFZTXFNcHVXCmxLWVVCR3dkcFBLeHU5TXVnV3k1VkR3UlpQejY1ajR2c1l1eHBvY2c4MS9Ia3dCaGdMUk45andTOVoxK2lIS0sKQUp3YVoyQmVjdlRJL1JEMmU0SlpDM3liTzNCWjNWa1lvYTBSTEkzWTZwZ3RUYUFhVFpheG9EeHdFMGY3VzZ1YgprVU1pTUJuK0l3S0JnSGpjZXVhMmNrOHNZcUdldit5K09tOWVLOUZnWUt3K0FBRm1ZNHdNQXNtQURZVFpjR2pRCkdEZW9CUFh3aW1yeXByc1ZsSVBBak9wNFEranlielN2MXE2OXZZYWFmS2Z1UjBJYm1VbG0zVnpUeERVNDlTeFMKTlJ3cHVoZDNBMk5LOXRmVS9xTDR4STdaeW9td2tBNFJXRDVoeS9iRVozMmtFbkFpTGpEdi8xVDFBb0dBRng1QgpwMm9ZOU1jZEFIYlREOGJVNGlIY0FCZWFKa1l5L2M4TTNRYXIvREdSQUdqdFpjRUpwMTVmT0tWS0U0bVVQNUtMCmpVcEFSdXZFYmRtZ3VocnM1TE5sdjhiQTEvYXE2RmV6UFhlQVNTMVVmaE8wODhYVWR5c01YenFKdG82LzdCT0gKZ1NWZmEzM1Bmd1kycXlsL2wyK1ZXT0t6MXNXSjFkZWtTZTlmU04wQ2dZRUFnVjh3ZUR1VXM5ZTFoQkZ6WGNicQpvZHhFRU9XdjBaakpoVXN1NWdvWnRrcXRDRFdxNW9Ua0xpOW5kcllTZnc0VUJnaW9hSTRtMGtmc0p5S1NPVnRUCnpSR3hwd0kwT2NwUTdLWndPMVNCVmtWL0tZMFA0WkIzaENLVVRFZnZiTUpiZ0J4OG5iV3lFZm84RnhGVmFNTU8KdDNQZ3h1R1I1QnJBMXZNdmhHdDFRemc9Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0=</prv>
+		<type>server</type>
+	</cert>
+	<captiveportal>
+		<auth_method>radius</auth_method>
+		<radacct_enable/>
+		<radmac_enable/>
+		<reauthenticateacct>stopstart</reauthenticateacct>
+		<radiusip>127.0.0.1</radiusip>
+		<radiussession_timeout/>
+		<radiussrcip_attribute>lan</radiussrcip_attribute>
+		<radmac_format>ietf</radmac_format>
+	</captiveportal>
+	<hotspot>
+		<company>TlVDTEVXQUxMIEhPVFNQT1Q=</company>
+		<page_type>default</page_type>
+		<default_lang>tr</default_lang>
+	</hotspot>
+	<digitalsign>
+		<sign_type>local</sign_type>
+		<sign_time>onehour</sign_time>
+		<sign_hour>12:30</sign_hour>
+	</digitalsign>
+</nuclewall>

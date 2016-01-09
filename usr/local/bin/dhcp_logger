@@ -1,0 +1,189 @@
+#!/usr/local/bin/php -q
+<?php
+/*
+	dhcp_logger
+	
+	Copyright (C) 2013-2015 Ogün AÇIK
+	All rights reserved.
+
+*/
+require('config.gui.inc');
+require('5651_logger.inc');
+
+$today = 'dhcp-' . date('dmY');
+$log_dir = '/var/5651/logs/';
+$log_file = $log_dir . $today . '.txt';
+
+$log_dir_exists = is_dir($log_dir);
+$log_file_exists = file_exists($log_file);
+
+if(!$log_dir_exists)
+{
+	mkdir($log_dir, 0644, true);
+}
+
+$leasesfile = "{$g['dhcpd_chroot_path']}/var/db/dhcpd.leases";
+$awk = '/usr/bin/awk';
+
+$cleanpattern = "'{ gsub(\"#.*\", \"\");} { gsub(\";\", \"\"); print;}'";
+$splitpattern = "'BEGIN { RS=\"}\";} {for (i=1; i<=NF; i++) printf \"%s \", \$i; printf \"}\\n\";}'";
+
+exec("/bin/cat {$leasesfile} | {$awk} {$cleanpattern} | {$awk} {$splitpattern}", $leases_content);
+$leases_count = count($leases_content);
+
+$leases = array();
+$i = 0;
+$l = 0;
+$p = 0;
+
+while($i < $leases_count)
+{
+	$data = explode(' ', $leases_content[$i]);
+
+	$f = 0;
+	$fcount = count($data);
+
+	if($fcount < 20)
+	{
+		$i++;
+		continue;
+	}
+	
+	while($f < $fcount)
+	{
+		switch($data[$f])
+		{
+			case 'lease':
+				$leases[$l]['ip'] = $data[$f+1];
+				$leases[$l]['type'] = 'dynamic';
+				$f = $f+2;
+				break;
+			case 'starts':
+				$leases[$l]['start'] = $data[$f+2];
+				$leases[$l]['start'] .= " " . $data[$f+3];
+				$timestamp = strtotime($leases[$l]['start']);
+				$leases[$l]['start'] = strftime("%d.%m.%Y-%H:%M:%S", $timestamp);
+				$f = $f+3;
+				break;
+			case 'ends':
+				$leases[$l]['end'] = $data[$f+2];
+				$leases[$l]['end'] .= " " . $data[$f+3];
+				$timestamp = strtotime($leases[$l]['end']);
+				$leases[$l]['end'] = strftime("%d.%m.%Y-%H:%M:%S", $timestamp);
+				$f = $f+3;
+				break;
+			case 'tstp':
+				$f = $f+3;
+				break;
+			case 'tsfp':
+				$f = $f+3;
+				break;
+			case 'atsfp':
+				$f = $f+3;
+				break;
+			case 'cltt':
+				$f = $f+3;
+				break;
+			case 'binding':
+				$leases[$l]['act'] = $data[$f+2];
+				$f = $f+1;
+				break;
+			case 'next':
+				$f = $f+3;
+				break;
+			case 'rewind':
+				$f = $f+3;
+				break;
+			case 'hardware':
+				$leases[$l]['mac'] = strtoupper(str_replace(':', '-', $data[$f+2]));
+				$f = $f+2;
+				break;
+			case 'client-hostname':
+				if($data[$f+1] <> "")
+				{
+					$leases[$l]['hostname'] = preg_replace('/"/','',$data[$f+1]);
+				}
+				else
+				{
+					$hostname = gethostbyaddr($leases[$l]['ip']);
+					if($hostname <> "")
+					{
+						$leases[$l]['hostname'] = $hostname;
+					}
+				}
+				$f = $f+1;
+				break;
+			case 'uid':
+				$f = $f+1;
+				break;
+		}
+		$f++;
+	}
+	$l++;
+	$i++;
+}
+
+if(count($leases) > 0)
+{
+	$leases = remove_duplicate($leases, 'ip');
+}
+
+foreach($config['interfaces'] as $ifname => $ifarr)
+{
+	if (is_array($config['dhcpd'][$ifname]) && is_array($config['dhcpd'][$ifname]['staticmap']))
+	{
+		foreach($config['dhcpd'][$ifname]['staticmap'] as $static)
+		{
+			$slease = array();
+			$slease['ip'] = $static['ipaddr'];
+			$slease['type'] = 'static';
+			$slease['mac'] = strtoupper(str_replace(':', '-', $static['mac']));
+			$slease['start'] = "";
+			$slease['end'] = "";
+			$leases[] = $slease;
+		}
+	}
+}
+
+$log = false;
+
+if($leases)
+{
+	if($log_file_exists)
+	{
+		$log = fopen($log_file, 'a');
+	}
+	else
+	{
+		$log = fopen($log_file, 'w');
+		$title = "IP adresi				Kullanıma Başlama Tarih-Saati		Kullanım Bitiş Tarih-Saati		MAC Adresi\r\n";
+		fwrite($log, $title);
+	}
+
+	foreach($leases as $lease)
+	{
+		if($lease['act'] != 'free')
+		{
+			if($lease['type'] == 'dynamic')
+			{
+				fwrite($log, format_ipaddr($lease['ip']));
+				fwrite($log, $lease['start'] . "\t\t\t");
+				fwrite($log, $lease['end'] . "\t\t\t");
+				fwrite($log, $lease['mac'] . "\n");
+			}
+			
+			else if($lease['type'] == 'static')
+			{
+				fwrite($log, format_ipaddr($lease['ip']));
+				fwrite($log, "\tSABİT IP\t\t\t\t\t\t");
+				fwrite($log, "SABİT IP\t\t\t\t\t\t\t");
+				fwrite($log, $lease['mac'] . "\n");
+			}
+		}
+	}
+
+	if($log)
+		fclose($log);
+}
+
+?>

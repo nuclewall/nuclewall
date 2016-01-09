@@ -1,0 +1,448 @@
+.cell {
+-webkit-border-horizontal-spacing: 0px;
+-webkit-border-image: none;
+-webkit-border-vertical-spacing: 0px;
+background-color: #ffffff;
+border: solid 1px #bbb;
+border-collapse: collapse;
+color: #333;
+display: table-cell;
+float: none;
+font-family: Arial, sans-serif;
+font-size: 13px;
+font-style: normal;
+font-weight: normal;
+line-height: 18px;
+overflow: visible;
+padding-bottom: 6px;
+padding-left: 8px;
+padding-right: 8px;
+padding-top: 6px;
+text-align: left;
+vertical-align: middle;
+min-width: 80px;
+word-break: break-all;
+}
+
+.cell.dark {
+background-color: #efefef;
+}
+
+.cell.tools {
+width: 35px;
+min-width: 35px;
+max-width: 35px;
+}
+
+.cell.tools.hotspot {
+width: 40px;
+min-width: 40px;
+max-width: 40px;
+}
+
+.cell.description {
+text-align: left;
+vertical-align: middle;
+background-color: #efefef;
+}
+
+.cell.disabled {
+max-width: 35px;
+min-width: 35px;
+}
+
+.wall {
+-webkit-border-horizontal-spacing: 0px;
+-webkit-border-image: none;
+-webkit-border-vertical-spacing: 0px;
+background-color: #ffffff;
+border: solid 1px #bbb;
+border-collapse: collapse;
+color: #333;
+display: table-cell;
+float: none;
+font-family: Arial, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-weight: normal;
+overflow-y: visible;
+padding-top: 6px;
+padding-bottom: 6px;
+padding-left: 4px;
+padding-right: 4px;
+text-align: center;
+vertical-align: middle;
+}
+
+.wall.description {
+background-color: #EFEFEF;
+overflow: hidden;
+line-height: 15px;
+max-height: 20px;
+min-width: 120px; 
+}
+
+.wall.tools {
+width: 65px;
+min-width: 65px;
+max-width: 65px;
+text-align: left;
+background-color: #EFEFEF;
+vertical-align: middle;
+}
+
+.head {
+-webkit-border-horizontal-spacing: 0px;
+-webkit-border-image: none;
+-webkit-border-vertical-spacing: 0px;
+border: #dc3737 solid 1px;
+background-color: #df0000;
+border-collapse: collapse;
+color: white;
+display: table-cell;
+float: none;
+font-family: Arial, sans-serif;
+font-size: 11px;
+font-style: normal;
+font-weight: bold;
+line-height: 16px;
+overflow-y: visible;
+padding-bottom: 5px;
+padding-left: 8px;
+padding-right: 8px;
+padding-top: 5px;
+text-align: left;
+vertical-align: middle;
+text-shadow: none;
+
+}
+
+.hwall {
+-webkit-border-horizontal-spacing: 0px;
+-webkit-border-image: none;
+-webkit-border-vertical-spacing: 0px;
+border: #dc3737 solid 1px;
+background-color: #df0000;
+border-collapse: collapse;
+color: white;
+display: table-cell;
+float: none;
+overflow-y: visible;
+padding-bottom: 3px;
+padding-left: 4px;
+padding-right: 4px;
+padding-top: 3px;
+text-align: center;
+vertical-align: middle;
+}
+
+.headw {
+-webkit-border-horizontal-spacing: 0px;
+-webkit-border-image: none;
+-webkit-border-vertical-spacing: 0px;
+border: #dc3737 solid 1px;
+background-color: #df0000;
+border-collapse: collapse;
+color: white;
+display: table-cell;
+float: none;
+font-family: Arial, sans-serif;
+font-size: 11px;
+font-style: normal;
+font-weight: bold;
+overflow-y: visible;
+padding-bottom: 5px;
+padding-left: 4px;
+padding-right: 4px;
+padding-top: 5px;
+text-align: left;
+vertical-align: middle;
+text-shadow: none;
+min-width: 25px;
+}
+
+.times{
+-webkit-border-horizontal-spacing: 0px;
+-webkit-border-image: none;
+-webkit-border-vertical-spacing: 0px;
+background-color: #ffffff;
+border: solid 1px #bbb;
+border-collapse: collapse;
+color: #333;
+display: table-cell;
+float: none;
+font-family: Arial, sans-serif;
+font-size: 13px;
+font-style: normal;
+font-weight: normal;
+height: 14px;
+line-height: 22px;
+overflow-y: visible;
+padding: 5px;
+text-align: center;
+vertical-align: middle;
+}
+
+.times.day {
+text-align: left;
+width: 295px;
+max-width: 295px;
+}
+
+.times.hour {
+width: 80px;
+max-width: 80px;
+}
+
+.times.if {
+padding: 1px;
+padding-left: 5px;
+padding-top: 5px;
+margin: 1px;
+text-align: left;
+
+}
+
+.grids {
+-webkit-border-horizontal-spacing: 0px;
+-webkit-border-image: none;
+-webkit-border-vertical-spacing: 0px;
+background-color: transparent;
+border: solid 1px #bbb;
+border-collapse: collapse;
+color: #333;
+display: table;
+font-family: Arial, sans-serif;
+font-size: 13px;
+font-style: normal;
+font-weight: normal;
+line-height: 18px;
+margin-bottom: 19.5px;
+margin-top:10px;
+overflow-y: visible;
+vertical-align: middle;
+width: 100%;
+}
+
+.grids.data
+{
+	width: 300px;
+}
+
+.grids.times {
+margin: 2px;
+line-height: 12px;
+font-size:12px;
+
+}
+
+.icon_plus_right {
+margin-left: 10px;
+}
+
+.select {
+margin: 0;
+padding: 2px;
+height: 22px;
+width: 110px;
+}
+
+.head.users {
+font-size: 11px;
+}
+
+.cell.users {
+min-width: 110px;
+max-width: 110px;
+width: 110px;
+font-size: 14px;
+}
+
+.cell.macs {
+min-width: 160px;
+max-width: 160px;
+width: 160px;
+font-size: 14px;
+text-align: center
+}
+
+.cell.data {
+padding: 1px;
+min-width: 150px;
+max-width: 150px;
+width: 150px;
+}
+
+.cell.dhcphostname {
+padding-left: 3px;
+padding-right: 3px;
+width: 90px;
+max-width: 90px;
+min-width: 90px;
+}
+
+.cell.dhcptype {
+padding-left: 4px;
+padding-right: 4px;
+width: 55px;
+max-width: 55px;
+min-width: 55px;
+word-break: normal;
+text-align: center;
+}
+
+.cell.dhcpstat {
+padding-left: 4px;
+padding-right: 4px;
+width: 68px;
+max-width: 68px;
+min-width: 68px;
+text-align: center;
+}
+
+.cell.dhcpip {
+padding-left: 4px;
+padding-right: 4px;
+width: 90px;
+max-width: 90px;
+min-width: 90px;
+}
+
+.cell.dhcpdate {
+padding-left: 2px;
+padding-right: 2px;
+width: 105px;
+max-width: 105px;
+min-width: 105px;
+text-align: center;
+}
+
+.cell.tools.dhcp {
+padding-left: 2px;
+padding-right: 2px;
+}
+
+.cell.dhcpmac {
+width: 105px;
+max-width: 105px;
+min-width: 105px;
+padding-left: 4px;
+padding-right: 4px;
+}
+
+.cell.hotspotmac {
+width: 105px;
+max-width: 105px;
+min-width: 105px;
+padding-left: 4px;
+padding-right: 4px;
+text-align: center;
+}
+
+.cell.hotspotmac.left {
+text-align: left;
+}
+
+.cell.hotspottype {
+width: 50px;
+max-width: 50px;
+min-width: 50px;
+text-align: center;
+padding-left: 4px;
+padding-right: 4px;
+}
+
+.cell.count {
+width: 95px;
+max-width: 95px;
+min-width: 95px;
+text-align: center;
+vertical-align: middle;
+padding: 4px;
+}
+
+.cell.gw {
+width: 50px;
+max-width: 50px;
+min-width: 50px;
+}
+
+.cell.description.gw {
+min-width:200px;
+max-width: 200px;
+width: 200px;
+}
+
+.cell.description.dt {
+min-width: 180px;
+max-width: 180px;
+width: 180px;
+text-align: center;
+}
+
+.cell.description.mac {
+min-width: 300px;
+}
+
+.cell.date {
+min-width: 125px;
+max-width: 125px;
+width: 125px;
+text-align: center;
+}
+
+.cell.logd {
+background-color: #dcebfe;
+min-width: 130px;
+}
+
+.cell.logm {
+min-width: 550px;
+max-width: 550px;
+}
+
+.cell.sd {
+min-width: 150px;
+max-width: 150px;
+}
+
+.cell.center {
+text-align: center;
+}
+
+.cell.blue {
+background-color: #dcebfe;
+}
+
+.cell.tools.sv {
+background-color: #efefef;
+text-align: center;
+width: 45px;
+max-width: 45px;
+min-width: 45px;
+}
+
+.cell.status {
+padding-left: 18px;
+width: 20px;
+max-width: 20px;
+min-width: 20px;
+}
+
+.cell.description.sv {
+text-align: left;
+vertical-align: middle;
+padding: 4px;
+padding-left: 20px;
+min-width: 400px;
+max-width: 400px;
+width: 400px;
+}
+
+.wall.toolc {
+min-width: 50px;
+max-width: 50px;
+text-align: center;
+background-color: #efefef;
+vertical-align: middle;
+}

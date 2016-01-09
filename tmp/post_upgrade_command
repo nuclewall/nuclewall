@@ -1,0 +1,41 @@
+#!/bin/sh
+
+PFSENSETYPE=`cat /etc/platform`
+KERNELTYPE=`cat /boot/kernel/pfsense_kernel.txt`
+
+if [ $KERNELTYPE = "SMP" ]; then
+	if [ -f /kernels/kernel_SMP.gz ]; then 
+		tar xzpf /kernels/kernel_SMP.gz --exclude loader.conf -C /boot/
+	fi
+fi
+
+Detect interactive logins and display the shell
+echo	"if [ \`env | grep cons25 | wc -l\` -gt 0 ]; then" > $CVS_CO_DIR/root/.shrc
+echo	"	/etc/rc.initial" >> $CVS_CO_DIR/root/.shrc
+echo	"	exit" >> $CVS_CO_DIR/root/.shrc
+echo	"elif [ \`env | grep SSH_TTY | wc -l\` -gt 0 ]; then" >> $CVS_CO_DIR/root/.shrc
+echo	"	/etc/rc.initial.utf" >> $CVS_CO_DIR/root/.shrc
+echo	"	exit" >> $CVS_CO_DIR/root/.shrc
+echo	"fi" >> $CVS_CO_DIR/root/.shrc
+
+echo	"if [ \`env | grep cons25 | wc -l\` -gt 0 ]; then" > $CVS_CO_DIR/root/.profile
+echo	"	/etc/rc.initial" >> $CVS_CO_DIR/root/.profile
+echo	"	exit" >> $CVS_CO_DIR/root/.profile
+echo	"elif [ \`env | grep SSH_TTY | wc -l\` -gt 0 ]; then" >> $CVS_CO_DIR/root/.profile
+echo	"	/etc/rc.initial.utf" >> $CVS_CO_DIR/root/.profile
+echo	"	exit" >> $CVS_CO_DIR/root/.profile
+echo	"fi" >> $CVS_CO_DIR/root/.profile
+
+# Now turn on or off serial console as needed
+/tmp/post_upgrade_command.php
+
+# Remove any previous MD5 sum files
+rm -f /root/*.md5
+
+# File moved to pfSense php shell (pfSsh.php)
+rm -rf /usr/local/sbin/cvs_sync.sh
+
+
+if [ -f /usr/local/sbin/php ]; then
+	rm /usr/local/sbin/php
+fi

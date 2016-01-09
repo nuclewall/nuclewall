@@ -1,0 +1,30 @@
+#  'realm/username'
+#  Using this entry, IPASS users have their realm set to "IPASS".
+realm IPASS {
+		format = prefix
+		delimiter = "/"
+		ignore_null = yes
+		ignore_default = no
+}
+#  'username@realm'
+realm suffix {
+		format = suffix
+		delimiter = "@"
+		ignore_null = yes
+		ignore_default = no
+}
+#  'username%realm'
+realm realmpercent {
+		format = suffix
+		delimiter = "%"
+		ignore_null = yes
+		ignore_default = no
+}
+#  'domain\user'
+realm ntdomain {
+		format = prefix
+		### 3 backslash in .inc will be 2 backslash in file and after starting radiusd just only one
+		delimiter = "\\"
+		ignore_null = yes
+		ignore_default = no
+}

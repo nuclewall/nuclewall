@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# log_rotater
+# Copyright (C) 2013-2015 Ogün AÇIK
+# All rights reserved.
+
+LOG_DIR="/var/5651/logs"
+SENT_DIR="$LOG_DIR/sent"
+SIGNEDS_DIR="/var/5651/signed_files"
+
+logger "5651: Süresi dolmuþ dosyalar siliniyor..."
+
+# Delete the log files
+if [ -d $LOG_DIR ]; then
+	cd $LOG_DIR
+	find . -type f -name *.txt -mtime +170 -exec rm  {} +
+fi
+
+# Delete the log files that are sent to Windows
+if [ -d $SENT_DIR ]; then
+	cd $SENT_DIR
+	find . -type d -mtime +170 -mindepth 1 -exec rm -r {} +
+fi
+
+# Delete the sign files, but first remove the immutable flags(schg)
+if [ -d $SIGNEDS_DIR ]; then
+	cd $SIGNEDS_DIR
+	find . -type f -mtime +170 -exec chflags 0 {} +
+	find . -type d -mtime +170 -mindepth 1 -exec rm -r {} +
+fi
+
+# Delete the downloaded log files
+find /tmp -type f -name "dhcp-*.tar" -exec rm -f {} +

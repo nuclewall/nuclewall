@@ -1,0 +1,71 @@
+#!/usr/local/bin/php -q
+<?php
+/*
+	log_signer
+	
+	Copyright (C) 2013-2015 Ogün AÇIK
+	All rights reserved.
+
+*/
+
+$log_dir = '/var/5651/logs/';
+$signed_root_dir = '/var/5651/signed_files/';
+$signed_file_dir = $signed_root_dir . date('dmY');
+$signed_file_dir_exists = is_dir($signed_file_dir);
+
+if(!$signed_file_dir_exists)
+{
+	mkdir($signed_file_dir, 0644, true);
+}
+
+exec("ls $log_dir*.txt", $files_to_sign);
+
+if($files_to_sign)
+{
+	foreach($files_to_sign as $file)
+	{
+		$s = exec("sign_file.sh $file");
+
+		if(($s == 'OK') and (file_exists($file . '.imza')))
+		{
+			$now = date("d-m-Y H:i:s");
+			$ts = time();
+
+			$md5hash = md5_file($file);
+			$sha1hash = sha1_file($file);
+
+			$b_file = basename($file);
+			
+			$log_file = "$signed_file_dir/" . 'dhcp-' . $ts . '.log';
+			$signed_file = "$signed_file_dir/" . 'dhcp-' . $ts;
+			$sign_file = "$signed_file_dir/". 'dhcp-' . $ts . '.imza';
+			
+			rename("$file", $signed_file);
+			rename("$file.imza", $sign_file);
+			
+			$log = fopen($log_file, 'w');
+			$info = "$b_file dosyasý $now tarihinde imzalandý.\n\n";
+			$info .= "md5 özeti: $md5hash\n";
+			$info .= "sha1 özeti: $sha1hash\n";
+
+			fwrite($log, $info);
+			fclose($log);
+			
+			exec("chflags schg $signed_file");
+			exec("chflags schg $sign_file");
+			exec("chflags schg $log_file");
+			
+			syslog(LOG_WARNING, "5651: $file dosyasý imzalandý.");
+		}
+		
+		else if($s == 'FAILED')
+			syslog(LOG_WARNING, "5651: $file dosyasý imzalanamadý.");
+	}
+}
+
+else
+{
+	syslog(LOG_WARNING, "5651: Þu anda imzalanacak dosya yok.");
+}
+
+?>

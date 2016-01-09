@@ -1,0 +1,42 @@
+authorize {
+	preprocess
+	sql	
+	pap
+}
+
+authenticate {
+	Auth-Type PAP {
+		pap
+	}
+}
+
+preacct {
+	preprocess
+	acct_unique
+}
+
+accounting {
+	sql
+	attr_filter.accounting_response
+}
+
+session {
+	sql
+}
+
+post-auth {
+	sql
+
+	Post-Auth-Type REJECT {
+		sql
+		attr_filter.access_reject
+	}
+}
+
+pre-proxy {
+	attr_filter.pre-proxy
+}
+
+post-proxy {
+	attr_filter.post-proxy
+}

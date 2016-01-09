@@ -1,0 +1,4 @@
+exec motp {
+		wait = yes
+		program = "/usr/local/bin/bash /usr/local/etc/raddb/scripts/otpverify.sh %{request:User-Name} %{request:User-Password} %{reply:MOTP-Init-Secret} %{reply:MOTP-PIN} %{reply:MOTP-Offset}"
+	}	

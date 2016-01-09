@@ -1,0 +1,300 @@
+#!/bin/sh
+
+# $Id$
+
+# /etc/rc - master bootup script, invokes php setup
+# part of pfSense by Scott Ullrich
+# Copyright (C) 2004-2010 Scott Ullrich, All rights reserved.
+# originally based on m0n0wall (http://neon1.net/m0n0wall)
+# Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
+# All rights reserved.
+
+#/bin/stty status '^T'
+#/bin/stty susp '^-' intr '^-' quit '^-'
+
+#trap : 2
+#trap : 3
+
+HOME=/
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:/usr/local/sbin
+export HOME PATH
+
+/etc/locale/kbdcontrol -l /etc/locale/tr.iso9.q.kbd
+/etc/locale/vidcontrol -f /etc/locale/iso09-8x16.fnt
+
+# Set our operating platform
+PLATFORM=`/bin/cat /etc/platform`
+
+# Handle ZFS read-only case
+if [ "$PLATFORM" = "pfSense" ]; then
+	if [ -f /usr/bin/grep ]; then
+		WHEREISROOT=`/sbin/mount | /usr/bin/grep " / " | /usr/bin/grep "tank" | /usr/bin/cut -d' ' -f1`
+		if [ "$WHEREISROOT" != "" ]; then
+			/sbin/zfs set readonly=off $WHEREISROOT
+		fi
+	fi
+fi
+
+if [ "$PLATFORM" = "cdrom" ]; then
+	/etc/rc.cdrom
+fi
+
+if [ "$PLATFORM" = "pfSense" ]; then
+	/sbin/mdmfs -S -M -s 4m md /var/run
+fi
+
+# Mount /. If it fails run a fsck.
+if [ ! "$PLATFORM" = "cdrom" ] ; then
+	/sbin/mount -a || (/sbin/fsck -fy; /sbin/mount -a)
+	
+	if [ -d "/conf" ]; then
+		# If item is not a symlink then rm and recreate
+		CONFPOINTSTO=`readlink /conf` 
+		if ! test "x$CONFPOINTSTO" = "x/cf/conf"; then 
+			/bin/rm -rf /conf
+			/bin/ln -s /cf/conf /conf
+		fi
+	fi
+fi
+
+# Disable APM on ATA drives. Leaving this on will kill drives long-term, especially laptop drives, by generating excessive Load Cycles.
+if [ -f /etc/rc.disable_hdd_apm ]; then
+	/etc/rc.disable_hdd_apm
+fi
+
+# Check to see if a compact flash mountpoint exists
+# If it fails to mount then run a fsck -fy
+if grep -q cf /etc/fstab; then
+	/sbin/mount -w /cf 2>/dev/null
+    /sbin/mount -uw /cf || \
+	(/sbin/umount /cf; /sbin/fsck -fy /cf; /sbin/mount -w /cf)
+fi
+
+# sync pw database after mount.
+rm -f /etc/spwd.db.tmp
+/usr/sbin/pwd_mkdb -d /etc/ /etc/master.passwd
+
+product=`/usr/bin/grep product_name /etc/inc/globals.inc | /usr/bin/cut -d'"' -f4`
+varrunpath=`/usr/bin/grep varrun_path /etc/inc/globals.inc | /usr/bin/cut -d'"' -f4`
+
+# Enable console output if its muted.
+/sbin/conscontrol mute off >/dev/null
+
+if [ "$PLATFORM" = "cdrom" ] ; then
+	# do nothing for cdrom platform
+else
+	SWAPDEVICE=`/bin/cat /etc/fstab | /usr/bin/grep swap | /usr/bin/cut -f1`
+	/sbin/swapon -a 2>/dev/null >/dev/null
+fi
+
+if [ "$PLATFORM" = "cdrom" ] ; then
+	/bin/mkdir /tmp/unionfs
+	/bin/mkdir /tmp/unionfs/usr
+	/bin/mkdir /tmp/unionfs/root
+	/bin/mkdir /tmp/unionfs/sbin
+	/bin/mkdir /tmp/unionfs/bin
+	/bin/mkdir /tmp/unionfs/boot
+	/bin/mkdir /tmp/unionfs/confdefault
+	/sbin/mount_unionfs /tmp/unionfs/usr /usr/
+	/sbin/mount_unionfs /tmp/unionfs/root /root/
+	/sbin/mount_unionfs /tmp/unionfs/bin /bin/		
+	/sbin/mount_unionfs /tmp/unionfs/sbin /sbin/	
+	/sbin/mount_unionfs /tmp/unionfs/boot /boot/
+	/sbin/mount_unionfs /tmp/unionfs/confdefault /conf.default/
+fi
+
+# Repair symlinks if they are broken
+if [ ! -L /etc/syslog.conf ]; then
+	/bin/rm -rf /etc/syslog.conf
+	/bin/ln -s /var/etc/syslog.conf /etc/syslog.conf
+fi
+
+# Repair symlinks if they are broken
+if [ ! -L /etc/hosts ]; then
+	/bin/rm -rf /etc/hosts
+	/bin/ln -s /var/etc/hosts /etc/hosts
+fi
+
+if [ ! -L /etc/resolv.conf ]; then
+    /bin/rm -rf /etc/resolv.conf
+    /bin/ln -s /var/etc/resolv.conf /etc/resolv.conf
+fi
+
+# Setup compatibility link for packages that
+# have trouble overriding the PREFIX configure
+# argument since we build our packages in a
+# seperated PREFIX area
+# Only create if symlink does not exist. 
+if [ ! -h /tmp/tmp ]; then
+    /bin/ln -hfs / /tmp/tmp
+fi
+
+# Make sure our /tmp is 777 + Sticky
+if [ ! "$PLATFORM" = "cdrom" ] ; then
+	/bin/rm -rf /tmp/*
+fi
+/bin/chmod 1777 /tmp
+
+if [ ! "$PLATFORM" = "cdrom" ] ; then
+	# Malloc debugging check
+	if [ -L /etc/malloc.conf ]; then
+	    #ln -s aj /etc/malloc.conf
+		/bin/rm /etc/malloc.conf
+	fi
+fi
+
+if [ ! -L /etc/dhclient.conf ]; then
+    /bin/rm -rf /etc/dhclient.conf
+fi
+
+if [ ! -L /etc/sasyncd.conf ]; then
+    /bin/mkdir -p /var/etc/
+    /usr/bin/touch /var/etc/sasyncd.conf
+    /bin/rm -rf /etc/sasyncd.conf
+    /bin/ln -s /var/etc/sasyncd.conf /etc/sasyncd.conf
+    /usr/sbin/chown root:wheel /var/etc/sasyncd.conf
+    /bin/chmod 0600 /var/etc/sasyncd.conf
+fi
+
+if [ ! -d /var/tmp ]; then
+	/bin/mkdir -p /var/tmp
+fi
+
+if [ ! -d /cf/conf/backup/ ]; then
+	/bin/mkdir -p /cf/conf/backup/ 
+fi
+
+# OpenVPN storage
+if [ ! -d /var/etc/openvpn ]; then
+	/bin/mkdir -p /var/etc/openvpn
+fi
+if [ ! -d /var/etc/openvpn-csc ]; then
+	/bin/mkdir -p /var/etc/openvpn-csc
+fi
+
+set -T
+trap "echo 'Reboot interrupted'; exit 1" 3
+
+# Remove old nameserver resolution files
+/bin/rm -f /var/etc/nameserver*
+
+# Create uploadbar tmp directory
+/bin/mkdir -p /tmp/uploadbar
+/bin/chmod 0777 /tmp/uploadbar
+
+# make some directories in /var
+/bin/mkdir -p /var/run /var/log /var/etc /var/db/entropy /var/at/jobs/ /var/empty 2>/dev/null
+/bin/rm -rf /var/run/*
+if [ "$PLATFORM" != "pfSense" ]; then
+	/bin/rm /var/log/* 2>/dev/null
+fi
+
+echo -n "."
+DISABLESYSLOGCLOG=`cat /cf/conf/config.xml | grep disablesyslogclog | wc -l | awk '{ print $1 }'`
+ENABLEFIFOLOG=`cat /cf/conf/config.xml | grep usefifolog | wc -l | awk '{ print $1 }'`
+LOG_FILES="system filter dhcpd portalauth relayd lighttpd apinger"
+for logfile in $LOG_FILES; do
+	if [ "$DISABLESYSLOGCLOG" -gt "0" ]; then 
+		/usr/bin/touch /var/log/$logfile.log
+	else 
+		if [ ! -f /var/log/$logfile.log ]; then
+			if [ "$ENABLEFIFOLOG" -gt "0" ]; then
+				# generate fifolog files
+				/usr/sbin/fifolog_create -s 511488 /var/log/$logfile.log
+			else 
+				/usr/sbin/clog -i -s 512144 /var/log/$logfile.log
+			fi
+		fi
+	fi 
+done
+
+# change permissions on newly created fifolog files.
+/bin/chmod 0600 /var/log/*.log
+
+DEVFS=`/sbin/mount | /usr/bin/grep devfs | /usr/bin/wc -l | /usr/bin/cut -d" " -f8`
+if [ "$DEVFS" = "0" ]; then
+    mount_devfs devfs /dev
+fi
+
+# Create an initial utmp file
+cd /var/run && /bin/cp /dev/null utmp && /bin/chmod 644 utmp
+
+/sbin/ldconfig -elf /usr/lib /usr/local/lib /lib
+
+# Make sure /etc/rc.conf doesn't exist.
+if [ -f /etc/rc.conf ]; then
+    /bin/rm -rf /etc/rc.conf
+fi
+
+# Launching kbdmux(4)
+if [ -f "/dev/kbdmux0" ]; then
+	/usr/sbin/kbdcontrol -k /dev/kbdmux0 < /dev/console
+	[ -c "/dev/atkbd0" ] && kbdcontrol -a atkbd0 < /dev/console
+	[ -c "/dev/ukbd0" ] && kbdcontrol -a ukbd0 < /dev/console
+fi
+
+# Fire up unionfs if mount points exist.
+if [ -f /dist/uniondirs ]; then
+	/etc/rc.d/unionfs start
+fi
+
+# Ensure gettytab is of a sane size
+if [ `/bin/ls -la /etc/gettytab | /usr/bin/awk '{ print $5'}` -lt 512 ]; then
+	echo ">>> Restoring /etc/gettytab due to unusal size"
+	echo ">>> Restoring /etc/gettytab due to unusal size" | /usr/bin/logger
+	/bin/cp /etc/gettytab.bak /etc/gettytab
+fi
+
+# Recreate capabilities DB
+/usr/bin/cap_mkdb /etc/login.conf
+
+# Run the php.ini setup file and populate
+# /usr/local/etc/php.ini and /usr/local/lib/php.ini
+/etc/rc.php_ini_setup 2>/tmp/php_errors.txt
+
+# Launch external configuration loader for supported platforms
+if [ "$PLATFORM" = "pfSense" ]; then
+	/usr/local/bin/php -q /etc/ecl.php
+fi
+
+if [ -f /etc/rc.custom_boot_early ]; then
+	/bin/echo -n "Launching /etc/rc.custom_boot_early...";
+	/etc/rc.custom_boot_early
+fi
+
+/usr/bin/nice -n20 /usr/local/sbin/check_reload_status
+
+# let the PHP-based configuration subsystem set up the system now
+/bin/rm -f /cf/conf/backup/backup.cache
+/bin/rm -f /root/lighttpd*
+/usr/bin/touch $varrunpath/booting
+/etc/rc.bootup
+
+# If a shell was selected from recovery 
+# console then just drop to the shell now.
+if [ -f "/tmp/donotbootup" ]; then
+	echo "Dropping to recovery shell."
+	exit 0
+fi
+
+cd /tmp && /usr/sbin/cron -s 2>/dev/null
+
+# Start ping handler every 240 seconds
+/usr/local/bin/minicron 240 /var/run/ping_hosts.pid /usr/local/bin/ping_hosts.sh
+
+# Start account expire handler every hour
+/usr/local/bin/minicron 3600 /var/run/expire_accounts.pid /etc/rc.expireaccounts
+
+# Start alias url updater every 24 hours
+/usr/local/bin/minicron 86400 /var/run/update_alias_url_data.pid /etc/rc.update_alias_url_data
+
+/bin/chmod a+rw /tmp/.
+
+/bin/rm $varrunpath/booting
+
+/usr/local/bin/beep.sh start 2>&1 >/dev/null
+
+# Reset the cache.  read-only requires this.
+/bin/rm /tmp/config.cache
+
+exit 0

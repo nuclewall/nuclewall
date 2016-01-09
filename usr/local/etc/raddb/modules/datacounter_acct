@@ -1,0 +1,16 @@
+exec datacounterdaily {
+		wait = yes
+		program = "/bin/sh /usr/local/etc/raddb/scripts/datacounter_acct.sh %{request:User-Name} daily %{request:Acct-Input-Octets} %{request:Acct-Output-Octets}"
+	}
+exec datacounterweekly {
+		wait = yes
+		program = "/bin/sh /usr/local/etc/raddb/scripts/datacounter_acct.sh %{request:User-Name} weekly %{request:Acct-Input-Octets} %{request:Acct-Output-Octets}"
+	}
+exec datacountermonthly {
+		wait = yes
+		program = "/bin/sh /usr/local/etc/raddb/scripts/datacounter_acct.sh %{request:User-Name} monthly %{request:Acct-Input-Octets} %{request:Acct-Output-Octets}"
+	}
+exec datacounterforever {
+		wait = yes
+		program = "/bin/sh /usr/local/etc/raddb/scripts/datacounter_acct.sh %{request:User-Name} forever %{request:Acct-Input-Octets} %{request:Acct-Output-Octets}"
+	}	

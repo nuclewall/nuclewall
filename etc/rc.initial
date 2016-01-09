@@ -1,0 +1,126 @@
+#!/bin/sh
+
+# /etc/rc.initial
+# part of pfSense by Scott Ullrich
+# Copyright (C) 2004-2011 Scott Ullrich, All rights reserved.
+# originally based on m0n0wall (http://neon1.net/m0n0wall)
+# Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
+# All rights reserved.
+
+# make sure the user can't kill us by pressing Ctrl-C,
+# ctrl-z, etc.
+#trap : 2
+#trap : 3
+#trap : 4
+
+# If recovery console shell option has been specified
+if [ -f "/tmp/donotbootup" ]; then
+	/usr/bin/env prompt="%B[%n@%m]%b%/(%h)||RecoveryConsoleShell: " /bin/tcsh
+	rm "/tmp/donotbootup"
+	echo "5 saniye sonra yeniden baþlatýlacak. Ýptal için: Ctrl+c"
+	sleep 5
+	/etc/rc.reboot
+	exit
+fi
+
+# Set our operating platform
+PLATFORM=`cat /etc/platform`
+
+# endless loop
+while : ; do
+
+if [ -f /tmp/ttybug ]; then
+	rm /tmp/ttybug
+	exit && exit && logout
+fi
+
+cat /etc/banner
+
+/etc/rc.banner
+
+F_SSHPORT="/var/run/sshport"
+
+if [ -f "$F_SSHPORT" ]; then
+	SSHPORT=`head -1 /var/run/sshport`
+fi
+
+# Check to see if SSH is listening.
+SSHD=`/usr/bin/sockstat -4l | grep "*.$SSHPORT" | wc -l`
+if [ "$SSHD" -gt 0 ]; then
+	sshd_option="8) SSHD(Port: ${SSHPORT}) servisini kapat";
+else
+	sshd_option="8) SSHD(Port: ${SSHPORT}) servisini aç";
+fi
+
+
+if [ "$PLATFORM" = "cdrom" ]; then
+    option99="99) NUCLEWALL kurulumunu baþlat."
+fi
+
+# display a cheap menu
+echo ""
+echo ""
+echo ""
+echo "    ETHERNET KARTLARI		WEB ARAYÜZÜ"
+echo "      1) Ýliþkilendir		  3) Yeniden baþlat"
+echo "      2) IP adreslerini belirle	  4) WAN arayüzünden eriþime izin ver"
+echo ""
+echo "    NUCLEWALL			DÝÐER"
+echo "      5) Yeniden baþlat		  ${sshd_option}"
+echo "      6) Kapat                    9) Kabuk"
+echo "      7) Ayarlarý sýfýrla"
+echo ""
+
+if [ "${option99}" != "" ]; then
+	/bin/echo "      ${option99}"
+fi
+
+echo
+read -p "    Seçim > " opmode
+echo
+
+# see what the user has chosen
+case ${opmode} in
+0)
+        exit && exit && logout
+        ;;
+1)
+        /etc/rc.initial.setports
+        ;;
+2)
+        /etc/rc.initial.setlanip
+        ;;
+3)
+		/usr/bin/killall -9 php; /usr/bin/killall -9 lighttpd; /etc/rc.restart_webgui
+		;;
+4)
+		/etc/rc.allowwan
+		;;
+5)
+        /etc/rc.initial.reboot
+        ;;
+6)
+        /etc/rc.initial.halt
+        ;;
+7)
+        /etc/rc.initial.defaults
+        ;;
+8) 
+		php -f /etc/rc.initial.toggle_sshd
+		;;	
+9)
+        /bin/tcsh
+        ;;
+99)
+		if [ -e /dev/ukbd0 ]; then
+	    	env TERM=cons25 /scripts/lua_installer
+		else
+			/scripts/lua_installer
+		fi
+		;;
+"")
+		kill $PPID ; exit
+		;;
+esac
+
+done

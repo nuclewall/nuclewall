@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# $Id$
+
+if ! /usr/bin/lockf -s -t 30 /tmp/config.lock /usr/bin/true; then
+	echo "Þu anda bir yazma iþlemi yapýldýðýndan dolayý yeniden baþlatýlamýyor."
+	exit 1
+fi
+
+sleep 1
+
+SHUTDOWN=/sbin/shutdown
+if [ -f /sbin/shutdown.old ]; then
+	SHUTDOWN=/sbin/shutdown.old
+fi
+
+$SHUTDOWN -r now

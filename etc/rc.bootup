@@ -1,0 +1,269 @@
+#!/usr/local/bin/php -f
+<?php
+/*
+	rc.bootup
+	part of pfSense by Scott Ullrich
+	originally based on m0n0wall (http://m0n0.ch/wall)
+	
+	Copyright (C) 2013-2015 Ogün AÇIK
+	All rights reserved.
+
+	Copyright (C) 2004-2009 Scott Ullrich <sullrich@pfsense.org>.
+	Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
+	Copyright (C) 2009 Erik Kristensen
+	All rights reserved.
+
+	Redistribution and use in source and binary forms, with or without
+	modification, are permitted provided that the following conditions are met:
+
+	1. Redistributions of source code must retain the above copyright notice,
+	   this list of conditions and the following disclaimer.
+
+	2. Redistributions in binary form must reproduce the above copyright
+	   notice, this list of conditions and the following disclaimer in the
+	   documentation and/or other materials provided with the distribution.
+
+	THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
+	INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+	AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+	AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
+	OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+	SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+	INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+	CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+	ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+	POSSIBILITY OF SUCH DAMAGE.
+*/
+
+function rescue_detect_keypress()
+{
+	$timeout=9;
+	echo "\n";
+	echo "[ Kurulum için K'ye basýn... ]\n";
+	echo "Seçim için kalan süre: {$timeout}";
+	$key = null;
+	exec("/bin/stty erase " . chr(8));
+	
+	while(!in_array($key, array("k", "K")))
+	{
+	        echo chr(8) . "{$timeout}";
+	        `/bin/stty -icanon min 0 time 25`;
+	        $key = trim(`KEY=\`dd count=1 2>/dev/null\`; echo \$KEY`);
+	        `/bin/stty icanon`;
+	        $timeout--;
+	        if ($timeout == 0) 
+				break;
+	}
+	
+	if (in_array($key, array("k", "K")))
+	{
+		putenv("TERM=cons25");  
+		echo "\n\nKurulum baþlatýlýyor...\n";
+		passthru("/usr/bin/env TERM=cons25 /bin/tcsh -c /scripts/lua_installer");
+	 
+		if(file_exists("/tmp/install_complete"))
+		{			
+			passthru("/etc/rc.reboot");
+			exit;
+		}
+	}
+}
+
+require_once('/etc/inc/globals.inc');
+
+$g['booting'] = true;
+
+require_once('/etc/inc/config.inc');
+require_once('/etc/inc/config.console.inc');
+require_once('/etc/inc/auth.inc');
+require_once('/etc/inc/functions.inc');
+require_once('/etc/inc/filter.inc');
+require_once('/etc/inc/shaper.inc');
+require_once('/etc/inc/captiveportal.inc');
+require_once('/etc/inc/pfsense-utils.inc');
+require_once('/etc/inc/mysql.inc');
+require_once('/etc/inc/hotspot.inc');
+require_once('/etc/inc/openssl.inc');
+require_once('/usr/local/pkg/squidguard_configurator.inc');
+
+function set_password()
+{
+	$platform = trim(file_get_contents('/etc/platform'));
+
+	if(file_exists("/etc/nuclewall/password_init") and $platform == 'pfSense')
+	{
+		$success = false;
+		$fp = fopen('php://stdin', 'r');
+
+		echo "\nÞimdi web arayüzü ve SSH eriþiminde kullanacaðýnýz\nyönetici parolasýný belirleyin.\n";
+		echo "Parolanýzý daha sonra deðiþtirilebilirsiniz.\n";
+
+		do
+		{	
+			echo "\nYeni bir yönetici parolasý girip <ENTER> a basýn:\n> ";
+			$password = chop(fgets($fp));	
+
+			if($password != '')
+			{
+				echo "Parolanýz '{$password}' olacak. Onaylýyor musunuz? [e|h]\n> ";
+				$key = chop(fgets($fp));
+
+				if(strtolower($key) == "e")
+				{
+					$admin_user =& getUserEntryByUID(0);
+
+					if (!$admin_user)
+					{
+						$admin_user = array();
+						$admin_user['uid'] = 0;
+
+						if (!is_array($config['system']['user']))
+							$config['system']['user'] = array();
+
+						$config['system']['user'][] = $admin_user;
+					}
+
+					$admin_user['name'] = "admin";
+					$admin_user['scope'] = "system";
+					$admin_user['priv'] = array("user-shell-access");
+
+					local_user_set_password($admin_user, $password);
+					local_user_set($admin_user);
+					write_config("Yeni yonetici parolasi belirlendi.");
+
+					$success = true;
+					system("rm /etc/nuclewall/password_init");
+					echo "Yeni yönetici parolasý belirlendi.\n\n";
+					echo "'admin' kullanýcý adý ve belirlediðiniz parola ile\nweb arayüzünde oturum açabilirsiniz.\n\n";
+					echo "Devam etmek için <ENTER> a basýn. ";
+					fgets($fp);
+					exit;
+				}
+			}
+		}while(!$success);
+	}
+}
+
+system_dmesg_save();
+
+system_check_reset_button();
+
+mute_kernel_msgs();
+
+start_devd();
+
+set_device_perms();
+
+unmute_kernel_msgs();
+
+if($g['platform'] == 'cdrom') 
+		rescue_detect_keypress();
+
+parse_config_bootup();
+
+while(is_interface_mismatch() == true)
+{
+	echo "\n\nEthernet kartý-arayüz iliþkilendirmeleri yapýlmamýþ. Þimdi yapýlmasý gerekiyor.\n\n";
+	$ifaces = get_interface_list();
+	if (is_array($ifaces))
+	{
+		foreach($ifaces as $iface => $ifdata)
+			interfaces_bring_up($iface);
+	}
+	set_networking_interfaces_ports();
+}
+
+convert_config();
+
+cleanup_backupcache(true);
+
+system_setup_sysctl();
+
+system_do_shell_commands(1);
+
+system_timezone_configure();
+
+system_hostname_configure();
+
+system_hosts_generate();
+
+interfaces_loopback_configure();
+
+mwexec_bg("/etc/sshd");
+
+setup_microcode();
+
+mute_kernel_msgs();
+	
+interfaces_configure();
+
+system_hosts_generate();
+
+system_resolvconf_generate();
+
+system_syslogd_start();
+
+filter_configure_sync();
+
+filter_pflog_start();
+
+setup_gateways_monitor();
+
+local_sync_accounts();
+
+system_webgui_start();
+
+configure_cron();
+
+system_routing_configure();
+
+system_routing_enable();
+
+services_dnsmasq_configure();
+
+system_ntp_configure(false);
+
+exec("/usr/local/sbin/ntpdate_sync_once.sh");
+
+system_console_configure();
+
+services_dhcpd_configure();
+
+system_dhcpleases_configure();
+
+filter_configure_sync();
+
+openssl_init();
+
+hotspot_init();
+
+mysql_init();
+
+start_mysql();
+
+if (isset($config['captiveportal']['enable']))
+{ 
+	start_radius();
+}
+
+captiveportal_configure();
+
+squid_init();
+
+system_do_shell_commands();
+
+set_password();
+
+auto_login();
+
+$kern_hz = `/sbin/sysctl kern.clockrate | /usr/bin/awk '{ print $5 }' | /usr/bin/cut -d"," -f1`;
+$kern_hz = trim($kern_hz, "\r\n");
+if($kern_hz == "1000") 
+	mwexec("/sbin/sysctl net.inet.tcp.rexmit_min=30");
+
+if (file_exists("/sbin/shutdown.old"))
+	@unlink("/sbin/shutdown.old");
+
+unset($g['booting']);
+
+?>

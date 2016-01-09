@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE packagegui SYSTEM "../schema/packages.dtd">
+<?xml-stylesheet type="text/xsl" href="../xsl/package.xsl"?>
+<packagegui>
+	<name>squidguardacl</name>
+	<title>PROXY WEB FİLTRESİ: ÖZEL ERİŞİM KURALLARI</title>
+	<include_file>/usr/local/pkg/squidguard.inc</include_file>
+	<tabs>
+		<tab>
+			<text>Genel</text>
+			<url>/pkg_edit.php?xml=squid.xml&amp;id=0</url>
+		</tab>
+		<tab>
+			<text>Önbellek</text>
+			<url>/pkg_edit.php?xml=squid_cache.xml&amp;id=0</url>
+		</tab>
+		<tab>
+			<text>Genel Filtre Kuralları</text>
+			<url>/pkg_edit.php?xml=squidguard_default.xml&amp;id=0</url>
+		</tab>
+		<tab>
+			<text>Özel Filtre Kuralları</text>
+			<url>/pkg.php?xml=squidguard_acl.xml</url>
+			<active/>
+		</tab>
+	</tabs>
+	<adddeleteeditpagefields>
+                <columnitem>
+                        <fielddescr>Aktiflik</fielddescr>
+                        <fieldname>disabled</fieldname>
+                </columnitem>
+                <columnitem>
+                        <fielddescr>İsim</fielddescr>
+                        <fieldname>name</fieldname>
+                </columnitem>
+                <columnitem>
+                        <fielddescr>Açıklama</fielddescr>
+                        <fieldname>description</fieldname>
+                </columnitem>
+	</adddeleteeditpagefields>
+	<fields>
+		<field>
+			<fielddescr>Pasifleştir</fielddescr>
+			<fieldname>disabled</fieldname>
+			<description>Kuralı pasif hale getirmek için işaretleyin.</description>
+			<type>checkbox</type>
+		</field>
+		<field>
+			<fielddescr>İsim</fielddescr>
+			<fieldname>name</fieldname>
+			<description>Erişim kuralınız için bir isim belirtin. Türkçe karakter ve boşluk karakteri kullanmayın.</description>
+			<type>input</type>
+			<class>input-medium</class>
+			<required/>
+		</field>
+		<field>
+			<fielddescr>Kaynak Adresler</fielddescr>
+			<fieldname>source</fieldname>
+			<description>Kuralın uygulanacağı IP adresi, IP adres aralığı veya ağ adreslerini aralarında birer boşluk bırakarak girebilirsiniz. Örnek: 10.0.0.5 192.168.1.5-192.168.1.20 172.16.0.0/24 mypc.alanadi.com
+			</description>
+			<type>input</type>
+			<class>input-xxlarge</class>
+		</field>
+		<field>
+			<fielddescr>Açıklama</fielddescr>
+			<fieldname>description</fieldname>
+			<description>Kuralınız için bir açıklama girmeniz faydalı olabilir.</description>
+			<type>input</type>
+			<class>input-xxlarge</class>
+		</field>
+		<field>
+			<fielddescr>Uygulanmış Kurallar</fielddescr>
+			<fieldname>dest</fieldname>
+			<description>Belirttiğiniz adreslere uygulanacak erişim kurallarını listelerden ayarlayabilirsiniz.</description>
+			<type>input</type>
+			<class>input-xxlarge</class>
+		</field>
+	</fields>
+	<custom_php_validation_command>
+		squidguard_validate_acl(&amp;$_POST, &amp;$input_errors);
+	</custom_php_validation_command>
+	<custom_php_command_before_form>
+		squidguard_before_form_acl(&amp;$pkg);
+	</custom_php_command_before_form>
+	<custom_php_after_form_command>
+		squidGuard_print_javascript();
+	</custom_php_after_form_command>
+	<custom_php_resync_config_command>
+		squidguard_resync_acl();
+		if (is_process_running('squidGuard'))
+			squidguard_resync();
+	</custom_php_resync_config_command>
+	<custom_delete_php_command>
+		squidguard_resync_acl();
+		if (is_process_running('squidGuard'))
+			squidguard_resync();
+	</custom_delete_php_command>
+</packagegui>

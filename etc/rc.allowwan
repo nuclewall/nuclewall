@@ -1,0 +1,63 @@
+#!/usr/local/bin/php -f
+
+<?php
+require_once("globals.inc");
+require_once("functions.inc");
+require_once("config.inc");
+require_once("util.inc");
+require("filter.inc");
+require("shaper.inc");
+
+global $config;
+
+$fp = fopen('php://stdin', 'r');
+
+$config = parse_config(true);
+$rule_exists = false;
+$blockpriv_exists = isset($config["interfaces"]["wan"]["blockpriv"]);
+
+foreach($config["filter"]["rule"] as $key=>$value)
+{
+	if(isset($value["console"]))
+	{
+		$rule_exists = true;
+	}
+}
+
+if($rule_exists && !$blockpriv_exists)
+{
+	echo "    Eriþim þu anda zaten açýk. Kapatmak için web arayüzünü kullanýn.\n\n    Devam etmek için <ENTER> a basýn. ";
+	fgets($fp);
+	fclose($fp);
+	exit;
+}
+
+if(!$rule_exists)
+{
+	echo "    Ýzin verme kuralý ekleniyor...\n";
+	$filterent = array();
+	$filterent["type"] = "pass";
+	$filterent["interface"] = "wan";
+	$filterent["source"]["any"] = "";
+	$filterent["destination"]["any"] = "";
+	$filterent["statetype"] = "keep state";
+	$filterent["os"] = "";
+	$filterent["console"] = true;
+	$filterent["descr"] = "TlVDTEVXQUxMJ2EgV0FOIGFyYXnDvHrDvG5kZW4gZXJpxZ9pbWUgaXppbiB2ZXIu";
+	$config["filter"]["rule"][] = $filterent;
+}
+
+unset($config["interfaces"]["wan"]["blockpriv"]);
+unlink_if_exists("/tmp/config.cache");
+write_config("NUCLEWALL'a WAN arayuzunden erisime izin verildi");
+unlink_if_exists("/tmp/config.cache");
+unset($config['interfaces']['wan']['blockbogons']);
+
+$config = parse_config(true);
+echo "    Ayarlar yeniden yükleniyor...\n";
+filter_configure_sync();
+echo "    NUCLEWALL'a WAN arayüzünden eriþime izin verildi.\n\n    Devam etmek için <ENTER> a basýn. ";
+fgets($fp);
+fclose($fp);
+exit;
+?>

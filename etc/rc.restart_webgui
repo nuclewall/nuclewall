@@ -1,0 +1,30 @@
+#!/usr/local/bin/php -f
+
+<?php
+
+require("config.inc");
+require("functions.inc");
+require("shaper.inc");
+require("captiveportal.inc");
+
+$fp = fopen('php://stdin', 'r');
+
+echo "    Web arayüzü yeniden baþlatýlýyor...\n";
+
+sigkillbyname("lighttpd", "KILL");
+
+while (is_process_running("lighttpd")) {
+        echo '.';
+        sleep(1);
+}
+
+system_webgui_start();
+
+captiveportal_init_webgui();
+
+echo "\n    Baþarýlý bir þekilde yeniden baþlatýldý.\n\n    Devam etmek için <ENTER> a basýn. ";
+fgets($fp);
+fclose($fp);
+exit;
+
+?>
