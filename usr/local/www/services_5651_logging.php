@@ -172,12 +172,12 @@ if ($_POST)
 							</div>
 						</div>
 						<p>
-							<b>NOT: </b>Yerel imzalama seçeneği tamamen deneysel olup Telekomünikasyon İletişim Başkanlığı tarafından bildirilen bir imzalama
+							<b>NOT: </b>Yerel imzalama seçeneği tamamen deneysel olup Bilgi Teknolojileri ve İletişim Kurumu tarafından bildirilen bir imzalama
 							seçeneği değildir.
 						</p>
 						<p>
-							Telekomünikasyon İletişim Başkanlığı'dan bildirildiği üzere, kayıtların
-							<a class="btn-link" target="_blank" href="http://tib.gov.tr/tr/tr-menu-55-ip_log_imzalayici_programi.html">IP Log İmzalayıcı</a>
+							Bilgi Teknolojileri ve İletişim Kurumu'ndan bildirildiği üzere, kayıtların
+							<a class="btn-link" target="_blank" href="http://www.btk.gov.tr/tr-TR/Sayfalar/IP-Log-Imzalayici">IP Log İmzalayıcı</a>
 							tarafından imzalanması önerilir.
 						</p>
 					</td>

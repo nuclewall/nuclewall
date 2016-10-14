@@ -78,11 +78,11 @@ $pgtitle = array('HOTSPOT ', 'OTURUM HAREKETLERÝ');
 				<tr>
 					<td>
 						<div style="margin-right: 10px;" class="pull-left">
-							<a onclick="return confirm('Tüm hotspot olay günlüklerini silmek istediðinizden emin misiniz?.')" class="btn" href="diag_logs_auth.php?act=del">
+							<a onclick="return confirm('Tüm hotspot olay günlüklerini silmek istediðinizden emin misiniz?.')" class="btn" href="hotspot_logs.php?act=del">
 							<i class="icon-trash"></i>Sil</a>
 						</div>
 
-						<form class="form-search" id="clearform" name="clearform" action="diag_logs_auth.php" method="post">
+						<form class="form-search" id="clearform" name="clearform" action="hotspot_logs.php" method="post">
 							<input style="height:20px" type="text" id="filtertext" name="filtertext" value="<?=$filtertext;?>" class="input-medium">
 							<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Ara</button>
 						</form>
