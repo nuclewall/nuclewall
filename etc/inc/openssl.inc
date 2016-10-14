@@ -44,7 +44,7 @@ EOF;
 
 	file_put_contents($temp_config, $conf);
 	system("base64 --encode $temp_config > $org_config && rm -f $temp_config");
-	system("chmod 400 $org_config && chflags schg $org_config");
+	system("chmod 400 $org_config");
 }
 
 function openssl_init()
