@@ -26,6 +26,7 @@ $pconfig['cinterface'] = $config['captiveportal']['interface'];
 $pconfig['timeout'] = $config['captiveportal']['timeout'];
 $pconfig['idletimeout'] = $config['captiveportal']['idletimeout'];
 $pconfig['enable'] = isset($config['captiveportal']['enable']);
+$pconfig['allow_dns'] = isset($config['captiveportal']['allow_dns']);
 
 if ($_POST)
 {
@@ -69,6 +70,7 @@ if ($_POST)
 		$config['captiveportal']['timeout'] = $_POST['timeout'];
 		$config['captiveportal']['idletimeout'] = $_POST['idletimeout'];
 		$config['captiveportal']['enable'] = $_POST['enable'] ? true : false;
+		$config['captiveportal']['allow_dns'] = $_POST['allow_dns'] ? true : false;
 		
 		write_config();
 
@@ -151,6 +153,18 @@ if ($_POST)
 						Yeniden oturum açıp kullanmaya devam edebilirler.</p>
 						<b>Not: </b>Oturum süresi kullanmak istemiyorsanız bu alanı boş bırakın.
 						<br>Fakat, aktif oturum süresi kullanmıyorsanız bu alanı kullanmanız önerilir.
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" class="vncell">DNS trafiği</td>
+					<td class="vtable">
+						<label>
+						<input name="allow_dns" type="checkbox" value="yes" <?php if ($pconfig['allow_dns']) echo "checked"; ?>>
+						Harici DNS trafiğine izin ver.
+						<p>Hotspot'a oturum açmamış kullanıcıların harici DNS sunucularına erişmesine izin verir.
+						İzin verilmezse, harici DNS sunucu kullanan kullanıcılar HOTSPOT oturum açma sayfasına otomatik olarak yönlendirilmezler. 
+						</p>
+						</label>
 					</td>
 				</tr>
 				<tr>

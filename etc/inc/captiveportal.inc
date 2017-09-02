@@ -212,6 +212,13 @@ function captiveportal_init_rules($reinit = false)
 
 	$cprules =	"add 65291 set 1 allow pfsync from any to any\n";
 	$cprules .= "add 65292 set 1 allow carp from any to any\n";
+	
+	if (isset($config['captiveportal']['allow_dns']))
+	{
+	    $cprules .= "add 65293 allow udp from any to any 53 keep-state\n";
+	    $cprules .= "add 65294 allow tcp from any to any 53 keep-state\n";
+	}
+	
 
 	$cprules .= <<<EOD
 # add 65300 set 1 skipto 65534 all from any to any not layer2
@@ -288,8 +295,22 @@ EOD;
 		$rulenum++;
 	}
 	
-	   $cprules .= <<<EOD
+	
+	if (isset($config['captiveportal']['allow_dns']))
+	{
+	    $cprules .= <<<EOD
+# allow unauthentication users to use external DNS servers
+add 65520 allow udp from any to any 53 out
+add 65521 allow tcp from any to any 53 out
+add 65522 allow udp from any to any 53 in
+add 65523 allow tcp from any to any 53 in
 
+EOD;
+
+	}
+	
+	$cprules .= <<<EOD
+	   
 # redirect non-authenticated clients to captive portal
 add 65531 set 1 fwd 127.0.0.1,8000 tcp from any to any in
 # let the responses from the captive portal web server back out
