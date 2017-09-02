@@ -44,7 +44,7 @@ $pgtitle = array('ARAÇLAR', 'AYARLARI SIFIRLA');
 <body>
 <?php include('fbegin.inc'); ?>
 
-<?php if ($_POST['Submit'] == "Evet"):
+<?php if ($_POST['Submit'] == "Onayla"):
 	print_info_box("NUCLEWALL şimdi fabrika ayarlarına dönderilip yeniden başlatılacak. Bu işlem birkaç dakika sürebilir."); ?>
 	<pre>
 	<?php
@@ -74,7 +74,7 @@ $pgtitle = array('ARAÇLAR', 'AYARLARI SIFIRLA');
 
 							</p>
 						</div>
-											
+
 					</td>
 				</tr>
 				<tr>
