@@ -177,7 +177,7 @@ if ($_POST)
 						</p>
 						<p>
 							Bilgi Teknolojileri ve İletişim Kurumu'ndan bildirildiği üzere, kayıtların
-							<a class="btn-link" target="_blank" href="http://www.btk.gov.tr/tr-TR/Sayfalar/IP-Log-Imzalayici">IP Log İmzalayıcı</a>
+							<a class="btn-link" target="_blank" href="https://www.btk.gov.tr/ip-log-imzalayici">IP Log İmzalayıcı</a>
 							tarafından imzalanması önerilir.
 						</p>
 					</td>
