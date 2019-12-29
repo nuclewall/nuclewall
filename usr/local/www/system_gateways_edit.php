@@ -1,23 +1,23 @@
-<?php 
+<?php
 /*
 	system_gateways_edit.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2010 Seth Mos <seth.mos@dds.nl>.
 	All rights reserved.
-	
+
 	Redistribution and use in source and binary forms, with or without
 	modification, are permitted provided that the following conditions are met:
-	
+
 	1. Redistributions of source code must retain the above copyright notice,
 	   this list of conditions and the following disclaimer.
-	
+
 	2. Redistributions in binary form must reproduce the above copyright
 	   notice, this list of conditions and the following disclaimer in the
 	   documentation and/or other materials provided with the distribution.
-	
+
 	THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
 	INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
 	AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
@@ -41,7 +41,7 @@ $a_gateways = $a_gateways_arr;
 
 if (!is_array($config['gateways']['gateway_item']))
         $config['gateways']['gateway_item'] = array();
-        
+
 $a_gateway_item = &$config['gateways']['gateway_item'];
 
 $id = $_GET['id'];
@@ -85,12 +85,12 @@ if ($_POST) {
 	{
 		$input_errors[] = "Geçerli bir Ağ Geçidi ismi girmediniz.";
 	}
-	
+
 	if (! is_validaliasname($_POST['name']))
 	{
 		$input_errors[] = "Ağ Geçidi ismi geçersiz karakterler içermemelidir.";
 	}
-	
+
 	if (($_POST['gateway'] && (!is_ipaddr($_POST['gateway'])) && ($_POST['attribute'] != "system")) && ($_POST['gateway'] != "dynamic"))
 	{
 		$input_errors[] = "Geçerli bir Ağ Geçidi IP adresi girmediniz.";
@@ -103,9 +103,9 @@ if ($_POST) {
 			if (is_ipaddr($config['interfaces'][$_POST['interface']]['ipaddr']) && (empty($_POST['gateway']) || $_POST['gateway'] == "dynamic"))
 				$input_errors[] = "Sabit IP adresi verilmiş ethernet kartlarına dinamik ağ geçidi değerleri verilemez.";
 		}
-		
+
 		$parent_ip = get_interface_ip($_POST['interface']);
-		
+
 		if (is_ipaddr($parent_ip))
 		{
 			$parent_sn = get_interface_subnet($_POST['interface']);
@@ -114,7 +114,7 @@ if ($_POST) {
 			}
 		}
 	}
-	
+
 	if (($_POST['monitor'] <> "") && !is_ipaddr($_POST['monitor']) && $_POST['monitor'] != "dynamic")
 	{
 		$input_errors[] = "Geçerli bir Takip IP adresi girmediniz.";
@@ -130,7 +130,7 @@ if ($_POST) {
 					$input_errors[] = "Ağ Geçidi ismi değiştirilemez.";
 				continue;
 			}
-			
+
 			if($_POST['name'] <> "")
 			{
 				if (($gateway['name'] <> "") && ($_POST['name'] == $gateway['name']) && ($gateway['attribute'] != "system")) {
@@ -138,7 +138,7 @@ if ($_POST) {
 					break;
 				}
 			}
-			
+
 			if(is_ipaddr($_POST['gateway']))
 			{
 				if (($gateway['gateway'] <> "") && ($_POST['gateway'] == $gateway['gateway']) && ($gateway['attribute'] != "system")) {
@@ -146,7 +146,7 @@ if ($_POST) {
 					break;
 				}
 			}
-			
+
 			if(is_ipaddr($_POST['monitor']))
 			{
 				if (($gateway['monitor'] <> "") && ($_POST['monitor'] == $gateway['monitor']) && ($gateway['attribute'] != "system")) {
@@ -195,12 +195,12 @@ if ($_POST) {
 			$a_gateway_item[] = $gateway;
 
 		mark_subsystem_dirty('staticroutes');
-	
+
 		write_config();
 
 		if (!empty($reloadif))
 			send_event("interface reconfigure {$reloadif}");
-		
+
 		header("Location: system_gateways.php");
 		exit;
 	}
@@ -241,13 +241,13 @@ function monitor_change() {
               <table class="tabcont" border="0" cellpadding="0" cellspacing="0">
 				<tr>
 					<td colspan="2" valign="top" class="listtopic">AĞ GEÇİDİNİ DÜZENLE</td>
-				</tr>	
-                <tr> 
+				</tr>
+                <tr>
                   <td valign="top" class="vncell">Ethernet Kartı</td>
                   <td class="vtable">
 		 	<select name='interface'>
 
-			<?php 
+			<?php
 				$interfaces = get_configured_interface_with_descr(false, true);
 				foreach ($interfaces as $iface => $ifacename) {
 				echo "<option value=\"{$iface}\"";
@@ -263,13 +263,13 @@ function monitor_change() {
                 </tr>
                 <tr>
                   <td valign="top" class="vncell">İsim</td>
-                  <td class="vtable"> 
-                    <input name="name" type="text" id="name" value="<?=htmlspecialchars($pconfig['name']);?>"> 
+                  <td class="vtable">
+                    <input name="name" type="text" id="name" value="<?=htmlspecialchars($pconfig['name']);?>">
                     <br>Ağ Geçidi için bir isim girin.</td>
                 </tr>
 		<tr>
                   <td valign="top" class="vncell">Ağ Geçidi</td>
-                  <td class="vtable"> 
+                  <td class="vtable">
                     <input name="gateway" type="text" class="host" id="gateway" value="<?php if ($pconfig['dynamic']) echo "dynamic"; else echo $pconfig['gateway']; ?>"/>
                     <br>Ağ Geçidinin IP adresini girin.</td>
                 </tr>
@@ -300,19 +300,19 @@ function monitor_change() {
 			?>
 			<input name="monitor" type="text" id="monitor" value="<?php echo $monitor; ?>" /><br />
 			Ağ Geçidi ICMP ECHO isteklerine cevap vermiyorsa bir Takip IP'si girerek takip edebilirsiniz.
-			
+
 		  </td>
 		</tr>
 		<tr>
 			<td valign="top" class="vncell">Açıklama</td>
-			<td class="vtable"> 
+			<td class="vtable">
 				<input name="descr" type="text" id="descr" value="<?=htmlspecialchars($pconfig['descr']);?>">
 				<br>İsteğe bağlı bir açıklama girebilirsiniz.
 			</td>
 		</tr>
 		<tr>
 			<td class="vncell"></td>
-			<td class="vtable"> 
+			<td class="vtable">
 				<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
 				<input type="button" value="İptal" class="btn btn-default"  onclick="history.back()">
 				<?php if (isset($id) && $a_gateways[$id]): ?>

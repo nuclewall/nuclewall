@@ -1,24 +1,24 @@
-<?php 
+<?php
 /* $Id$ */
 /*
 	system_gateway_groups_edit.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2010 Seth Mos <seth.mos@dds.nl>.
 	All rights reserved.
-	
+
 	Redistribution and use in source and binary forms, with or without
 	modification, are permitted provided that the following conditions are met:
-	
+
 	1. Redistributions of source code must retain the above copyright notice,
 	   this list of conditions and the following disclaimer.
-	
+
 	2. Redistributions in binary form must reproduce the above copyright
 	   notice, this list of conditions and the following disclaimer in the
 	   documentation and/or other materials provided with the distribution.
-	
+
 	THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
 	INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
 	AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
@@ -69,9 +69,9 @@ if ($_POST) {
 
 	$reqdfields = explode(" ", "name");
 	$reqdfieldsn = explode(",", "Name");
-	
+
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
-	
+
 	if (! isset($_POST['name'])) {
 		$input_errors[] = 'Geçerli bir ağ geçidi grubu adı belirtilmelidir.';
 	}
@@ -118,11 +118,11 @@ if ($_POST) {
 			$a_gateway_groups[$id] = $gateway_group;
 		else
 			$a_gateway_groups[] = $gateway_group;
-		
+
 		mark_subsystem_dirty('staticroutes');
-		
+
 		write_config();
-		
+
 		header("Location: system_gateway_groups.php");
 		exit;
 	}
@@ -145,17 +145,17 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI' , 'GRUP DÜZENLE');
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
 					<td colspan="2" valign="top" class="listtopic">AĞ GEÇİDİ GRUBU DÜZENLE</td>
-				</tr>	
+				</tr>
 				<tr>
 					<td valign="top" class="vncell">Grup Adı</td>
-					<td class="vtable"> 
-						<input name="name" type="text" id="name" value="<?=htmlspecialchars($pconfig['name']);?>"> 
+					<td class="vtable">
+						<input name="name" type="text" id="name" value="<?=htmlspecialchars($pconfig['name']);?>">
 						<br> Grup adı girin.
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Ağ Geçidi Önceliği</td>
-					<td class="vtable"> 
+					<td class="vtable">
 						<?php
 							foreach($a_gateways as $gwname => $gateway) {
 								$selected = array();
@@ -179,9 +179,9 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI' , 'GRUP DÜZENLE');
 								echo "</select> <b>{$gateway['name']} - " . base64_decode($gateway['descr']) ."</b><br />";
 							}
 						?>
-					
+
 					Yük dengeleme ve değiştirme gibi olaylarda hangi ağ geçidine öncelik tanınacağını belirler.
-					
+
 					</td>
 				</tr>
 				<tr>
@@ -196,20 +196,20 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI' , 'GRUP DÜZENLE');
 								}
 							?>
 						</select>
-						<br>Yük dengeleme, ağ geçidi değiştirme gibi olayların hangi 
+						<br>Yük dengeleme, ağ geçidi değiştirme gibi olayların hangi
 						durumda tetikleneceğini belirtin.
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Açıklama</td>
-					<td class="vtable"> 
+					<td class="vtable">
 						<input name="descr" type="text" id="descr" value="<?=htmlspecialchars($pconfig['descr']);?>">
 						<br>İsteğe bağlı bir açıklama girebilirsiniz.
 					</td>
 				</tr>
 				<tr>
 					<td class="vncell"></td>
-					<td class="vtable"> 
+					<td class="vtable">
 						<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
 						<input type="button" value="İptal" class="btn btn-default"  onclick="history.back()">
 						<?php if (isset($id) && $a_gateway_groups[$id]): ?>

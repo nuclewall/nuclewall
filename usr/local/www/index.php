@@ -2,7 +2,7 @@
 /*
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
     Copyright (C) 2004, 2005 Scott Ullrich
     All rights reserved.
 
@@ -70,7 +70,7 @@ if (!is_array($config['widgets'])) {
 		header("Location: index.php");
 		exit;
 	}
-	
+
 	require_once('includes/functions.inc.php');
 
 	if(file_exists("/usr/sbin/swapinfo")) {
@@ -93,37 +93,37 @@ if (!is_array($config['widgets'])) {
 
 if ($config['widgets'] && $config['widgets']['sequence'] != "") {
 	$pconfig['sequence'] = $config['widgets']['sequence'];
-	
+
 	$widgetlist = $pconfig['sequence'];
 	$colpos = array();
 	$savedwidgetfiles = array();
 	$widgetname = "";
 	$widgetlist = explode(",",$widgetlist);
-	
+
 	foreach ($widgetlist as $widget){
-		$dashpos = strpos($widget, "-");		
+		$dashpos = strpos($widget, "-");
 		$widgetname = substr($widget, 0, $dashpos);
-		$colposition = strpos($widget, ":");		
+		$colposition = strpos($widget, ":");
 		$displayposition = strrpos($widget, ":");
 		$colpos[] = substr($widget,$colposition + 1, $displayposition - $colposition-1);
 		$displayarray[] = substr($widget,$displayposition + 1);
 		$savedwidgetfiles[] = $widgetname . ".widget.php";
 	}
-	
-    foreach ($widgetfiles as $defaultwidgets){         
+
+    foreach ($widgetfiles as $defaultwidgets){
          if (!in_array($defaultwidgets, $savedwidgetfiles)){
              $savedwidgetfiles[] = $defaultwidgets;
          }
-     }   
-	
+     }
+
 	foreach ($widgetnames as $widget){
         if ($config['widgets'][$widget . '-config']){
             $pconfig[$widget . '-config'] = $config['widgets'][$widget . '-config'];
         }
-    }   
-	
-	$widgetlist = $savedwidgetfiles;	
-} 
+    }
+
+	$widgetlist = $savedwidgetfiles;
+}
 
 else $widgetlist = $widgetfiles;
 
@@ -136,7 +136,7 @@ while (false !== ($filename = readdir($dirhandle))) {
 }
 foreach($phpincludefiles as $includename) {
 	if(!stristr($includename, ".inc"))
-		continue;	
+		continue;
 	include($directory . $includename);
 }
 
@@ -144,7 +144,7 @@ $jscriptstr = <<<EOD
 <script language="javascript" type="text/javascript">
 
 function configureWidget(selectedDiv){
-	selectIntLink = selectedDiv + "-settings";	
+	selectIntLink = selectedDiv + "-settings";
 	d = document;
 	textlink = d.getElementById(selectIntLink);
 	if (textlink.style.display == "none")
@@ -154,15 +154,15 @@ function configureWidget(selectedDiv){
 }
 
 function showWidget(selectedDiv,swapButtons){
-    Effect.BlindDown(selectedDiv, {duration:1});      
-    showSave();    
-	d = document;	
+    Effect.BlindDown(selectedDiv, {duration:1});
+    showSave();
+	d = document;
     if (swapButtons){
 	    selectIntLink = selectedDiv + "-min";
 		textlink = d.getElementById(selectIntLink);
 		textlink.style.display = "inline";
-	    
-	    
+
+
 	    selectIntLink = selectedDiv + "-open";
 		textlink = d.getElementById(selectIntLink);
 		textlink.style.display = "none";
@@ -170,41 +170,41 @@ function showWidget(selectedDiv,swapButtons){
     }
 	selectIntLink = selectedDiv + "-container-input";
 	textlink = d.getElementById(selectIntLink);
-	textlink.value = "show";	
-    
+	textlink.value = "show";
+
 }
-	
+
 function minimizeWidget(selectedDiv,swapButtons){
 	//fade element
-    Effect.BlindUp(selectedDiv, {duration:1});      
+    Effect.BlindUp(selectedDiv, {duration:1});
     showSave();
-	d = document;	
+	d = document;
     if (swapButtons){
 	    selectIntLink = selectedDiv + "-open";
 		textlink = d.getElementById(selectIntLink);
-		textlink.style.display = "inline";	    
-	    
+		textlink.style.display = "inline";
+
 	    selectIntLink = selectedDiv + "-min";
 		textlink = d.getElementById(selectIntLink);
 		textlink.style.display = "none";
-    }  		
+    }
 	selectIntLink = selectedDiv + "-container-input";
 	textlink = d.getElementById(selectIntLink);
-	textlink.value = "hide";	  
-    
+	textlink.value = "hide";
+
 }
 
 function showSave(){
 	d = document;
 	selectIntLink = "submit";
 	textlink = d.getElementById(selectIntLink);
-	textlink.style.display = "inline";	
+	textlink.style.display = "inline";
 }
 
-function updatePref(){	
+function updatePref(){
 	var widgets = document.getElementsByClassName('widgetdiv');
 	var widgetSequence = "";
-	var firstprint = false;	
+	var firstprint = false;
 	d = document;
 	for (i=0; i<widgets.length; i++){
 		if (firstprint)
@@ -214,19 +214,19 @@ function updatePref(){
 		widget = widget + "-input";
 		textlink = d.getElementById(widget).value;
 		widgetSequence += textlink;
-		firstprint = true;		
+		firstprint = true;
 	}
 	selectLink = "sequence";
 	textlink = d.getElementById(selectLink);
 	textlink.value = widgetSequence;
-	return true;	
+	return true;
 }
 
-function hideAllWidgets(){		
+function hideAllWidgets(){
 		Effect.Fade('niftyOutter', {to: 0.2});
 }
 
-function showAllWidgets(){		
+function showAllWidgets(){
 		Effect.Fade('niftyOutter', {to: 1.0});
 }
 
@@ -267,16 +267,16 @@ echo $jscriptstr;
 	$directory = "/usr/local/www/widgets/widgets/";
 	$printed = false;
 	$firstprint = false;
-	?> 
-	<div id="col1" style="float:left;width:49%;padding-bottom:40px">		
-	<?php	
-		
-	foreach($widgetlist as $widget) {		
+	?>
+	<div id="col1" style="float:left;width:49%;padding-bottom:40px">
+	<?php
+
+	foreach($widgetlist as $widget) {
 		if(!stristr($widget, "widget.php"))
 					continue;
 		$periodpos = strpos($widget, ".");
-		$widgetname = substr($widget, 0, $periodpos);	
-		
+		$widgetname = substr($widget, 0, $periodpos);
+
 		switch($widgetname) {
 			case 'system': $title = 'Sistem'; break;
 			case 'services_status': $title = 'Servisler'; break;
@@ -284,27 +284,27 @@ echo $jscriptstr;
 			case 'interfaces': $title = 'Ağ Arayüzleri'; break;
 			case 'gateways': $title = 'Ağ Geçitleri'; break;
 		}
-		
+
 		if ($config['widgets'] && $pconfig['sequence'] != ""){
 			switch($displayarray[$widgetcounter]){
 				case "show":
 					$divdisplay = "block";
 					$display = "block";
-					$inputdisplay = "show";					
+					$inputdisplay = "show";
 					$showWidget = "none";
 					$mindiv = "inline";
 					break;
 				case "hide":
 					$divdisplay = "block";
 					$display = "none";
-					$inputdisplay = "hide";		
+					$inputdisplay = "hide";
 					$showWidget = "inline";
 					$mindiv = "none";
 					break;
 				case "close":
 					$divdisplay = "none";
 					$display = "block";
-					$inputdisplay = "close";			
+					$inputdisplay = "close";
 					$showWidget = "none";
 					$mindiv = "inline";
 					break;
@@ -344,14 +344,14 @@ echo $jscriptstr;
 				}
 			}
 		}
-		
+
 		if ($config['widgets'] && $pconfig['sequence'] != ""){
 			if ($colpos[$widgetcounter] == "col2" && $printed == false)
 			{
 				$printed = true;
 				?>
 				</div>
-				<div id="col2" style="float:right;width:49%;padding-bottom:40px">		
+				<div id="col2" style="float:right;width:49%;padding-bottom:40px">
 				<?php
 			}
 		}
@@ -359,10 +359,10 @@ echo $jscriptstr;
 			$printed = true;
 			?>
 			</div>
-			<div id="col2" style="float:right;width:49%;padding-bottom:40px">		
+			<div id="col2" style="float:right;width:49%;padding-bottom:40px">
 			<?php
 		}
-		
+
 		?>
 		<div style="clear:both;"></div>
 		<div  id="<?php echo $widgetname;?>-container" class="widgetdiv" style="display:<?php echo $divdisplay; ?>;">
@@ -371,41 +371,41 @@ echo $jscriptstr;
 				<div style="float:left;">
 					<?php echo $title;?>
 				</div>
-				<div align="right" style="float:right;">	
-					<div id="<?php echo $widgetname;?>-configure" onclick='return configureWidget("<?php echo $widgetname;?>")' style="display:none; cursor:pointer" ><img src="./themes/<?= $g['theme']; ?>/images/icons/icon_configure.gif" /></div>									
-					<div id="<?php echo $widgetname;?>-open" onclick='return showWidget("<?php echo $widgetname;?>",true)' style="display:<?php echo $showWidget;?>; cursor:pointer" ><img src="./themes/<?= $g['theme']; ?>/images/icons/icon_open.gif" /></div>	
-					<div id="<?php echo $widgetname;?>-min" onclick='return minimizeWidget("<?php echo $widgetname;?>",true)' style="display:<?php echo $mindiv;?>; cursor:pointer" ><img src="./themes/<?= $g['theme']; ?>/images/icons/icon_minus.gif"/></div>													
+				<div align="right" style="float:right;">
+					<div id="<?php echo $widgetname;?>-configure" onclick='return configureWidget("<?php echo $widgetname;?>")' style="display:none; cursor:pointer" ><img src="./themes/<?= $g['theme']; ?>/images/icons/icon_configure.gif" /></div>
+					<div id="<?php echo $widgetname;?>-open" onclick='return showWidget("<?php echo $widgetname;?>",true)' style="display:<?php echo $showWidget;?>; cursor:pointer" ><img src="./themes/<?= $g['theme']; ?>/images/icons/icon_open.gif" /></div>
+					<div id="<?php echo $widgetname;?>-min" onclick='return minimizeWidget("<?php echo $widgetname;?>",true)' style="display:<?php echo $mindiv;?>; cursor:pointer" ><img src="./themes/<?= $g['theme']; ?>/images/icons/icon_minus.gif"/></div>
 				</div>
 				<div style="clear:both;"></div>
 			</div>
 			<?php if ($divdisplay != "block") { ?>
 			<div id="<?php echo $widgetname;?>-loader" style="display:<?php echo $display; ?>;">
 			</div> <?php } if ($divdisplay != "block") $display = none; ?>
-			<div id="<?php echo $widgetname;?>" style="display:<?php echo $display; ?>;">				
-				<?php 
+			<div id="<?php echo $widgetname;?>" style="display:<?php echo $display; ?>;">
+				<?php
 					if ($divdisplay == "block")
 					{
 						include($directory . $widget);
-					}	
+					}
 				 ?>
 			</div>
 			<div style="clear:both;"></div>
 		</div>
-		<?php 	
+		<?php
 	$widgetcounter++;
 }
-	?>			
+	?>
 		</div>
 	<div style="clear:both;"></div>
 </div>
 
 </div>
-	    
+
 <script type="text/javascript">
 	document.observe('dom:loaded', function(in_event)
-	{		
-			Sortable.create("col1", {tag:'div',dropOnEmpty:true,containment:columns,handle:'widgetheader',constraint:false,only:'widgetdiv',onChange:showSave});	
-			Sortable.create("col2", {tag:'div',dropOnEmpty:true,containment:columns,handle:'widgetheader',constraint:false,only:'widgetdiv',onChange:showSave});		
+	{
+			Sortable.create("col1", {tag:'div',dropOnEmpty:true,containment:columns,handle:'widgetheader',constraint:false,only:'widgetdiv',onChange:showSave});
+			Sortable.create("col2", {tag:'div',dropOnEmpty:true,containment:columns,handle:'widgetheader',constraint:false,only:'widgetdiv',onChange:showSave});
 	});
 </script>
 </body>

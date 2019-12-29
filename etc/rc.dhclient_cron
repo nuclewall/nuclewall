@@ -42,7 +42,7 @@ foreach($iflist as $ifname => $interface) {
 	$real_interface = get_real_interface($ifname);
 	if($config['interfaces'][$ifname]['ipaddr'] == "dhcp") {
 		$pid = find_dhclient_process($real_interface);
-		if($pid == 0 or !$pid) {	
+		if($pid == 0 or !$pid) {
 			/* dhclient is not running for interface, kick it */
 			log_error("DHCLIENT was not running for {$real_interface} ... Launching new instance.");
 			exec("/sbin/dhclient $real_interface");

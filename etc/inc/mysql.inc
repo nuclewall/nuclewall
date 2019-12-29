@@ -1,7 +1,7 @@
 <?php
 /*
 	mysql.inc
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -11,12 +11,12 @@ function mysql_init()
 	$platform = trim(file_get_contents('/etc/platform'));
 	$initFile = '/etc/nuclewall/mysql_init';
 	$mysqlDir = '/var/db/mysql';
-	
-	if(file_exists($initFile) and ($platform == 'pfSense'))  
+
+	if(file_exists($initFile) and ($platform == 'pfSense'))
 	{
 		if(is_dir('/var/db/mysql'))
 			exec("rm -rf /var/db/mysql");
-		
+
 		initFiles();
 		exec('/etc/mysql/mysql.sh');
 	}
@@ -32,11 +32,11 @@ function initFiles()
 	$mysqlStarter = "$pfx/mysql.sh";
 	$mysqlLocalConn = '/etc/inc/local.inc';
 	$clientsConf = '/usr/local/etc/raddb/clients.conf';
-	
+
 	$rootPass = md5(uniqid() . 'root');
 	$radiusPass = md5(uniqid() . 'radius');
 	$radclientPass = md5(uniqid() . 'radclient');
-    
+
 	$_adminSql = adminSqlInit($radiusPass);
 	$_schemaSql = schemaSqlInit();
 	$_mysqlLocalConn = mysqlLocalConnInit($radiusPass);
@@ -52,7 +52,7 @@ function initFiles()
 	file_put_contents($mysqlStarter, $_mysqlStarter);
 	file_put_contents($mysqlLocalConn, $_mysqlLocalConn);
 	file_put_contents($clientsConf, $_clientsConf);
-	
+
 	chmod($mysqlStarter, 0755);
 	chmod($sqlConf, 0640);
 }
@@ -277,7 +277,7 @@ function radiusClientsInit($pass)
 {
 	global $config;
 	$config = parse_config(true);
-	
+
 	$conf = <<<EOF
 client "captiveportal" {
 	ipaddr = 127.0.0.1
@@ -285,11 +285,11 @@ client "captiveportal" {
 	shortname = captiveportal
 }
 EOF;
-	
+
 	$config['captiveportal']['radiuskey'] = $pass;
 	$config['captiveportal']['radmac_secret'] = $pass;
 	write_config();
-	
+
 	return $conf;
 }
 

@@ -1,7 +1,7 @@
 <?php
 /*
 	hotspot_settings.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -39,14 +39,14 @@ if ($_POST)
 		$reqdfieldsn = array("Arayüz");
 
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
-		
+
 		if(!is_process_running("mysqld"))
 		{
 			start_mysql();
 		}
 		start_radius();
 	}
-	
+
 	else
 	{
 		stop_radius();
@@ -56,7 +56,7 @@ if ($_POST)
 	{
 		$input_errors[] = 'Aktif oturum süresi 1 dakikadan az olamaz.';
 	}
-	
+
 	if ($_POST['idletimeout'] && (!is_numeric($_POST['idletimeout']) || ($_POST['idletimeout'] < 1)))
 	{
 		$input_errors[] = 'Aktif oturum süresi 1 dakikadan az olamaz.';
@@ -66,19 +66,19 @@ if ($_POST)
 	{
 		if (is_array($_POST['cinterface']))
 			$config['captiveportal']['interface'] = implode(',', $_POST['cinterface']);
-		
+
 		$config['captiveportal']['timeout'] = $_POST['timeout'];
 		$config['captiveportal']['idletimeout'] = $_POST['idletimeout'];
 		$config['captiveportal']['enable'] = $_POST['enable'] ? true : false;
 		$config['captiveportal']['allow_dns'] = $_POST['allow_dns'] ? true : false;
-		
+
 		write_config();
 
 		$retval = 0;
 		$retval = captiveportal_configure();
 
 		$savemsg = get_std_save_message($retval);
-		
+
 		if (is_array($_POST['cinterface']))
 			$pconfig['cinterface'] = implode(",", $_POST['cinterface']);
 
@@ -124,7 +124,7 @@ if ($_POST)
 					<td valign="top" class="vncell">Arayüz</td>
 					<td class="vtable">
 						<select name="cinterface[]" multiple="true" size="<?php echo count($config['interfaces']); ?>" id="cinterface">
-						  <?php 
+						  <?php
 						  $interfaces = get_configured_interface_with_descr();
 						  $cselected = explode(",", $pconfig['cinterface']);
 						  foreach ($interfaces as $iface => $ifacename): ?>
@@ -162,7 +162,7 @@ if ($_POST)
 						<input name="allow_dns" type="checkbox" value="yes" <?php if ($pconfig['allow_dns']) echo "checked"; ?>>
 						Harici DNS trafiğine izin ver.
 						<p>Hotspot'a oturum açmamış kullanıcıların harici DNS sunucularına erişmesine izin verir.
-						İzin verilmezse, harici DNS sunucu kullanan kullanıcılar HOTSPOT oturum açma sayfasına otomatik olarak yönlendirilmezler. 
+						İzin verilmezse, harici DNS sunucu kullanan kullanıcılar HOTSPOT oturum açma sayfasına otomatik olarak yönlendirilmezler.
 						</p>
 						</label>
 					</td>

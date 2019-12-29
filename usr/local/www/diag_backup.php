@@ -2,10 +2,10 @@
 /* $Id$ */
 /*
 	diag_backup.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2004-2009 Scott Ullrich
 	All rights reserved.
 
@@ -156,7 +156,7 @@ if ($_POST) {
 								if(file_exists("{$g['tmp_path']}/config.cache"))
 									unlink("{$g['tmp_path']}/config.cache");
 								$config = parse_config(true);
-				
+
 								if(isset($config['captiveportal']['enable'])) {
 									/* for some reason ipfw doesn't init correctly except on bootup sequence */
 									mark_subsystem_dirty("restore");

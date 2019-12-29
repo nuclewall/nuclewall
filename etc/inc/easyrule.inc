@@ -319,5 +319,4 @@ function easyrule_parse_pass($int, $proto, $src, $dst, $dstport = 0) {
 	}
 	return "Unknown pass error.";
 }
-
 ?>

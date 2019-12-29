@@ -1,11 +1,11 @@
 <?php
 /*
 	diag_logs_filter.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 
-	part of pfSense 
+	part of pfSense
 	Copyright (C) 2004-2009 Scott Ullrich
 	originally based on m0n0wall (http://m0n0.ch/wall)
 
@@ -110,7 +110,7 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' , 'GÜVENLİK DUVARI');
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td>	
+					<td>
 						<div style="margin-right: 10px;" class="pull-left">
 							<a onclick="return confirm('Tüm güvenlik duvarı günlüklerini silmek istediğinizden emin misiniz?.')" class="btn" href="diag_logs_filter.php?act=del">
 							<i class="icon-trash"></i>Sil</a>
@@ -135,7 +135,7 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' , 'GÜVENLİK DUVARI');
 								<td class="head">Kaynak</td>
 								<td class="head">Hedef</td>
 								<td class="head">Protokol</td>
-							</tr>	
+							</tr>
 							<?php foreach ($filterlog as $filterent): ?>
 							<tr>
 								<td class="wall">

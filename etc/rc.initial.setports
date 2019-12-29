@@ -39,6 +39,5 @@
 	require_once("captiveportal.inc");
 
 	set_networking_interfaces_ports();
-
 	reload_interfaces_sync();
 ?>

@@ -2,7 +2,7 @@
 /* $Id$ */
 /*
 	status_gateway_groups.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 
@@ -94,14 +94,14 @@ $pgtitle = array('DURUM', 'AĞ GEÇİDİ GRUPLARI');
 										$priority_arr[$itemsplit[1]][] = $itemsplit[0];
 									}
 									ksort($priority_arr);
-							
+
 									foreach($priority_arr as $number => $tier)
 									{
 										foreach($tier as $member)
 										{
-											echo	htmlspecialchars($member) . ", ";		
+											echo	htmlspecialchars($member) . ", ";
 										}
-										
+
 									}
 									?>
 								</td>

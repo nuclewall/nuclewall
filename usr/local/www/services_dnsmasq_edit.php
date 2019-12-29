@@ -1,24 +1,24 @@
-<?php 
+<?php
 /* $Id$ */
 /*
 	services_dnsmasq_edit.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2003-2004 Bob Zoller <bob@kludgebox.com> and Manuel Kasper <mk@neon1.net>.
 	All rights reserved.
-	
+
 	Redistribution and use in source and binary forms, with or without
 	modification, are permitted provided that the following conditions are met:
-	
+
 	1. Redistributions of source code must retain the above copyright notice,
 	   this list of conditions and the following disclaimer.
-	
+
 	2. Redistributions in binary form must reproduce the above copyright
 	   notice, this list of conditions and the following disclaimer in the
 	   documentation and/or other materials provided with the distribution.
-	
+
 	THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
 	INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
 	AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
@@ -47,7 +47,7 @@ function hosts_sort() {
 
 require("guiconfig.inc");
 
-if (!is_array($config['dnsmasq']['hosts'])) 
+if (!is_array($config['dnsmasq']['hosts']))
 	$config['dnsmasq']['hosts'] = array();
 
 $a_hosts = &$config['dnsmasq']['hosts'];
@@ -71,16 +71,16 @@ if ($_POST) {
 	/* input validation */
 	$reqdfields = explode(" ", "domain ip");
 	$reqdfieldsn = array("Alan Adı", "IP Adresi");
-	
+
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
-	
-	if (($_POST['host'] && !is_hostname($_POST['host']))) 
+
+	if (($_POST['host'] && !is_hostname($_POST['host'])))
 		$input_errors[] = "Sunucu adı sadece A-Z, 0-9 ve '-' karakterlerinden oluşabilir.";
 
-	if (($_POST['domain'] && !is_domain($_POST['domain']))) 
+	if (($_POST['domain'] && !is_domain($_POST['domain'])))
 		$input_errors[] = "Geçerli bir alan adı girmelisiniz.";
-		
-	if (($_POST['ip'] && !is_ipaddr($_POST['ip']))) 
+
+	if (($_POST['ip'] && !is_ipaddr($_POST['ip'])))
 		$input_errors[] = "Geçerli bir IP adresi girmelisiniz.";
 
 	/* check for overlaps */
@@ -106,11 +106,11 @@ if ($_POST) {
 		else
 			$a_hosts[] = $hostent;
 		hosts_sort();
-		
+
 		mark_subsystem_dirty('hosts');
-		
+
 		write_config();
-		
+
 		header("Location: services_dnsmasq_hosts.php");
 		exit;
 	}
@@ -133,10 +133,10 @@ $pgtitle = array('SERVİSLER', 'DNS ÇÖZÜMLEYİCİ', 'DNS KAYDI DÜZENLE');
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
 					<td colspan="2" valign="top" class="listtopic">DNS KAYDI DÜZENLE</td>
-				</tr>	
+				</tr>
 				<tr>
 					<td valign="top" class="vncell">Sunucu Adı</td>
-					<td class="vtable"> 
+					<td class="vtable">
 						<input name="host" type="text" class="formfld" id="host" size="40" value="<?=htmlspecialchars($pconfig['host']);?>">
 						<br>Sunucu adını alan adı olmadan girin.<br>
 						Örnek: <em>www</em>
@@ -144,7 +144,7 @@ $pgtitle = array('SERVİSLER', 'DNS ÇÖZÜMLEYİCİ', 'DNS KAYDI DÜZENLE');
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Alan Adı</td>
-					<td class="vtable"> 
+					<td class="vtable">
 						<input name="domain" type="text" id="domain" value="<?=htmlspecialchars($pconfig['domain']);?>">
 						<br>Sunucunun alan adını girin.<br>
 						Örnek: <em>sunucum.com</em>
@@ -152,7 +152,7 @@ $pgtitle = array('SERVİSLER', 'DNS ÇÖZÜMLEYİCİ', 'DNS KAYDI DÜZENLE');
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">IP Adresi</td>
-					<td class="vtable"> 
+					<td class="vtable">
 						<input name="ip" type="text" id="ip" value="<?=htmlspecialchars($pconfig['ip']);?>">
 						<br>Sunucunun IP adresini girin.<br>
 						Örnek: <em>192.168.100.100</em>
@@ -160,14 +160,14 @@ $pgtitle = array('SERVİSLER', 'DNS ÇÖZÜMLEYİCİ', 'DNS KAYDI DÜZENLE');
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Açıklama</td>
-					<td class="vtable"> 
+					<td class="vtable">
 						<input name="descr" type="text" id="descr" value="<?=htmlspecialchars($pconfig['descr']);?>">
 						<br>İsteğe bağlı bir açıklama girebilirsiniz.
 					</td>
 				</tr>
 				<tr>
 				<td class="vncell"></td>
-				<td class="vtable"> 
+				<td class="vtable">
 					<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
 					<input class="btn" type="button" value="İptal" onclick="history.back()">
 					<?php if (isset($id) && $a_hosts[$id]): ?>

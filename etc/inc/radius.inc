@@ -6,30 +6,30 @@
     Copyright (c) 2003, Michael Bretterklieber <michael@bretterklieber.com>
     All rights reserved.
 
-    Redistribution and use in source and binary forms, with or without 
-    modification, are permitted provided that the following conditions 
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions
     are met:
 
-    1. Redistributions of source code must retain the above copyright 
+    1. Redistributions of source code must retain the above copyright
        notice, this list of conditions and the following disclaimer.
-    2. Redistributions in binary form must reproduce the above copyright 
-       notice, this list of conditions and the following disclaimer in the 
+    2. Redistributions in binary form must reproduce the above copyright
+       notice, this list of conditions and the following disclaimer in the
        documentation and/or other materials provided with the distribution.
-    3. The names of the authors may not be used to endorse or promote products 
+    3. The names of the authors may not be used to endorse or promote products
        derived from this software without specific prior written permission.
 
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
-    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-    IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
-    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-    BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
-    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY 
-    OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
-    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+    IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+    BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+    OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
     EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-    This code cannot simply be copied and put under the GNU Public License or 
+    This code cannot simply be copied and put under the GNU Public License or
     any other GPL-like (LGPL, GPL2) License.
 
         This version of RADIUS.php has been modified by
@@ -69,7 +69,7 @@ PEAR::loadExtension('radius');
  *
  * Abstract base class for RADIUS
  *
- * @package Auth_RADIUS 
+ * @package Auth_RADIUS
  */
 class Auth_RADIUS extends PEAR {
 
@@ -134,7 +134,7 @@ class Auth_RADIUS extends PEAR {
      *
      * @return void
      */
-    function Auth_RADIUS() 
+    function Auth_RADIUS()
     {
         $this->PEAR();
     }
@@ -142,8 +142,8 @@ class Auth_RADIUS extends PEAR {
     /**
      * Adds a RADIUS server to the list of servers for requests.
      *
-     * At most 10 servers may be specified.    When multiple servers 
-     * are given, they are tried in round-robin fashion until a 
+     * At most 10 servers may be specified.    When multiple servers
+     * are given, they are tried in round-robin fashion until a
      * valid response is received
      *
      * @access public
@@ -154,7 +154,7 @@ class Auth_RADIUS extends PEAR {
      * @param  integer $maxtries     Max. retries for each request
      * @return void
      */
-    function addServer($servername = 'localhost', $port = 0, $sharedSecret = 'testing123', $timeout = 3, $maxtries = 2) 
+    function addServer($servername = 'localhost', $port = 0, $sharedSecret = 'testing123', $timeout = 3, $maxtries = 2)
     {
         $this->_servers[] = array($servername, $port, $sharedSecret, $timeout, $maxtries);
     }
@@ -165,7 +165,7 @@ class Auth_RADIUS extends PEAR {
      * @access public
      * @return string
      */
-    function getError() 
+    function getError()
     {
         return radius_strerror($this->res);
     }
@@ -177,7 +177,7 @@ class Auth_RADIUS extends PEAR {
      * @param  string  $file Path to the configuration file
      * @return void
      */
-    function setConfigfile($file) 
+    function setConfigfile($file)
     {
         $this->_configfile = $file;
     }
@@ -191,7 +191,7 @@ class Auth_RADIUS extends PEAR {
      * @param  type    $type         Attribute-type
      * @return bool  true on success, false on error
      */
-    function putAttribute($attrib, $value, $type = null) 
+    function putAttribute($attrib, $value, $type = null)
     {
         if ($type == null) {
             $type = gettype($value);
@@ -221,8 +221,8 @@ class Auth_RADIUS extends PEAR {
      * @param  mixed   $port         Attribute-value
      * @param  type    $type         Attribute-type
      * @return bool  true on success, false on error
-     */ 
-    function putVendorAttribute($vendor, $attrib, $value, $type = null) 
+     */
+    function putVendorAttribute($vendor, $attrib, $value, $type = null)
     {
 
         if ($type == null) {
@@ -266,11 +266,11 @@ class Auth_RADIUS extends PEAR {
     }
 
     /**
-     * Overwrite this. 
+     * Overwrite this.
      *
      * @access public
      */
-    function open() 
+    function open()
     {
     }
 
@@ -333,7 +333,7 @@ class Auth_RADIUS extends PEAR {
      * @return bool  true on success, false on error
      * @see addServer()
      */
-    function putServer($servername, $port = 0, $sharedsecret = 'testing123', $timeout = 3, $maxtries = 3) 
+    function putServer($servername, $port = 0, $sharedsecret = 'testing123', $timeout = 3, $maxtries = 3)
     {
         if (!radius_add_server($this->res, $servername, $port, $sharedsecret, $timeout, $maxtries)) {
             return false;
@@ -348,7 +348,7 @@ class Auth_RADIUS extends PEAR {
      * @param  string  $servername   Servername or IP-Address
      * @return bool  true on success, false on error
      */
-    function putConfigfile($file) 
+    function putConfigfile($file)
     {
         if (!radius_config($this->res, $file)) {
             return false;
@@ -357,11 +357,11 @@ class Auth_RADIUS extends PEAR {
     }
 
     /**
-     * Initiates a RADIUS request. 
+     * Initiates a RADIUS request.
      *
      * @access public
-     * @return bool  true on success, false on errors     
-     */ 
+     * @return bool  true on success, false on errors
+     */
     function start()
     {
         if (!$this->open()) {
@@ -441,7 +441,7 @@ class Auth_RADIUS extends PEAR {
 
             if (!is_array($attrib)) {
                 return false;
-            }        
+            }
 
             $attr = $attrib['attr'];
             $data = $attrib['data'];
@@ -586,7 +586,7 @@ class Auth_RADIUS extends PEAR {
                         $this->attributes['url_logoff'] = radius_cvt_string($datav);
                         break;
                     }
-                } 
+                }
 
         	if ($vendor == 14122) { /* RADIUS_VENDOR_WISPr Wi-Fi Alliance */
 
@@ -671,9 +671,9 @@ class Auth_RADIUS extends PEAR {
  *
  * Class for authenticating using PAP (Plaintext)
  *
- * @package Auth_RADIUS 
+ * @package Auth_RADIUS
  */
-class Auth_RADIUS_PAP extends Auth_RADIUS 
+class Auth_RADIUS_PAP extends Auth_RADIUS
 {
 
     /**
@@ -698,7 +698,7 @@ class Auth_RADIUS_PAP extends Auth_RADIUS
      *
      * @return bool   true on success, false on error
      */
-    function open() 
+    function open()
     {
         $this->res = radius_auth_open();
         if (!$this->res) {
@@ -708,7 +708,7 @@ class Auth_RADIUS_PAP extends Auth_RADIUS
     }
 
     /**
-     * Creates an authentication request 
+     * Creates an authentication request
      *
      * Creates an authentication request.
      * You MUST call this method before you can put any attribute
@@ -724,7 +724,7 @@ class Auth_RADIUS_PAP extends Auth_RADIUS
     }
 
     /**
-     * Put authentication specific attributes 
+     * Put authentication specific attributes
      *
      * @return void
      */
@@ -744,10 +744,10 @@ class Auth_RADIUS_PAP extends Auth_RADIUS
  * class Auth_RADIUS_CHAP_MD5
  *
  * Class for authenticating using CHAP-MD5 see RFC1994.
- * Instead og the plaintext password the challenge and 
+ * Instead og the plaintext password the challenge and
  * the response are needed.
  *
- * @package Auth_RADIUS 
+ * @package Auth_RADIUS
  */
 class Auth_RADIUS_CHAP_MD5 extends Auth_RADIUS_PAP
 {
@@ -788,7 +788,7 @@ class Auth_RADIUS_CHAP_MD5 extends Auth_RADIUS_PAP
     /**
      * Put CHAP-MD5 specific attributes
      *
-     * For authenticating using CHAP-MD5 via RADIUS you have to put the challenge 
+     * For authenticating using CHAP-MD5 via RADIUS you have to put the challenge
      * and the response. The chapid is inserted in the first byte of the response.
      *
      * @return void
@@ -796,7 +796,7 @@ class Auth_RADIUS_CHAP_MD5 extends Auth_RADIUS_PAP
     function putAuthAttributes()
     {
         if (isset($this->username)) {
-            $this->putAttribute(RADIUS_USER_NAME, $this->username);        
+            $this->putAttribute(RADIUS_USER_NAME, $this->username);
         }
         if (isset($this->response)) {
             $response = pack('C', $this->chapid) . $this->response;
@@ -829,9 +829,9 @@ class Auth_RADIUS_CHAP_MD5 extends Auth_RADIUS_PAP
  *
  * Class for authenticating using MS-CHAPv1 see RFC2433
  *
- * @package Auth_RADIUS 
+ * @package Auth_RADIUS
  */
-class Auth_RADIUS_MSCHAPv1 extends Auth_RADIUS_CHAP_MD5 
+class Auth_RADIUS_MSCHAPv1 extends Auth_RADIUS_CHAP_MD5
 {
     /**
      * LAN-Manager-Response
@@ -847,9 +847,9 @@ class Auth_RADIUS_MSCHAPv1 extends Auth_RADIUS_CHAP_MD5
     var $flags = 1;
 
     /**
-     * Put MS-CHAPv1 specific attributes 
+     * Put MS-CHAPv1 specific attributes
      *
-     * For authenticating using MS-CHAPv1 via RADIUS you have to put the challenge 
+     * For authenticating using MS-CHAPv1 via RADIUS you have to put the challenge
      * and the response. The response has this structure:
      * struct rad_mschapvalue {
      *   u_char ident;
@@ -882,9 +882,9 @@ class Auth_RADIUS_MSCHAPv1 extends Auth_RADIUS_CHAP_MD5
  *
  * Class for authenticating using MS-CHAPv2 see RFC2759
  *
- * @package Auth_RADIUS 
+ * @package Auth_RADIUS
  */
-class Auth_RADIUS_MSCHAPv2 extends Auth_RADIUS_MSCHAPv1 
+class Auth_RADIUS_MSCHAPv2 extends Auth_RADIUS_MSCHAPv1
 {
     /**
      * 16 Bytes binary challenge
@@ -899,9 +899,9 @@ class Auth_RADIUS_MSCHAPv2 extends Auth_RADIUS_MSCHAPv1
     var $peerChallenge = null;
 
   /**
-     * Put MS-CHAPv2 specific attributes 
+     * Put MS-CHAPv2 specific attributes
      *
-     * For authenticating using MS-CHAPv1 via RADIUS you have to put the challenge 
+     * For authenticating using MS-CHAPv1 via RADIUS you have to put the challenge
      * and the response. The response has this structure:
      * struct rad_mschapv2value {
      *   u_char ident;
@@ -916,11 +916,11 @@ class Auth_RADIUS_MSCHAPv2 extends Auth_RADIUS_MSCHAPv1
     function putAuthAttributes()
     {
         if (isset($this->username)) {
-            $this->putAttribute(RADIUS_USER_NAME, $this->username);        
+            $this->putAttribute(RADIUS_USER_NAME, $this->username);
         }
         if (isset($this->response) && isset($this->peerChallenge)) {
-            // Response: chapid, flags (1 = use NT Response), Peer challenge, reserved, Response        
-            $resp = pack('CCa16a8a24',$this->chapid , 1, $this->peerChallenge, str_repeat("\0", 8), $this->response);        
+            // Response: chapid, flags (1 = use NT Response), Peer challenge, reserved, Response
+            $resp = pack('CCa16a8a24',$this->chapid , 1, $this->peerChallenge, str_repeat("\0", 8), $this->response);
             $this->putVendorAttribute(RADIUS_VENDOR_MICROSOFT, RADIUS_MICROSOFT_MS_CHAP2_RESPONSE, $resp);
         }
         if (isset($this->challenge)) {
@@ -935,7 +935,7 @@ class Auth_RADIUS_MSCHAPv2 extends Auth_RADIUS_MSCHAPv1
      * attributes are filled with Nullbytes to leave nothing in the mem.
      *
      * @access public
-     */   
+     */
     function close()
     {
         Auth_RADIUS_MSCHAPv1::close();
@@ -947,10 +947,10 @@ class Auth_RADIUS_MSCHAPv2 extends Auth_RADIUS_MSCHAPv1
  * class Auth_RADIUS_Acct
  *
  * Class for RADIUS accounting
- * 
- * @package Auth_RADIUS 
+ *
+ * @package Auth_RADIUS
  */
-class Auth_RADIUS_Acct extends Auth_RADIUS 
+class Auth_RADIUS_Acct extends Auth_RADIUS
 {
     /**
      * Defines where the Authentication was made, possible values are:
@@ -963,19 +963,19 @@ class Auth_RADIUS_Acct extends Auth_RADIUS
      * Defines the type of the accounting request, on of:
      * RADIUS_START, RADIUS_STOP, RADIUS_ACCOUNTING_ON, RADIUS_ACCOUNTING_OFF
      * @var  integer
-     */    
+     */
     var $status_type = null;
 
    /**
      * The time the user was logged in in seconds
      * @var  integer
-     */    
+     */
     var $session_time = null;
 
    /**
      * A uniq identifier for the session of the user, maybe the PHP-Session-Id
      * @var  string
-     */    
+     */
     var $session_id = null;
 
     /**
@@ -1018,7 +1018,7 @@ class Auth_RADIUS_Acct extends Auth_RADIUS
      *
      * @return bool   true on success, false on error
      */
-    function open() 
+    function open()
     {
         $this->res = radius_acct_open();
         if (!$this->res) {
@@ -1028,7 +1028,7 @@ class Auth_RADIUS_Acct extends Auth_RADIUS
     }
 
    /**
-     * Creates an accounting request 
+     * Creates an accounting request
      *
      * Creates an accounting request.
      * You MUST call this method before you can put any attribute.
@@ -1046,10 +1046,10 @@ class Auth_RADIUS_Acct extends Auth_RADIUS
   /**
      * Put attributes for accounting.
      *
-     * Here we put some accounting values. There many more attributes for accounting, 
+     * Here we put some accounting values. There many more attributes for accounting,
      * but for web-applications only certain attributes make sense.
      * @return void
-     */ 
+     */
     function putAuthAttributes()
     {
         if (isset($this->username)) {
@@ -1072,10 +1072,10 @@ class Auth_RADIUS_Acct extends Auth_RADIUS
  * class Auth_RADIUS_Acct_Start
  *
  * Class for RADIUS accounting. Its usualy used, after the user has logged in.
- * 
+ *
  * @package Auth_RADIUS
  */
-class Auth_RADIUS_Acct_Start extends Auth_RADIUS_Acct 
+class Auth_RADIUS_Acct_Start extends Auth_RADIUS_Acct
 {
    /**
      * Defines the type of the accounting request.

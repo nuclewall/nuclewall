@@ -12,7 +12,7 @@
   border-right: 1px solid #ddd;
 }
 
-.newtabmenu a:link, 
+.newtabmenu a:link,
 .newtabmenu a:visited {
   font-family: Arial, Helvetica, sans-serif;
   color: #333;
@@ -46,11 +46,11 @@
   display: inline-block;
 }
 
-.newtabmenu_active a:link, 
-.newtabmenu_active a:visited, 
-.newtabmenu_active a:visited, 
+.newtabmenu_active a:link,
+.newtabmenu_active a:visited,
+.newtabmenu_active a:visited,
 .newtabmenu_active a:hover {
   background-image: url(images/tab-active-bg.png);
   background-repeat: repeat-x;
   color: #fff;
-} 
+}

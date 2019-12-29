@@ -1,7 +1,7 @@
 <?php
 /*
 	datasources.inc
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -9,7 +9,7 @@
 function MySQLConnectionFile($hostname, $port, $username, $password, $database, $table, $uname_field, $pass_field)
 {
 	$external_file = '/etc/inc/external.inc';
-	
+
 	$conf = <<<EOF
 <?php
 \$settings = array(
@@ -29,7 +29,7 @@ EOF;
 function PgSQLConnectionFile($hostname, $port, $username, $password, $database, $table, $uname_field, $pass_field)
 {
 	$external_file = '/etc/inc/external.inc';
-	
+
 	$conf = <<<EOF
 <?php
 \$settings = array(
@@ -49,7 +49,7 @@ EOF;
 function SqlServerConnectionFile($hostname, $port, $username, $password, $database, $table, $uname_field, $pass_field)
 {
 	$external_file = '/etc/inc/external.inc';
-	
+
 	$conf = <<<EOF
 <?php
 \$settings = array(

@@ -1,7 +1,7 @@
 <?php
 /*
 	services_dnsmasq_hosts.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */

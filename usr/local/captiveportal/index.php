@@ -87,7 +87,7 @@ else
 if ($clientmac && portal_mac_radius($clientmac, $clientip))
 {
     exit;
-} 
+}
 
 else if ($_POST['accept'])
 {
@@ -96,7 +96,7 @@ else if ($_POST['accept'])
 		if($external != 'none' && $external_connection)
 		{
 			$found = checkUser($external_connection, $settings['table_name'], $settings['username_field'], $settings['password_field'], $_POST['auth_user'], $_POST['auth_pass']);
-			
+
 			if($found)
 			{
 				captiveportal_logportalauth($_POST['auth_user'], $clientmac, $clientip, 'YENI OTURUM');
@@ -104,12 +104,12 @@ else if ($_POST['accept'])
 				$external = true;
 			}
 		}
-		
+
 		if(!$external)
 		{
 			$auth_list = radius($_POST['auth_user'], $_POST['auth_pass'], $clientip, $clientmac, 'YENI OTURUM');
 			$type = 'error';
-					
+
 			if (!empty($auth_list['url_redirection']))
 			{
 				$redirurl = $auth_list['url_redirection'];
@@ -122,7 +122,7 @@ else if ($_POST['accept'])
 				log_error('HOTSPOT servisi duzgun calismiyor. FreeRADIUS sunucusunu kontrol edin.');
 				exit;
 			}
-			
+
 			else if($auth_list['auth_val'] == 3)
 			{
 				if($auth_list['reply_message'])
@@ -133,15 +133,15 @@ else if ($_POST['accept'])
 				{
 					$error_message = $hotspot_errors['login'][$lang];
 				}
-				
+
 				captiveportal_logportalauth($_POST['auth_user'], $clientmac, $clientip, 'BASARISIZ', $auth_list['reply_message']);
 				portal_reply_page($redirurl, 'error', $error_message);
 			}
 		}
-    } 
+    }
 }
 
-else	
+else
 {
 	portal_reply_page($redirurl, 'login', null, $clientmac, $clientip);
 }

@@ -10,7 +10,7 @@ define('REDIRECTOR_OPTIONS_REM', '# squidGuard options');
 define('REDIRECTOR_PROGRAM_OPT', 'redirect_program');
 define('REDIRECT_BYPASS_OPT', 'redirector_bypass');
 define('REDIRECT_CHILDREN_OPT', 'redirect_children');
-define('REDIRECTOR_PROCESS_COUNT', '3'); 
+define('REDIRECTOR_PROCESS_COUNT', '3');
 define('REDIRECT_BASE_URL', '/sgerror.php');
 define('REDIRECT_URL_ARGS', '&a=%a&n=%n&i=%i&s=%s&t=%t&u=%u');
 define('SQUID_CONFIGFILE', '/usr/local/etc/squid/squid.conf');
@@ -191,7 +191,7 @@ function sg_reconfigure()
 		file_put_contents($conf_file, $conf);
 		file_put_contents('/usr/local/etc/squid' . SQUIDGUARD_CONFIGFILE, $conf);
 		set_file_access($squidguard_config[F_WORKDIR], OWNER_NAME, 0755);
-	} 
+	}
 
 	squid_reconfigure();
 }
@@ -287,7 +287,7 @@ function squidguard_rebuild_db($tag, $rdb_dbhome, $rdb_itemslist)
 	sg_addlog("squidguard_rebuild_db", "Create rebuild config '$conf_path'.", SQUIDGUARD_INFO);
 
 	mwexec_bg("/usr/bin/nice -n20 " . SQUIDGUARD_BINPATH . "/squidGuard -c $conf_path -C all");
-	
+
 	while (exec("ps -auxwwww | grep 'squidGuard -c .* -C all' | grep -v grep | awk '{print $2}' | wc -l | awk '{ print $1 }'") > 0) {
 		sleep (10);
 	}
@@ -439,7 +439,7 @@ function sg_create_config()
 		  $ads_pos = strpos($ent, '_ads');
 		  if ( ($ads_pos > 0 || $adv_pos > 0) && $squidguard_config[F_ADV_BLANKIMG] == 'on')
 				 $sg_tag->items[] = "redirect " . sg_redirector_base_url($dst['redirect'], RMOD_INT_BLANKIMG);
-			
+
 				if ($squidguard_config[F_ENABLELOG] == 'on' ) {
 					$sg_tag->items[] = "log ". SQUIDGUARD_LOGFILE;
 				}
@@ -504,7 +504,7 @@ function sg_create_config()
 			}
 			$log_entr_added .= " {$acl[F_NAME]};";
 		}
-		
+
 		$log_entr_added = !empty($log_entr_added) ? $log_entr_added : "Nothing.";
 		sg_addlog("sg_create_config", "Add ACL's: $log_entr_added", SQUIDGUARD_INFO);
 	}
@@ -561,7 +561,7 @@ function sg_create_simple_config($blk_dbhome, $blk_destlist, $redirect_to = "404
 	$sgconf[] = "logdir $logdir";
 	$sgconf[] = "dbhome $dbhome";
 	$sgconf[] = "";
-	
+
 	if (is_array($blk_destlist)) {
 		foreach($blk_destlist as $dst => $dpath) {
 			$tmp_s = array();
@@ -582,7 +582,7 @@ function sg_create_simple_config($blk_dbhome, $blk_destlist, $redirect_to = "404
 	$sgconf[] = "acl {\n\t default {\n\t\t pass all ";
 	$sgconf[] = "\t\t redirect " . sg_redirector_base_url($redirect_to, RMOD_INT_ERRORPAGE); # use sgerror only!
 	$sgconf[] = "\t } \n}";
-	
+
 	foreach ($sgconf as $key => $val) $sgconf[$key] = ltrim($sgconf[$key], "\n");
 
 	return implode("\n", $sgconf);
@@ -683,7 +683,7 @@ function sg_check_config_data ($input_errors)
 	}
 
 	$key_sources = array_count_values($sources);
-	
+
 	if ($squidguard_config[F_ACLS]) {
 		$acls = array();
 		foreach($squidguard_config[F_ACLS][F_ITEM] as $acl) {
@@ -744,7 +744,7 @@ if(!function_exists("is_url"))
 		if (preg_match("/^(http|https):\/\//i", $url))	return true;
 		if (strstr("blank", $url))	  return true;
 		if (strstr("blank_img", $url))  return true;
-		if (preg_match("/^((30[1235]{1})|(40[0-9]{1})|(41[0-7]{1})|(50[0-5]{1}))/i", $url)) return true; 
+		if (preg_match("/^((30[1235]{1})|(40[0-9]{1})|(41[0-7]{1})|(50[0-5]{1}))/i", $url)) return true;
 		return false;
 	}
 }
@@ -869,7 +869,7 @@ function array_packitems($arval)
 {
 	if (is_array($arval)) {
 		$arval = array_map("trim", $arval);
-		$arval = array_diff($arval, array(' ', '')); 
+		$arval = array_diff($arval, array(' ', ''));
 		$arval = array_unique($arval);
 		$arval = array_values($arval);
 	}
@@ -1024,7 +1024,7 @@ function sg_reconfigure_blacklist($source_filename)
 			return;
 		}
 	}
-	
+
 	else {
 		$sf_contents = sg_uploadfile_from_url($sf);
 	}
@@ -1079,7 +1079,7 @@ function sg_update_blacklist($from_file)
 				$current_dbpath = "$arc_db_dir/$key";
 				if (count($val)) {
 					$blk_list[$key] = $key;
-					
+
 					if (file_exists($current_dbpath))
 						mwexec("rm -R $current_dbpath");
 					mwexec("mv -f {$val['path']}/ $current_dbpath");
@@ -1183,7 +1183,7 @@ function squidguard_blacklist_restore_arcdb()
 	$arc_db_dir	   = SQUIDGUARD_DBSAMPLE;
 
 	squidguard_update_log("Restore default blacklist DB.", "new");
-	
+
 	if (file_exists($arc_db_dir))
 	{
 		mwexec("cp -R -p $arc_db_dir/ $dbhome");
@@ -1322,7 +1322,7 @@ function squid_init()
 	else
 	{
 		if(is_process_running('squid'))
-		{	
+		{
 			mwexec(SQUID_LOCALBASE . "/sbin/squid -k kill");
 		}
 	}

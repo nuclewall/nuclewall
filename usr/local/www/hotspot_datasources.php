@@ -1,7 +1,7 @@
 <?php
 /*
 	hotspot_datasources.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -44,38 +44,38 @@ $sqlserver_pass_field = base64_decode($config['datasources']['sqlserver']['passw
 if(!empty($mysql_hostname) && !empty($mysql_port) && !empty($mysql_username) && !empty($mysql_password) && !empty($mysql_db))
 {
 	$mysql_connection = MySQLConnect($mysql_hostname, $mysql_port, $mysql_username, $mysql_password, $mysql_db);
-	
+
 	if($mysql_connection)
 	{
 		$mysql_connection_status = "Bağlandı";
 		$mysql_connection_class = "label label-success";
-		
+
 		if(!empty($mysql_table) && !empty($mysql_uname_field) && !empty($mysql_pass_field))
 		{
 			$mysql_available = true;
-			
+
 			$mysql_data = checkData($mysql_connection, $mysql_table, $mysql_uname_field, $mysql_pass_field);
-			
+
 			if($mysql_data)
 			{
 				$mysql_data_status = "Kullanılabilir veri var";
 				$mysql_data_class = "label label-success";
 			}
-			
+
 			else
 			{
 				$mysql_data_status = "Veri bulunamadı";
 				$mysql_data_class = "label label-important";
 			}
 		}
-		
+
 		else
 		{
 			$mysql_data_status = "Yapılandırılmadı";
 			$mysql_data_class = "label";
 		}
 	}
-	
+
 	else
 	{
 		$mysql_connection_status = "Bağlantı yok";
@@ -96,38 +96,38 @@ else
 if(!empty($pgsql_hostname) && !empty($pgsql_port) && !empty($pgsql_username) && !empty($pgsql_password) && !empty($pgsql_db))
 {
 	$pgsql_connection = PgSQLConnect($pgsql_hostname, $pgsql_port, $pgsql_username, $pgsql_password, $pgsql_db);
-	
+
 	if($pgsql_connection)
 	{
 		$pgsql_connection_status = "Bağlandı";
 		$pgsql_connection_class = "label label-success";
-		
+
 		if(!empty($pgsql_table) && !empty($pgsql_uname_field) && !empty($pgsql_pass_field))
 		{
 			$pgsql_available = true;
-			
+
 			$pgsql_data = checkData($pgsql_connection, $pgsql_table, $pgsql_uname_field, $pgsql_pass_field);
-			
+
 			if($pgsql_data)
 			{
 				$pgsql_data_status = "Kullanılabilir veri var";
 				$pgsql_data_class = "label label-success";
 			}
-			
+
 			else
 			{
 				$pgsql_data_status = "Veri bulunamadı";
 				$pgsql_data_class = "label label-important";
 			}
 		}
-		
+
 		else
 		{
 			$pgsql_data_status = "Yapılandırılmadı";
 			$pgsql_data_class = "label";
 		}
 	}
-	
+
 	else
 	{
 		$pgsql_connection_status = "Bağlantı yok";
@@ -148,38 +148,38 @@ else
 if(!empty($sqlserver_hostname) && !empty($sqlserver_port) && !empty($sqlserver_username) && !empty($sqlserver_password) && !empty($sqlserver_db))
 {
 	$sqlserver_connection = MSSQLConnect($sqlserver_hostname, $sqlserver_port, $sqlserver_username, $sqlserver_password, $sqlserver_db);
-	
+
 	if($sqlserver_connection)
 	{
 		$sqlserver_connection_status = "Bağlandı";
 		$sqlserver_connection_class = "label label-success";
-		
+
 		if(!empty($sqlserver_table) && !empty($sqlserver_uname_field) && !empty($sqlserver_pass_field))
 		{
 			$sqlserver_available = true;
-			
+
 			$sqlserver_data = checkData($sqlserver_connection, $sqlserver_table, $sqlserver_uname_field, $sqlserver_pass_field);
-			
+
 			if($sqlserver_data)
 			{
 				$sqlserver_data_status = "Kullanılabilir veri var";
 				$sqlserver_data_class = "label label-success";
 			}
-			
+
 			else
 			{
 				$sqlserver_data_status = "Veri bulunamadı";
 				$sqlserver_data_class = "label label-important";
 			}
 		}
-		
+
 		else
 		{
 			$sqlserver_data_status = "Yapılandırılmadı";
 			$sqlserver_data_class = "label";
 		}
 	}
-	
+
 	else
 	{
 		$sqlserver_connection_status = "Bağlantı yok";
@@ -203,30 +203,30 @@ if ($_POST)
 	$pconfig = $_POST;
 
 	$config['datasources']['external'] = $_POST['datasource'];
-	
+
 	write_config();
-	
+
 	if($_POST['datasource'] == 'mysql' and $mysql_available)
 	{
 		 MySQLConnectionFile($mysql_hostname, $mysql_port, $mysql_username, $mysql_password, $mysql_db, $mysql_table, $mysql_uname_field, $mysql_pass_field);
 	}
-	
+
 	else if($_POST['datasource'] == 'postgres' and $pgsql_available)
 	{
 		 PgSQLConnectionFile($pgsql_hostname, $pgsql_port, $pgsql_username, $pgsql_password, $pgsql_db, $pgsql_table, $pgsql_uname_field, $pgsql_pass_field);
 	}
-	
+
 	else if($_POST['datasource'] == 'sqlserver' and $sqlserver_available)
 	{
 		 SqlServerConnectionFile($sqlserver_hostname, $sqlserver_port, $sqlserver_username, $sqlserver_password, $sqlserver_db, $sqlserver_table, $sqlserver_uname_field, $sqlserver_pass_field);
 	}
-	
+
 	else
 	{
 		$external_file = '/etc/inc/external.inc';
 		file_put_contents($external_file, '');
 	}
-	
+
 	$savemsg = 'Değişiklikler başarıyla kaydedildi.';
 }
 
@@ -258,9 +258,9 @@ if ($_POST)
 				<tr>
 					<td valign="top" class="vncell">Aktif Veri Kaynağı</td>
 					<td class="vtable">
-						Yerel + 
+						Yerel +
 						<select name="datasource" required id="datasource">
-							<option <?php if($pconfig['datasource'] == "none") echo "selected"; ?> value="none">Hiçbiri</option>	
+							<option <?php if($pconfig['datasource'] == "none") echo "selected"; ?> value="none">Hiçbiri</option>
 						<?php if($mysql_available): ?>
 							<option <?php if($pconfig['datasource'] == "mysql") echo "selected"; ?> value="mysql">MySQL</option>
 						<?php endif; ?>

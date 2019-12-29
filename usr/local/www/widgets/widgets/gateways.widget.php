@@ -1,7 +1,7 @@
 <?php
 /*
 	Copyright 2013 Ogün Açık
-	
+
 	Copyright 2008 Seth Mos
 	Part of pfSense widgets (www.pfsense.com)
 	originally based on m0n0wall (http://m0n0.ch/wall)

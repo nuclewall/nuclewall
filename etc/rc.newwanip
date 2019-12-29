@@ -39,7 +39,7 @@ require_once("filter.inc");
 require_once("shaper.inc");
 
 // Do not process while booting
-if($g['booting']) 
+if($g['booting'])
 	exit;
 
 function restart_packages() {
@@ -48,7 +48,7 @@ function restart_packages() {
 	/* restart packages */
 	system_ntp_configure(false);
 	shell_exec("echo /usr/local/sbin/ntpdate_sync_once.sh | tcsh");
-	log_error("{$g['product_name']} package system has detected an ip change $oldip ->  $curwanip ... Restarting packages.");		
+	log_error("{$g['product_name']} package system has detected an ip change $oldip ->  $curwanip ... Restarting packages.");
 	send_event("service reload packages");
 }
 
@@ -126,5 +126,4 @@ file_put_contents("{$g['vardb_path']}/{$interface}_cacheip", $curwanip);
 services_dnsupdate_process($interface);
 
 restart_packages();
-
 ?>

@@ -1,10 +1,10 @@
-<?php 
+<?php
 /*
 	services_5651_signeds.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 */
 
 require('guiconfig.inc');
@@ -82,13 +82,13 @@ jQuery('#datetimepicker').datetimepicker({
 
 jQuery( document ).ready(function() {
 	var date_i = jQuery('#date_i').val();
-	
+
 	jQuery.ajax({
 	method: "POST",
 	url: "file_handler.php",
 	data: { act: "list", date: date_i}
 	}).done(function( msg )
-	{ 
+	{
 		jQuery("#files").html(msg);
 		jQuery("#sign_alert").hide();
 	});
@@ -97,13 +97,13 @@ jQuery( document ).ready(function() {
 jQuery("#datetimepicker").on('changeDate', function()
 {
 	var date_r = jQuery('#date_r').val();
-	
+
 	jQuery.ajax({
 	method: "POST",
 	url: "file_handler.php",
 	data: { act: "list", date: date_r}
 	}).done(function( msg )
-	{ 
+	{
 		jQuery("#files").html(msg);
 		jQuery("#sign_alert").hide();
 	});

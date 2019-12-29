@@ -2,10 +2,10 @@
 /* $Id$ */
 /*
 	status_dhcp_leases.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2004-2009 Scott Ullrich
 	All rights reserved.
 
@@ -184,11 +184,11 @@ while($i < $leases_count)
 				$f = $f+1;
 				break;
 			case "next":
-			
+
 				$f = $f+3;
 				break;
 			case "rewind":
-				
+
 				$f = $f+3;
 				break;
 			case "hardware":
@@ -204,7 +204,7 @@ while($i < $leases_count)
 					$leases[$l]['online'] = 'Çevrimdışı';
 					$leases[$l]['class'] = "";
 				}
-				
+
 				$f = $f+2;
 				break;
 			case "client-hostname":
@@ -239,7 +239,7 @@ if(count($leases) > 0)
 
 foreach($config['interfaces'] as $ifname => $ifarr)
 {
-	if (is_array($config['dhcpd'][$ifname]) && 
+	if (is_array($config['dhcpd'][$ifname]) &&
 		is_array($config['dhcpd'][$ifname]['staticmap']))
 		{
 		foreach($config['dhcpd'][$ifname]['staticmap'] as $static)
@@ -290,11 +290,11 @@ if ($_GET['order'])
 							</tr>
 							<?php
 							$mac_man = load_mac_manufacturer_table();
-							
+
 							foreach ($leases as $data)
 							{
 								$lip = ip2ulong($data['ip']);
-								
+
 								if ($data['act'] == "Sabit")
 								{
 									foreach ($config['dhcpd'] as $dhcpif => $dhcpifconf)
@@ -314,24 +314,24 @@ if ($_GET['order'])
 										if ($data['if'] != "")
 											break;
 									}
-								} 
-								
+								}
+
 								else
-								{   	
+								{
 									foreach ($config['dhcpd'] as $dhcpif => $dhcpifconf)
-									{	
+									{
 										if (($lip >= ip2ulong($dhcpifconf['range']['from'])) && ($lip <= ip2ulong($dhcpifconf['range']['to'])))
 										{
 											$data['if'] = $dhcpif;
 											break;
 										}
 									}
-								}		
-								
+								}
+
 								echo "<tr>\n";
 								echo "<td class=\"cell dhcpip\">{$data['ip']}</td>\n";
-								
-								$mac = $data['mac']; 
+
+								$mac = $data['mac'];
 								$mac_hi = strtoupper($mac[0] . $mac[1] . $mac[3] . $mac[4] . $mac[6] . $mac[7]);
 								$mac_url =  str_replace(':', '-', $data['mac']);
 
@@ -343,31 +343,31 @@ if ($_GET['order'])
 								{
 									echo "<td title=\"HOTSPOT Özel izinli MAC adresleri listesine ekle\" class=\"cell dhcpmac\"><a class=\"btn-link\" href=\"hotspot_mac_edit.php?act=new&mac={$mac_url}\">{$data['mac']}</a></td>\n";
 								}
-								
+
 								echo "<td class=\"cell dhcphostname\">" . htmlentities($data['hostname']) . "</td>\n";
-								
+
 								if ($data['type'] != "Sabit")
 								{
 									echo "<td class=\"cell dhcpdate\">" . adjust_gmt($data['start']) . "</td>\n";
 									echo "<td class=\"cell dhcpdate\">" . adjust_gmt($data['end']) . "</td>\n";
 								}
-								
+
 								else
 								{
 									echo "<td class=\"cell\">Yok</td>\n";
 									echo "<td class=\"cell\">Yok</td>\n";
 								}
-								
+
 								echo "<td class=\"cell dhcpstat\"><span class=\"label {$data['class']}\">{$data['online']}</span></td>\n";
 								echo "<td class=\"cell dhcptype\">{$data['act']}</td>\n";
 								echo "<td class=\"cell tools dhcp\">";
-								
+
 								if ($data['type'] == "dynamic")
 								{
 									echo "<a title=\"IP adresi dağıtımını sabit olarak yap\" href=\"services_dhcp_edit.php?if={$data['if']}&mac={$data['mac']}&hostname={$data['hostname']}\">";
 									echo "<i class=\"icon-plus\"></i></a>\n";
 								}
-								
+
 								if (($data['type'] == "dynamic") && ($data['online'] != 'Çevrimiçi'))
 								{
 									echo "<a title=\"Bu IP dağıtımını sil\" href=\"status_dhcp_leases.php?deleteip={$data['ip']} \">";

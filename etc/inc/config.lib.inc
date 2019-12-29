@@ -10,8 +10,8 @@ function encrypted_configxml()
 	if (!$g['booting'])
 		return;
 
-	$configtxt = file_get_contents($g['conf_path'] . "/config.xml");			
-	
+	$configtxt = file_get_contents($g['conf_path'] . "/config.xml");
+
 	if(tagfile_deformat($configtxt, $configtxt, "config.xml"))
 	{
 		$fp = fopen('php://stdin', 'r');
@@ -73,7 +73,7 @@ function parse_config($parse = false)
 		} else
 			$parse = true;
 	}
-	
+
 	if ($parse == true) {
 		if(!file_exists($g['conf_path'] . "/config.xml")) {
 			if($g['booting'])
@@ -122,7 +122,7 @@ function generate_config_cache($config)
 	if(file_exists($g['tmp_path'] . '/config.extra.cache') && $config_extra) {
 		$configcacheextra = fopen($g['tmp_path'] . '/config.extra.cache', "w");
 		fwrite($configcacheextra, serialize($config_extra));
-		fclose($configcacheextra);		
+		fclose($configcacheextra);
 		unset($configcacheextra);
 	}
 }
@@ -179,7 +179,7 @@ function parse_config_bootup()
 				{
 					restore_backup("/cf/conf/backup/{$last_backup}");
 				}
-				
+
 				if(!file_exists("{$g['conf_path']}/config.xml"))
 				{
 					unlock($lockkey);
@@ -224,7 +224,7 @@ function parse_config_bootup()
 
 EOD;
 		}
-		
+
 	alias_make_table($config);
 }
 
@@ -244,10 +244,10 @@ function convert_config()
 			{
 		        $config['cron']['item'][$x]['hour'] = "3";
 		 		write_config();
-		 	}       
+		 	}
 		}
 	}
-	
+
 	if ($config['version'] == $g['latest_config'])
 		return;
 
@@ -281,16 +281,16 @@ function safe_write_file($file, $content, $force_binary)
 	$write_mode = $force_binary ? "wb" : "w";
 
 	$fd = fopen($tmp_file, $write_mode);
-	
+
 	if (!$fd)
 		return false;
-		
+
 	if (!fwrite($fd, $content))
 	{
 		fclose($fd);
 		return false;
 	}
-	
+
 	fflush($fd);
 	fclose($fd);
 
@@ -310,7 +310,7 @@ function write_config($desc='Bilinmeyen', $backup = true)
 	global $config, $g;
 
 	$username = empty($_SESSION["Username"]) ? "(system)" : $_SESSION['Username'];
-	
+
 	if (!empty($_SERVER['REMOTE_ADDR']))
 		$username .= '@' . $_SERVER['REMOTE_ADDR'];
 
@@ -339,7 +339,7 @@ function write_config($desc='Bilinmeyen', $backup = true)
 		unlock($lockkey);
 		return -1;
 	}
-	
+
 	cleanup_backupcache(30, true);
 
 	$config = parse_xml_config("{$g['conf_path']}/config.xml", $g['xml_rootobj']);
@@ -379,7 +379,7 @@ function reset_factory_defaults($lock = false)
 	safe_mkdir("{$g['cf_conf_path']}");
 
 	$dh = opendir($g['conf_path']);
-	
+
 	while ($filename = readdir($dh))
 	{
 		if (($filename != ".") && ($filename != ".."))
@@ -387,9 +387,9 @@ function reset_factory_defaults($lock = false)
 			unlink_if_exists($g['conf_path'] . "/" . $filename);
 		}
 	}
-	
+
 	closedir($dh);
-	
+
 	copy("{$g['conf_default_path']}/config.xml", "{$g['conf_path']}/config.xml");
 
 	disable_security_checks();
@@ -411,7 +411,7 @@ function config_restore($conffile)
 		return 1;
 
 	backup_config();
-	
+
 	$lockkey = lock('config', LOCK_EX);
 
 	unlink_if_exists("{$g['tmp_path']}/config.cache");
@@ -437,7 +437,7 @@ function config_install($conffile)
 
 	if (!config_validate("{$conffile}"))
 		return 1;
-		
+
 	$lockkey = lock('config', LOCK_EX);
 
 	copy($conffile, "{$g['conf_path']}/config.xml");
@@ -503,7 +503,7 @@ function cleanup_backupcache($revisions = 30, $lock = false)
 {
 	global $g;
 	$i = false;
-	
+
 	if (!$lock)
 		$lockkey = lock('config');
 
@@ -518,7 +518,7 @@ function cleanup_backupcache($revisions = 30, $lock = false)
 		$backups = array();
 		$baktimes = array();
 	}
-	
+
 	$newbaks = array();
 	$bakfiles = glob($g['cf_conf_path'] . "/backup/config-*");
 	$tocache = array();
@@ -530,9 +530,9 @@ function cleanup_backupcache($revisions = 30, $lock = false)
 			unlink($backup);
 			continue;
 		}
-		
+
 		$tocheck = array_shift(explode('.', array_pop(explode('-', $backup))));
-		
+
 		if(!in_array($tocheck, $baktimes))
 		{
 			$i = true;
@@ -612,7 +612,7 @@ function backup_config()
 	{
             $baktime = $config['revision']['time'];
     }
-    
+
 	if($config['revision']['description'] == "")
 	{
 		$bakdesc = "Unknown";
@@ -621,7 +621,7 @@ function backup_config()
 	{
 		$bakdesc = $config['revision']['description'];
     }
-	
+
     copy($g['cf_conf_path'] . '/config.xml', $g['cf_conf_path'] . '/backup/config-' . $baktime . '.xml');
     if(file_exists($g['cf_conf_path'] . '/backup/backup.cache')) {
             $backupcache = unserialize(file_get_contents($g['cf_conf_path'] . '/backup/backup.cache'));

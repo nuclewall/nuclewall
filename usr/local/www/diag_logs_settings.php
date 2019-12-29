@@ -1,7 +1,7 @@
 <?php
 /*
 	diag_logs_settings.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 

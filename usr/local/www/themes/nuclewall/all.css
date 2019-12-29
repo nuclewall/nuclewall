@@ -52,7 +52,7 @@ textarea {
   width: 100%;
 }
 
-.infoboxnpimg {  
+.infoboxnpimg {
   vertical-align: middle;
   width: 28px;
   height: 32px;
@@ -91,7 +91,7 @@ textarea {
   color: #cc0000;
 }
 
-.gray {	
+.gray {
   color: #a0a0a0;
 }
 
@@ -246,7 +246,7 @@ textarea {
 
 .widgetheader {
   font-weight: bold;
-  background: url(images/tab-active-bg.png) repeat-x; 
+  background: url(images/tab-active-bg.png) repeat-x;
   padding: 6px;
   color: #fff;
   font-size: 12px;

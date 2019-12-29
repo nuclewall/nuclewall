@@ -1,27 +1,27 @@
 <?php
 /*
 	system_advanced_admin.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2005-2010 Scott Ullrich
 	Copyright (C) 2008 Shrew Soft Inc
-	
+
 	originally part of m0n0wall (http://m0n0.ch/wall)
 	Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
 	All rights reserved.
-	
+
 	Redistribution and use in source and binary forms, with or without
 	modification, are permitted provided that the following conditions are met:
-	
+
 	1. Redistributions of source code must retain the above copyright notice,
 	this list of conditions and the following disclaimer.
-	
+
 	2. Redistributions in binary form must reproduce the above copyright
 	notice, this list of conditions and the following disclaimer in the
 	documentation and/or other materials provided with the distribution.
-	
+
 	THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
 	INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
 	AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
@@ -98,7 +98,7 @@ if ($_POST) {
       $restart_webgui = true;
     if (update_if_changed("webgui max processes", $config['system']['webgui']['max_procs'], $_POST['max_procs']))
       $restart_webgui = true;
-	
+
     if ($_POST['quietlogin'] == "yes") {
       $config['system']['webgui']['quietlogin'] = true;
     } else {
@@ -150,24 +150,24 @@ if ($_POST) {
       unset($config['system']['sshdkeyonly']);
 
     $sshd_port = $config['system']['ssh']['port'];
-    
+
 	if ($_POST['sshport'])
 	{
       $config['system']['ssh']['port'] = $_POST['sshport'];
 	  exec("echo {$_POST['sshport']} >/var/run/sshport");
 	}
-    
+
 	else if (isset($config['system']['ssh']['port']))
 	{
       unset($config['system']['ssh']['port']);
 	  exec("echo 22 >/var/run/sshport");
 	}
-    
+
 	else
 	{
 		exec("echo 22 >/var/run/sshport");
 	}
-	
+
 	if (($sshd_enabled != $config['system']['enablesshd']) ||
       ($sshd_keyonly != $config['system']['sshdkeyonly']) ||
       ($sshd_port != $config['system']['ssh']['port']))
@@ -292,9 +292,9 @@ function prot_change()
 					<td valign="top" class="vncell">Engelleme<br>Koruması</td>
 					<td class="vtable">
 						<?php
-						if($config['interfaces']['lan']) 
+						if($config['interfaces']['lan'])
 							$lockout_interface = "LAN";
-						else 
+						else
 							$lockout_interface = "WAN";
 						?>
 						<input name="noantilockout" type="checkbox" id="noantilockout" value="yes" <?php if ($pconfig['noantilockout']) echo "checked"; ?> />
@@ -338,7 +338,7 @@ function prot_change()
 					<br>
 					SSH sunucunun dinleme portu. Varsayılan (22) için boş bırakın.
 					</td>
-				</tr>           
+				</tr>
 				<tr>
 					<td class="vncell"></td>
 					<td class="vtable">
@@ -369,7 +369,7 @@ function prot_change()
 if ($restart_sshd)
 {
   killbyname("sshd");
-  
+
   if ($config['system']['enablesshd']) {
     send_event("service restart sshd");
   }

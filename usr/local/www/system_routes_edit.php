@@ -1,25 +1,25 @@
-<?php 
+<?php
 /*
 	system_routes_edit.php
 	part of m0n0wall (http://m0n0.ch/wall)
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
 	Copyright (C) 2010 Scott Ullrich
 	All rights reserved.
-	
+
 	Redistribution and use in source and binary forms, with or without
 	modification, are permitted provided that the following conditions are met:
-	
+
 	1. Redistributions of source code must retain the above copyright notice,
 	   this list of conditions and the following disclaimer.
-	
+
 	2. Redistributions in binary form must reproduce the above copyright
 	   notice, this list of conditions and the following disclaimer in the
 	   documentation and/or other materials provided with the distribution.
-	
+
 	THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
 	INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
 	AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
@@ -62,7 +62,7 @@ if (isset($_GET['dup'])) {
 }
 
 if (isset($id) && $a_routes[$id]) {
-	list($pconfig['network'],$pconfig['network_subnet']) = 
+	list($pconfig['network'],$pconfig['network_subnet']) =
 		explode('/', $a_routes[$id]['network']);
 	$pconfig['gateway'] = $a_routes[$id]['gateway'];
 	$pconfig['descr'] = base64_decode($a_routes[$id]['descr']);
@@ -80,10 +80,10 @@ if ($_POST) {
 	$reqdfieldsn = explode(",",
 			"Hedef ağ" . "," .
 			"Hedef ağ bit sayısı" . "," .
-			"Ağ geçidi");		
-	
+			"Ağ geçidi");
+
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
-	
+
 	if (($_POST['network'] && !is_ipaddr($_POST['network']) && !is_alias($_POST['network']))) {
 		$input_errors[] = "Geçerli bir hedef ağ belirtilmelidir.";
 	}
@@ -130,10 +130,10 @@ if ($_POST) {
 	}
 
 	$overlaps = array_intersect($current_targets, $new_targets);
-	
+
 	if(isset($old_targets))
 		$overlaps = array_diff($overlaps, $old_targets);
-	
+
 	if (count($overlaps)) {
 		$input_errors[] = "Belirtilen hedef ağa zaten bir yönlendirme mevcut." . ": " . implode(", ", $overlaps);
 	}
@@ -154,15 +154,15 @@ if ($_POST) {
 			$delete_targets = array_diff($old_targets, $new_targets);
 			if (count($delete_targets))
 				foreach ($delete_targets as $dts)
-					$toapplylist[] = "/sbin/route delete {$dts}"; 
+					$toapplylist[] = "/sbin/route delete {$dts}";
 		}
 		file_put_contents("{$g['tmp_path']}/.system_routes.apply", serialize($toapplylist));
 		staticroutes_sort();
-		
+
 		mark_subsystem_dirty('staticroutes');
-		
+
 		write_config();
-		
+
 		header("Location: system_routes.php");
 		exit;
 	}
@@ -185,12 +185,12 @@ $pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER', 'YÖNLENDİRME DÜZENLE')
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
 					<td colspan="2" valign="top" class="listtopic">SABİT YÖNLENDİRME DÜZENLE</td>
-				</tr>	
+				</tr>
 				<tr>
 					<td valign="top" class="vncell">Hedef Ağ</td>
-					<td class="vtable"> 
-					<input name="network" type="text" id="network" value="<?=htmlspecialchars($pconfig['network']);?>"> 
-				/ 
+					<td class="vtable">
+					<input name="network" type="text" id="network" value="<?=htmlspecialchars($pconfig['network']);?>">
+				/
 					<select name="network_subnet" id="network_subnet">
 						<?php for ($i = 32; $i >= 1; $i--): ?>
 						<option value="<?=$i;?>" <?php if ($i == $pconfig['network_subnet']) echo "selected"; ?>>
@@ -201,7 +201,7 @@ $pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER', 'YÖNLENDİRME DÜZENLE')
 					<br>Sabit yönlendirme için hedef bir ağ girin.
 					</td>
 				</tr>
-				<tr> 
+				<tr>
 					<td valign="top" class="vncell">Ağ Geçidi</td>
 					<td class="vtable">
 					<select name="gateway" id="gateway">
@@ -218,14 +218,14 @@ $pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER', 'YÖNLENDİRME DÜZENLE')
 				</tr>
 					<tr>
 				<td valign="top" class="vncell">Açıklama</td>
-				<td class="vtable"> 
+				<td class="vtable">
 				<input name="descr" type="text" id="descr" value="<?=htmlspecialchars($pconfig['descr']);?>">
 				<br> <span>Yönlendirme için bir açıklama girebilirsiniz.</span></td>
 				</tr>
 				<tr>
 				<td class="vncell"></td>
-				<td class="vtable"> 
-				<input class="btn btn-inverse" id="save" name="Submit" type="submit"  value="Kaydet"> 
+				<td class="vtable">
+				<input class="btn btn-inverse" id="save" name="Submit" type="submit"  value="Kaydet">
 				<input class="btn btn-default" id="cancel" type="button" value="İptal" onclick="history.back()">
 				<?php if (isset($id) && $a_routes[$id]): ?>
 				<input name="id" type="hidden" value="<?=htmlspecialchars($id);?>">

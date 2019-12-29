@@ -1,10 +1,10 @@
 <?php
 /*
 	firewall_rules.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	part of pfSense (http://www.pfsense.com)
         Copyright (C) 2005 Scott Ullrich (sullrich@gmail.com)
 
@@ -78,7 +78,7 @@ if($_REQUEST['dragdroporder'])
 	$a_filter_after = array();
 	$found = false;
 	$drag_order = $_REQUEST['dragtable'];
-	
+
 	for ($i = 0; isset($a_filter[$i]); $i++)
 	{
 		if(( $_REQUEST['if'] == "FloatingRules" && isset($a_filter[$i]['floating']) ) || ( $a_filter[$i]['interface'] == $_REQUEST['if'] && !isset($a_filter[$i]['floating']) )) {
@@ -106,19 +106,19 @@ if($_REQUEST['dragdroporder'])
 
 	mark_subsystem_dirty('filter');
 	$undo = array();
-	
-	foreach($_REQUEST['dragtable'] as $dt) 
+
+	foreach($_REQUEST['dragtable'] as $dt)
 		$undo[] = "";
-		
+
 	$counter = 0;
-	
+
 	foreach($_REQUEST['dragtable'] as $dt)
 	{
 		$undo[$dt] = $counter;
 		$counter++;
 	}
-	
-	foreach($undo as $dt) 
+
+	foreach($undo as $dt)
 		$undotxt .= "&dragtable[]={$dt}";
 	Header("Location: firewall_rules.php?if=" . $_REQUEST['if'] . "&undodrag=true" . $undotxt);
 	exit;
@@ -150,7 +150,7 @@ if (is_array($config['ifgroups']['ifgroupentry']))
 			$iflist[$ifgen['ifname']] = $ifgen['ifname'];
 
 foreach ($ifdescs as $ifent => $ifdesc)
-	if(have_ruleint_access($ifent)) 
+	if(have_ruleint_access($ifent))
 		$iflist[$ifent] = $ifdesc;
 
 pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/interfaces_override");
@@ -197,7 +197,7 @@ if ($_GET['act'] == "del")
 }
 
 
-if($_REQUEST['savemsg']) 
+if($_REQUEST['savemsg'])
 	$savemsg = htmlentities($_REQUEST['savemsg']);
 
 if (isset($_POST['del_x']))
@@ -209,7 +209,7 @@ if (isset($_POST['del_x']))
 			delete_nat_association($a_filter[$rulei]['associated-rule-id']);
 			unset($a_filter[$rulei]);
 		}
-		
+
 		write_config();
 		mark_subsystem_dirty('filter');
 		header("Location: firewall_rules.php?if=" . htmlspecialchars($if));
@@ -225,7 +225,7 @@ else if ($_GET['act'] == "toggle")
 			unset($a_filter[$_GET['id']]['disabled']);
 		else
 			$a_filter[$_GET['id']]['disabled'] = true;
-		
+
 		write_config();
 		mark_subsystem_dirty('filter');
 		header("Location: firewall_rules.php?if=" . htmlspecialchars($if));
@@ -244,7 +244,7 @@ else
 			break;
 		}
 	}
-	
+
 	if(isset($movebtn) && is_array($_POST['rule']) && count($_POST['rule']))
 	{
 		$a_filter_new = array();
@@ -317,7 +317,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 					$active = true;
 				else
 					$active = false;
-				
+
 				$tab_array[] = array("Değişen", $active, "firewall_rules.php?if=FloatingRules");
 				$tabscounter = 0; $i = 0; foreach ($iflist as $ifent => $ifname) {
 					if ($ifent == $if)
@@ -378,7 +378,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 										</a>
 								</td>
 							</tr>
-							
+
 							<?php   // Show the anti-lockout rule if it's enabled, and we are on LAN with an if count > 1, or WAN with an if count of 1.
 								if (!isset($config['system']['webgui']['noantilockout']) &&
 									(((count($config['interfaces']) > 1) && ($if == 'lan'))
@@ -386,7 +386,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 
 									$alports = implode(', ', filter_get_antilockout_ports(true));
 							?>
-							
+
 							<tr id="antilockout">
 							<td class="wall"></td>
 								<td class="wall">
@@ -411,10 +411,10 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 									</a>
 								</td>
 							</tr>
-							
+
 							<?php endif; ?>
 							<?php if (isset($config['interfaces'][$if]['blockpriv'])): ?>
-							
+
 							<tr id="frrfc1918">
 								<td class="wall"></td>
 								<td class="wall">
@@ -436,10 +436,10 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 									</a>
 								</td>
 							</tr>
-							
+
 							<?php endif; ?>
 							<?php if (isset($config['interfaces'][$if]['blockbogons'])): ?>
-							
+
 							<tr id="frrfc1918">
 								<td class="wall"></td>
 								<td class="wall">
@@ -462,9 +462,9 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								</td>
 							</tr>
 							<?php endif; ?>
-							
 
-							
+
+
 							<tbody id="dragtable">
 								<?php $nrules = 0; for ($i = 0; isset($a_filter[$i]); $i++):
 									pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/row_start");
@@ -476,7 +476,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 									$isadvset = firewall_check_for_advanced_options($filterent);
 									if($isadvset)
 										$advanced_set = "<img src=\"./themes/nuclewall/images/icons/icon_advanced.gif\" title=\"" . "gelişmiş ayar uygulandı" . ": {$isadvset}\" border=\"0\">";
-									else 
+									else
 										$advanced_set = "";
 								?>
 								<tr id="fr<?=$nrules;?>">
@@ -520,15 +520,15 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 
 											$alias_popup = rule_popup($filterent['source']['address'],pprint_port($filterent['source']['port']),$filterent['destination']['address'],pprint_port($filterent['destination']['port']));
 											$span_end = "</U></span>";
-												
+
 											$alias_src_span_begin = $alias_popup["src"];
-																				
+
 											$alias_src_port_span_begin = $alias_popup["srcport"];
-																				
+
 											$alias_dst_span_begin = $alias_popup["dst"];
-																					
+
 											$alias_dst_port_span_begin = $alias_popup["dstport"];
-												
+
 											//build Schedule popup box
 											$a_schedules = &$config['schedules']['schedule'];
 											$schedule_span_begin = "";
@@ -543,22 +543,22 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 												{
 													if ($schedule['name'] == $filterent['sched'] ){
 														$schedstatus = filter_get_time_based_rule_status($schedule);
-														
+
 														foreach($schedule['timerange'] as $timerange) {
 															$tempFriendlyTime = "";
 															$tempID = "";
 															$firstprint = false;
 															if ($timerange){
 																$dayFriendly = "";
-																$tempFriendlyTime = "";							
-																	
+																$tempFriendlyTime = "";
+
 																//get hours
 																$temptimerange = $timerange['hour'];
 																$temptimeseparator = strrpos($temptimerange, "-");
-																
-																$starttime = substr ($temptimerange, 0, $temptimeseparator); 
-																$stoptime = substr ($temptimerange, $temptimeseparator+1); 
-																	
+
+																$starttime = substr ($temptimerange, 0, $temptimeseparator);
+																$stoptime = substr ($temptimerange, $temptimeseparator+1);
+
 																if ($timerange['month']){
 																	$tempmontharray = explode(",", $timerange['month']);
 																	$tempdayarray = explode(",",$timerange['day']);
@@ -568,14 +568,14 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 																	foreach ($tempmontharray as $monthtmp){
 																		$month = $tempmontharray[$arraycounter];
 																		$day = $tempdayarray[$arraycounter];
-																		
+
 																		if (!$firstDayFound)
 																		{
 																			$firstDay = $day;
 																			$firstmonth = $month;
 																			$firstDayFound = true;
 																		}
-																			
+
 																		$currentDay = $day;
 																		$nextDay = $tempdayarray[$arraycounter+1];
 																		$currentDay++;
@@ -587,21 +587,21 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 																				$dayFriendly .= $monthArray[$firstmonth-1] . " " . $firstDay . " - " . $currentDay ;
 																			else
 																				$dayFriendly .=  $monthArray[$month-1] . " " . $day;
-																			$firstDayFound = false;	
+																			$firstDayFound = false;
 																			$firstPrint = true;
-																		}													
-																		$arraycounter++;	
+																		}
+																		$arraycounter++;
 																	}
 																}
 																else
 																{
 																	$tempdayFriendly = $timerange['position'];
 																	$firstDayFound = false;
-																	$tempFriendlyDayArray = explode(",", $tempdayFriendly);								
+																	$tempFriendlyDayArray = explode(",", $tempdayFriendly);
 																	$currentDay = "";
 																	$firstDay = "";
 																	$nextDay = "";
-																	$counter = 0;													
+																	$counter = 0;
 																	foreach ($tempFriendlyDayArray as $day){
 																		if ($day != ""){
 																			if (!$firstDayFound)
@@ -612,7 +612,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 																			$currentDay =$tempFriendlyDayArray[$counter];
 																			//get next day
 																			$nextDay = $tempFriendlyDayArray[$counter+1];
-																			$currentDay++;					
+																			$currentDay++;
 																			if ($currentDay != $nextDay){
 																				if ($firstprint)
 																					$dayFriendly .= ", ";
@@ -621,13 +621,13 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 																					$dayFriendly .= $dayArray[$firstDay-1] . " - " . $dayArray[$currentDay-1];
 																				else
 																					$dayFriendly .= $dayArray[$firstDay-1];
-																				$firstDayFound = false;	
-																				$firstprint = true;			
+																				$firstDayFound = false;
+																				$firstprint = true;
 																			}
 																			$counter++;
 																		}
 																	}
-																}		
+																}
 																$timeFriendly = $starttime . " - " . $stoptime;
 																$description = $timerange['rangedescr'];
 																$sched_content .= $dayFriendly . "; " . $timeFriendly . "<br>";
@@ -643,8 +643,8 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 											$alttext = "";
 											$image = "";
 											if (!isset($filterent['disabled'])){
-												 if ($schedstatus) 
-												 { 
+												 if ($schedstatus)
+												 {
 													if ($iconfn == "block" || $iconfn == "reject")
 													{
 														$image = "icon_block";
@@ -658,13 +658,13 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 													$printicon = true;
 												  }
 												  else if ($filterent['sched'])
-												  { 
+												  {
 													if ($iconfn == "block" || $iconfn == "reject")
 														$image = "icon_block_d";
 													else
 														$image = "icon_block";
 													$alttext = "This rule is not currently active because its period has expired";
-													$printicon = true;				  	
+													$printicon = true;
 												  }
 											}
 										?>
@@ -756,7 +756,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 									</td>
 								</tr>
 								<?php $nrules++; endfor; ?>
-								
+
 								<?php if ($nrules == 0): ?>
 								<tr>
 									<td class="wall" colspan="13" style="text-align: left;">
@@ -767,7 +767,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 									</td>
 								</tr>
 							<?php endif; ?>
-							
+
 							</tbody>
 							<tr id="fr<?=$nrules;?>">
 								<?php

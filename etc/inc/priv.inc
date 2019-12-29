@@ -1,9 +1,9 @@
 <?php
 /*
-		Copyright (C) 2008 Shrew Soft Inc
+		Copyright (C) 2013 Ogün AÇIK
 		All rights reserved.
-		
-		Copyright (C) 2013-2015 Ogün AÇIK
+
+		Copyright (C) 2008 Shrew Soft Inc
 		All rights reserved.
 
 		Copyright (C) 2007, 2008 Scott Ullrich <sullrich@gmail.com>
@@ -48,15 +48,15 @@ require_once("priv.defs.inc");
 function get_priv_files($directory)
 {
 	$dir_array = array();
-	if(!is_dir($directory)) 
+	if(!is_dir($directory))
 		return;
 	if ($dh = opendir($directory))
 	{
 		while (($file = readdir($dh)) !== false) {
 			$canadd = 0;
-			if($file == ".") 
+			if($file == ".")
 				$canadd = 1;
-			if($file == "..") 
+			if($file == "..")
 				$canadd = 1;
 			if($canadd == 0)
 				array_push($dir_array, $file);
@@ -101,7 +101,7 @@ function cmp_page_matches($page, & $matches, $fullwc = true)
 			continue;
 
 		$wcpos = strpos($match, "*");
-		
+
 		if ($wcpos === false)
 			$result = strcmp($page, $match);
 		else
@@ -239,10 +239,10 @@ function getAllowedPages($username)
 
 	$allowed_pages = array();
 	$allowed_groups = array();
-	
+
 	$local_user = getUserEntry($username);
 	getPrivPages($local_user, $allowed_pages);
-	
+
 	if ($local_user)
 		$allowed_groups = local_user_get_groups($local_user);
 
@@ -259,10 +259,10 @@ function getAllowedPages($username)
 function sort_user_privs($privs)
 {
 	$priority_privs = array("page-dashboard-all", "page-system-login/logout");
-	
+
 	$fprivs = array_intersect($privs, $priority_privs);
 	$sprivs  = array_diff($privs, $priority_privs);
-	
+
 	return array_merge($fprivs, $sprivs);
 }
 

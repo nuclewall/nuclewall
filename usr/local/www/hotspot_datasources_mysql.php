@@ -1,7 +1,7 @@
 <?php
 /*
 	hotspot_datasources_mysql.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -30,7 +30,7 @@ if ($_POST)
 {
 	unset($input_errors);
 	$pconfig = $_POST;
-	
+
 	if($datasource == "mysql")
 	{
 		$input_errors[] = "MySQL veri kaynağı şu anda kullanımda olduğu için değişiklik yapılamıyor.
@@ -41,14 +41,14 @@ if ($_POST)
 	{
 		$input_errors[] = 'Geçerli bir sunucu adı girmelisiniz.';
 	}
-	
+
 	if (!is_port($_POST['port']))
 	{
 		$input_errors[] = 'Geçerli bir port numarası girmelisiniz.';
 	}
 
 	if (!$input_errors)
-	{	
+	{
 		$config['datasources']['mysql']['hostname'] = base64_encode($_POST['hostname']);
 		$config['datasources']['mysql']['port'] = base64_encode($_POST['port']);
 		$config['datasources']['mysql']['dbusername'] = base64_encode($_POST['dbusername']);
@@ -57,11 +57,11 @@ if ($_POST)
 		$config['datasources']['mysql']['table_name'] = base64_encode($_POST['table_name']);
 		$config['datasources']['mysql']['username_field'] = base64_encode($_POST['username_field']);
 		$config['datasources']['mysql']['password_field'] = base64_encode($_POST['password_field']);
-		
+
 		write_config();
 
 		$savemsg = 'Değişiklikler başarıyla kaydedildi.';
-	
+
 	}
 }
 
@@ -72,7 +72,7 @@ if ($_POST)
 <body>
 <?php include('fbegin.inc'); ?>
 
- 
+
 <?php if ($input_errors) print_input_errors($input_errors); ?>
 <?php if ($savemsg) print_info_box($savemsg); ?>
 <form action='hotspot_datasources_mysql.php' method='post' enctype='multipart/form-data' name='iform' id='iform'>

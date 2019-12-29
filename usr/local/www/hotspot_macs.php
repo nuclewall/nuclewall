@@ -1,7 +1,7 @@
 <?php
 /*
 	hotspot_macs.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -17,24 +17,24 @@ if (file_exists("{$g['vardb_path']}/captiveportal.db"))
 {
 	$captiveportallck = lock('captiveportaldb');
 	$cpcontents = file("{$g['vardb_path']}/captiveportal.db", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-	unlock($captiveportallck);	
+	unlock($captiveportallck);
 }
 
-if ($connection) 
+if ($connection)
 {
 	if (($_GET['act'] == 'del') && is_mac($_GET['mac']))
 	{
 		$mac_addr = $_GET['mac'];
-		
+
 		$findMac = $pdo->prepare("
 			SELECT username FROM radcheck
 			WHERE username = :mac
 		");
-		
+
 		$findMac->bindParam(':mac', $mac_addr);
 		$findMac->execute();
 		$macExists = $findMac->fetch(PDO::FETCH_ASSOC);
-			
+
 		if($macExists)
 		{
 			/* Delete from radcheck table */
@@ -42,17 +42,17 @@ if ($connection)
 				DELETE FROM radcheck
 				WHERE username = :mac
 			");
-			
+
 			$delmac->bindParam(':mac', $mac_addr);
 			$delmac->execute();
-			
+
 			/* Check user whether if logged in captiveportal */
 			if(isset($cpcontents))
 			{
 				foreach ($cpcontents as $cpcontent)
 				{
 					$cpent = explode(",", $cpcontent);
-					
+
 					if($cpent[4] == $mac_addr)
 					{
 						$usession = $cpent[5];
@@ -60,30 +60,30 @@ if ($connection)
 						break;
 					}
 				}
-				
+
 				/* Logout the user from captiveportal */
 				if($ufound)
 					captiveportal_disconnect_client($usession);
 			}
-			
+
 			/* Delete from radacct table */
 			$delacct = $pdo->prepare("
 				DELETE FROM radacct
 				WHERE username = :mac
 			");
-			
+
 			$delacct->bindParam(':mac', $mac_addr);
 			$delacct->execute();
-			
+
 			$savemsg = "'$mac_addr' MAC adresi silindi.";
 		}
-		
+
 		else
 		{
 			$input_errors[] = "'$mac_addr' MAC adresi bulunamadı.";
 		}
 	}
-	
+
 	/* Get MAC list */
 	$statement = $pdo->prepare("
 		SELECT username AS mac, description,
@@ -91,7 +91,7 @@ if ($connection)
 		FROM radcheck
 		WHERE attribute = 'Auth-Type' AND value = 'Accept'
 	");
-	$statement->execute();		
+	$statement->execute();
 }
 
 ?>
@@ -134,7 +134,7 @@ if ($connection)
 								  <input id="search" placeholder="MAC adresi ara..." class="input-medium" style="height:20px" type="text">
 								</div>
 							</div>
-						 
+
 						<table class="grids sortable">
 							<tr>
 								<td class="head users">MAC Adresi</td>
@@ -170,7 +170,7 @@ if ($connection)
 <script type="text/javascript">
 jQuery("#search").on("keyup", function() {
     var value = jQuery(this).val();
-	
+
     jQuery("table.grids tr").each(function(index) {
         if (index !== 0) {
 

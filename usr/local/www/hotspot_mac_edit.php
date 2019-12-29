@@ -1,7 +1,7 @@
 <?php
 /*
 	hotspot_mac_edit.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -17,30 +17,30 @@ if (file_exists("{$g['vardb_path']}/captiveportal.db"))
 {
 	$captiveportallck = lock('captiveportaldb');
 	$cpcontents = file("{$g['vardb_path']}/captiveportal.db", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-	unlock($captiveportallck);	
+	unlock($captiveportallck);
 }
 
-if($connection) 
+if($connection)
 {
 	if (($_GET['act'] == 'new') && is_mac($_GET['mac']))
 	{
 		$macFound['mac'] = $_GET['mac'];
 	}
-	
+
 	if (($_GET['act'] == 'edit') && is_mac($_GET['mac']))
 	{
 		$mac_addr = $_GET['mac'];
-		
+
 		$getInfo = $pdo->prepare("
 			SELECT username AS mac, value, description
 			FROM radcheck
 			WHERE username = :mac AND attribute = 'Auth-Type'
 		");
-		
+
 		$getInfo->bindParam(':mac', $mac_addr);
 		$getInfo->execute();
 		$macFound = $getInfo->fetch(PDO::FETCH_ASSOC);
-			
+
 		if(!$macFound)
 		{
 			$input_errors[] = "'$mac_addr' MAC adresi bulunamadı.";
@@ -50,14 +50,14 @@ if($connection)
 	if($_POST)
 	{
 		unset($input_errors);
-		
+
 		$macError = false;
 		$currentmac = $_POST['currentmac'];
-		
+
 		$mac_addr = $_POST['mac_addr'];
 		$description = htmlspecialchars($_POST['description']);
-				
-		if(!is_mac($mac_addr)) 
+
+		if(!is_mac($mac_addr))
 		{
 			$input_errors[] = "'$mac_addr' geçerli bir MAC adresi değil.";
 			$macError = true;
@@ -89,7 +89,7 @@ if($connection)
 		{
 			/* If editing an user */
 			if(!empty($currentmac))
-			{				
+			{
 				$updateMac = $pdo->prepare("
 					UPDATE radcheck
 					SET username = :mac,
@@ -111,7 +111,7 @@ if($connection)
 						foreach ($cpcontents as $cpcontent)
 						{
 							$cpent = explode(",", $cpcontent);
-							
+
 							if($cpent[4] == $currentmac)
 							{
 								$usession = $cpent[5];
@@ -145,21 +145,21 @@ if($connection)
 			else
 			{
 				$createMac = $pdo->prepare("
-					INSERT INTO 
+					INSERT INTO
 					radcheck(username, attribute, op, value, description)
 					VALUES(:mac, 'Auth-Type', ':=', 'Accept', :description)
 				");
-				
+
 				$createMac->bindParam(':mac', $mac_addr);
 				$createMac->bindParam(':description', $description);
-				
+
 				$macCreated = $createMac->execute();
-				
+
 				if($macCreated)
 				{
 					$savemsg = "'$mac_addr' MAC adresi izinli geçiş listesine eklendi.";
 				}
-				else 
+				else
 				{
 					$input_errors[] = "'$mac_addr' MAC adresi izinli geçiş listesine eklenemedi.";
 				}

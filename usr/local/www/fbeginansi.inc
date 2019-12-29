@@ -122,7 +122,7 @@ $diagnostics_menu[] = array("Ayarlarý Sýfýrla", "/diag_defaults.php");
 
 ?>
 
-<div id="header">  
+<div id="header">
 	<div style="position:absolute;left:865px">
 	    <div class="btn-toolbar">
 			<div class="btn-group">
@@ -153,14 +153,14 @@ $diagnostics_menu[] = array("Ayarlarý Sýfýrla", "/diag_defaults.php");
 		<img src="/themes/nuclewall/images/transparent.gif" border="0">
 	</a>
 </div>
-	
+
 <div class="title">
     <span class="pgtitle"><?=strtoupper(genhtmltitle($pgtitle));?></span>
 </div>
 
 <div id="content">
 	<div id="navigation" style="z-index:1000">
-	
+
 		<ul id="menu">
 			<li>
 				<div><a style="color:white" href="hotspot_status.php">HOTSPOT</a></div>
@@ -213,7 +213,7 @@ $diagnostics_menu[] = array("Ayarlarý Sýfýrla", "/diag_defaults.php");
 				?>
 				</ul>
 			</li>
-		</ul>       
+		</ul>
 	</div>
 	<script>
 		if(Prototype.Browser.Gecko){

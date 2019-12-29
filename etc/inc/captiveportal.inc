@@ -49,7 +49,7 @@ function captiveportal_configure()
 	global $config, $g;
 
 	$captiveportallck = lock('captiveportal', LOCK_EX);
-	
+
 	if (isset($config['captiveportal']['enable']))
 	{
 		if ($g['booting'])
@@ -65,9 +65,9 @@ function captiveportal_configure()
 		touch("{$g['vardb_path']}/captiveportal.db");
 
 		killbypid("{$g['varrun_path']}/cp_prunedb.pid");
-		
+
 		captiveportal_init_rules(true);
-		
+
 		captiveportal_radius_stop_all();
 
 		$croninterval = $config['captiveportal']['croninterval'] ? $config['captiveportal']['croninterval'] : 60;
@@ -90,7 +90,7 @@ function captiveportal_configure()
 		if ($g['booting'])
 			echo "Tamam\n";
 	}
-	
+
 	else
 	{
 		killbypid("{$g['varrun_path']}/lighty-CaptivePortal.pid");
@@ -101,7 +101,7 @@ function captiveportal_configure()
 
 		mwexec("/sbin/sysctl net.link.ether.ipfw=0");
 
-		if (is_module_loaded("ipfw.ko"))		
+		if (is_module_loaded("ipfw.ko"))
 			mwexec("/sbin/kldunload ipfw.ko");
 		$listifs = get_configured_interface_list_by_realif();
 		foreach ($listifs as $listrealif => $listif) {
@@ -120,7 +120,7 @@ function captiveportal_configure()
 	}
 
 	unlock($captiveportallck);
-	
+
 	return 0;
 }
 
@@ -130,11 +130,11 @@ function captiveportal_init_webgui()
 
 	 if (!isset($config['captiveportal']['enable']))
 		return;
-			
+
 	system_generate_lighty_config("{$g['varetc_path']}/lighty-CaptivePortal.conf","", "", "lighty-CaptivePortal.pid", "8000", "/usr/local/captiveportal/","cert-portal.pem", 1, true);
 
 	@unlink("{$g['varrun_path']}/lighty-CaptivePortal.pid");
-	
+
 	$res = mwexec("/usr/local/sbin/lighttpd -f {$g['varetc_path']}/lighty-CaptivePortal.conf");
 }
 
@@ -147,22 +147,22 @@ function captiveportal_init_rules($reinit = false)
 
 	$cpips = array();
 	$ifaces = get_configured_interface_list();
-	
+
 	foreach ($ifaces as $kiface => $kiface2)
 	{
 		$tmpif = get_real_interface($kiface);
 		pfSense_interface_flags($tmpif, -IFF_IPFW_FILTER);
 	}
-	
+
 	$cpinterfaces = explode(",", $config['captiveportal']['interface']);
 	$firsttime = 0;
-	
+
 	foreach ($cpinterfaces as $cpifgrp)
 	{
 		if (!isset($ifaces[$cpifgrp]))
 			continue;
 		$tmpif = get_real_interface($cpifgrp);
-		
+
 		if (!empty($tmpif))
 		{
 			if ($firsttime > 0)
@@ -170,7 +170,7 @@ function captiveportal_init_rules($reinit = false)
 			$cpinterface .= "via {$tmpif}";
 			$firsttime = 1;
 			$cpipm = get_interface_ip($cpifgrp);
-			
+
 			if (is_ipaddr($cpipm))
 			{
 				$carpif = link_ip_to_carp_interface($cpipm);
@@ -190,13 +190,13 @@ function captiveportal_init_rules($reinit = false)
 			}
 		}
 	}
-	
+
 	if (count($cpips) > 0)
 	{
 		$cpactive = true;
 		$cpinterface = "{ {$cpinterface} } ";
 	}
-	
+
 	else
 		return false;
 
@@ -212,13 +212,13 @@ function captiveportal_init_rules($reinit = false)
 
 	$cprules =	"add 65291 set 1 allow pfsync from any to any\n";
 	$cprules .= "add 65292 set 1 allow carp from any to any\n";
-	
+
 	if (isset($config['captiveportal']['allow_dns']))
 	{
 	    $cprules .= "add 65293 allow udp from any to any 53 keep-state\n";
 	    $cprules .= "add 65294 allow tcp from any to any 53 keep-state\n";
 	}
-	
+
 
 	$cprules .= <<<EOD
 # add 65300 set 1 skipto 65534 all from any to any not layer2
@@ -294,8 +294,8 @@ EOD;
 		$cprules .= "add {$rulenum} set 1 allow ip from any to table(2) out\n";
 		$rulenum++;
 	}
-	
-	
+
+
 	if (isset($config['captiveportal']['allow_dns']))
 	{
 	    $cprules .= <<<EOD
@@ -308,9 +308,9 @@ add 65523 allow tcp from any to any 53 in
 EOD;
 
 	}
-	
+
 	$cprules .= <<<EOD
-	   
+
 # redirect non-authenticated clients to captive portal
 add 65531 set 1 fwd 127.0.0.1,8000 tcp from any to any in
 # let the responses from the captive portal web server back out
@@ -328,7 +328,7 @@ EOD;
 	$cprules .= captiveportal_allowedip_configure();
 
 	$cprules .= captiveportal_allowedhostname_configure();
-	
+
 	if ($reinit == true)
 		$cprules = "table all flush\nflush\n{$cprules}";
 	else
@@ -409,7 +409,7 @@ function captiveportal_prune_old()
 		}
 
 		$uidletimeout = (is_numeric($cpentry[8])) ? $cpentry[8] : $idletimeout;
-		
+
 		if (!$timedout && $uidletimeout > 0)
 		{
 			$lastact = captiveportal_get_last_activity($cpentry[2]);
@@ -430,7 +430,7 @@ function captiveportal_prune_old()
 		}
 
 		if (!$timedout && !empty($radiusservers))
-		{			
+		{
 			RADIUS_ACCOUNTING_STOP($cpentry[1],
 				$cpentry[4],
 				$cpentry[5],
@@ -447,7 +447,7 @@ function captiveportal_prune_old()
 				$radiusservers,
 				$cpentry[2],
 				$cpentry[3]);
-			
+
 			}
 
 			if (isset($config['captiveportal']['reauthenticate']))
@@ -458,18 +458,18 @@ function captiveportal_prune_old()
 					$cpentry[2],
 					$cpentry[3],
 					$cpentry[1]);
-					
+
 				if ($auth_list['auth_val'] == 3)
 				{
 					captiveportal_disconnect($cpentry, $radiusservers, 17);
 					captiveportal_logportalauth($cpentry[4], $cpentry[3], $cpentry[2], "RADIUS_DISCONNECT", $auth_list['reply_message']);
 					$unsetindexes[] = $cpentry[5];
 				}
-				
+
 				else if ($auth_list['auth_val'] == 2)
 					captiveportal_reapply_attributes($cpentry, $auth_list);
 			}
-		
+
 	}
 
 	if (!empty($unsetindexes))
@@ -495,7 +495,7 @@ function captiveportal_disconnect($dbent, $radiusservers,$term_cause = 1,$stop_t
 			false,
 			$stop_time);
 	}
-	
+
 	if (is_ipaddr($dbent[2]))
 	{
 		mwexec("/sbin/ipfw table 1 delete {$dbent[2]}");
@@ -509,7 +509,7 @@ function captiveportal_disconnect($dbent, $radiusservers,$term_cause = 1,$stop_t
 		mwexec("/sbin/ipfw pipe " . ($dbent[1]+20000) . " delete");
 		mwexec("/sbin/ipfw pipe " . ($dbent[1]+20001) . " delete");
 	}
-	
+
 	captiveportal_free_ipfw_ruleno($dbent[1]);
 }
 
@@ -526,12 +526,12 @@ function captiveportal_disconnect_client($sessionid, $term_cause = 1, $logoutRea
 	{
 		$cpentry = $cpdb[$sessionid];
 		$unsetindex[] = $sessionid;
-		
+
 		captiveportal_write_db($cpdb, false, $unsetindex);
 
 		captiveportal_disconnect($cpentry, $radiusservers, $term_cause);
 		captiveportal_logportalauth($cpentry[4], $cpentry[3], $cpentry[2], 'OTURUM KAPATILDI');
-	}		
+	}
 }
 
 function captiveportal_radius_stop_all()
@@ -571,14 +571,14 @@ function captiveportal_passthrumac_configure_entry($macent)
 		$rules .= "pipe {$bw_up} config bw {$macent['bw_up']}Kbit/s queue 100\n";
 		$actionup = "pipe {$bw_up}";
 	}
-	
+
 	if($enBwdown)
 	{
 		$bw_down = $ruleno + 20001;
 		$rules .= "pipe {$bw_down} config bw {$macent['bw_down']}Kbit/s queue 100\n";
 		$actiondown = "pipe {$bw_down}";
 	}
-	
+
 	$rules .= "add {$ruleno} {$actiondown} ip from any to any MAC {$macent['mac']} any\n";
 	$ruleno++;
 	$rules .= "add {$ruleno} {$actionup} ip from any to any MAC any {$macent['mac']}\n";
@@ -622,13 +622,13 @@ function captiveportal_passthrumac_findbyname($username)
 function captiveportal_allowedip_configure_entry($ipent)
 {
 
-	if($ipent['ip']) 	
+	if($ipent['ip'])
 		$ipaddress = $ipent['ip'];
 
 	if($ipent['hostname'])
 	{
 		$ipaddress = gethostbyname($ipent['hostname']);
-		if(!is_ipaddr($ipaddress)) 
+		if(!is_ipaddr($ipaddress))
 			return;
 	}
 
@@ -705,7 +705,7 @@ function setup_dnsfilter_entries()
 
 	$cp_filterdns_filename = "{$g['varetc_path']}/filterdns-captiveportal.conf";
 	$cp_filterdns_conf = "";
-	
+
 	if (is_array($config['captiveportal']['allowedhostname']))
 	{
 		foreach ($config['captiveportal']['allowedhostname'] as $hostnameent)
@@ -716,9 +716,9 @@ function setup_dnsfilter_entries()
 			$cp_filterdns_conf .= "ipfw {$hostnameent['hostname']} 8\n";
 		}
 	}
-	
+
 	file_put_contents($cp_filterdns_filename, $cp_filterdns_conf);
-	
+
 	if (file_exists("{$g['tmp_path']}/filterdns-cpah.pid"))
 	{
 		if (isvalidpid("{$g['tmp_path']}/filterdns-cpah.pid"))
@@ -738,7 +738,7 @@ function captiveportal_allowedhostname_configure()
 	$rules = "\n# captiveportal_allowedhostname_configure()\n";
 	setup_dnsfilter_entries();
 	if (is_array($config['captiveportal']['allowedhostname'])) {
-		foreach ($config['captiveportal']['allowedhostname'] as $hostnameent) 
+		foreach ($config['captiveportal']['allowedhostname'] as $hostnameent)
 			$rules .= captiveportal_allowedip_configure_entry($hostnameent);
 	}
 	return $rules;
@@ -750,7 +750,7 @@ function captiveportal_allowedip_configure()
 
 	$rules = "";
 	if (is_array($config['captiveportal']['allowedip'])) {
-		foreach ($config['captiveportal']['allowedip'] as $ipent) 
+		foreach ($config['captiveportal']['allowedip'] as $ipent)
 			$rules .= captiveportal_allowedip_configure_entry($ipent);
 	}
 
@@ -819,7 +819,7 @@ function captiveportal_get_radius_servers()
 	if (file_exists("{$g['vardb_path']}/captiveportal_radius.db"))
 	{
 		$radiusservers = array();
-		$cpradiusdb = file("{$g['vardb_path']}/captiveportal_radius.db", 
+		$cpradiusdb = file("{$g['vardb_path']}/captiveportal_radius.db",
 		FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 		if ($cpradiusdb) {
 			foreach($cpradiusdb as $cpradiusentry) {
@@ -896,7 +896,7 @@ function captiveportal_read_db($locked = false, $index = 5)
 	if ($locked == false)
 		$cpdblck = lock('captiveportaldb');
 	$fd = @fopen("{$g['vardb_path']}/captiveportal.db", "r");
-	
+
 	if ($fd)
 	{
 		while (!feof($fd)) {
@@ -949,7 +949,7 @@ function captiveportal_write_db($cpdb, $locked = false, $remove = false)
 function captiveportal_write_elements()
 {
 	global $g, $config;
-	
+
 	if (is_dir($g['captiveportal_element_path'])) {
 		$dh = opendir($g['captiveportal_element_path']);
 		while (($file = readdir($dh)) !== false) {
@@ -970,7 +970,7 @@ function captiveportal_write_elements()
 				printf("Error: cannot open '{$data['name']}' in captiveportal_write_elements().\n");
 				return 1;
 			}
-			
+
 			$decoded = base64_decode($data['content']);
 			fwrite($fd,$decoded);
 			fclose($fd);
@@ -979,7 +979,7 @@ function captiveportal_write_elements()
 			mwexec("cd {$g['captiveportal_path']}/ && ln -s {$g['captiveportal_element_path']}/{$data['name']} {$data['name']}");
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -1026,7 +1026,7 @@ function captiveportal_get_next_ipfw_ruleno($rulenos_start = 2000, $rulenos_rang
 		$rules[2] = "used";
 		$ruleno = 2;
 	}
-	
+
 	file_put_contents("{$g['vardb_path']}/captiveportal.rules", serialize($rules));
 	unlock($cpruleslck);
 	return $ruleno;
@@ -1124,7 +1124,7 @@ function getNasIP()
 		else
 			$nasIp = get_interface_ip($config['captiveportal']['radiussrcip_attribute']);
 	}
-		
+
 	if(!is_ipaddr($nasIp))
 		$nasIp = "0.0.0.0";
 
@@ -1162,39 +1162,39 @@ function portal_reply_page($redirurl, $type = null, $message = null, $clientmac 
 {
 	global $g, $config;
 	$detect = new Mobile_Detect;
-	
+
 	if( $detect->isMobile() && !$detect->isTablet() )
 	{
 		$login_page = '/usr/local/captiveportal/pages/hotspot_mobile.html';
 		$error_page = '/usr/local/captiveportal/pages/hotspot_mobile_err.html';
 	}
-	
+
 	else
 	{
 		$login_page = '/usr/local/captiveportal/pages/hotspot.html';
 		$error_page = '/usr/local/captiveportal/pages/hotspot_err.html';
 	}
-	
+
 	$ifip = portal_ip_from_client_ip($clientip);
-	
+
 	if (!$ifip)
 		$ourhostname = $config['system']['hostname'] . ":8000";
 	else
 		$ourhostname = "{$ifip}:8000";
-	
+
 	if ($type == 'redir')
 	{
 		header("Location: {$redirurl}");
 		return;
 	}
-	
+
 	else if ($type == "login")
 	{
 		$htmltext = get_include_contents($login_page);
 		$htmltext = str_replace("#PORTAL_ACTION#", "http://{$ourhostname}/", $htmltext);
 		$htmltext = str_replace("#PORTAL_REDIRURL#", htmlspecialchars($redirurl), $htmltext);
 	}
-	
+
 	else
 	{
 		$htmltext = get_include_contents($error_page);
@@ -1202,7 +1202,7 @@ function portal_reply_page($redirurl, $type = null, $message = null, $clientmac 
 		$htmltext = str_replace("#PORTAL_REDIRURL#", htmlspecialchars($redirurl), $htmltext);
 		$htmltext = str_replace("#PORTAL_MESSAGE#", htmlspecialchars($message), $htmltext);
 	}
-	
+
     echo $htmltext;
 }
 
@@ -1266,7 +1266,7 @@ function captiveportal_reapply_attributes($cpentry, $attributes)
 	unset($bw_up_pipeno, $bw_Down_pipeno, $bw_up, $bw_down);
 }
 
-function portal_allow($clientip,$clientmac,$username,$password = null, $attributes = null, $ruleno = null, $datasource) 
+function portal_allow($clientip,$clientmac,$username,$password = null, $attributes = null, $ruleno = null, $datasource)
 {
 	global $redirurl, $g, $config, $type, $passthrumac, $_POST;
 
@@ -1288,7 +1288,7 @@ function portal_allow($clientip,$clientmac,$username,$password = null, $attribut
 	unset($sessionid);
 	$cpdb = captiveportal_read_db(true);
 	$writecfg = false;
-	
+
 	$allow_time = time();
 
 	foreach ($cpdb as $sid => $cpentry)
@@ -1313,12 +1313,12 @@ function portal_allow($clientip,$clientmac,$username,$password = null, $attribut
 		mwexec("/sbin/ipfw table 2 add {$clientip} mac {$clientmac}");
 
 		$bpassword = base64_encode($password);
-		$cpdb[] = array($allow_time, $ruleno, $clientip, $clientmac, $username, $sessionid, $bpassword, 
+		$cpdb[] = array($allow_time, $ruleno, $clientip, $clientmac, $username, $sessionid, $bpassword,
 		$attributes['session_timeout'], $attributes['idle_timeout'], $attributes['session_terminate_time'], $datasource);
 
 		captiveportal_write_db($cpdb, true);
 		unlock($cpdblck);
-		
+
 		if (!empty($radiusservers))
 		{
 			$acct_val = RADIUS_ACCOUNTING_START($ruleno, $username, $sessionid, $radiusservers, $clientip, $clientmac);

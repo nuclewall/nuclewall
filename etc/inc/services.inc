@@ -1,7 +1,7 @@
 <?php
 /*
 	services.inc
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -9,10 +9,10 @@
 function services_dhcpd_configure()
 {
 	global $config, $g;
-	
-	if($g['services_dhcp_server_enable'] == false) 
+
+	if($g['services_dhcp_server_enable'] == false)
 		return;
-	
+
 	if(is_process_running("dhcpd"))
 		mwexec("killall dhcpd", true);
 
@@ -49,7 +49,7 @@ function services_dhcpd_configure()
 				$dhcpreturn = "";
 				exec("cd /;LANG=C /usr/bin/tar -xzf {$g['cf_conf_path']}/dhcpleases.tgz 2>&1", $dhcprestore, $dhcpreturn);
 				$dhcprestore = implode(" ", $dhcprestore);
-				
+
 				if($dhcpreturn <> 0)
 				{
 					log_error("DHCP leases restore failed exited with $dhcpreturn, the error is: $dhcprestore\n");
@@ -61,7 +61,7 @@ function services_dhcpd_configure()
 	$syscfg = $config['system'];
 	$dhcpdcfg = $config['dhcpd'];
 	$Iflist = get_configured_interface_list();
-		
+
 	if ($g['booting'])
 		echo "DHCP sunucusu baþlatýlýyor...";
 	else
@@ -72,11 +72,11 @@ function services_dhcpd_configure()
 		printf("Error: cannot open dhcpd.conf in services_dhcpd_configure().\n");
 		return 1;
 	}
-	
+
 	$ddns_zones = array();
 
 	$dhcpdconf = <<<EOD
-	
+
 option domain-name "{$syscfg['domain']}";
 option ldap-server code 95 = text;
 option domain-search-list code 119 = text;
@@ -92,7 +92,7 @@ EOD;
 	if(!isset($dhcpifconf['disableauthoritative']))
 		$dhcpdconf .= "authoritative;\n";
 
-	if(isset($dhcpifconf['alwaysbroadcast'])) 
+	if(isset($dhcpifconf['alwaysbroadcast']))
 		$dhcpdconf .= "always-broadcast on\n";
 
 	$dhcpdifs = array();
@@ -129,7 +129,7 @@ EOD;
 		{
 			$dnscfg .= "	option domain-name \"{$dhcpifconf['domain']}\";\n";
 		}
-		
+
 		if (is_array($dhcpifconf['dnsserver']) && ($dhcpifconf['dnsserver'][0]))
 		{
 			$dnscfg .= "	option domain-name-servers " . join(",", $dhcpifconf['dnsserver']) . ";";
@@ -141,7 +141,7 @@ EOD;
 			$dnscfg .= "	option domain-name-servers {$ifcfgip};";
 			if ($newzone['domain-name'] && is_array($syscfg['dnsserver']) && ($syscfg['dnsserver'][0]))
 				$newzone['dns-servers'] = $syscfg['dnsserver'];
-		} 
+		}
 		else if (is_array($syscfg['dnsserver']) && ($syscfg['dnsserver'][0]))
 		{
 			$dnscfg .= "	option domain-name-servers " . join(",", $syscfg['dnsserver']) . ";";
@@ -203,7 +203,7 @@ EOD;
 					$dhhostname = str_replace(".", "_", $dhhostname);
 					$dhcpdconf .= "	option host-name \"{$dhhostname}\";\n";
 				}
-				
+
 				if ($sm['netbootfile'])
 					$dhcpdconf .= "	filename \"{$sm['netbootfile']}\";\n";
 
@@ -213,7 +213,7 @@ EOD;
 		}
 
 		$dhcpdifs[] = get_real_interface($dhcpif);
-		
+
 		if ($newzone['domain-name'])
 			$ddns_zones[] = $newzone;
 	}
@@ -223,7 +223,7 @@ EOD;
 
 	touch("{$g['dhcpd_chroot_path']}/var/db/dhcpd.leases");
 	touch("{$g['varrun_path']}/dhcpd.pid");
-	
+
 	mwexec("/usr/local/sbin/dhcpd -user dhcpd -group _dhcp -chroot {$g['dhcpd_chroot_path']} -cf /etc/dhcpd.conf " .
 		join(" ", $dhcpdifs));
 
@@ -240,7 +240,7 @@ function services_dnsmasq_configure()
 {
 	global $config, $g;
 	$return = 0;
-	
+
 	if(isset($config['system']['developerspew']))
 	{
 		$mt = microtime();
@@ -265,7 +265,7 @@ function services_dnsmasq_configure()
 		if (isset($config['dnsmasq']['regdhcp'])) {
 			$args .= " --dhcp-hostsfile={$g['varetc_path']}/hosts ";
 		}
-		
+
 		if (isset($config['dnsmasq']['domainoverrides']) && is_array($config['dnsmasq']['domainoverrides']))
 		{
 			foreach($config['dnsmasq']['domainoverrides'] as $override) {
@@ -386,7 +386,7 @@ EOD;
 				if (isset($dnsupdate['usetcp']))
 					$cmd .= " -v";
 				$cmd .= " {$g['varetc_path']}/nsupdatecmds{$i}";
-	
+
 				mwexec_bg($cmd);
 			}
 		}
@@ -402,7 +402,7 @@ function configure_cron()
 
 	/* preserve existing crontab entries */
 	$crontab_contents = file("/etc/crontab", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-	
+
 	for ($i = 0; $i < count($crontab_contents); $i++)
 	{
 		$cron_item =& $crontab_contents[$i];
@@ -413,7 +413,7 @@ function configure_cron()
 		}
 	}
 	$crontab_contents = implode("\n", $crontab_contents) . "\n";
-	
+
 	if (is_array($config['cron']['item']))
 	{
 		$crontab_contents .= "#\n";
@@ -431,13 +431,13 @@ function configure_cron()
 			$crontab_contents .= "{$item['who']}\t";
 			$crontab_contents .= "{$item['command']}";
 		}
-    
+
 		$crontab_contents .= "\n#\n";
 		$crontab_contents .= "# If possible do not add items to this file manually.\n";
 		$crontab_contents .= "# If you do so, this file must be terminated with a blank line (e.g. new line)\n";
 		$crontab_contents .= "#\n\n";
 	}
-	
+
 	/* please maintain the newline at the end of file */
 	file_put_contents("/etc/crontab", $crontab_contents);
 
@@ -476,19 +476,19 @@ function install_cron_job($command, $active=false, $minute="0", $hour="*", $mont
 		$cron_item['wday'] = $weekday;
 		$cron_item['who'] = $who;
 		$cron_item['command'] = $command;
-		
+
 		if(!$is_installed)
 		{
 			$config['cron']['item'][] = $cron_item;
 			write_config();
-		} 
+		}
 		else
 		{
 			$config['cron']['item'][$x] = $cron_item;
 			write_config();
 		}
 	}
-	
+
 	else
 	{
 		if(($is_installed == true) && ($x > 0))

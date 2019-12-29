@@ -1,25 +1,25 @@
-<?php 
+<?php
 /*
 	interfaces_assign.php
 	part of m0n0wall (http://m0n0.ch/wall)
 	Written by Jim McBeath based on existing m0n0wall files
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2003-2005 Manuel Kasper <mk@neon1.net>.
 	All rights reserved.
-	
+
 	Redistribution and use in source and binary forms, with or without
 	modification, are permitted provided that the following conditions are met:
-	
+
 	1. Redistributions of source code must retain the above copyright notice,
 	   this list of conditions and the following disclaimer.
-	
+
 	2. Redistributions in binary form must reproduce the above copyright
 	   notice, this list of conditions and the following disclaimer in the
 	   documentation and/or other materials provided with the distribution.
-	
+
 	THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
 	INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
 	AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
@@ -76,17 +76,17 @@ else if ($_POST)
 		if (($ifname == 'lan') || ($ifname == 'wan') || (substr($ifname, 0, 3) == 'opt'))
 			$portifmap[$ifport][] = strtoupper($ifname);
 	}
-	
+
 	foreach ($portifmap as $portname => $ifnames)
 	{
 		if (count($ifnames) > 1) {
 			$errstr = sprintf('Port %1$s '.
 				' was assigned to %2$s' .
 				' interfaces:', $portname, count($ifnames));
-				
+
 			foreach ($portifmap[$portname] as $ifn)
 				$errstr .= " " . $ifn;
-			
+
 			$input_errors[] = $errstr;
 		}
 	}
@@ -97,7 +97,7 @@ else if ($_POST)
 		{
 			if (($ifname == 'lan') || ($ifname == 'wan') ||
 				(substr($ifname, 0, 3) == 'opt')) {
-				
+
 				if (!is_array($ifport))
 				{
 					$reloadif = false;
@@ -112,7 +112,7 @@ else if ($_POST)
 
 					if (!isset($config['interfaces'][$ifname]['descr']))
 						$config['interfaces'][$ifname]['descr'] = strtoupper($ifname);
-						
+
 					if ($reloadif == true) {
 						interface_configure($ifname, true);
 					}
@@ -133,8 +133,8 @@ if ($_GET['act'] == "del")
 	{
 		unset($config['interfaces'][$id]['enable']);
 		$realid = get_real_interface($id);
-		interface_bring_down($id);  
-		
+		interface_bring_down($id);
+
 		unset($config['interfaces'][$id]);
 
 		if (is_array($config['dhcpd']) && is_array($config['dhcpd'][$id]))
@@ -151,7 +151,7 @@ if ($_GET['act'] == "del")
 					unset($config['filter']['rule'][$x]);
 			}
        	}
-		
+
 		if(is_array($config['nat']['advancedoutbound']) && count($config['nat']['advancedoutbound']['rule']) > 0)
 		{
         	foreach ($config['nat']['advancedoutbound']['rule'] as $x => $rule)
@@ -160,7 +160,7 @@ if ($_GET['act'] == "del")
 					unset($config['nat']['advancedoutbound']['rule'][$x]['interface']);
         	}
 		}
-		
+
 		if(is_array($config['nat']['rule']) && count($config['nat']['rule']) > 0)
 		{
 			foreach ($config['nat']['rule'] as $x => $rule)
@@ -174,7 +174,7 @@ if ($_GET['act'] == "del")
 
 		if($config['interfaces']['lan'] && $config['dhcpd']['wan'])
 		{
-			unset($config['dhcpd']['wan']);		
+			unset($config['dhcpd']['wan']);
 		}
 
 		link_interface_to_vlans($realid, "update");
@@ -217,7 +217,7 @@ if ($_GET['act'] == "add" && (count($config['interfaces']) < count($portlist)))
 				break;
 			}
 		}
-		
+
 		if (!$portused)
 		{
 			$config['interfaces'][$newifname]['if'] = $portname;
@@ -235,10 +235,10 @@ if ($_GET['act'] == "add" && (count($config['interfaces']) < count($portlist)))
 
 include('head.inc');
 
-if(file_exists("/var/run/interface_mismatch_reboot_needed")) 
+if(file_exists("/var/run/interface_mismatch_reboot_needed"))
 	if ($_POST)
 	{
-		if($rebootingnow) 	
+		if($rebootingnow)
 			$savemsg = "Sistem şimdi yeniden başlatılıyor...";
 		else
 			$savemsg = "Sistemin yeniden başlatılması gerekiyor. Lütfen ayarlarınızı uygulayın.";
@@ -264,10 +264,10 @@ if(file_exists("/var/run/interface_mismatch_reboot_needed"))
 <?php if ($input_errors) print_input_errors($input_errors); ?>
 
 <table class="tabcont" cellpadding="0" cellspacing="0">
-	<tr> 
+	<tr>
 		<td>
 			<table width="100%" class="grids">
-				<tr> 
+				<tr>
 					<td class="head">Arayüz</td>
 					<td class="head">Ethernet Kartı</td>
 					<td class="head"></td>
@@ -278,13 +278,13 @@ if(file_exists("/var/run/interface_mismatch_reboot_needed"))
 						else
 							$ifdescr = strtoupper($ifname);
 						?>
-				<tr> 
+				<tr>
 					<td class="times if"><?=$ifdescr;?></td>
 					<td class="times if">
 						<select name="<?=$ifname;?>" id="<?=$ifname;?>">
 						<?php foreach ($portlist as $portname => $portinfo): ?>
 							<option  value="<?=$portname;?>"  <?php if ($portname == $iface['if']) echo " selected";?>>
-							<?php 
+							<?php
 								echo htmlspecialchars($portname . " (" . $portinfo['mac'] . ")");?>
 							</option>
 							<?php endforeach; ?>
@@ -294,9 +294,9 @@ if(file_exists("/var/run/interface_mismatch_reboot_needed"))
 						<?php if ($ifname != 'wan'): ?>
 						<a title="Sil" href="interfaces_assign.php?act=del&id=<?=$ifname;?>" onclick="return confirm('Silmek istediğinize emin misiniz?')">
 							<i class="icon-trash"></i>
-						</a> 
+						</a>
 						<?php endif; ?>
-					</td>	
+					</td>
 				</tr>
 					<?php endforeach; ?>
 					<?php if (count($config['interfaces']) < count($portlist)): ?>

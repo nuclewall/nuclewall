@@ -1,10 +1,10 @@
 <?php
 /*
 	diag_arp.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	part of the pfSense project	(http://www.pfsense.org)
 	Copyright (C) 2004-2009 Scott Ullrich <sullrich@gmail.com>
 
@@ -229,7 +229,7 @@ function _getHostName($mac,$ip) {
 		exec("host -W 1 $ip", $output);
 		if (preg_match('/.*pointer ([A-Za-z0-9.-]+)\..*/',$output[0],$matches)) {
 			if ($matches[1] <> $ip)
-				return $matches[1]; 
+				return $matches[1];
 		}
 	}
 	return "";
@@ -239,19 +239,19 @@ $pgtitle = array('DURUM', 'ARP TABLOSU');
 
 ?>
 
-<?php include('head.inc'); ?> 
+<?php include('head.inc'); ?>
 </head>
 <body>
-<?php include('fbegin.inc'); ?> 
+<?php include('fbegin.inc'); ?>
 
 <?php
 for ($i = 0; $i < ob_get_level(); $i++) { ob_end_flush(); }
 ob_implicit_flush(1);
 
 $dnsavailable=1;
-$dns = trim(_getHostName("", "8.8.8.8")); 
+$dns = trim(_getHostName("", "8.8.8.8"));
 if ($dns == ""){
-	$dns = trim(_getHostName("", "8.8.4.4")); 
+	$dns = trim(_getHostName("", "8.8.4.4"));
 	if ($dns == "") $dnsavailable =0;
 }
 
@@ -261,7 +261,7 @@ foreach ($data as &$entry)
 		$dns = trim(_getHostName($entry['mac'], $entry['ip']));
 	else
 		$dns="";
-	
+
 	if(trim($dns))
 		$entry['dnsresolve'] = "$dns";
 	else
@@ -288,11 +288,11 @@ $mac_man = load_mac_manufacturer_table();
 								<tr>
 									<td class="cell"><?=$entry['ip'];?></td>
 									<td class="cell">
-									
+
 										<?php
 										$mac = str_replace(':', '-', $entry['mac']);
 										$mac_hi = strtoupper($mac[0] . $mac[1] . $mac[3] . $mac[4] . $mac[6] . $mac[7]);
-										
+
 										if(isset($mac_man[$mac_hi]))
 											$mac = str_replace(':', '-', $mac_man[$mac_hi]);
 										?>

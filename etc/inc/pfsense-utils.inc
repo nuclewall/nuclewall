@@ -30,7 +30,7 @@
 function have_natpfruleint_access($if)
 {
 	$security_url = "firewall_nat_edit.php?if=". strtolower($if);
-	if(isAllowedPage($security_url, $allowed)) 
+	if(isAllowedPage($security_url, $allowed))
 		return true;
 	return false;
 }
@@ -38,7 +38,7 @@ function have_natpfruleint_access($if)
 function have_ruleint_access($if)
 {
 	$security_url = "firewall_rules.php?if=". strtolower($if);
-	if(isAllowedPage($security_url)) 
+	if(isAllowedPage($security_url))
 		return true;
 	return false;
 }
@@ -48,7 +48,7 @@ function does_url_exist($url)
 	$fd = fopen("$url","r");
 	if($fd) {
 		fclose($fd);
-   		return true;    
+   		return true;
 	} else {
         return false;
 	}
@@ -94,16 +94,16 @@ function enable_hardware_offloading($interface)
 
 	if(isset($config['system']['do_not_use_nic_microcode']))
 		return;
-	
+
 	$int = get_real_interface($interface);
-	if(empty($int)) 
+	if(empty($int))
 		return;
 	$int_family = preg_split("/[0-9]+/", $int);
 	$supported_ints = array('fxp');
-	
+
 	if (in_array($int_family, $supported_ints))
 	{
-		if(does_interface_exist($int)) 
+		if(does_interface_exist($int))
 			pfSense_interface_flags($int, IFF_LINK0);
 	}
 
@@ -124,9 +124,9 @@ function is_alias_inuse($alias)
 	global $g, $config;
 
 	if($alias == "") return false;
-	
+
 	if(is_array($config['filter']['rule']))
-		
+
 		foreach($config['filter']['rule'] as $rule)
 		{
 			if($rule['source']['address'])
@@ -136,7 +136,7 @@ function is_alias_inuse($alias)
 				if($rule['destination']['address'] == $alias)
 					return true;
 		}
-		
+
 	if(is_array($config['nat']['rule']))
 		foreach($config['nat']['rule'] as $rule)
 		{
@@ -322,7 +322,7 @@ function reload_all_sync()
 	/* sync pw database */
 	unlink_if_exists("/etc/spwd.db.tmp");
 	mwexec("/usr/sbin/pwd_mkdb -d /etc/ /etc/master.passwd");
-	
+
 	/* restart sshd */
 	send_event("service restart sshd");
 
@@ -365,14 +365,14 @@ function auto_login()
 
 	$fd = false;
 	$tries = 0;
-	
+
 	while (!$fd && $tries < 100)
 	{
 		$fd = fopen("/etc/gettytab", "w");
 		$tries++;
-		
+
 	}
-	
+
 	if(!$fd)
 	{
 		if ($status)
@@ -381,7 +381,7 @@ function auto_login()
 			log_error("Disabling auto login was not possible.");
 		return;
 	}
-	
+
 	foreach($getty_split as $gs)
 	{
 		if(stristr($gs, $getty_search_str)) {
@@ -400,7 +400,7 @@ function auto_login()
 		log_error("Enabled console auto login, console menu is NOT password protected.");
 	else
 		log_error("Disabled console auto login, console menu is password protected.");
-	
+
 }
 
 function setup_serial_port()
@@ -461,7 +461,7 @@ function setup_serial_port()
 	}
 	fclose($fd);
 	auto_login();
-	
+
 	return;
 }
 
@@ -476,12 +476,12 @@ function print_value_list($list, $count = 10, $separator = ",")
 	return $list;
 }
 
-function is_dhcp_server_enabled() 
+function is_dhcp_server_enabled()
 {
 	global $config;
 
 	$dhcpdenable = false;
-	
+
 	if (!is_array($config['dhcpd']))
 		return false;
 
@@ -554,7 +554,7 @@ function get_interface_info($ifdescr)
 	$ifinfo['outbytes'] = $out4_pass + $out4_block;
 	$ifinfo['inpkts'] = $in4_pass_packets + $in4_block_packets;
 	$ifinfo['outpkts'] = $out4_pass_packets + $out4_block_packets;
-		
+
 	$ifconfiginfo = "";
 	$link_type = $config['interfaces'][$ifdescr]['ipaddr'];
 	switch ($link_type) {
@@ -572,7 +572,7 @@ function get_interface_info($ifdescr)
 	default:
 		break;
 	}
-	
+
 	if ($ifinfo['status'] == "up")
 	{
 		unset($ifconfiginfo);
@@ -583,7 +583,7 @@ function get_interface_info($ifdescr)
 			if (preg_match("/media: .*? \((.*?)\)/", $ici, $matches))
 			{
 				$ifinfo['media'] = $matches[1];
-			} 
+			}
 
 			if (preg_match("/status: (.*)$/", $ici, $matches)) {
 				if ($matches[1] != "active")
@@ -608,7 +608,7 @@ function get_interface_info($ifdescr)
 			}
 		}
 
-		if (interface_has_gateway($ifdescr)) 
+		if (interface_has_gateway($ifdescr))
 			$ifinfo['gateway'] = get_interface_gateway($ifdescr);
 	}
 
@@ -645,7 +645,7 @@ function is_fqdn($fqdn)
 	if(preg_match("/\.\./", $fqdn)) {
 		$hostname = false;
 	}
-	if(preg_match("/^\./i", $fqdn)) { 
+	if(preg_match("/^\./i", $fqdn)) {
 		$hostname = false;
 	}
 	if(preg_match("/\//i", $fqdn)) {
@@ -688,7 +688,7 @@ function isvm()
 function update_status($status)
 {
 	global $pkg_interface;
-	
+
 	if($pkg_interface != "console")
 	{
 		echo "\n<script type=\"text/javascript\">this.document.forms[0].status.value=\"" . $status . "\";</script>";
@@ -703,7 +703,7 @@ function update_status($status)
 function update_alias_names_upon_change($section, $field, $new_alias_name, $origname)
 {
 	global $g, $config, $pconfig, $debug;
-	if(!$origname) 
+	if(!$origname)
 		return;
 
 	$sectionref = &$config;
@@ -936,7 +936,7 @@ function pfSense_handle_custom_code($src_dir)
 		$cf = glob($src_dir . "/*.inc");
 		foreach($cf as $nf)
 		{
-			if($nf == "." || $nf == "..") 
+			if($nf == "." || $nf == "..")
 				continue;
 			include("$nf");
 		}

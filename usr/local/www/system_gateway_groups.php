@@ -116,7 +116,7 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI');
 								<td class="head">Öncelik</td>
 								<td class="head">Açıklama</td>
 								<td class="head"></td>
-			
+
 							</tr>
 									  <?php $i = 0; foreach ($a_gateway_groups as $gateway_group): ?>
 								<tr>

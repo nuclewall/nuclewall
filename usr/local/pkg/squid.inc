@@ -1,13 +1,13 @@
 <?php
 /*
 	squid.inc
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2006-2009 Scott Ullrich
 	Copyright (C) 2006 Fernando Lemos
-	Copyright (C) 2008 Martin Fuchs	
+	Copyright (C) 2008 Martin Fuchs
 	All rights reserved.
 
 	Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
 	ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 	POSSIBILITY OF SUCH DAMAGE.
 */
-	
+
 require_once('squidguard.inc');
 
 define('SQUID_LOCALBASE','/usr/local');
@@ -84,11 +84,11 @@ function squid_dash_z()
 	}
 
 	if(!is_dir($cachedir.'/00/')) {
-		while (is_process_running('squid')) {	
+		while (is_process_running('squid')) {
 			mwexec(SQUID_LOCALBASE . "/sbin/squid -k kill");
 			sleep(1);
 		}
-		
+
 		mwexec("/usr/sbin/chown -R proxy:proxy $cachedir");
 		mwexec(SQUID_LOCALBASE . "/sbin/squid -z");
 	}
@@ -177,7 +177,7 @@ function squid_validate_cache($post, $input_errors)
 				'maximum_object_size' => "En büyük nesne boyutu",
 				'maximum_objsize_in_mem' => "RAM'deki en büyük nesne boyutu"
 	);
-	
+
 	foreach ($num_fields as $field => $name)
 	{
 		$value = trim($post[$field]);
@@ -196,14 +196,14 @@ function squid_validate_cache($post, $input_errors)
 		$input_errors[] = "Dizin '/' karakteri ile başlamalıdır.";
 	if (strlen($post['harddisk_cache_location']) <= 3)
 		$input_errors[] = "Girdiğiniz dizin geçerli değil.";
-  
+
 	squid_dash_z();
 }
 
 function squid_install_cron($should_install)
 {
 	global $config, $g;
-	if($g['booting']==true) 
+	if($g['booting']==true)
 		return;
 	$rotate_is_installed = false;
 	$swapstate_is_installed = false;
@@ -288,7 +288,7 @@ function squid_resync_general()
 	$port = ($settings['proxy_port'] ? $settings['proxy_port'] : 3128);
 	$ifaces = ($settings['active_interface'] ? $settings['active_interface'] : 'lan');
 	$real_ifaces = array();
-	
+
 	foreach (explode(",", $ifaces) as $i => $iface)
 	{
 		$real_ifaces[] = squid_get_real_interface_address($iface);
@@ -296,9 +296,9 @@ function squid_resync_general()
 			$conf .= "http_port {$real_ifaces[$i][0]}:$port\n";
 		}
 	}
-	
+
 	$conf .= "http_port 127.0.0.1:" . $settings['proxy_port'] . " transparent\n";
-	
+
 	$icp_port = ($settings['icp_port'] ? $settings['icp_port'] : 0);
 
 	$pidfile = "{$g['varrun_path']}/squid.pid";
@@ -339,18 +339,18 @@ shutdown_lifetime 3 seconds
 EOD;
 
 	$src = '';
-	
+
 	foreach ($real_ifaces as $iface)
 	{
 		list($ip, $mask) = $iface;
 		$ip = long2ip(ip2long($ip) & ip2long($mask));
 		$src .= " $ip/$mask";
 	}
-	
+
 	$conf .= "# Allow local network(s) on interface(s)\n";
 	$conf .= "acl localnet src $src\n";
 	$valid_acls[] = 'localnet';
-	
+
 	if ($settings['disable_xforward']) $conf .= "forwarded_for off\n";
 	if ($settings['disable_via']) $conf .= "via off\n";
 	if ($settings['disable_squidversion']) $conf .= "httpd_suppress_version_string on\n";
@@ -380,12 +380,12 @@ function squid_resync_cache()
 	$max_objsize = ($settings['maximum_object_size'] ? $settings['maximum_object_size'] : 10);
 	$min_objsize = ($settings['minimum_object_size'] ? $settings['minimum_object_size'] : 0);
 	$max_objsize_in_mem = ($settings['maximum_objsize_in_mem'] ? $settings['maximum_objsize_in_mem'] : 2048);
-	
+
 	$cache_policy = 'heap LFUDA';
 	$memory_policy = 'heap GDSF';
 	$offline_mode = 'off';
 	$disk_cache_system = 'ufs';
-	
+
 	$disk_cache_opts = "{$disk_cache_system} {$cachedir} {$disk_cache_size} {$level1} 256";
 
 	$conf = <<<EOD
@@ -402,7 +402,7 @@ EOD;
 
 	$conf .= "cache_swap_low 90\n";
 	$conf .= "cache_swap_high 95\n";
-  
+
 	return $conf;
 }
 
@@ -477,9 +477,9 @@ EOD;
     $conf .= "http_access allow manager ext_manager_".$count."\n";
     $count += 1;
 	 }}
-	
+
   $conf .= <<<EOD
-  
+
 http_access deny manager
 http_access allow purge localhost
 http_access deny purge
@@ -503,23 +503,23 @@ function squid_resync_auth()
 	if (!empty($config['installedpackages']['squid']['config'][0]['custom_options'])) {
 		$custopts = explode(";", ($config['installedpackages']['squid']['config'][0]['custom_options']));
 		$conf .= "# Custom options\n";
-		
+
 		foreach ($custopts as $custopt) {
 			$conf .= $custopt."\n";
 		}
 	}
-	
+
 	$conf .="# Setup allowed acls\n";
 	$allowed = array('allowed_subnets');
-	
+
 	$conf .= "# Allow local network(s) on interface(s)\n";
 	$allowed[] = "localnet";
-		
+
 	$allowed = array_filter($allowed, 'squid_is_valid_acl');
-	
+
 	foreach ($allowed as $acl)
 		$conf .= "http_access allow $acl\n";
-	
+
 	$conf .= "# Default block all to be sure\n";
 	$conf .= "http_access deny all\n";
 
@@ -549,14 +549,14 @@ function squid_resync()
 	}
 
 	squid_dash_z();
-    
+
 	mwexec(SQUID_LOCALBASE . "/sbin/squid -D");
 	sleep(1);
-	
+
 
 	log_error("Ayarlar senkronize ediliyor.");
 	mwexec(SQUID_LOCALBASE . "/sbin/squid -k reconfigure");
-	
+
 	filter_configure();
 }
 
@@ -577,13 +577,13 @@ function squid_generate_rules($type)
 	$fw_aliases = filter_generate_aliases();
 	if(strstr($fw_aliases, "pptp ="))
 		$PPTP_ALIAS = "\$pptp";
-	else 
+	else
 		$PPTP_ALIAS = "\$PPTP";
 	if(strstr($fw_aliases, "PPPoE ="))
 		$PPPOE_ALIAS = "\$PPPoE";
-	else 
+	else
 		$PPPOE_ALIAS = "\$pppoe";
-		
+
 	switch($type) {
 		case 'nat':
 			$rules .= "\n# Setup Squid proxy redirect\n";
@@ -605,7 +605,7 @@ function squid_generate_rules($type)
 				}
 				$exempt_ip = substr($exempt_ip,2);
 				foreach ($ifaces as $iface) {
-					$rules .= "no rdr on $iface proto tcp from { $exempt_ip } to any port 80\n";         
+					$rules .= "no rdr on $iface proto tcp from { $exempt_ip } to any port 80\n";
 				}
 			}
 			if (!empty($squid_conf['defined_ip_proxy_off_dest'])) {
@@ -639,8 +639,8 @@ function squid_generate_rules($type)
 				$rules .= "\n";
 			};
 			if($config['pppoe']['mode'] == "server" && $config['pppoe']['localip']) {
-				$rules .= "pass in quick on $PPPOE_ALIAS proto tcp from any to !127.0.0.1 port $port flags S/SA keep state\n";			
-			}			
+				$rules .= "pass in quick on $PPPOE_ALIAS proto tcp from any to !127.0.0.1 port $port flags S/SA keep state\n";
+			}
 			if($config['pptpd']['mode'] == "server" && $config['pptpd']['localip']) {
 				$rules .= "pass in quick on $PPTP_ALIAS proto tcp from any to !127.0.0.1 port $port flags S/SA keep state\n";
 			}

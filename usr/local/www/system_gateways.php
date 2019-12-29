@@ -4,7 +4,7 @@
 	system_gateways.php
 
 	Copyright (C) 2015 Ogün AÇIK
-	
+
 	Copyright (C) 2010 Seth Mos <seth.mos@dds.nl>.
 	All rights reserved.
 
@@ -51,7 +51,7 @@ $a_gateway_item = &$config['gateways']['gateway_item'];
 if ($_POST)
 {
 	$pconfig = $_POST;
-	
+
 	if ($_POST['apply'])
 	{
 		$retval = 0;
@@ -83,7 +83,7 @@ if ($_GET['act'] == "del")
 						$remove = false;
 						break;
 					}
-						
+
 				}
 			}
 		}
@@ -100,12 +100,12 @@ if ($_GET['act'] == "del")
 				}
 			}
 		}
-		
+
 		if($remove == true)
 		{
 			if ($config['interfaces'][$a_gateways[$_GET['id']]['friendlyiface']]['gateway'] == $a_gateways[$_GET['id']]['name'])
 				unset($config['interfaces'][$a_gateways[$_GET['id']]['friendlyiface']]['gateway']);
-			
+
 			unset($a_gateway_item[$realid]);
 			write_config();
 			mark_subsystem_dirty('staticroutes');

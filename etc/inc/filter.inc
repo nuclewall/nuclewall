@@ -193,7 +193,7 @@ function filter_configure_sync($delete_states_if_needed = true)
 		echo ".";
 	update_filter_reload_status("Loading filter rules");
 	/* enable pf if we need to, otherwise disable */
-	
+
 	if(!isset ($config['system']['disablefilter']))
 	{
 		mwexec("/sbin/pfctl -e", true);
@@ -479,7 +479,7 @@ function filter_generate_aliases()
 	if(isset($config['aliases']['alias'])) {
 		foreach ($config['aliases']['alias'] as $aliased) {
 			$extralias = "";
-			/* 
+			/*
 			 * XXX: i am not sure what this does so i am commenting it out for now, because as it is
 			 * its quite dangerous!
 			 * $ip = find_interface_ip($aliased['address']);
@@ -1981,7 +1981,7 @@ EOD;
 
 	$ipfrules .= "\n# webConfigurator lockout\n";
 	if(!$config['system']['webgui']['port']) {
-		if($config['system']['webgui']['protocol'] == "http") 
+		if($config['system']['webgui']['protocol'] == "http")
 			$webConfiguratorlockoutport = "80";
 		else
 			$webConfiguratorlockoutport = "443";
@@ -2282,7 +2282,7 @@ EOD;
 anchor "miniupnpd"
 
 EOD;
-	
+
 		$upnp_interfaces = explode(",", $config['installedpackages']['miniupnpd'][0]['config']['iface_array']);
 		foreach($upnp_interfaces as $upnp_if) {
 			if(is_array($FilterIflist[$upnp_if])) {
@@ -2615,7 +2615,6 @@ function filter_get_antilockout_ports($wantarray = false) {
 		return $lockoutports;
 	else
 		return implode(" ", $lockoutports);
-
 }
 
 ?>

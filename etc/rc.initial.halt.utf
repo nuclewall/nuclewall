@@ -41,14 +41,14 @@ $fp = fopen('php://stdin', 'r');
 echo <<<EOD
     NUCLEWALL şimdi kapatılacak.
 
-    Onaylıyor musunuz? [e|h]\n    > 
+    Onaylıyor musunuz? [e|h]\n    >
 EOD;
-	
+
 	$yn = chop(fgets($fp));
-	
+
 	if (strcasecmp($yn, "e") == 0 || strcasecmp($yn, "E") == 0)
 		system_halt();
-	
+
 	fclose($fp);
-	
+
 ?>

@@ -75,7 +75,7 @@ if ($pipe)
 	{
 		$queue =& $dnpipe->find_queue($pipe, $qname);
 	}
-	else 
+	else
 		$addnewpipe = true;
 }
 
@@ -98,7 +98,7 @@ if ($_GET)
 						$input_errors[] = "Bu sınırlayıcı bir kural tarafından kullanılıyor. Silmeden önce kuraldan kaldırın.";
 				}
 			}
-			
+
 			if (!$input_errors)
 			{
 				$queue->delete_queue();
@@ -134,7 +134,7 @@ if ($_GET)
 					unset($config['filter']['rule'][$key]['pdnpipe']);
 			}
 			write_config();
-			
+
 			$retval = 0;
                         $retval = filter_configure();
                         $savemsg = get_std_save_message($retval);
@@ -143,7 +143,7 @@ if ($_GET)
 	                        $savemsg = get_std_save_message($retval);
                         else
        	                	$savemsg = $retval;
-			
+
 			$output_form = $dn_default_shaper_message;
 
 		break;
@@ -152,8 +152,8 @@ if ($_GET)
 		{
 			$q = new dnpipe_class();
 			$q->SetQname($pipe);
-		} 
-		else 
+		}
+		else
 			$input_errors[] = "Yeni sınırlayıcı yaratılamadı.";
 
 		if ($q)
@@ -164,7 +164,7 @@ if ($_GET)
 		}
 		break;
 	case "show":
-		if ($queue)  
+		if ($queue)
 			$output_form .= $queue->build_form();
 		else
 			$input_errors[] = "Sınırlayıcı bulunamadı.";
@@ -200,14 +200,14 @@ else if ($_POST)
 	if ($addnewpipe)
 	{
 		$dnpipe =& new dnpipe_class();
-		
+
 		$dnpipe->ReadConfig($_POST);
 		$dnpipe->validate_input($_POST, &$input_errors);
 		if (!$input_errors)
 		{
 			unset($tmppath);
 			$tmppath[] = $dnpipe->GetQname();
-			$dnpipe->SetLink(&$tmppath);	
+			$dnpipe->SetLink(&$tmppath);
 			$dnpipe->wconfig();
 			write_config();
 			mark_subsystem_dirty('shaper');
@@ -234,7 +234,7 @@ else if ($_POST)
 				$can_enable = true;
 			}
 			read_dummynet_config();
-			$output_form .= $tmp->build_form();			
+			$output_form .= $tmp->build_form();
 		} else
 			$input_errors[] = "Sınırlayıcı eklenemedi.";
 	}
@@ -245,14 +245,14 @@ else if ($_POST)
 			$retval = 0;
 			$retval = filter_configure();
 			$savemsg = get_std_save_message($retval);
-			
+
 			if (stristr($retval, "error") <> true)
 					$savemsg = get_std_save_message($retval);
 			else
 					$savemsg = $retval;
 
 			clear_subsystem_dirty('shaper');
-			
+
 			if ($queue) {
 				$output_form .= $queue->build_form();
 				$dontshow = false;
@@ -271,11 +271,11 @@ else if ($_POST)
 				write_config();
 				mark_subsystem_dirty('shaper');
 				$dontshow = false;
-                } 
+                }
 		read_dummynet_config();
 		$output_form .= $queue->build_form();
 	}
-	else 
+	else
 	{
 		$output_form .= "<p class=\"pgtitle\">" . $dn_default_shaper_msg."</p>";
 		$dontshow = true;
@@ -294,7 +294,7 @@ if ($queue)
 	else
 		$can_enable = false;
 	if ($queue->CanHaveChildren())
-	{ 
+	{
 		$can_add = true;
 	}
 	else
@@ -324,14 +324,14 @@ if (!$dontshow || $newqueue)
 	$output_form .= "<input type=\"submit\" name=\"Submit\" value=\"Kaydet\" class=\"btn btn-inverse\"> ";
 	$output_form .= "<a class=\"btn btn-default\" href=\"firewall_shaper_vinterface.php?pipe=";
 	$output_form .= $pipe . "&queue=";
-	
+
 	if ($queue)
 	{
 		$output_form .= "&queue=" . $queue->GetQname();
 	}
-	
+
 	$output_form .= "&action=delete\">";
-	$output_form .= "Sil</a>";  
+	$output_form .= "Sil</a>";
 	$output_form .= "</td></tr>";
 }
 
@@ -352,7 +352,7 @@ $output .= $output_form;
 <?php if (is_subsystem_dirty('shaper')): ?><p>
 <?php print_info_box_np("Hız sınırlayıcı ayarları değiştirildi.<br>Değişikliklerin etkili olması için uygulamalısınız.", true);?>
 <?php endif; ?>
-<table border="0" cellpadding="0" cellspacing="0">	
+<table border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
@@ -364,7 +364,7 @@ $output .= $output_form;
 						</div>
 					</td>
 				</tr>
-				<?php echo $output; ?>	
+				<?php echo $output; ?>
 				<tr>
 					<td colspan="2">
 

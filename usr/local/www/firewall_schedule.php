@@ -1,10 +1,10 @@
 <?php
 /*
 	firewall_schedule.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2004 Scott Ullrich
 	All rights reserved.
 

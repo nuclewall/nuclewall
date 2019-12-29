@@ -29,7 +29,6 @@ if [ "${works}" != "true" ]; then
 	exit
 fi
 
-# ddb
 if [ ! -z "`sysctl -Nq debug.ddb.scripting.scripts`" ]; then
 	/sbin/ddb /etc/ddb.conf
 fi

@@ -2,7 +2,7 @@
 /* $Id$ */
 /*
     diag_cpu_activity.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 
@@ -64,23 +64,23 @@ if($_REQUEST['getactivity']) {
 	}
 	function activitycallback(transport) {
 		$('cpuactivitydiv').innerHTML = '<font face="Arial"><font size="3"><b><pre style="text-align:left;">' + transport.responseText  + '</pre></font>';
-		setTimeout('getcpuactivity()', 2500);		
+		setTimeout('getcpuactivity()', 2500);
 	}
-	setTimeout('getcpuactivity()', 1000);	
+	setTimeout('getcpuactivity()', 1000);
 </script>
 <div id='maincontent'>
 <?php
-	if(strstr($pfSversion, "1.2")) 
+	if(strstr($pfSversion, "1.2"))
 		echo "<p class=\"pgtitle\">{$pgtitle}</p>";
 	if($savemsg) {
 		echo "<div id='savemsg'>";
 		print_info_box($savemsg);
-		echo "</div>";	
+		echo "</div>";
 	}
 	if ($input_errors)
 		print_input_errors($input_errors);
 ?>
-<table border="0" cellpadding="0" cellspacing="0">  
+<table border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<table id="backuptable" class="tabcont" cellpadding="0" cellspacing="0">

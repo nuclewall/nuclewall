@@ -55,7 +55,7 @@ user "root"
 group "wheel"
 
 ## Mailer to use (default: "/usr/lib/sendmail -t")
-#mailer "/var/qmail/bin/qmail-inject" 
+#mailer "/var/qmail/bin/qmail-inject"
 
 ## Location of the pid-file (default: "/var/run/apinger.pid")
 pid_file "{$g['varrun_path']}/apinger.pid"
@@ -72,19 +72,19 @@ status {
 }
 
 ## These parameters can be overriden in a specific alarm configuration
-alarm default { 
+alarm default {
 	command on "/usr/local/sbin/pfSctl -c 'filter reload'"
 	command off "/usr/local/sbin/pfSctl -c 'filter reload'"
 	combine 10s
 }
 
-## "Down" alarm definition. 
+## "Down" alarm definition.
 ## This alarm will be fired when target doesn't respond for 30 seconds.
 alarm down "down" {
 	time 10s
 }
 
-## "Delay" alarm definition. 
+## "Delay" alarm definition.
 ## This alarm will be fired when responses are delayed more than 200ms
 ## it will be canceled, when the delay drops below 100ms
 alarm delay "delay" {
@@ -92,7 +92,7 @@ alarm delay "delay" {
 	delay_high {$a_settings['latencyhigh']}ms
 }
 
-## "Loss" alarm definition. 
+## "Loss" alarm definition.
 ## This alarm will be fired when packet loss goes over 20%
 ## it will be canceled, when the loss drops below 10%
 alarm loss "loss" {
@@ -101,13 +101,13 @@ alarm loss "loss" {
 }
 
 target default {
-	## How often the probe should be sent	
+	## How often the probe should be sent
 	interval 1s
-	
-	## How many replies should be used to compute average delay 
+
+	## How many replies should be used to compute average delay
 	## for controlling "delay" alarms
 	avg_delay_samples 10
-	
+
 	## How many probes should be used to compute average loss
 	avg_loss_samples 50
 
@@ -222,7 +222,7 @@ EOD;
 	mwexec_bg("/usr/local/sbin/apinger -c {$g['varetc_path']}/apinger.conf");
 	sleep(1);
 	sigkillbypid("{$g['varrun_path']}/apinger.pid", "USR1");
-	
+
 	return 0;
 }
 
@@ -304,7 +304,7 @@ function return_gateways_array($disabled = false) {
 			$gateway['friendlyiface'] = $gateway['interface'];
 			$gateway['interface'] = get_real_interface($gateway['interface']);
 			/* FIXME: Should this be enabled.
-			 * Some interface like wan might be default but have no info recorded 
+			 * Some interface like wan might be default but have no info recorded
 			 * the config.
 			if ($gateway['friendlyiface'] == "wan" && !isset($gateway['defaultgw'])) {
 				if (file_exists("{$g['tmp_path']}/{$gateway['interface']}_defaultgw"))
@@ -317,7 +317,7 @@ function return_gateways_array($disabled = false) {
 			$gateways_arr[$gateway['name']] = $gateway;
 			$i++;
 		}
-	} 
+	}
 
 	/* Loop through all interfaces with a gateway and add it to a array */
 	if ($disabled == false)
@@ -344,7 +344,7 @@ function return_gateways_array($disabled = false) {
 		$gateway['friendlyiface'] = $ifname;
 		$gateway['name'] = $friendly;
 		$gateway['attribute'] = "system";
-	
+
 		if ($gateway['dynamic'] === "default") {
 			$gateway['defaultgw'] = true;
 			$gateway['dynamic'] = true;
@@ -392,26 +392,26 @@ function return_gateway_groups_array()
 				if (!isset($gwsttng['monitor_disable']) && stristr($gateways_status[$gwname]['status'], "down"))
 					$dfltgwdown = true;
 			}
-			
+
 			if (empty($upgw) && (isset($gwsttng['monitor_disable']) || !stristr($gateways_status[$gwname]['status'], "down")) && $gwsttng[$gwname]['friendlyiface'] != "lan")
 				$upgw = $gwname;
-			
+
 			if ($dfltgwdown == true && !empty($upgw))
 				break;
 		}
-		
+
 		if($dfltgwfound == false)
 		{
 			$gwname = convert_friendly_interface_to_friendly_descr("wan");
 			if (!empty($gateways_status[$gwname]) && stristr($gateways_status[$gwname]['status'], "down"))
 				$dfltgwdown = true;
 		}
-		
+
 		if($dfltgwdown == true && !empty($upgw))
 		{
 			if ($gateways_arr[$upgw]['gateway'] == "dynamic")
 				$gateways_arr[$upgw]['gateway'] = get_interface_gateway($gateways_arr[$upgw]['friendlyiface']);
-			
+
 			if (is_ipaddr($gateways_arr[$upgw]['gateway']))
 			{
 				log_error("Default gateway down setting {$upgw} as default!");
@@ -424,7 +424,7 @@ function return_gateway_groups_array()
 			if ($defaultgw != $gateways_arr[$dfltgwname]['gateway'])
 				mwexec("/sbin/route change -inet default {$gateways_arr[$dfltgwname]['gateway']}");
 		}
-	
+
 		unset($upgw, $dfltgwfound, $dfltgwdown, $gwname, $gwsttng);
 	}
 
@@ -439,7 +439,7 @@ function return_gateway_groups_array()
 				$tier = $itemsplit[1];
 				$gwname = $itemsplit[0];
 				$backupplan[$tier][] = $gwname;
-				
+
 				if (!empty($gateways_status[$gwname]))
 				{
 					$status = $gateways_status[$gwname];
@@ -484,11 +484,11 @@ function return_gateway_groups_array()
 						$gateway = $gateways_arr[$member];
 						$int = $gateway['interface'];
 						$gatewayip = "";
-						if(is_ipaddr($gateway['gateway'])) 
+						if(is_ipaddr($gateway['gateway']))
 							$gatewayip = $gateway['gateway'];
 						else if ($int <> "")
 							$gatewayip = get_interface_gateway($gateway['friendlyiface']);
-					
+
 						if (($int <> "") && is_ipaddr($gatewayip)) {
 							$groupmember = array();
 							$groupmember['int']  = $int;
@@ -509,7 +509,7 @@ function return_gateway_groups_array()
 function dhclient_update_gateway_groups_defaultroute($interface = "wan")
 {
 	global $config, $g;
-	foreach($config['gateways']['gateway_item'] as & $gw) {	
+	foreach($config['gateways']['gateway_item'] as & $gw) {
 		if($gw['interface'] == $interface) {
 			$current_gw = get_interface_gateway($interface);
 			if($gw['gateway'] <> $current_gw) {
@@ -552,7 +552,7 @@ function lookup_gateway_monitor_ip_by_name($name)
 function lookup_gateway_interface_by_name($name)
 {
 	$gateways_arr = return_gateways_array();
-	
+
 	if (!empty($gateways_arr[$name]))
 	{
 		$interfacegw = $gateway['interface'];
@@ -564,9 +564,9 @@ function lookup_gateway_interface_by_name($name)
 function get_interface_gateway($interface, &$dynamic = false)
 {
 	global $config, $g;
-	
+
 	$gw = NULL;
-	
+
 	$gwcfg = $config['interfaces'][$interface];
 	if (!empty($gwcfg['gateway']) && is_array($config['gateways']['gateway_item']))
 	{
@@ -590,8 +590,6 @@ function get_interface_gateway($interface, &$dynamic = false)
 		}
 		if (file_exists("{$g['tmp_path']}/{$realif}_defaultgw"))
 			$dynamic = "default";
-		
-		
 	}
 	return ($gw);
 }

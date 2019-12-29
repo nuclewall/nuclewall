@@ -1,11 +1,11 @@
-<?php 
+<?php
 /*
 	util.inc
 	part of the pfSense project (http://www.pfsense.com)
 
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	originally part of m0n0wall (http://m0n0.ch/wall)
 	Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
 	All rights reserved.
@@ -72,7 +72,7 @@ function sigkillbyname($procname, $sig)
 
 function killbyname($procname)
 {
-	if(isvalidproc($procname)) 
+	if(isvalidproc($procname))
 		mwexec("/usr/bin/killall " . escapeshellarg($procname));
 }
 
@@ -147,7 +147,7 @@ function send_event($cmd)
 
 	if(!isset($g['event_address']))
 		$g['event_address'] = "unix:///var/run/check_reload_status";
-		
+
 	$try = 0;
 	while ($try < 3)
 	{
@@ -171,7 +171,7 @@ function send_multiple_events($cmds)
 
 	if(!isset($g['event_address']))
 		$g['event_address'] = "unix:///var/run/check_reload_status";
-			
+
 	if (!is_array($cmds))
 		return;
 
@@ -203,7 +203,7 @@ function refcount_reference($reference)
 	} catch (Exception $e) {
 		log_error($e->getMessage());
 	}
-		
+
 	return $shm_data;
 }
 
@@ -305,11 +305,11 @@ function ip_range_to_subnet_array($startip, $endip)
 	if (!is_ipaddr($startip) || !is_ipaddr($endip)) {
 		return array();
 	}
-	
+
 	$rangesubnets = array();
 
 	$cidr = find_smallest_cidr(ip_range_size($startip, $endip));
-	
+
 	for ($cidr; $cidr <= 32; $cidr++)
 	{
 		$targetsub_min = gen_subnet($startip, $cidr);
@@ -324,23 +324,23 @@ function ip_range_to_subnet_array($startip, $endip)
 		{
 			break;
 		}
-		
+
 		if (ip_greater_than($targetsub_min, $startip) && ($targetsub_max == $endip))
 		{
 			break;
 		}
-		
+
 		if (ip_greater_than($targetsub_min, $startip) && ip_less_than($targetsub_max, $endip))
 		{
 			break;
 		}
 	}
-	
+
 	if ($startip != $targetsub_min)
 	{
 		$rangesubnets = array_merge($rangesubnets, ip_range_to_subnet_array($startip, ip_before($targetsub_min)));
 	}
-	
+
 	$rangesubnets[] = "{$targetsub_min}/{$cidr}";
 
 	if ($endip != $targetsub_max)
@@ -356,7 +356,7 @@ function is_iprange($range)
 	{
 		return false;
 	}
-	
+
 	list($ip1, $ip2) = explode ('-', $range);
 	return (is_ipaddr($ip1) && is_ipaddr($ip2));
 }
@@ -397,7 +397,7 @@ function is_ipaddroralias($ipaddr)
 		}
 		return false;
 	}
-	
+
 	else
 		return is_ipaddr($ipaddr);
 }
@@ -584,7 +584,7 @@ function get_configured_interface_list_by_realif($only_opt = false, $withdisable
 	{
 		if ($only_opt && ($if == "wan" || $if == "lan"))
 			continue;
-		
+
 		if (isset($ifdetail['enable']) || $withdisabled == true)
 		{
 			$tmpif = get_real_interface($if);
@@ -602,7 +602,7 @@ function get_configured_interface_with_descr($only_opt = false, $withdisabled = 
 
 	$iflist = array();
 
-	if(is_array($config['interfaces'])) 
+	if(is_array($config['interfaces']))
 	{
 		foreach($config['interfaces'] as $if => $ifdetail) {
 			if ($only_opt && ($if == "wan" || $if == "lan"))
@@ -723,7 +723,7 @@ function get_interface_list($mode = "active", $keyby = "physical", $vfaces = "")
 				$iflist[$ifname] = $toput;
 				break;
 			case "ppp":
-				
+
 			case "friendly":
 				if($friendly != "") {
 					$toput['if'] = $ifname;
@@ -1006,7 +1006,7 @@ function run_plugins($directory)
 		foreach ($files as $file) {
 			if (stristr($file, ".sh") == true)
 				mwexec($directory . $file . " start");
-			else if (!is_dir($directory . "/" . $file) && stristr($file,".inc")) 
+			else if (!is_dir($directory . "/" . $file) && stristr($file,".inc"))
 				require_once($directory . "/" . $file);
 		}
 	}
@@ -1095,8 +1095,8 @@ function get_memory()
 	if(file_exists("/var/log/dmesg.boot"))
 		$mem = `cat /var/log/dmesg.boot | grep memory`;
 	else
-		$mem = `dmesg -a | grep memory`;			
-	if (preg_match_all("/avail memory.* \((.*)MB\)/", $mem, $matches)) 
+		$mem = `dmesg -a | grep memory`;
+	if (preg_match_all("/avail memory.* \((.*)MB\)/", $mem, $matches))
 		return array($matches[1][0], $matches[1][0]);
 	if(!$real && !$avail) {
 		$real = trim(`sysctl hw.physmem | cut -d' ' -f2`);
@@ -1109,8 +1109,8 @@ function get_memory()
 function mute_kernel_msgs()
 {
 	global $config;
-	if($config['system']['enableserial']) 
-		return;			
+	if($config['system']['enableserial'])
+		return;
 	exec("/sbin/conscontrol mute on");
 }
 
@@ -1184,7 +1184,7 @@ function timeout($timer = 9)
 		if ($timer == 0)
 			break;
 	}
-	return $key;	
+	return $key;
 }
 
 function msort($array, $id="id", $sort_ascending=true)
@@ -1216,7 +1216,7 @@ function msort($array, $id="id", $sort_ascending=true)
 function color($color = "0m")
 {
 	global $TERM;
-	if(!$TERM) 
+	if(!$TERM)
 		$TERM=`/usr/bin/env | grep color`;
 	if(!$TERM)
 		$TERM=`/usr/bin/env | grep cons25`;
@@ -1224,23 +1224,23 @@ function color($color = "0m")
 		$ESCAPE=chr(27);
 		switch ($color) {
 			case "black":
-				return "{$ESCAPE}[30m"; 
+				return "{$ESCAPE}[30m";
 			case "red":
-				return "{$ESCAPE}[31m"; 
+				return "{$ESCAPE}[31m";
 			case "green":
-				return "{$ESCAPE}[32m"; 
+				return "{$ESCAPE}[32m";
 			case "yellow":
-				return "{$ESCAPE}[33m"; 
+				return "{$ESCAPE}[33m";
 			case "blue":
-				return "{$ESCAPE}[34m"; 
+				return "{$ESCAPE}[34m";
 			case "magenta":
-				return "{$ESCAPE}[35m"; 
+				return "{$ESCAPE}[35m";
 			case "cyan":
-				return "{$ESCAPE}[36m"; 
+				return "{$ESCAPE}[36m";
 			case "white":
-				return "{$ESCAPE}[37m"; 
+				return "{$ESCAPE}[37m";
 			case "default":
-				return "{$ESCAPE}[39m"; 
+				return "{$ESCAPE}[39m";
 		}
 		return "{$ESCAPE}[{$color}";
 	}
@@ -1250,7 +1250,7 @@ function is_URL($url)
 {
 	$match = preg_match("'\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))'", $url);
 	if($match)
-		return true;	
+		return true;
 	return false;
 }
 
@@ -1259,7 +1259,7 @@ function is_file_included($file = "")
 	$files = get_included_files();
 	if (in_array($file, $files))
 		return true;
-	
+
 	return false;
 }
 
@@ -1296,7 +1296,7 @@ function get_staticroutes($returnsubnetsonly = false)
 			$allsubnets[] = $route['network'];
 		}
 	}
-	
+
 	if ($returnsubnetsonly)
 	{
 		return $allsubnets;

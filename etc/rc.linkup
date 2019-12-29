@@ -1,43 +1,43 @@
 #!/usr/local/bin/php -f
 <?php
 /*
-        rc.linkup - devd hotplug actions
-        part of pfSense
+  rc.linkup - devd hotplug actions
+  part of pfSense
 
-        Copyright (C) 2003-2005 Scott Ullrich <sullrich@gmail.com>.
-        All rights reserved.
+  Copyright (C) 2003-2005 Scott Ullrich <sullrich@gmail.com>.
+  All rights reserved.
 
-        Redistribution and use in source and binary forms, with or without
-        modification, are permitted provided that the following conditions are met:
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
 
-        1. Redistributions of source code must retain the above copyright notice,
-           this list of conditions and the following disclaimer.
+  1. Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
 
-        2. Redistributions in binary form must reproduce the above copyright
-           notice, this list of conditions and the following disclaimer in the
-           documentation and/or other materials provided with the distribution.
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
 
-        THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
-        INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
-        AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-        AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
-        OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-        SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-        INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-        CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-        ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-        POSSIBILITY OF SUCH DAMAGE.
+  THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+  AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+  AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
+  OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE.
 */
 
 /* parse the configuration and include all functions used below */
 require_once("globals.inc");
 require_once("config.inc");
-require_once("filter.inc");	
-require_once("shaper.inc");	
+require_once("filter.inc");
+require_once("shaper.inc");
 require_once("interfaces.inc");
 
 function handle_argument_group($iface, $argument2) {
-	global $config;	
+	global $config;
 
 	$ipaddr = $config['interfaces'][$iface]['ipaddr'];
 	if (is_ipaddr($ipaddr) || empty($ipaddr)) {
@@ -59,7 +59,7 @@ function handle_argument_group($iface, $argument2) {
 			interfaces_staticarp_configure($iface);
 			log_error("HOTPLUG: Configuring interface {$iface}");
 			// Do not try to readd to bridge otherwise em(4) has problems
-			interface_configure($iface, false, true); 
+			interface_configure($iface, false, true);
 			break;
 		case "up":
 			log_error("DEVD Ethernet attached event for {$iface}");

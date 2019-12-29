@@ -57,7 +57,9 @@ $config = parse_config(true);
 echo "    Ayarlar yeniden yükleniyor...\n";
 filter_configure_sync();
 echo "    NUCLEWALL'a WAN arayüzünden eriþime izin verildi.\n\n    Devam etmek için <ENTER> a basýn. ";
+
 fgets($fp);
 fclose($fp);
+
 exit;
 ?>

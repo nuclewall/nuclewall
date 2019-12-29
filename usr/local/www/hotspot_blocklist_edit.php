@@ -1,7 +1,7 @@
 <?php
 /*
 	hotspot_blocklist_edit.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -17,10 +17,10 @@ if (file_exists("{$g['vardb_path']}/captiveportal.db"))
 {
 	$captiveportallck = lock('captiveportaldb');
 	$cpcontents = file("{$g['vardb_path']}/captiveportal.db", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-	unlock($captiveportallck);	
+	unlock($captiveportallck);
 }
 
-if($connection) 
+if($connection)
 {
 	if (($_GET['act'] == 'new') && is_mac($_GET['mac']))
 	{
@@ -30,7 +30,7 @@ if($connection)
 	if (($_GET['act'] == 'edit') && is_mac($_GET['mac']))
 	{
 		$mac_addr = $_GET['mac'];
-		
+
 		$getInfo = $pdo->prepare("
 			SELECT mac_addr AS mac, description
 			FROM blocklist
@@ -63,9 +63,9 @@ if($connection)
 			foreach ($cpcontents as $cpcontent)
 			{
 				$cpent = explode(",", $cpcontent);
-				
+
 				$mac_dash = str_replace(':', '-', $cpent[3]);
-				
+
 				if($mac_dash == $mac_addr )
 				{
 					$usession = $cpent[5];
@@ -79,7 +79,7 @@ if($connection)
 				captiveportal_disconnect_client($usession);
 		}
 
-		if(!is_mac($mac_addr)) 
+		if(!is_mac($mac_addr))
 		{
 			$input_errors[] = "'$mac_addr' geçerli bir MAC adresi değil.";
 			$macError = true;
@@ -111,7 +111,7 @@ if($connection)
 		{
 			/* If editing an user */
 			if(!empty($currentmac))
-			{				
+			{
 				$updateMac = $pdo->prepare("
 					UPDATE blocklist
 					SET mac_addr = :mac,
@@ -122,20 +122,20 @@ if($connection)
 				$updateMac->bindParam(':mac', $mac_addr);
 				$updateMac->bindParam(':currentmac', $currentmac);
 				$updateMac->bindParam(':description', $description);
-			
+
 				$macUpdated = $updateMac->execute();
-				
+
 				if($macUpdated)
-				{					
+				{
 					/* Delete from radacct table */
 					$delacct = $pdo->prepare("
 						DELETE FROM radacct
 						WHERE username = :mac
 					");
-					
+
 					$delacct->bindParam(':mac', $currentmac);
 					$db = $delacct->execute();
-					
+
 					header('Location: hotspot_blocklist.php');
 				}
 				else
@@ -146,21 +146,21 @@ if($connection)
 			else
 			{
 				$createMac = $pdo->prepare("
-					INSERT INTO 
+					INSERT INTO
 					blocklist(mac_addr, description)
 					VALUES(:mac, :description)
 				");
-				
+
 				$createMac->bindParam(':mac', $mac_addr);
 				$createMac->bindParam(':description', $description);
-				
+
 				$macCreated = $createMac->execute();
-				
+
 				if($macCreated)
 				{
 					$savemsg = "'$mac_addr' MAC adresinin internete erişimi engellendi.";
 				}
-				else 
+				else
 				{
 					$input_errors[] = "'$mac_addr' MAC adresi engellenemedi.";
 				}

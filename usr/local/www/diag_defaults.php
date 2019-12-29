@@ -3,7 +3,7 @@
 	diag_defaults.php
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2004-2009 Scott Ullrich
 	All rights reserved.
 

@@ -2,7 +2,7 @@
 /*
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2010 Ermal Luçi
 	All rights reserved.
 
@@ -88,7 +88,7 @@ function index_users()
 function & getUserEntry($name)
 {
 	global $config, $userindex;
-	
+
 	if (isset($userindex[$name]))
 		return $config['system']['user'][$userindex[$name]];
 }
@@ -127,19 +127,19 @@ function & getGroupEntryByGID($gid)
 function get_user_privileges(& $user)
 {
 	$privs = $user['priv'];
-	
+
 	if (!is_array($privs))
 		$privs = array();
-	
+
 	$names = local_user_get_groups($user, true);
-	
+
 	foreach ($names as $name)
 	{
 		$group = getGroupEntry($name);
 		if (is_array($group['priv']))
 			$privs = array_merge( $privs, $group['priv']);
 	}
-	
+
 	return $privs;
 }
 
@@ -197,7 +197,7 @@ function local_sync_accounts()
 			if (((!strncmp($line[0], "_", 1)) || ($line[2] < 2000) || ($line[2] > 65000)) && ($line[0] != "admin"))
 				continue;
 			$cmd = "/usr/sbin/pw userdel -n '{$line[0]}'";
-			
+
 			mwexec($cmd);
 		}
 		pclose($fd);
@@ -244,14 +244,14 @@ function local_user_set(& $user)
 		return;
 	}
 
-	$home_base = "/home/";	
+	$home_base = "/home/";
 	$user_uid = $user['uid'];
 	$user_name = $user['name'];
 	$user_home = "{$home_base}{$user_name}";
 	$user_shell = "/etc/rc.initial.utf";
 	$user_group = "nobody";
 
-	if (!is_dir($home_base)) 
+	if (!is_dir($home_base))
 		mkdir($home_base, 0755);
 
 	$lock_account = false;
@@ -259,7 +259,7 @@ function local_user_set(& $user)
 	if (userHasPrivilege($user, "user-shell-access") || userHasPrivilege($user, "page-all"))
 	{
 		$user_shell = "/bin/tcsh";
-	} 
+	}
 	else
 	{
 		$user_shell = "/sbin/nologin";
@@ -292,11 +292,11 @@ function local_user_set(& $user)
 	else
 		$user_op = "usermod";
 
-	$comment = str_replace(array(":", "!", "@"), " ", $user['descr']); 
+	$comment = str_replace(array(":", "!", "@"), " ", $user['descr']);
 	$cmd = "/usr/sbin/pw {$user_op} -q -u {$user_uid} -n {$user_name}".
 			" -g {$user_group} -s {$user_shell} -d {$user_home}".
 			" -c ".escapeshellarg($comment)." -H 0 2>&1";
-	
+
 	$fd = popen($cmd, "w");
 	fwrite($fd, $user['password']);
 	pclose($fd);
@@ -306,7 +306,7 @@ function local_user_set(& $user)
 		mkdir($user_home, 0700);
 		mwexec("/bin/cp /root/.* {$home_base}/", true);
 	}
-	
+
 	chown($user_home, $user_name);
 	chgrp($user_home, $user_group);
 
@@ -322,7 +322,7 @@ function local_user_set(& $user)
 		file_put_contents("{$user_home}/.ssh/authorized_keys", $keys);
 		chown("{$user_home}/.ssh/authorized_keys", $user_name);
 	}
-	
+
 	else
 		unlink_if_exists("{$user_home}/.ssh/authorized_keys");
 
@@ -499,7 +499,7 @@ function local_group_set($group, $reset = false)
 		$group_op = "groupmod";
 
 	$cmd = "/usr/sbin/pw {$group_op} {$group_name} -g {$group_gid} -M {$group_members} 2>&1";
-	
+
 	mwexec($cmd);
 }
 
@@ -512,7 +512,7 @@ function local_group_del($group)
 function get_user_expiration_date($username)
 {
 	$user = getUserEntry($username);
-	if ($user['expires']) 
+	if ($user['expires'])
 		return $user['expires'];
 }
 
@@ -581,7 +581,7 @@ function session_auth()
 				header("Location: {$page}");
 			}
 			exit;
-		} 
+		}
 		else
 		{
 			$_SESSION['Login_Error'] = "Kullanýcý adý veya parola hatalý.";
@@ -599,7 +599,7 @@ function session_auth()
 			$_GET['logout'] = true;
 			$_SESSION['Logout'] = true;
 		} else
-			$_SESSION['last_access'] = time();	
+			$_SESSION['last_access'] = time();
 	}
 	else
 	{
@@ -607,7 +607,7 @@ function session_auth()
 		{
 			$_GET['logout'] = true;
 			$_SESSION['Logout'] = true;
-		} 
+		}
 	}
 
 	if (isset($_GET['logout']))

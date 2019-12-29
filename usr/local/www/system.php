@@ -1,10 +1,10 @@
 <?php
 /*
 	system.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
 	All rights reserved.
 	Redistribution and use in source and binary forms, with or without
@@ -69,7 +69,7 @@ if($pconfig['timezone'] <> $_POST['timezone'])
 	if($pid) {
 		mwexec("/bin/kill $pid");
 		usleep(1000);
-	}		
+	}
 	filter_pflog_start();
 }
 
@@ -103,18 +103,18 @@ if ($_POST)
 
 	if ($_POST['domain'] && !is_domain($_POST['domain']))
 		$input_errors[] = "Alan adı sadece a-z, 0-9, '-' ve '.' karakterlerinden oluşabilir.";
-	
+
 	if(($_POST['dns1'] && !is_ipaddr($_POST['dns1'])) || ($_POST['dns2'] && !is_ipaddr($_POST['dns2'])))
 		$input_errors[] = "1. ve 2. DNS sunucuları için geçerli bir ip adresi belirtilmelidir.";
-		
+
 	if(($_POST['dns3'] && !is_ipaddr($_POST['dns3'])) || ($_POST['dns4'] && !is_ipaddr($_POST['dns4'])))
 		$input_errors[] = "3. ve 4. DNS sunucuları için geçerli bir ip adresi belirtilmelidir.";
-	
+
 	if($_POST['webguiport'] && (!is_numericint($_POST['webguiport']) || ($_POST['webguiport'] < 1) || ($_POST['webguiport'] > 65535)))
 		$input_errors[] = "Web arayüzü için geçerli bir TCP/IP portu belirtilmelidir.";
 
 	$direct_networks_list = explode(" ", filter_get_direct_networks_list());
-	
+
 	for ($dnscounter=1; $dnscounter<5; $dnscounter++)
 	{
 		$dnsitem = "dns{$dnscounter}";
@@ -167,26 +167,26 @@ if ($_POST)
 		else
 			unset($config['system']['dnslocalhost']);
 
-		if($_POST['dns1gwint']) 
+		if($_POST['dns1gwint'])
 			$config['system']['dns1gwint'] = $pconfig['dns1gwint'];
-		else 
+		else
 			unset($config['system']['dns1gwint']);
 
-		if($_POST['dns2gwint']) 
+		if($_POST['dns2gwint'])
 			$config['system']['dns2gwint'] = $pconfig['dns2gwint'];
 		else
 			unset($config['system']['dns2gwint']);
 
-		if($_POST['dns3gwint']) 
+		if($_POST['dns3gwint'])
 			$config['system']['dns3gwint'] = $pconfig['dns3gwint'];
-		else 
+		else
 			unset($config['system']['dns3gwint']);
 
-		if($_POST['dns4gwint']) 
+		if($_POST['dns4gwint'])
 			$config['system']['dns4gwint'] = $pconfig['dns4gwint'];
 		else
 			unset($config['system']['dns4gwint']);
-		
+
 		if($_POST['disablefilter'] == "yes")
 			$config['system']['disablefilter'] = "enabled";
 		else
@@ -207,7 +207,7 @@ if ($_POST)
 			$retval |= send_event("service reload dns");
 
 		$retval |= filter_configure();
-		
+
 		$savemsg = get_std_save_message($retval);
 	}
 }
@@ -244,7 +244,7 @@ if ($savemsg)
 							Güvenlik duvarını <b>devre dışı</b> bırakmak için işaretleyin.
 						</label>
 					</td>
-					
+
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Sunucu Adı</td>
@@ -282,7 +282,7 @@ if ($savemsg)
 										<?php
 											$interface = "none";
 											$dnsgw = "dns{$dnscounter}gwint";
-											
+
 											if($pconfig[$dnsgw] == $interface)
 												$selected = "selected";
 											else

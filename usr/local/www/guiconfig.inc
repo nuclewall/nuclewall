@@ -1,10 +1,10 @@
 <?php
 /*
 	guiconfig.inc
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	by Scott Ullrich, Copyright 2004, All rights reserved.
 	originally based on of m0n0wall (http://m0n0.ch/wall)
 
@@ -68,20 +68,20 @@ if(!$ignorefirmwarelock) {
 	}
 }
 
-$firewall_rules_dscp_types = array("af11", 
-				"af12", 
-				"af13", 
-				"af21", 
-				"af22", 
-				"af23", 
-				"af31", 
-				"af32", 
-				"af33", 
-				"af41", 
-				"af42", 
-				"af43", 
-				"EF", 
-				"1-64", 
+$firewall_rules_dscp_types = array("af11",
+				"af12",
+				"af13",
+				"af21",
+				"af22",
+				"af23",
+				"af31",
+				"af32",
+				"af33",
+				"af41",
+				"af42",
+				"af43",
+				"EF",
+				"1-64",
 				"0x10",
 				"0x04-0xfc");
 
@@ -135,7 +135,7 @@ $netbios_nodetypes = array(
 
 /* some well knows ports */
 $wkports = array(
-	5999 => "CVSup",	
+	5999 => "CVSup",
 	53 => "DNS",
 	21 => "FTP",
 	3000 => "HBCI",
@@ -163,7 +163,7 @@ $wkports = array(
 	1194 => "OpenVPN",
 	110 => "POP3",
 	995 => "POP3/S",
-	1723 => "PPTP",	
+	1723 => "PPTP",
 	1812 => "RADIUS",
 	1813 => "RADIUS accounting",
 	5004 => "RTP",
@@ -233,7 +233,7 @@ EOF;
 	print <<<EOF2
 	</div>
 EOF2;
-	
+
 }
 
 function verify_gzip_file($fname)
@@ -254,7 +254,7 @@ function print_info_box_np($msg, $save=false) {
 			$savebutton .= "<input type='hidden' name='if' value='" . htmlspecialchars($_POST['if']) . "'>";
 		$alert= 'alert-danger';
 	}
-		
+
 	if(!$savebutton) {
 		$alert= 'alert-success';
 		$savebutton = '';
@@ -267,22 +267,22 @@ function print_info_box_np($msg, $save=false) {
 	<span>{$msg}</span>
 	{$savebutton}
 </div>
-		
+
 EOFnp;
 
 }
 
 function print_info_box_np_undo($msg, $name="apply",$value="Uygula", $undo)
 {
-	
+
 	if(stristr($msg, "apply") != false || stristr($msg, "save") != false || stristr($msg, "create") != false) {
 		$savebutton = " <input type=\"button\" value=\"Undo\" onClick=\"document.location='{$undo}'\">";
 		$savebutton .= " <input name=\"{$name}\" type=\"submit\" class=\"btn btn-danger\" id=\"${name}\" value=\"{$value}\">";
-		if($_POST['if']) 
+		if($_POST['if'])
 			$savebutton .= "<input type='hidden' name='if' value='" . htmlspecialchars($_POST['if']) . "'>";
 		$alert= 'alert-warning';
 	}
-		
+
 	if(!$savebutton) {
 		$alert= 'alert-success';
 		$savebutton = '';
@@ -296,7 +296,7 @@ function print_info_box_np_undo($msg, $name="apply",$value="Uygula", $undo)
 	{$savebutton}
 	{$undobutton}
 </div>
-	
+
 
 EOFnp;
 
@@ -313,9 +313,9 @@ function get_std_save_message($ok)
 	$filter_related = false;
 	$filter_pages = array("nat", "filter");
 	$to_return = "Değişiklikler başarıyla uygulandı.";
-	foreach($filter_pages as $fp) 
+	foreach($filter_pages as $fp)
 		if(stristr($_SERVER['SCRIPT_FILENAME'], $fp))
-			$filter_related = true;	
+			$filter_related = true;
 	return $to_return;
 }
 
@@ -435,12 +435,12 @@ function clear_log_file($logfile = "/var/log/system.log")
 		unlink($logfile);
 		touch($logfile);
 	} else {
-		if(isset($config['system']['usefifolog'])) 
+		if(isset($config['system']['usefifolog']))
 			exec("/usr/sbin/fifolog_create -s 511488 {$logfile}");
 		else
 			exec("/usr/sbin/clog -i -s 511488 {$logfile}");
 	}
-	system_syslogd_start();	
+	system_syslogd_start();
 }
 
 function dump_clog($logfile, $tail, $grepfor = "")
@@ -449,38 +449,38 @@ function dump_clog($logfile, $tail, $grepfor = "")
 	$sor = isset($config['syslog']['reverse']) ? "-r" : "";
 	$logarr = "";
 	$grepline = "  ";
-	
+
 	if(is_array($grepfor))
 	{
 		foreach($grepfor as $agrep)
 			$grepline .= " | grep \"$agrep\"";
 	}
-	
+
 	if(is_array($grepinvert))
 	{
 		foreach($grepinvert as $agrep)
 			$grepline .= " | grep -v \"$agrep\"";
 	}
-	
+
 	if(file_exists($logfile) && filesize($logfile) == 0)
 	{
 		$logarr = array("Log file started.");
-	} 
+	}
 	else
 	{
 		exec("/usr/sbin/clog {$logfile}{$grepline}| grep -v \"CLOG\" | grep -v \"\033\" | /usr/bin/tail {$sor} -n {$tail} | /usr/bin/uniq", $logarr);
 	}
-	 
+
 	foreach ($logarr as $logent)
 	{
 		$logent = preg_split("/\s+/", $logent, 6);
 		echo "<tr>\n";
-		
+
 		$dt = strtotime(join(' ', array_slice($logent, 0, 3)));
 		$entry_date_time =  strftime("%T - %e %B", $dt);
 		$entry_text = ($logent[3] == $config['system']['hostname']) ? "" : $logent[3] . " ";
 		$entry_text .= htmlspecialchars($logent[4] . " " . $logent[5]);
-		
+
 		echo "<td class=\"cell logd\">{$entry_date_time}</td>\n";
 		echo "<td class=\"cell logm\">{$entry_text}</td>\n";
 		echo "</tr>\n";
@@ -493,38 +493,38 @@ function dump_clog_auth($logfile, $tail, $grepfor = "")
 	$sor = isset($config['syslog']['reverse']) ? "-r" : "";
 	$logarr = "";
 	$grepline = "  ";
-	
+
 	if(is_array($grepfor))
 	{
 		foreach($grepfor as $agrep)
 			$grepline .= " | grep \"$agrep\"";
 	}
-	
+
 	if(is_array($grepinvert))
 	{
 		foreach($grepinvert as $agrep)
 			$grepline .= " | grep -v \"$agrep\"";
 	}
-	
+
 	if(file_exists($logfile) && filesize($logfile) == 0)
 	{
 		$logarr = array("Log file started.");
-	} 
+	}
 	else
 	{
 		exec("/usr/sbin/clog {$logfile}{$grepline}| grep -v \"CLOG\" | grep -v \"\033\" | grep -v \"squid\" | /usr/bin/tail {$sor} -n {$tail} | /usr/bin/uniq", $logarr);
 	}
-	 
+
 	foreach ($logarr as $logent)
 	{
 		$logent = preg_split("/\s+/", $logent, 6);
 		echo "<tr>\n";
-		
+
 		$dt = strtotime(join(' ', array_slice($logent, 0, 3)));
 		$entry_date_time =  strftime("%T - %e %B", $dt);
 		$entry_text = ($logent[3] == $config['system']['hostname']) ? "" : $logent[3] . " ";
 		$entry_text .= htmlspecialchars($logent[4] . " " . $logent[5]);
-		
+
 		echo "<td class=\"cell logd\">{$entry_date_time}</td>\n";
 		echo "<td class=\"cell logm\">{$entry_text}</td>\n";
 		echo "</tr>\n";
@@ -537,23 +537,23 @@ function dump_mysql($logfile, $tail, $grepfor = "")
 	$sor = isset($config['syslog']['reverse']) ? "-r" : "";
 	$logarr = "";
 	$grepline = "  ";
-	
+
 	if(is_array($grepfor))
 	{
 		foreach($grepfor as $agrep)
 			$grepline .= " | grep \"$agrep\"";
 	}
-	
+
 	if(is_array($grepinvert))
 	{
 		foreach($grepinvert as $agrep)
 			$grepline .= " | grep -v \"$agrep\"";
 	}
-	
+
 	exec("/bin/cat {$logfile}{$grepline}| grep . | /usr/bin/tail {$sor} -n {$tail} | /usr/bin/uniq > /tmp/mysql.log");
-	
+
 	$log = fopen("/tmp/mysql.log", "r");
-	
+
 	if ($log)
 	{
 		while (($line = fgets($log)) !== false)
@@ -561,45 +561,45 @@ function dump_mysql($logfile, $tail, $grepfor = "")
 			$message = '';
 			$datetime = '';
 			$has_date = preg_match("#^[0-9]{6}(.*)$#i", $line);
-			
+
 			if($has_date)
 			{
 				$line_a = split(' {1,2}', $line);
 				$date = $line_a[0];
 				$time = $line_a[1];
-				
+
 				$year = '20' . substr($date, 0, 2);
 				$month = substr($date, 2, 2);
 				$day = substr($date, 4, 2);
-				
+
 				$fulltime = $day . '-' . $month . '-' . $year . ' ' . $time;
 				$datetime = strftime("%T - %e %B", strtotime($fulltime));
-				
+
 				unset($line_a[0]);
 				unset($line_a[1]);
-				
+
 				$message = implode(' ', $line_a);
 			}
-			
+
 			else
 			{
 				$message = $line;
 			}
-			
+
 			echo "<tr>\n";
 			echo "<td class=\"cell logd\">{$datetime}</td>\n";
 			echo "<td class=\"cell logm\">{$message}</td>\n";
 			echo "</tr>\n";
 		}
-		
+
 		fclose($log);
 
-	} 
-	
-	else 
+	}
+
+	else
 	{
 		log_error('Log dosyası açılamadı');
-	} 
+	}
 }
 
 function dump_radius($logfile, $tail, $grepfor = "")
@@ -608,31 +608,31 @@ function dump_radius($logfile, $tail, $grepfor = "")
 	$sor = isset($config['syslog']['reverse']) ? "-r" : "";
 	$logarr = "";
 	$grepline = "  ";
-	
+
 	if(is_array($grepfor))
 	{
 		foreach($grepfor as $agrep)
 			$grepline .= " | grep \"$agrep\"";
 	}
-	
+
 	if(is_array($grepinvert))
 	{
 		foreach($grepinvert as $agrep)
 			$grepline .= " | grep -v \"$agrep\"";
 	}
-	
+
 	exec("/bin/cat {$logfile}{$grepline}| grep . | /usr/bin/tail {$sor} -n {$tail} | /usr/bin/uniq > /tmp/radius.log");
-	
+
 	$log = fopen("/tmp/radius.log", "r");
-	
+
 	if ($log)
 	{
 		while (($line = fgets($log)) !== false)
 		{
-			
+
 			$line_a = split(' :', $line);
 			$date = $line_a[0];
-			
+
 			$message = $line_a[1];
 			$datetime = strftime("%T - %e %B", strtotime($date));
 
@@ -642,12 +642,12 @@ function dump_radius($logfile, $tail, $grepfor = "")
 			echo "</tr>\n";
 		}
 		fclose($log);
-	} 
-	
-	else 
+	}
+
+	else
 	{
 		log_error('Log dosyası açılamadı');
-	} 
+	}
 }
 
 function return_clog($logfile, $tail, $withorig = true, $grepfor = "", $grepinvert = "", $grepreverse = false) {
@@ -665,7 +665,7 @@ function return_clog($logfile, $tail, $withorig = true, $grepfor = "", $grepinve
 		exec("cat {$logfile}{$grepline} | /usr/bin/tail {$sor} -n {$tail}", $logarr);
 	} else {
 		if(isset($config['system']['usefifolog'])) {
-			exec("/usr/sbin/fifolog_reader {$logfile}{$grepline} | /usr/bin/tail {$sor} -n {$tail}", $logarr);			
+			exec("/usr/sbin/fifolog_reader {$logfile}{$grepline} | /usr/bin/tail {$sor} -n {$tail}", $logarr);
 		} else {
 			exec("/usr/sbin/clog {$logfile}{$grepline}| grep -v \"CLOG\" | grep -v \"\033\" | /usr/bin/tail {$sor} -n {$tail}", $logarr);
 		}
@@ -708,12 +708,12 @@ function address_to_pconfig($adr, &$padr, &$pmask, &$pnot, &$pbeginport, &$pendp
 		if (!$pmask)
 			$pmask = 32;
 	}
-	
+
 	if (isset($adr['not']))
 		$pnot = 1;
 	else
 		$pnot = 0;
-	
+
 	if ($adr['port'])
 	{
                 list($pbeginport, $pendport) = explode("-", $adr['port']);
@@ -764,9 +764,9 @@ function is_specialnet($net)
 {
 	global $specialsrcdst;
 
-	if(!$net) 
+	if(!$net)
 		return false;
-	
+
 	if (in_array($net, $specialsrcdst))
 		return true;
 	else
@@ -781,7 +781,7 @@ function display_top_tabs(& $tab_array, $no_drop_down = false)
 		global $tab_array_indent;
 		global $tab_array_space;
 		global $tab_array_char_limit;
-		
+
 		if ($tab_array_indent == '')
 		{
 			$tab_array_indent = 0;
@@ -844,64 +844,64 @@ function rule_popup($src,$srcport,$dst,$dstport)
 	if($config['aliases']['alias'] <> "" and is_array($config['aliases']['alias']))
 	{
 		$span_begin = "";
-                $alias_src_span_begin = "";
-                $alias_src_span_end = "";
-                $alias_src_port_span_begin = "";
-                $alias_src_port_span_end = "";
-                $alias_dst_span_begin = "";
-                $alias_dst_span_end = "";
-                $alias_dst_port_span_begin = "";
-                $alias_dst_port_span_end = "";
-                $alias_content_text = "";
-        	foreach($config['aliases']['alias'] as $alias_name)
-        	{
-                	$alias_addresses = explode (" ", $alias_name['address']);
-                	$alias_details = explode ("||", $alias_name['detail']);
-                	$alias_objects_with_details = "";
-                	$counter = 0;
-			if ($alias_name['url']) {
-				$alias_objects_with_details .= $alias_name['url'] . "<br/>";
-			}
-                	foreach($alias_addresses as $alias_ports_address)
-                	{
-                        	$alias_objects_with_details .= $alias_addresses[$counter];
-                        	$alias_detail_default = strpos ($alias_details[$counter],"Entry added");
-                        	if ($alias_details[$counter] != "" && $alias_detail_default === False){
-                                	$alias_objects_with_details .=" - " . $alias_details[$counter];
-                        	}
-                        	$alias_objects_with_details .= "<br>";
-                        	$counter++;
-                	}
-                	//max character length for caption field
-                	$maxlength = 60;
+            $alias_src_span_begin = "";
+            $alias_src_span_end = "";
+            $alias_src_port_span_begin = "";
+            $alias_src_port_span_end = "";
+            $alias_dst_span_begin = "";
+            $alias_dst_span_end = "";
+            $alias_dst_port_span_begin = "";
+            $alias_dst_port_span_end = "";
+            $alias_content_text = "";
+        foreach($config['aliases']['alias'] as $alias_name)
+        {
+            	$alias_addresses = explode (" ", $alias_name['address']);
+            	$alias_details = explode ("||", $alias_name['detail']);
+            	$alias_objects_with_details = "";
+            	$counter = 0;
+		if ($alias_name['url']) {
+			$alias_objects_with_details .= $alias_name['url'] . "<br/>";
+		}
+            	foreach($alias_addresses as $alias_ports_address)
+            	{
+                    	$alias_objects_with_details .= $alias_addresses[$counter];
+                    	$alias_detail_default = strpos ($alias_details[$counter],"Entry added");
+                    	if ($alias_details[$counter] != "" && $alias_detail_default === False){
+                            	$alias_objects_with_details .=" - " . $alias_details[$counter];
+                    	}
+                    	$alias_objects_with_details .= "<br>";
+                    	$counter++;
+            	}
+            	//max character length for caption field
+            	$maxlength = 60;
 
-                	$alias_descr_substr = $alias_name['descr'];
-                	$alias_content_text = htmlspecialchars($alias_objects_with_details);
-                	$alias_caption = htmlspecialchars($alias_descr_substr . ":");
-                	$strlength = strlen ($alias_caption);
-                	if ($strlength >= $maxlength)
-                        	$alias_caption = substr($alias_caption, 0, $maxlength) . "...";
+            	$alias_descr_substr = $alias_name['descr'];
+            	$alias_content_text = htmlspecialchars($alias_objects_with_details);
+            	$alias_caption = htmlspecialchars($alias_descr_substr . ":");
+            	$strlength = strlen ($alias_caption);
+            	if ($strlength >= $maxlength)
+                    	$alias_caption = substr($alias_caption, 0, $maxlength) . "...";
 
-			$alias_caption_escaped = str_replace("'", "\'", $alias_caption);
-			$alias_content_escaped = str_replace("'", "\'", $alias_content_text);
-			$span_begin = "<span style=\"cursor: help;\" onmouseover=\"domTT_activate(this, event, 'content', '<h1>$alias_caption_escaped</h1><p>$alias_content_escaped</p>', 'trail', true, 'delay', 0, 'fade', 'both', 'fadeMax', 93, 'styleClass', 'niceTitle');\" onmouseout=\"this.style.color = ''; domTT_mouseout(this, event);\"><U>";
+		$alias_caption_escaped = str_replace("'", "\'", $alias_caption);
+		$alias_content_escaped = str_replace("'", "\'", $alias_content_text);
+		$span_begin = "<span style=\"cursor: help;\" onmouseover=\"domTT_activate(this, event, 'content', '<h1>$alias_caption_escaped</h1><p>$alias_content_escaped</p>', 'trail', true, 'delay', 0, 'fade', 'both', 'fadeMax', 93, 'styleClass', 'niceTitle');\" onmouseout=\"this.style.color = ''; domTT_mouseout(this, event);\"><U>";
 
-                	if ($alias_name['name'] == $src)
-                        	$alias_src_span_begin = $span_begin;
-                	if ($alias_name['name'] == $srcport)
-                        	$alias_src_port_span_begin = $span_begin;
-                	if ($alias_name['name'] == $dst)
-                        	$alias_dst_span_begin = $span_begin;
-                	if ($alias_name['name'] == $dstport)
-                        	$alias_dst_port_span_begin = $span_begin;
-        	}
-        	$descriptions = array ();
-        	$descriptions['src'] = $alias_src_span_begin;
-        	$descriptions['srcport'] = $alias_src_port_span_begin;
-        	$descriptions['dst'] = $alias_dst_span_begin;
-        	$descriptions['dstport'] = $alias_dst_port_span_begin;
+            	if ($alias_name['name'] == $src)
+                    	$alias_src_span_begin = $span_begin;
+            	if ($alias_name['name'] == $srcport)
+                    	$alias_src_port_span_begin = $span_begin;
+            	if ($alias_name['name'] == $dst)
+                    	$alias_dst_span_begin = $span_begin;
+            	if ($alias_name['name'] == $dstport)
+                    	$alias_dst_port_span_begin = $span_begin;
+        }
+        $descriptions = array ();
+        $descriptions['src'] = $alias_src_span_begin;
+        $descriptions['srcport'] = $alias_src_port_span_begin;
+        $descriptions['dst'] = $alias_dst_span_begin;
+        $descriptions['dstport'] = $alias_dst_port_span_begin;
 
-        	return $descriptions;
+        return $descriptions;
   	}
 }
 

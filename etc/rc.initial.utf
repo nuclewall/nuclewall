@@ -93,9 +93,9 @@ case ${opmode} in
 7)
         /etc/rc.initial.defaults.utf
         ;;
-8) 
+8)
 		php -f /etc/rc.initial.toggle_sshd.utf
-		;;	
+		;;
 9)
         /bin/tcsh
         ;;

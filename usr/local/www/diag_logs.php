@@ -1,10 +1,10 @@
 <?php
 /*
 	diag_logs.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2004-2009 Scott Ullrich
 	All rights reserved.
 
@@ -44,7 +44,7 @@ $nentries = $config['syslog']['nentries'];
 if (!$nentries)
 	$nentries = 50;
 
-if ($_GET['act'] == 'del') 
+if ($_GET['act'] == 'del')
 	clear_log_file($system_logfile);
 
 if ($_POST['filtertext'])
@@ -91,7 +91,7 @@ $pgtitle = array('OLAY GÜNLÜKLERÝ' , 'SÝSTEM');
 							<input style="height:20px" type="text" id="filtertext" name="filtertext" value="<?=$filtertext;?>" class="input-medium">
 							<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Ara</button>
 						</form>
-							
+
 						<table class="grids" width="100%">
 							<tr>
 								<td class="head">

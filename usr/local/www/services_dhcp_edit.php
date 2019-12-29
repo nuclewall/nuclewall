@@ -1,24 +1,24 @@
-<?php 
+<?php
 /* $Id$ */
 /*
 	services_dhcp_edit.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
 	All rights reserved.
-	
+
 	Redistribution and use in source and binary forms, with or without
 	modification, are permitted provided that the following conditions are met:
-	
+
 	1. Redistributions of source code must retain the above copyright notice,
 	   this list of conditions and the following disclaimer.
-	
+
 	2. Redistributions in binary form must reproduce the above copyright
 	   notice, this list of conditions and the following disclaimer in the
 	   documentation and/or other materials provided with the distribution.
-	
+
 	THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
 	INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
 	AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
@@ -53,7 +53,7 @@ require("guiconfig.inc");
 $if = $_GET['if'];
 if ($_POST['if'])
 	$if = $_POST['if'];
-	
+
 if (!$if) {
 	header("Location: services_dhcp.php");
 	exit;
@@ -91,15 +91,15 @@ if ($_POST) {
 	/* input validation */
 	$reqdfields = explode(" ", "mac");
 	$reqdfieldsn = array("MAC Adresi");
-	
+
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
-	
+
 	$_POST['mac'] = strtolower(str_replace("-", ":", $_POST['mac']));
-	
+
 	if ($_POST['hostname']) {
 		preg_match("/\-\$/", $_POST['hostname'], $matches);
 		if($matches)
-			$input_errors[] = "Sunucu adı RFC952'ye göre '-' ile bitemez.";		
+			$input_errors[] = "Sunucu adı RFC952'ye göre '-' ile bitemez.";
 		if (!is_hostname($_POST['hostname'])) {
 			$input_errors[] = "Sunucu adı sadece A-Z, 0-9 ve '-' karakterlerini içerebilir.";
 		} else {
@@ -114,7 +114,7 @@ if ($_POST) {
 	if (($_POST['mac'] && !is_macaddr($_POST['mac']))) {
 		$input_errors[] = "Geçerli bir MAC adresi girilmelidir.";
 	}
-	
+
 	foreach ($a_maps as $mapent) {
 		if (isset($id) && ($a_maps[$id]) && ($a_maps[$id] === $mapent))
 			continue;
@@ -124,7 +124,7 @@ if ($_POST) {
 			break;
 		}
 	}
-		
+
 
 	if ($_POST['ipaddr']) {
 		$dynsubnet_start = ip2ulong($config['dhcpd'][$if]['range']['from']);
@@ -154,12 +154,12 @@ if ($_POST) {
 		else
 			$a_maps[] = $mapent;
 		staticmaps_sort($if);
-		
+
 		write_config();
 
 		if(isset($config['dhcpd'][$if]['enable'])) {
 			mark_subsystem_dirty('staticmaps');
-			if (isset($config['dnsmasq']['regdhcpstatic']))	
+			if (isset($config['dnsmasq']['regdhcpstatic']))
 				mark_subsystem_dirty('hosts');
 		}
 
@@ -187,45 +187,45 @@ $logurl = "diag_logs_dhcp.php";
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
 					<td colspan="2" valign="top" class="listtopic">SABİT IP ADRESİ DÜZENLE</td>
-				</tr>	
-				<tr> 
+				</tr>
+				<tr>
 					<td valign="top" class="vncell">MAC Adresi</td>
-					<td class="vtable"> 
+					<td class="vtable">
 						<input name="mac" type="text" id="mac" value="<?=htmlspecialchars($pconfig['mac']);?>">
 						<br>Sabit IP adresi verilecek istemcinin MAC adresini <em>xx:xx:xx:xx:xx:xx</em> biçiminde girin.
 					</td>
 				</tr>
-				<tr> 
+				<tr>
 					<td valign="top" class="vncell">IP Adresi</td>
-					<td class="vtable"> 
+					<td class="vtable">
 						<input name="ipaddr" type="text" id="ipaddr" value="<?=htmlspecialchars($pconfig['ipaddr']);?>">
 						<br>
 						<b>NOT: </b>Bu alan boş bırakılırsa otomatik IP dağıtım aralığından rastgele bir IP adresi seçilecektir.
 					</td>
 				</tr>
-				<tr> 
+				<tr>
 					<td valign="top" class="vncell">Sunucu Adı</td>
-					<td class="vtable"> 
+					<td class="vtable">
 						<input name="hostname" type="text" id="hostname" value="<?=htmlspecialchars($pconfig['hostname']);?>">
 						<br>Alan adı kısmı olmadan bir sunucu adı girin.
 					</td>
-				</tr>				
-				<tr> 
+				</tr>
+				<tr>
 					<td valign="top" class="vncell">Açıklama</td>
-					<td class="vtable"> 
-						<input name="descr" type="text" id="descr" size="40" value="<?=htmlspecialchars($pconfig['descr']);?>"> 
+					<td class="vtable">
+						<input name="descr" type="text" id="descr" size="40" value="<?=htmlspecialchars($pconfig['descr']);?>">
 						<br>İsteğe bağlı bir açıklama girebilirsiniz.
 					</td>
 				</tr>
-				<tr> 
+				<tr>
 					<td class="vncell"></td>
-					<td class="vtable"> 
+					<td class="vtable">
 						<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
 						<a class="btn" href="services_dhcp.php">İptal</a>
 						<?php if (isset($id) && $a_maps[$id]): ?>
 						<input name="id" type="hidden" value="<?=htmlspecialchars($id);?>">
 						<?php endif; ?>
-						<input name="if" type="hidden" value="<?=htmlspecialchars($if);?>"> 
+						<input name="if" type="hidden" value="<?=htmlspecialchars($if);?>">
 					</td>
 				</tr>
 			</table>

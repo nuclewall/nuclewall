@@ -2,10 +2,10 @@
 /* $Id$ */
 /*
 	firewall_aliases_edit.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2004 Scott Ullrich
 	Copyright (C) 2009 Ermal Luçi
 	Copyright (C) 2010 Jim Pingle
@@ -52,13 +52,13 @@ $reserved_keywords = array_merge($reserved_keywords, $reserved_ifs);
 if (!is_array($config['aliases']['alias']))
 	$config['aliases']['alias'] = array();
 $a_aliases = &$config['aliases']['alias'];
-	
+
 if($_POST)
 	$origname = $_POST['origname'];
 
 function alias_same_type($name, $type) {
 	global $config;
-	
+
 	foreach ($config['aliases']['alias'] as $alias) {
 		if ($name == $alias['name']) {
 			if (in_array($type, array("host", "network")) &&
@@ -87,7 +87,7 @@ if (isset($id) && $a_aliases[$id]) {
 
 	$iflist = get_configured_interface_with_descr(false, true);
 	foreach ($iflist as $if => $ifdesc)
-		if($ifdesc == $pconfig['descr']) 
+		if($ifdesc == $pconfig['descr'])
 			$input_errors[] = sprintf("%s adında bir ağ arayüzü zaten mevcut.", $pconfig['descr']);
 
 	if($a_aliases[$id]['type'] == "urltable") {
@@ -137,7 +137,7 @@ if ($_POST) {
 		}
 	}
 
-	foreach($reserved_keywords as $rk) 
+	foreach($reserved_keywords as $rk)
 		if($rk == $_POST['name'])
 			$input_errors[] = sprintf("%s anahtar kelimesi takma ad olarak kullanılamaz.", $rk);
 
@@ -147,7 +147,7 @@ if ($_POST) {
 			break;
 		}
 	}
-	
+
 	$alias = array();
 	$address = array();
 	$final_address_details = array();
@@ -318,7 +318,7 @@ if ($_POST) {
 		write_config();
 
 		header("Location: firewall_aliases.php");
-		exit;		
+		exit;
 	}
 	else
 	{
@@ -579,12 +579,12 @@ EOD;
 												$address = $item2[0];
 												$address_subnet = $item2[1];
 											}
-											
+
 										}
 										$item4 = base64_decode($item3[$counter]);
 										$tracker = $counter;
 								?>
-								
+
 								<tr>
 									<td>
 										<input autocomplete="off" name="address<?php echo $tracker; ?>" type="text" id="address<?php echo $tracker; ?>" size="30" value="<?=htmlspecialchars($address);?>" />
@@ -661,7 +661,7 @@ EOD;
 var addressarray=new Array(<?php echo $aliasesaddr; ?>);
 
 function createAutoSuggest() {
-<?php  
+<?php
 	for ($jv = 0; $jv < $counter; $jv++)
 		echo "objAlias[{$jv}] = new AutoSuggestControl(document.getElementById(\"address{$jv}\"), new StateSuggestions(addressarray));\n";
 ?>

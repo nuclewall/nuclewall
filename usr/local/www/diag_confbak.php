@@ -5,7 +5,7 @@
 
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
     Copyright (C) 2010 Jim Pingle
 	Copyright (C) 2005 Colin Smith
     All rights reserved.
@@ -161,7 +161,7 @@ if($savemsg)
 									Değişiklik
 								</td>
 							</tr>
-							
+
 							<tr>
 								<td class="wall">
 									<input type="radio" name="newtime" value="current">

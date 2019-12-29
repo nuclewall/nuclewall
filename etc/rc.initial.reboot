@@ -41,9 +41,9 @@
 	echo <<<EOD
     NUCLEWALL þimdi yeniden baþlatýlacak.
 
-    Onaylýyor musunuz? [e|h]\n    > 
+    Onaylýyor musunuz? [e|h]\n    >
 EOD;
-	
+
 	$yn = chop(fgets($fp));
 	if (strcasecmp($yn, "e") == 0 || strcasecmp($yn, "E") == 0)
 		system_reboot_sync();

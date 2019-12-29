@@ -1,7 +1,7 @@
 <?php
 /*
 	hotspot_form_settings.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -55,51 +55,51 @@ $pageTarget = "/usr/local/www/pages/img/captiveportal-nuclewall";
 if ($_POST)
 {
     unset($input_errors);
-	
+
 	$pconfig = $_POST;
-	
+
 	$reqdfields = split(" ", "company page_type");
 	$reqdfieldsn = array("İşletme Adı", "Sayfa Metinleri");
 
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
-	
+
 	if(strlen($_POST['company']) > 25)
 		$input_errors[] = 'İşletme adı en fazla 25 karakter olabilir.';
-	
+
     if (is_uploaded_file($_FILES['logo']['tmp_name']))
-	{		
+	{
 		if(!getimagesize($_FILES['logo']['tmp_name']))
 			$input_errors[] = "'{$_FILES['logo']['name']}' dosyası bir görüntü dosyası değil.";
-    	
+
 		$size = filesize($_FILES['logo']['tmp_name']);
-		
+
 		if($size > 524288)
 			$input_errors[] = 'Logo boyutu en fazla 512 KB olabilir.';
 	}
-	
+
 	$tr_enabled = isset($_POST['tr_enabled']);
 	$en_enabled = isset($_POST['en_enabled']);
 	$de_enabled = isset($_POST['de_enabled']);
 	$ru_enabled = isset($_POST['ru_enabled']);
-	
+
 	if($_POST['page_type'] == "custom")
 	{
 		if(!$tr_enabled and !$en_enabled and !$de_enabled and !$ru_enabled)
 			$input_errors[] = 'Özel sayfa metinlerinde en az bir dil aktif edilmelidir.';
-		
+
 		$default_enabled = $_POST['default_lang'] . "_enabled";
-		
+
 		if(!${$default_enabled})
 			$input_errors[] = 'Varsayılan olarak seçilen dil aktif edilmemiş.';
-	}		
-	
+	}
+
 	if($tr_enabled)
 	{
 		$reqdfields = split(" ", "tr_title tr_uname tr_password tr_button");
 		$reqdfieldsn = array("Form başlığı(Türkçe)", "Kullanıcı adı alanı metni(Türkçe)", "Parola alanı metni(Türkçe)", "Giriş butonu metni(Türkçe)");
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 	}
-	
+
 	if(strlen($_POST['tr_title']) > 40)
 		$input_errors[] = 'Form başlığı en fazla 40 karakter olabilir.(Türkçe)';
 	if(strlen($_POST['tr_uname']) > 20)
@@ -115,7 +115,7 @@ if ($_POST)
 		$reqdfieldsn = array("Form başlığı(İngilizce)", "Kullanıcı adı alanı metni(İngilizce)", "Parola alanı metni(İngilizce)", "Giriş butonu metni(İngilizce)");
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 	}
-	
+
 	if(strlen($_POST['en_title']) > 40)
 		$input_errors[] = 'Form başlığı en fazla 40 karakter olabilir.(İngilizce)';
 	if(strlen($_POST['en_uname']) > 20)
@@ -124,14 +124,14 @@ if ($_POST)
 		$input_errors[] = 'Parola alanı metni en fazla 20 karakter olabilir.(İngilizce)';
 	if(strlen($_POST['en_button']) > 15)
 		$input_errors[] = 'Giriş butonu metni en fazla 15 karakter olabilir.(İngilizce)';
-	
+
 	if($de_enabled)
 	{
 		$reqdfields = split(" ", "de_title de_uname de_password de_button");
 		$reqdfieldsn = array("Form başlığı(Almanca)", "Kullanıcı adı alanı metni(Almanca)", "Parola alanı metni(Almanca)", "Giriş butonu metni(Almanca)");
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 	}
-	
+
 	if(strlen($_POST['de_title']) > 40)
 		$input_errors[] = 'Form başlığı en fazla 40 karakter olabilir.(Almanca)';
 	if(strlen($_POST['de_uname']) > 20)
@@ -147,7 +147,7 @@ if ($_POST)
 		$reqdfieldsn = array("Form başlığı(Rusça)", "Kullanıcı adı alanı metni(Rusça)", "Parola alanı metni(Rusça)", "Giriş butonu metni(Rusça)");
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 	}
-	
+
 	if(strlen($_POST['ru_title']) > 40)
 		$input_errors[] = 'Form başlığı en fazla 40 karakter olabilir.(Rusça)';
 	if(strlen($_POST['ru_uname']) > 20)
@@ -156,61 +156,61 @@ if ($_POST)
 		$input_errors[] = 'Parola alanı metni en fazla 20 karakter olabilir.(Rusça)';
 	if(strlen($_POST['ru_button']) > 15)
 		$input_errors[] = 'Giriş butonu metni en fazla 15 karakter olabilir.(Rusça)';
-	
+
 	if (!$input_errors)
-	{	
+	{
 		move_uploaded_file($_FILES["logo"]["tmp_name"], $imageTarget);
 		copy($imageTarget, $pageTarget);
-		
+
 		$config['hotspot']['company'] = base64_encode($_POST['company']);
 		$config['hotspot']['page_type'] = $_POST['page_type'];
 		$config['hotspot']['default_lang'] = $_POST['default_lang'];
-		
+
 		$config['hotspot']['tr']['enabled'] = $_POST['tr_enabled'] ? true : false;
 		$config['hotspot']['tr']['title'] = base64_encode($_POST['tr_title']);
 		$config['hotspot']['tr']['uname'] = base64_encode($_POST['tr_uname']);
 		$config['hotspot']['tr']['password'] = base64_encode($_POST['tr_password']);
 		$config['hotspot']['tr']['button'] = base64_encode($_POST['tr_button']);
-		
+
 		$config['hotspot']['en']['enabled'] = $_POST['en_enabled'] ? true : false;
 		$config['hotspot']['en']['title'] = base64_encode($_POST['en_title']);
 		$config['hotspot']['en']['uname'] = base64_encode($_POST['en_uname']);
 		$config['hotspot']['en']['password'] = base64_encode($_POST['en_password']);
 		$config['hotspot']['en']['button'] = base64_encode($_POST['en_button']);
-		
+
 		$config['hotspot']['de']['enabled'] = $_POST['de_enabled'] ? true : false;
 		$config['hotspot']['de']['title'] = base64_encode($_POST['de_title']);
 		$config['hotspot']['de']['uname'] = base64_encode($_POST['de_uname']);
 		$config['hotspot']['de']['password'] = base64_encode($_POST['de_password']);
 		$config['hotspot']['de']['button'] = base64_encode($_POST['de_button']);
-		
+
 		$config['hotspot']['ru']['enabled'] = $_POST['ru_enabled'] ? true : false;
 		$config['hotspot']['ru']['title'] = base64_encode($_POST['ru_title']);
 		$config['hotspot']['ru']['uname'] = base64_encode($_POST['ru_uname']);
 		$config['hotspot']['ru']['password'] = base64_encode($_POST['ru_password']);
 		$config['hotspot']['ru']['button'] = base64_encode($_POST['ru_button']);
-		
+
 		write_config();
-		
+
 		if($_POST['page_type'] == "default")
 		{
 			createDefaultJS($_POST['default_lang']);
 			createDefaultMobileJS($_POST['default_lang'], $_POST['company']);
 		}
-		
+
 		else if($_POST['page_type'] == "custom")
 		{
 			createCustomJS($_POST['default_lang'], $config['hotspot']);
 			createCustomMobileJS($_POST['default_lang'], $_POST['company'], $config['hotspot']);
 		}
-		
+
 		else
 		{
 			$input_errors[] = 'Sayfalar oluşturulamadı';
 		}
-		
+
 		initHtmlFiles();
-		
+
 		$savemsg = 'Ayarlar başarıyla kaydedildi.';
 	}
 }
@@ -221,7 +221,7 @@ if ($_POST)
 </head>
 <body>
 <?php include('fbegin.inc'); ?>
- 
+
 <?php if ($input_errors) print_input_errors($input_errors); ?>
 <?php if ($savemsg) print_info_box($savemsg); ?>
 <form action='hotspot_form_settings.php' method='post' enctype='multipart/form-data' name='iform' id='iform'>
@@ -338,7 +338,7 @@ if ($_POST)
 								<td valign="top">Form başlığı</td>
 								<td>
 									<input value="<?=$pconfig['tr_title']; ?>" placeholder="'İnternet erişimi için giriş yapın' gibi." name="tr_title" type="text" id="tr_title" style="width:290px;" maxlength="40">
-									
+
 								</td>
 							</tr>
 							<tr>
@@ -493,16 +493,16 @@ if ($_POST)
 		jQuery("tr[name='row']").hide();
 		jQuery("#text_"+lang).show();
 	}
-	
+
 	function togglesCustomPages()
 	{
 		var page = jQuery("input[name='page_type']:checked").val();
-		
+
 		if(page == "custom")
 		{
 			jQuery("#custom_pages").show();
 		}
-		
+
 		else
 		{
 			jQuery("#custom_pages").hide();
@@ -513,11 +513,11 @@ if ($_POST)
 		togglesCustomPages();
 		toggleForm();
 	});
-	
+
 	jQuery("input[name='lang']").on('change', function() {
 		toggleForm();
 	});
-	
+
 	jQuery("input[name='page_type']").on('change', function() {
 		togglesCustomPages();
 	});

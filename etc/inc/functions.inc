@@ -34,7 +34,7 @@
 if(!function_exists("pfSenseHeader"))
 {
 	function pfSenseHeader($text)
-	{	
+	{
 		Header("Location: $text");
 	}
 }

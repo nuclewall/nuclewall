@@ -1,7 +1,7 @@
 <?php
 /*
 	services_5651_logging.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -30,55 +30,55 @@ if ($_POST)
 {
     unset($input_errors);
 	$pconfig = $_POST;
-	
+
 	if(!empty($_POST['smbhostname']) && !is_hostname($_POST['smbhostname']))
 	{
 		$input_errors[] = 'Geçerli bir sunucu adı girmelisiniz.';
 	}
-	
+
 		if(!empty($_POST['sign_hour']) && !check_hour($_POST['sign_hour']))
 	{
 		$input_errors[] = 'Geçerli bir saat girmelisiniz. HH:MM formatında bir saat girin.';
 	}
-	
+
 	if($_POST['sign_type'] == 'remote')
 	{
 		$reqdfields = split(" ", "smbhostname smbusername smbpassword smbfolder");
 		$reqdfieldsn = array("Sunucu Adı", "Kullanıcı Adı", "Parola", "Klasör Adı");
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 	}
-	
+
 	if(strlen($_POST['smbusername']) > 128)
 		$input_errors[] = 'Kullanıcı adı 128 karakteri geçmemelidir.';
 	if(strlen($_POST['smbpassword']) > 128)
 		$input_errors[] = 'Parola 128 karakteri geçmemelidir.';
 	if(strlen($_POST['smbfolder']) > 128)
 		$input_errors[] = 'Klasör Adı 128 karakteri geçmemelidir.';
-	
+
 	if (!$input_errors)
 	{
 		$config['digitalsign']['enable'] = $_POST['enable'] ? true : false;
 		$config['digitalsign']['sign_type'] = $_POST['sign_type'];
 		$config['digitalsign']['sign_time'] = $_POST['sign_time'];
-		
+
 		if(!empty($_POST['sign_hour']))
 			$hour = $_POST['sign_hour'];
 		else
 			$hour = '12:30';
-		
+
 		$config['digitalsign']['sign_hour'] = $hour;
-		
+
 		$config['digitalsign']['smbhostname'] = base64_encode($_POST['smbhostname']);
 		$config['digitalsign']['smbusername'] = base64_encode($_POST['smbusername']);
 		$config['digitalsign']['smbpassword'] = base64_encode($_POST['smbpassword']);
 		$config['digitalsign']['smbfolder'] = base64_encode($_POST['smbfolder']);
-		
+
 		write_config();
-		
+
 		if(isset($_POST['enable']))
 		{
 			install_cron_job('/usr/local/bin/dhcp_logger', true, '0', '*/2', '*', '*', '*', 'root');
-			
+
 			if($_POST['sign_type'] == 'local')
 			{
 				if($_POST['sign_time'] == 'customhour')
@@ -87,30 +87,30 @@ if ($_POST)
 						$hour = $_POST['sign_hour'];
 					else
 						$hour = '12:30';
-					
+
 					$t = explode(':', $hour);
-					
+
 					install_cron_job('/usr/local/bin/log_signer', true,  $t[1], $t[0], '*', '*', '*', 'root');
 				}
-				
+
 				else if($_POST['sign_time'] == 'onehour')
-				{					
+				{
 					install_cron_job('/usr/local/bin/log_signer', true,  '0', '*', '*', '*', '*', 'root');
 				}
-				
+
 				install_cron_job('/usr/local/bin/log_sender', false,  '*', '*', '*', '*', '*', 'root');
 			}
-			
+
 			else if($_POST['sign_type'] == 'remote')
 			{
 				install_cron_job('/usr/local/bin/log_signer', false,  '*', '*', '*', '*', '*', 'root');
-				
+
 				smbfileInit($_POST['smbhostname'], $_POST['smbusername'], $_POST['smbpassword'], $_POST['smbfolder']);
-				
+
 				install_cron_job('/usr/local/bin/log_sender', true,  '0', '*/4', '*', '*', '*', 'root');
 			}
 		}
-		
+
 		else
 		{
 			install_cron_job('/usr/local/bin/dhcp_logger', false, '*', '*', '*', '*', '*', 'root');
@@ -128,7 +128,7 @@ if ($_POST)
 </head>
 <body>
 <?php include('fbegin.inc'); ?>
- 
+
 <?php if ($input_errors) print_input_errors($input_errors); ?>
 <?php if ($savemsg) print_info_box($savemsg); ?>
 
@@ -254,17 +254,17 @@ if ($_POST)
 </table>
 </form>
 </div>
-<script>	
+<script>
 	function togglesCustomPages()
 	{
 		var page = jQuery("input[name='sign_type']:checked").val();
-		
+
 		if(page == "local")
 		{
 			jQuery("#local_sign").show();
 			jQuery("#smbclient_form").hide();
 		}
-		
+
 		else if(page == "remote")
 		{
 			jQuery("#local_sign").hide();
@@ -276,7 +276,7 @@ if ($_POST)
 	{
 		togglesCustomPages();
 	});
-		
+
 	jQuery("input[name='sign_type']").on('change', function()
 	{
 		togglesCustomPages();

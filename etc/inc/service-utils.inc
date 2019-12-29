@@ -1,7 +1,7 @@
 <?php
 /*
 	service-utils.inc
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */

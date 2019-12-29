@@ -5,10 +5,10 @@
 	    $string = str_replace($nums, '', $string);
 	    return $string;
     }
-	
+
 	global $g;
     $g = array(
-	    "base_packages" => "siproxd", 
+	    "base_packages" => "siproxd",
 	    "event_address" => "unix:///var/run/check_reload_status",
 	    "factory_shipped_username" => "admin",
 	    "factory_shipped_password" => "nuclewall",
@@ -29,15 +29,15 @@
 	    "xml_rootobj" => "nuclewall",
 	    "admin_group" => "admins",
 	    "product_name" => "NUCLEWALL",
-	    "product_copyright_url" => "http://nuclewall.com",
+	    "product_copyright_url" => "https://nuclewall.github.io/nuclewall",
 	    "debug" => false,
 	    "latest_config" => "8.0",
 	    "nopkg_platforms" => array("cdrom"),
 	    "minimum_ram_warning" => "101",
 	    "minimum_ram_warning_text" => "128 MB",
 	    "minimum_nic_count" => "1",
-	    "minimum_nic_count_text" => "*AT LEAST* 1",	
-	    "wan_interface_name" => "wan", 
+	    "minimum_nic_count_text" => "*AT LEAST* 1",
+	    "wan_interface_name" => "wan",
 	    "nopccard_platforms" => array("wrap", "net48xx"),
 	    "xmlrpcbaseurl" => "",
 	    "captiveportal_path" => "/usr/local/captiveportal",
@@ -56,35 +56,35 @@
     $tcpflags = array("syn", "ack", "fin", "rst", "psh", "urg");
 
     /* Default sysctls */
-    $sysctls = array("net.inet.ip.portrange.first" => "1024", 
-	    "net.inet.tcp.blackhole" => "2", 
-	    "net.inet.udp.blackhole" => "1", 
-	    "net.inet.ip.random_id" => "1", 
-	    "net.inet.tcp.drop_synfin" => "1", 
-	    "net.inet.ip.redirect" => "1", 
-	    "net.inet6.ip6.redirect" => "1", 
-	    "net.inet.tcp.syncookies" => "1", 
-	    "net.inet.tcp.recvspace" => "65228", 
-	    "net.inet.tcp.sendspace" => "65228", 
-	    "net.inet.ip.fastforwarding" => "0", 
-	    "net.inet.tcp.delayed_ack" => "0", 
-	    "net.inet.udp.maxdgram" => "57344", 
-	    "net.link.bridge.pfil_onlyip" => "0", 
-	    "net.link.bridge.pfil_member" => "1", 
-	    "net.link.bridge.pfil_bridge" => "0", 
-	    "net.link.tap.user_open" => "1", 
-	    "kern.randompid" => "347", 
-	    "net.inet.ip.intr_queue_maxlen" => "1000", 
-	    "hw.syscons.kbd_reboot" => "0", 
-	    "net.inet.tcp.inflight.enable" => "1", 
-	    "net.inet.tcp.log_debug" => "0", 
-	    "net.inet.tcp.tso" => "1", 
+    $sysctls = array("net.inet.ip.portrange.first" => "1024",
+	    "net.inet.tcp.blackhole" => "2",
+	    "net.inet.udp.blackhole" => "1",
+	    "net.inet.ip.random_id" => "1",
+	    "net.inet.tcp.drop_synfin" => "1",
+	    "net.inet.ip.redirect" => "1",
+	    "net.inet6.ip6.redirect" => "1",
+	    "net.inet.tcp.syncookies" => "1",
+	    "net.inet.tcp.recvspace" => "65228",
+	    "net.inet.tcp.sendspace" => "65228",
+	    "net.inet.ip.fastforwarding" => "0",
+	    "net.inet.tcp.delayed_ack" => "0",
+	    "net.inet.udp.maxdgram" => "57344",
+	    "net.link.bridge.pfil_onlyip" => "0",
+	    "net.link.bridge.pfil_member" => "1",
+	    "net.link.bridge.pfil_bridge" => "0",
+	    "net.link.tap.user_open" => "1",
+	    "kern.randompid" => "347",
+	    "net.inet.ip.intr_queue_maxlen" => "1000",
+	    "hw.syscons.kbd_reboot" => "0",
+	    "net.inet.tcp.inflight.enable" => "1",
+	    "net.inet.tcp.log_debug" => "0",
+	    "net.inet.tcp.tso" => "1",
 	    "net.inet.icmp.icmplim" => "0",
 	    "vfs.read_max" => "128",
 	    "kern.ipc.maxsockbuf" => "4262144",
 	    "debug.pfftpproxy" => "0",
 		"net.inet.ip.process_options" => "0"
     );
-    
+
 	$config_parsed = false;
 ?>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 require('util.inc');
 require('local.inc');
 
@@ -16,7 +16,7 @@ if(is_process_running('mysqld'))
 			$settings['username'],
 			$settings['password']
 		);
-		
+
 		$connection = true;
 	}
 	catch (PDOException $e)

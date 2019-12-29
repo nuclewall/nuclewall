@@ -38,7 +38,7 @@
 	$version  = trim(file_get_contents("{$g['etc_path']}/version"));
 	$hostname = $config['system']['hostname'];
 	$machine = trim(`uname -m`);
-	
+
 	$iflist = get_configured_interface_with_descr(false, true);
 	foreach($iflist as $ifname => $friendly) {
 		/* point to this interface's config */
@@ -63,5 +63,4 @@
 			$class
 		);
 	}
-
 ?>

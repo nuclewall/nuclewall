@@ -193,100 +193,99 @@ exit();
 # functions
 # ----------------------------------------------------------------------------------------------------------------------
 function get_page($body) {
-        $str = Array();
-        $str[] = '<html>';
-        $str[] = "<body>\n$body\n</body>";
-        $str[] = '</html>';
-        return implode("\n", $str);
+  $str = Array();
+  $str[] = '<html>';
+  $str[] = "<body>\n$body\n</body>";
+  $str[] = '</html>';
+  return implode("\n", $str);
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # IE displayed self-page, if them size > 1024
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function get_error_page($er_code_id, $err_msg='') {
-        global $err_code;
-        global $cl;
-        global $g;
-        global $config;
-        $str = Array();
+  global $err_code;
+  global $cl;
+  global $g;
+  global $config;
+  $str = Array();
 
-        header("HTTP/1.1 " . $err_code[$er_code_id]);
+  header("HTTP/1.1 " . $err_code[$er_code_id]);
 
-        $str[] = '<html>';
-        $str[] = '<body>';
-	if ($config['installedpackages']['squidguarddefault']['config'][0]['deniedmessage']) {
-		$str[] = "<h3>{$config['installedpackages']['squidguarddefault']['config'][0]['deniedmessage']}: {$err_code[$er_code_id]}</h3>";
-	} else {
-		$str[] = "<h3>Request denied by {$g['product_name']} proxy: {$err_code[$er_code_id]}</h3>";
-	}
-        if ($err_msg) $str[] = "<b> Reason: </b> $err_msg";
-        $str[] = '<hr size="1" noshade>';
-        if ($cl['a'])        $str[] = "<b> Client address: </b> {$cl['a']} <br>";
-        if ($cl['n'])        $str[] = "<b> Client name:    </b> {$cl['n']} <br>";
-        if ($cl['i'])        $str[] = "<b> Client user:    </b> {$cl['i']} <br>";
-        if ($cl['s'])        $str[] = "<b> Client group:   </b> {$cl['s']} <br>";
-        if ($cl['t'])        $str[] = "<b> Target group:   </b> {$cl['t']} <br>";
-        if ($cl['u'])        $str[] = "<b> URL:            </b> {$cl['u']} <br>";
-        $str[] = '<hr size="1" noshade>';
-        $str[] = "</body>";
-        $str[] = "</html>";
+  $str[] = '<html>';
+  $str[] = '<body>';
+  if ($config['installedpackages']['squidguarddefault']['config'][0]['deniedmessage']) {
+  	$str[] = "<h3>{$config['installedpackages']['squidguarddefault']['config'][0]['deniedmessage']}: {$err_code[$er_code_id]}</h3>";
+  } else {
+  	$str[] = "<h3>Request denied by {$g['product_name']} proxy: {$err_code[$er_code_id]}</h3>";
+  }
+  if ($err_msg) $str[] = "<b> Reason: </b> $err_msg";
+  $str[] = '<hr size="1" noshade>';
+  if ($cl['a'])        $str[] = "<b> Client address: </b> {$cl['a']} <br>";
+  if ($cl['n'])        $str[] = "<b> Client name:    </b> {$cl['n']} <br>";
+  if ($cl['i'])        $str[] = "<b> Client user:    </b> {$cl['i']} <br>";
+  if ($cl['s'])        $str[] = "<b> Client group:   </b> {$cl['s']} <br>";
+  if ($cl['t'])        $str[] = "<b> Target group:   </b> {$cl['t']} <br>";
+  if ($cl['u'])        $str[] = "<b> URL:            </b> {$cl['u']} <br>";
+  $str[] = '<hr size="1" noshade>';
+  $str[] = "</body>";
+  $str[] = "</html>";
 
-        return implode("\n", $str);
+  return implode("\n", $str);
 }
 
 function get_about() {
-        global $err_code;
-        global $page_info;
-        $str = Array();
+  global $err_code;
+  global $page_info;
+  $str = Array();
 
-        // about info
-        $s = str_replace("\n", "<br>", $page_info);
-        $str[] = $s;
-        $str[] = "<br>";
+  // about info
+  $s = str_replace("\n", "<br>", $page_info);
+  $str[] = $s;
+  $str[] = "<br>";
 
-        $str[] = '<table>';
-        $str[] = ' <b>HTTP error codes (ERROR_CODE):</th></tr>';
-        foreach($err_code as $val) {
-                $str []= "<tr><td>$val";
-       }
-        $str[] = '</table>';
+  $str[] = '<table>';
+  $str[] = ' <b>HTTP error codes (ERROR_CODE):</th></tr>';
+  foreach($err_code as $val) {
+          $str []= "<tr><td>$val";
+  }
+  $str[] = '</table>';
 
-        return implode("\n", $str);
+  return implode("\n", $str);
 }
 
 function filter_by_image_size($url, $val_size) {
+   # load url header
+   $ch = curl_init();
+   curl_setopt($ch, CURLOPT_URL, $url);
+   curl_setopt($ch, CURLOPT_HEADER, 1);
+   curl_setopt($ch, CURLOPT_NOBODY, 1);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+   $hd = curl_exec($ch);
+   curl_close($ch);
 
-          # load url header
-          $ch = curl_init();
-          curl_setopt($ch, CURLOPT_URL, $url);
-          curl_setopt($ch, CURLOPT_HEADER, 1);
-          curl_setopt($ch, CURLOPT_NOBODY, 1);
-          curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-          $hd = curl_exec($ch);
-          curl_close($ch);
+  $size = 0;
+  $SKEY = "content-length:";
+  $s_tmp = strtolower($hd);
+  $s_tmp = str_replace("\n", " ", $s_tmp); # replace all "\n"
+  if (strpos($s_tmp, $SKEY) !== false) {
+      $s_tmp = trim(substr($s_tmp, strpos($s_tmp, $SKEY) + strlen($SKEY)));
+      $s_tmp = trim(substr($s_tmp, 0, strpos($s_tmp, " ")));
+      if (is_numeric($s_tmp))
+           $size = intval($s_tmp);
+      else $size = 0;
+  }
 
-         $size = 0;
-         $SKEY = "content-length:";
-         $s_tmp = strtolower($hd);
-         $s_tmp = str_replace("\n", " ", $s_tmp); # replace all "\n"
-         if (strpos($s_tmp, $SKEY) !== false) {
-             $s_tmp = trim(substr($s_tmp, strpos($s_tmp, $SKEY) + strlen($SKEY)));
-             $s_tmp = trim(substr($s_tmp, 0, strpos($s_tmp, " ")));
-             if (is_numeric($s_tmp))
-                  $size = intval($s_tmp);
-             else $size = 0;
-         }
-
-         # === check url type and content size ===
-         # redirect to specified url
-         if (($size !== 0) && ($size < $val_size)) {
-              header("HTTP/1.0");
-              header("Location: $url", '', 302);
-         }
-         # return blank image
-         else {
-              header("Content-Type: image/gif;");
-              echo GIF_BODY;
-         }
+  # === check url type and content size ===
+  # redirect to specified url
+  if (($size !== 0) && ($size < $val_size)) {
+       header("HTTP/1.0");
+       header("Location: $url", '', 302);
+  }
+  # return blank image
+  else {
+       header("Content-Type: image/gif;");
+       echo GIF_BODY;
+  }
 }
 ?>

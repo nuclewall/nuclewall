@@ -6,7 +6,7 @@
 
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-    
+
 	Copyright (C) 2008 Shrew Soft Inc.
     All rights reserved.
 
@@ -58,7 +58,7 @@ $id = $_GET['id'];
 if (isset($_POST['id']))
 	$id = $_POST['id'];
 
-if (!is_array($config['system']['user'])) 
+if (!is_array($config['system']['user']))
 	$config['system']['user'] = array();
 
 $a_user = &$config['system']['user'];
@@ -108,28 +108,28 @@ if ($_POST)
 	$admin_privs = array('user-shell-access', 'page-all');
 
 	$privs[] = 'page-essential';
-	
+
 	if($_POST['user-shell-access'])
 		$privs[] = $_POST['user-shell-access'];
-	
+
 	if($_POST['hotspot-menu'])
 		$privs[] = $_POST['hotspot-menu'];
-	
+
 	if($_POST['system-menu'])
 		$privs[] = $_POST['system-menu'];
 
 	if($_POST['network-menu'])
 		$privs[] = $_POST['network-menu'];
-	
+
 	if($_POST['firewall-menu'])
 		$privs[] = $_POST['firewall-menu'];
-	
+
 	if($_POST['services-menu'])
 		$privs[] = $_POST['services-menu'];
-	
+
 	if($_POST['status-menu'])
 		$privs[] = $_POST['status-menu'];
-	
+
 	if($_POST['tools-menu'])
 		$privs[] = $_POST['tools-menu'];
 
@@ -159,7 +159,7 @@ if ($_POST)
 		$oldusername = $a_user[$id]['name'];
 	else
 		$oldusername = "";
-	
+
 	if (!$input_errors)
 	{
 		foreach ($a_user as $userent)

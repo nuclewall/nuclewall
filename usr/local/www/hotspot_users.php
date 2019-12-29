@@ -1,7 +1,7 @@
 <?php
 /*
 	hotspot_users.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -17,10 +17,10 @@ if (file_exists("{$g['vardb_path']}/captiveportal.db"))
 {
 	$captiveportallck = lock('captiveportaldb');
 	$cpcontents = file("{$g['vardb_path']}/captiveportal.db", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-	unlock($captiveportallck);	
+	unlock($captiveportallck);
 }
 
-if ($connection) 
+if ($connection)
 {
 	if (($_GET['act'] == 'del') && (isset($_GET['uname'])) && (strlen($_GET['uname']) <= 12))
 	{
@@ -34,7 +34,7 @@ if ($connection)
 		$findUser->bindParam(':username', $username);
 		$findUser->execute();
 		$userExists = $findUser->fetch(PDO::FETCH_ASSOC);
-			
+
 		if($userExists)
 		{
 			/* Delete from radcheck table */
@@ -42,17 +42,17 @@ if ($connection)
 				DELETE FROM radcheck
 				WHERE username = :username
 			");
-			
+
 			$deluser->bindParam(':username', $username);
 			$deluser->execute();
-			
+
 			/* Check user whether if logged in captiveportal */
 			if(isset($cpcontents))
 			{
 				foreach ($cpcontents as $cpcontent)
 				{
 					$cpent = explode(",", $cpcontent);
-					
+
 					if($cpent[4] == $username)
 					{
 						$usession = $cpent[5];
@@ -60,21 +60,21 @@ if ($connection)
 						break;
 					}
 				}
-				
+
 				/* Logout the user from captiveportal */
 				if($ufound)
 					captiveportal_disconnect_client($usession);
 			}
-			
+
 			/* Delete from radacct table */
 			$delacct = $pdo->prepare("
 				DELETE FROM radacct
 				WHERE username = :username
 			");
-			
+
 			$delacct->bindParam(':username', $username);
 			$delacct->execute();
-			
+
 			$savemsg = "'$username' kullanıcısı silindi.";
 		}
 		else
@@ -87,13 +87,13 @@ if ($connection)
 	$statement = $pdo->prepare("
 		SELECT username, description,
 		DATE_FORMAT(registration,'%d-%m-%Y %H:%i:%s') AS date,
-		GROUP_CONCAT(value) AS contents, 
+		GROUP_CONCAT(value) AS contents,
 		GROUP_CONCAT(attribute) AS options
 		FROM radcheck
 		WHERE attribute <> 'Auth-Type ' AND value <> 'Accept'
 		GROUP BY username
 	");
-	$statement->execute();		
+	$statement->execute();
 }
 
 ?>

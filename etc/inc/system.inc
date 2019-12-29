@@ -50,7 +50,7 @@ function activate_sysctls()
 			if($tunable['value'] == "default") {
 				$value = get_default_sysctl_value($tunable['tunable']);
 				mwexec("/sbin/sysctl " . $tunable['tunable'] . "=\"" . $value .  "\"");
-			} else { 
+			} else {
 				mwexec("/sbin/sysctl " . $tunable['tunable'] . "=\"" . $tunable['value'] .  "\"");
 			}
 		}
@@ -145,7 +145,7 @@ function get_searchdomains()
 				continue;
 			foreach ($contents as $dns)
 			{
-				if(is_hostname($dns)) 
+				if(is_hostname($dns))
 					$master_list[] = $dns;
 			}
 		}
@@ -158,7 +158,7 @@ function get_nameservers()
 {
 	global $config, $g;
 	$master_list = array();
-	
+
 	$dns_lists = glob("/var/etc/nameserver_*");
 	if (is_array($dns_lists))
 	{
@@ -169,7 +169,7 @@ function get_nameservers()
 				continue;
 			foreach ($contents as $dns)
 			{
-				if(is_ipaddr($dns)) 
+				if(is_ipaddr($dns))
 					$master_list[] = $dns;
 			}
 		}
@@ -199,7 +199,7 @@ function system_hosts_generate()
 	{
 		$dnsmasqcfg['hosts'] = array();
 	}
-	
+
 	$hostscfg = $dnsmasqcfg['hosts'];
 
 	$hosts = "127.0.0.1	localhost localhost.{$syscfg['domain']}\n";
@@ -234,7 +234,7 @@ function system_hosts_generate()
 		else
 			$lhosts .= "{$host['ip']}	{$host['domain']}\n";
 	}
-	
+
 	if (isset($dnsmasqcfg['regdhcpstatic']) && is_array($config['dhcpd']))
 	{
 		foreach ($config['dhcpd'] as $dhcpif => $dhcpifconf)
@@ -306,7 +306,7 @@ function system_routing_configure($interface = "")
 	$gatewayip = "";
 	$interfacegw = "";
 	$foundgw = false;
-	
+
 	if (is_array($config['gateways']['gateway_item']))
 	{
 		mwexec("/bin/rm {$g['tmp_path']}/*_defaultgw", true);
@@ -330,15 +330,15 @@ function system_routing_configure($interface = "")
 			}
 		}
 	}
-	
+
 	if ($foundgw == false)
 	{
 		$defaultif = get_real_interface("wan");
 		$interfacegw = "wan";
 		$gatewayip = get_interface_gateway("wan");
 		@touch("{$g['tmp_path']}/{$defaultif}_defaultgw");
-	}	
-	
+	}
+
 	$dont_add_route = false;
 
 	if ($dont_add_route == false ) {
@@ -418,7 +418,7 @@ function system_syslogd_start()
 		mwexec('/bin/pkill syslogd');
 	if(is_process_running("fifolog_writer"))
 		mwexec('/bin/pkill fifolog_writer');
-	
+
 	$fifolog_create = "/usr/sbin/fifolog_create -s ";
 	$fifolog_log = "|/usr/sbin/fifolog_writer ";
 	$clog_create = "/usr/sbin/clog -i -s ";
@@ -431,7 +431,7 @@ function system_syslogd_start()
 		$log_directive = $clog_log;
 		$log_create_directive = $clog_create;
 	}
-	
+
 	if (isset($syslogcfg)) {
 		$separatelogfacilities = array('relayd');
 		if($config['installedpackages']['package']) {
@@ -444,7 +444,7 @@ function system_syslogd_start()
 			}
 		}
 		$facilitylist = implode(',', array_unique($separatelogfacilities));
-		/* write syslog.conf */		
+		/* write syslog.conf */
 		$fd = fopen("{$g['varetc_path']}/syslog.conf", "w");
 		if (!$fd) {
 			printf("Error: cannot open syslog.conf in system_syslogd_start().\n");
@@ -459,7 +459,7 @@ function system_syslogd_start()
 			$syslogconf .= system_syslogd_get_remote_servers($syslogcfg, "*.*");
 
 		$syslogconf .= "!-{$facilitylist}\n";
-		if (!isset($syslogcfg['disablelocallogging'])) 
+		if (!isset($syslogcfg['disablelocallogging']))
 			$syslogconf .= <<<EOD
 local0.*							{$log_directive}{$g['varlog_path']}/filter.log
 local4.*							{$log_directive}{$g['varlog_path']}/portalauth.log
@@ -545,10 +545,10 @@ function system_webgui_start()
 	if ($config['system']['webgui']['protocol'] == "https")
 	{
 		$cert = $config['cert'][0];
-		
+
 		$crt = base64_decode($cert['crt']);
 		$key = base64_decode($cert['prv']);
-		
+
 		if(!$config['system']['webgui']['port'])
 			$portarg = "443";
 	}
@@ -576,12 +576,12 @@ function system_generate_lighty_config($filename, $cert, $key, $pid_file, $port 
 	if(!is_dir("{$g['tmp_path']}/lighttpdcompress"))
 		mkdir("{$g['tmp_path']}/lighttpdcompress");
 
-	if($captive_portal == true) 
+	if($captive_portal == true)
 	{
 		$captiveportal = ",\"mod_rewrite\"";
 		$captive_portal_rewrite = "url.rewrite-once = ( \"(.*captiveportal.*)\" => \"$1\", \"(.*)\" => \"/index.php?redirurl=$1\" )\n";
 		$maxprocperip = $config['captiveportal']['maxprocperip'];
-		
+
 		if ($maxprocperip and $maxprocperip > 0)
 		{
 			$captive_portal_mod_evasive = "evasive.max-conns-per-ip = {$maxprocperip}";
@@ -589,14 +589,14 @@ function system_generate_lighty_config($filename, $cert, $key, $pid_file, $port 
 		}
 		else
 			$captive_portal_mod_evasive = "";
-		
+
 		$server_upload_dirs = "server.upload-dirs = ( \"{$g['tmp_path']}/captiveportal/\" )\n";
 		exec("mkdir -p {$g['tmp_path']}/captiveportal");
 		exec("chmod a-w {$g['tmp_path']}/captiveportal");
 		$server_max_request_size = "server.max-request-size    = 384";
 		$cgi_config = "";
 	}
-	
+
 	else
 	{
 		$captiveportal = "";
@@ -607,7 +607,7 @@ function system_generate_lighty_config($filename, $cert, $key, $pid_file, $port 
 		$server_max_request_size = "server.max-request-size    = 2097152";
 		$cgi_config = "cgi.assign = ( \".cgi\" => \"\" )";
 	}
-	
+
 	if($port <> "")
 		$lighty_port = $port;
 	else
@@ -637,7 +637,7 @@ function system_generate_lighty_config($filename, $cert, $key, $pid_file, $port 
 		$max_procs = 2;
 
 	if ($captive_portal == true)
-	{	
+	{
 		if ($max_procs > 1)
 			$max_php_children = intval($max_procs/2);
 		else
@@ -817,7 +817,7 @@ compress.filetype  = ("text/plain","text/css", "text/xml", "text/javascript" )
 {$captive_portal_mod_evasive}
 
 expire.url = (
-				"" => "access 50 hours",	
+				"" => "access 50 hours",
         )
 
 EOD;
@@ -831,19 +831,19 @@ EOD;
 	if($cert <> "" and $key <> "")
 	{
 		$fd = fopen("{$g['varetc_path']}/{$cert_location}", "w");
-		
+
 		if (!$fd)
 		{
 			printf("Error: cannot open cert.pem in system_webgui_start().\n");
 			return 1;
 		}
-		
+
 		chmod("{$g['varetc_path']}/{$cert_location}", 0600);
 		fwrite($fd, $cert);
 		fwrite($fd, "\n");
 		fwrite($fd, $key);
 		fclose($fd);
-		
+
 		$lighty_config .= "\n";
 		$lighty_config .= "## ssl configuration\n";
 		$lighty_config .= "ssl.engine = \"enable\"\n";
@@ -856,7 +856,7 @@ EOD;
 
 	if ($captive_portal == false && $config['system']['webgui']['protocol'] == "https" && !isset($config['system']['webgui']['disablehttpredirect']))
 	{
-		if($lighty_port != "443") 
+		if($lighty_port != "443")
 			$redirectport = ":{$lighty_port}";
 		$lighty_config .= <<<EOD
 \$SERVER["socket"] == ":80" {
@@ -868,13 +868,13 @@ EOD;
 	}
 
 	$fd = fopen("{$filename}", "w");
-	
+
 	if (!$fd)
 	{
 		printf("Error: cannot open {$filename} in system_generate_lighty_config().\n");
 		return 1;
 	}
-	
+
 	fwrite($fd, $lighty_config);
 	fclose($fd);
 
@@ -933,7 +933,7 @@ function system_ntp_configure($start_ntpd=true)
 
 	/* open configuration for wrting or bail */
 	$fd = fopen("{$g['varetc_path']}/ntpd.conf","w");
-	
+
 	if(!$fd)
 	{
 		log_error("{$g['varetc_path']}/ntpd.conf açýlamadý.");
@@ -958,7 +958,7 @@ function system_ntp_configure($start_ntpd=true)
 
 	/* start ntpd, allow a large initial skew, and use /var/etc/ntpd.conf - run through tcsh to work around a PHP shell exec bug. */
 	exec("echo /usr/local/bin/ntpd -g -c {$g['varetc_path']}/ntpd.conf | tcsh");
-	
+
 	// Note that we are starting up
 	log_error("NTPD baþlatýlýyor.");
 	return;
@@ -975,10 +975,10 @@ function sync_system_time()
 	{
 		mwexec("/usr/sbin/ntpdate -s $ts");
 	}
-	
+
 	if ($g['booting'])
 		echo "done.\n";
-	
+
 }
 
 function system_halt()
@@ -1031,7 +1031,7 @@ function system_do_shell_commands($early = 0)
 			exec($cmd);
 		}
 
-	} 
+	}
 	elseif($config['system'][$cmdn] <> "")
 	{
 		exec($config['system'][$cmdn]);
@@ -1080,7 +1080,7 @@ function system_dmesg_save()
 function system_setup_sysctl()
 {
 	global $config;
-	activate_sysctls();	
+	activate_sysctls();
 
 	if (isset($config['system']['sharednet']))
 	{
@@ -1115,7 +1115,7 @@ function system_check_reset_button()
 		echo <<<EOD
 
 EOD;
-		
+
 		reset_factory_defaults();
 		system_reboot_sync();
 		exit(0);
@@ -1127,7 +1127,7 @@ EOD;
 function system_get_dmesg_boot()
 {
 	global $g;
-		
+
 	return file_get_contents("{$g['varlog_path']}/dmesg.boot");
 }
 ?>

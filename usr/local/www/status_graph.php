@@ -49,7 +49,7 @@ $ifdescrs = get_configured_interface_with_descr();
 if ($_GET['if']) {
 	$curif = $_GET['if'];
 	$found = false;
-	foreach($ifdescrs as $descr => $ifdescr) 
+	foreach($ifdescrs as $descr => $ifdescr)
 		if($descr == $curif) $found = true;
 	if(!$found) {
 		Header("Location: status_graph.php");
@@ -138,7 +138,7 @@ function updateBandwidthHosts(data){
             }
         }
     }
-    
+
     setTimeout('updateBandwidth()', 1000);
 }
 

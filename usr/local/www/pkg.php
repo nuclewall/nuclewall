@@ -2,10 +2,10 @@
 /* $Id$ */
 /*
     pkg.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
     Copyright (C) 2004-2012 Scott Ullrich <sullrich@gmail.com>
     All rights reserved.
 
@@ -62,10 +62,10 @@ $section      = $pkg['menu'][0]['section'];
 $config_path  = $pkg['configpath'];
 $title	      = $pkg['title'];
 
-if($_REQUEST['startdisplayingat']) 
+if($_REQUEST['startdisplayingat'])
 	$startdisplayingat = $_REQUEST['startdisplayingat'];
 
-if($_REQUEST['display_maximum_rows']) 
+if($_REQUEST['display_maximum_rows'])
 	if($_REQUEST['display_maximum_rows'])
 		$display_maximum_rows = $_REQUEST['display_maximum_rows'];
 
@@ -198,7 +198,7 @@ if($pkg['adddeleteeditpagefields']['movable']){
             td {
                 border:0px solid black;
             }
-            
+
             td.up {
                 cursor:pointer;
             }
@@ -206,7 +206,7 @@ if($pkg['adddeleteeditpagefields']['movable']){
             td.down {
                 cursor:pointer;
             }
-            
+
         </style>
 
 
@@ -221,7 +221,7 @@ if($pkg['adddeleteeditpagefields']['movable']){
                     });
                 });
 
-                
+
                 function up(event) {
                     var element = event.element().ancestors()[1];
                     var previous = element.previous('.movable');
@@ -251,9 +251,9 @@ if($pkg['adddeleteeditpagefields']['movable']){
     					var num = axel * 1000000000000000000;
                 		location.href="/pkg.php?xml=" + xml + "&act=update&ids=" + alertItems() + "&nocache=" + num;
                 		}
-                    
+
                 }
-                
+
         </script>
 
 <?php }
@@ -268,10 +268,10 @@ echo "\t<script type=\"text/javascript\" src=\"javascript/domTT/fadomatic.js\"><
 		<td>
 			<table width="100%" class="grids">
 			<tbody>
-			<?php				
+			<?php
 				$include_filtering_inputbox = false;
 				$colspan = 0;
-				if($pkg['adddeleteeditpagefields']['columnitem'] <> "") 
+				if($pkg['adddeleteeditpagefields']['columnitem'] <> "")
 					foreach ($pkg['adddeleteeditpagefields']['columnitem'] as $column)
 						$colspan++;
 				if($pkg['fields']['field']) {
@@ -279,17 +279,17 @@ echo "\t<script type=\"text/javascript\" src=\"javascript/domTT/fadomatic.js\"><
 					foreach($pkg['fields']['field'] as $field) {
 						if($field['type'] == "sorting") {
 							$sortable="on";
-							if(isset($field['include_filtering_inputbox'])) 
+							if(isset($field['include_filtering_inputbox']))
 								$include_filtering_inputbox = true;
-							if($display_maximum_rows < 1) 
-								if($field['display_maximum_rows']) 
+							if($display_maximum_rows < 1)
+								if($field['display_maximum_rows'])
 									$display_maximum_rows = $field['display_maximum_rows'];
 							echo "<tr><td class='head' colspan='$colspan'><center>";
 							echo "<tr><td class='head' colspan='$colspan'><center>";
 							echo "Filter by: ";
 							$isfirst = true;
 							for($char = 65; $char < 91; $char++) {
-								if(!$isfirst) 
+								if(!$isfirst)
 									echo " | ";
 								echo "<a href=\"#\" onClick=\"setFilter('" . chr($char) . "');\">" . chr($char) . "</a>";
 								$isfirst = false;
@@ -299,15 +299,15 @@ echo "\t<script type=\"text/javascript\" src=\"javascript/domTT/fadomatic.js\"><
 							if($field['sortablefields']) {
 								echo "Filter field: <select name='pkg_filter_type'>";
 								foreach($field['sortablefields']['item'] as $si) {
-									if($si['name'] == $_REQUEST['pkg_filter_type']) 
+									if($si['name'] == $_REQUEST['pkg_filter_type'])
 										$SELECTED = "SELECTED";
-									else 
+									else
 										$SELECTED = "";
 									echo "<option value='{$si['name']}' {$SELECTED}>{$si['name']}</option>";
 								}
 								echo "</select>";
 							}
-							if($include_filtering_inputbox) 
+							if($include_filtering_inputbox)
 								echo "&nbsp;&nbsp;Filter text: <input id='pkg_filter' name='pkg_filter' value='" . $_REQUEST['pkg_filter'] . "'> <input type='submit' value='Filtrele'>";
 							echo "</td></tr><tr><td></td></tr>";
 						}
@@ -341,7 +341,7 @@ echo "\t<script type=\"text/javascript\" src=\"javascript/domTT/fadomatic.js\"><
 					for($x=5; $x<250; $x++) {
 						if($x == $display_maximum_rows)
 							$SELECTED = "SELECTED";
-						else 
+						else
 							$SELECTED = "";
 						echo "<option value='$x' $SELECTED>$x</option>\n";
 						$x=$x+4;
@@ -427,7 +427,7 @@ echo "\t<script type=\"text/javascript\" src=\"javascript/domTT/fadomatic.js\"><
 								$fieldname = $ip[xml_safe_fieldname($column['fieldname'])];
 								if ($column['type'] == 'interface') {
 									echo  $column['prefix'] . $iflist[$fieldname] . $column['suffix'];
-							    } 
+							    }
 								else {
 							    	if ($column['encoding'] == 'base64')
 										echo  $column['prefix'] . base64_decode($fieldname) . $column['suffix'];
@@ -439,7 +439,7 @@ echo "\t<script type=\"text/javascript\" src=\"javascript/domTT/fadomatic.js\"><
 										if ($column['fieldname'] == 'disabled') {
 											if ($fieldname == 'on')
 												echo "<span class=\"label\">Pasif</span>";
-											else 
+											else
 												echo "<span class=\"label label-success\">Aktif</span>";
 										}
 										else
@@ -461,9 +461,9 @@ echo "\t<script type=\"text/javascript\" src=\"javascript/domTT/fadomatic.js\"><
 				</td>
 </tr>
 <?php
-	
+
 	if($display_maximum_rows) {
-		if($pagination_counter == ($display_maximum_rows-1) or 
+		if($pagination_counter == ($display_maximum_rows-1) or
 		$i ==  (count($evaledvar)-1)) {
 			$colcount = count($pkg['adddeleteeditpagefields']['columnitem']);
 			$final_footer = "";
@@ -474,13 +474,13 @@ echo "\t<script type=\"text/javascript\" src=\"javascript/domTT/fadomatic.js\"><
 			if($startingat > -1) {
 				$final_footer .=  "<a href='pkg.php?xml=" . $_REQUEST['xml'] . "&startdisplayingat={$startingat}&display_maximum_rows={$display_maximum_rows}'>";
 			} else {
-				if($startingnat > 1) 
+				if($startingnat > 1)
 					$final_footer .=  "<a href='pkg.php?xml=" . $_REQUEST['xml'] . "&startdisplayingat=0&display_maximum_rows={$display_maximum_rows}'>";
 			}
 			$final_footer .=  "<font size='2'><< Previous page</a>";
-			if($tmppp + $display_maximum_rows > count($evaledvar)) 
+			if($tmppp + $display_maximum_rows > count($evaledvar))
 				$endingrecord = count($evaledvar);
-			else 
+			else
 				$endingrecord = $tmppp + $display_maximum_rows;
 			$final_footer .=  "</td><td align='center'>";
 			$tmppp++;
@@ -488,7 +488,7 @@ echo "\t<script type=\"text/javascript\" src=\"javascript/domTT/fadomatic.js\"><
 			$final_footer .=  "</td><td align='right'>&nbsp;";
 			if(($i+1) < count($evaledvar))
 				$final_footer .=  "<a href='pkg.php?xml=" . $_REQUEST['xml'] . "&startdisplayingat=" . ($startdisplayingat + $display_maximum_rows) . "&display_maximum_rows={$display_maximum_rows}'>";
-			$final_footer .=  "<font size='2'>Next page >></a>";	
+			$final_footer .=  "<font size='2'>Next page >></a>";
 			$final_footer .=  "</td></tr></table></td></tr>";
 			$i = count($evaledvar);
 			break;

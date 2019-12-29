@@ -2,10 +2,10 @@
 /* $Id$ */
 /*
 	interfaces.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2004-2008 Scott Ullrich
 	Copyright (C) 2006 Daniel S. Haischt.
 	Copyright (C) 2008-2010 Ermal Luçi
@@ -145,7 +145,7 @@ else if ($_POST && $_POST['enable'] != "yes")
 		$toapplylist = unserialize(file_get_contents("{$g['tmp_path']}/.interfaces.apply"));
 	else
 		$toapplylist = array();
-	$toapplylist[$if] = $if; 
+	$toapplylist[$if] = $if;
 	file_put_contents("{$g['tmp_path']}/.interfaces.apply", serialize($toapplylist));
 	header("Location: interfaces.php?if={$if}");
 	exit;
@@ -206,13 +206,13 @@ else if ($_POST)
 				$match = true;
 			}
 		}
-		
+
 		if(!$match)
 		{
 			$input_errors[] = "Geçerli bir ağ geçidi belirtilmelidir.";
 		}
 	}
-	
+
 	if ($_POST['mtu'] && ($_POST['mtu'] < 576))
 		$input_errors[] = "MTU 576 byte'tan büyük olmalıdır.";
 
@@ -236,7 +236,7 @@ else if ($_POST)
 		{
 			$gateway_item = array();
 			$skip = false;
-			
+
 			foreach($a_gateways as $item)
 			{
 				if(($item['interface'] == "$if") && ($item['gateway'] == "dynamic"))
@@ -244,7 +244,7 @@ else if ($_POST)
 					$skip = true;
 				}
 			}
-			
+
 			if($skip == false)
 			{
 				$gateway_item['gateway'] = "dynamic";
@@ -261,12 +261,12 @@ else if ($_POST)
 			case "static":
 				$wancfg['ipaddr'] = $_POST['ipaddr'];
 				$wancfg['subnet'] = $_POST['subnet'];
-				
+
 				if ($_POST['gateway'] != "none")
 				{
 					$wancfg['gateway'] = $_POST['gateway'];
 				}
-				
+
 				break;
 			case "dhcp":
 				$wancfg['ipaddr'] = "dhcp";
@@ -274,7 +274,7 @@ else if ($_POST)
 				$wancfg['alias-address'] = $_POST['alias-address'];
 				$wancfg['alias-subnet'] = $_POST['alias-subnet'];
 				$wancfg['dhcp_plus'] = $_POST['dhcp_plus'] == "yes" ? true : false;
-				
+
 				if($gateway_item)
 				{
 					$a_gateways[] = $gateway_item;
@@ -304,7 +304,7 @@ else if ($_POST)
 			unset($wancfg['mss']);
 		else
 			$wancfg['mss'] = $_POST['mss'];
-		
+
 		if (empty($_POST['mediaopt']))
 		{
 			unset($wancfg['media']);
@@ -312,7 +312,7 @@ else if ($_POST)
 		}
 		else
 		{
-			$mediaopts = explode(' ', $_POST['mediaopt']);	
+			$mediaopts = explode(' ', $_POST['mediaopt']);
 			if ($mediaopts[0] != ''){ $wancfg['media'] = $mediaopts[0]; }
 			if ($mediaopts[1] != ''){ $wancfg['mediaopt'] = $mediaopts[1]; }
 			else { unset($wancfg['mediaopt']); }
@@ -324,7 +324,7 @@ else if ($_POST)
 			$toapplylist = unserialize(file_get_contents("{$g['tmp_path']}/.interfaces.apply"));
 		else
 			$toapplylist = array();
-		$toapplylist[$if] = $if; 
+		$toapplylist[$if] = $if;
 		file_put_contents("{$g['tmp_path']}/.interfaces.apply", serialize($toapplylist));
 
 		mark_subsystem_dirty('interfaces');
@@ -334,7 +334,7 @@ else if ($_POST)
 		exit;
 	}
 
-} 
+}
 
 $mediaopts_list = array();
 $intrealname = $config['interfaces'][$if]['if'];
@@ -343,7 +343,7 @@ exec("/sbin/ifconfig -m $intrealname | grep \"media \"", $mediaopts);
 foreach ($mediaopts as $mediaopt)
 {
 	preg_match("/media (.*)/", $mediaopt, $matches);
-	
+
  	if (preg_match("/(.*) mediaopt (.*)/", $matches[1], $matches1))
  		array_push($mediaopts_list, $matches1[1] . " " . $matches1[2]);
 	else
@@ -412,7 +412,7 @@ $types = array("none" => "Hiçbiri", "static" => "Sabit", "dhcp" => "DHCP");
 									</select>
 								</td>
 							</tr>
-							
+
 							<tr>
 								<td valign="top" class="vncell">MTU</td>
 								<td class="vtable">
@@ -555,17 +555,17 @@ $types = array("none" => "Hiçbiri", "static" => "Sabit", "dhcp" => "DHCP");
 		selectbox.options.add(optn);
 		selectbox.selectedIndex = (selectbox.options.length-1);
 	}
-	
+
 	function report_failure()
 	{
 		alert("Sorry, we could not create your gateway at this time.");
 		hide_add_gateway();
 	}
-	
+
 	function save_callback(transport)
 	{
 		var response = transport.responseText;
-		
+
 		if(response)
 		{
 			document.getElementById("addgateway").style.display = 'none';
@@ -577,23 +577,23 @@ $types = array("none" => "Hiçbiri", "static" => "Sabit", "dhcp" => "DHCP");
 		else
 			report_failure();
 	}
-	
+
 	function table_bind()
 	{
 		var eth = jQuery("#type").val();
-		
+
 		if(eth == "static")
 		{
 			jQuery("#static").show();
 			jQuery("#dhcp").hide();
 		}
-		
+
 		else if(eth == "dhcp")
 		{
 			jQuery("#static").hide();
 			jQuery("#dhcp").show();
 		}
-		
+
 		else
 		{
 			jQuery("#static").hide();
@@ -602,9 +602,9 @@ $types = array("none" => "Hiçbiri", "static" => "Sabit", "dhcp" => "DHCP");
 	}
 
 	jQuery(document).ready(table_bind);
-	
+
 	jQuery("#type").change(table_bind);
-			
+
 </script>
 </div>
 </body>

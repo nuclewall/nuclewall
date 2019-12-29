@@ -1,7 +1,7 @@
 <?php
 /*
 	diag_logs_mysql.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -62,7 +62,7 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' , 'MYSQL SUNUCU');
 						<input style="height:20px" type="text" id="filtertext" name="filtertext" value="<?=$filtertext;?>" class="input-medium">
 						<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Ara</button>
 					</form>
-						
+
 					<table class="grids" width="100%">
 						<tr>
 							<td class="head">

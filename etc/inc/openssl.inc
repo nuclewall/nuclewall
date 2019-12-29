@@ -1,7 +1,7 @@
 <?php
 /*
 	openssl.inc
-	
+
 	Copyright (C) 2013-2015 Ogün Açýk
 	All rights reserved.
 */
@@ -22,7 +22,7 @@ export N_CONF_F="\$N_CONF_P/openssl.cnf"
 export N_CA_P="\$N_CONF_P/ca"
 #Scripts Path
 export N_SCRIPTS_P="\$N_CONF_P/scripts"
-# Binary 
+# Binary
 export N_BIN="/usr/local/bin/openssl"
 # Days
 export N_DAY="3650"
@@ -51,13 +51,13 @@ function openssl_init()
 {
 	$platform = trim(file_get_contents('/etc/platform'));
 	$initFile = '/etc/nuclewall/ssl_init';
-	
-	if(file_exists($initFile) and ($platform == 'pfSense'))  
+
+	if(file_exists($initFile) and ($platform == 'pfSense'))
 	{
 		echo "OpenSSL sertifikalarý oluþturuluyor...";
 		openSSLConfigInit();
 		system('ca_create.sh && cert_create.sh');
-		
+
 		if(file_exists("/usr/local/openssl/ca/cacert.pem") and
 		file_exists("/usr/local/openssl/ca/tsacert.pem") and
 		file_exists("/usr/local/openssl/ca/private/cakey.pem") and
@@ -66,7 +66,7 @@ function openssl_init()
 			echo "Tamam.\n";
 			system("rm -f $initFile");
 		}
-		
+
 		else
 			echo "Hata oluþtu.\n";
 	}

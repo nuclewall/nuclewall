@@ -93,7 +93,7 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' , 'DHCP SUNUCU');
 						<input style="height:20px" type="text" id="filtertext" name="filtertext" value="<?=$filtertext;?>" class="input-medium">
 						<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Ara</button>
 					</form>
-						
+
 					<table class="grids">
 						<tr>
 							<td class="head">

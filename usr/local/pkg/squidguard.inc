@@ -49,7 +49,7 @@ function squidguard_validate_acl($post, $input_errors)
 			if (strlen($description) > 70)
 				$input_errors[] = "'$description' boyutu 70 karakteri geçmemelidir.";
 		}
-	
+
 	}
 
 	foreach ($post as $key => $val) {
@@ -269,7 +269,7 @@ function squidguard_before_form_acl($pkg, $is_acl=true) {
 
 function make_select_options($val) {
 	$sel = "selected=\"selected\"";
-	
+
 	switch($val) {
 		case "allow": $opts['A'] = $sel; break;
 		case "deny" : $opts['D'] = $sel; break;
@@ -285,12 +285,12 @@ function make_grid_controls($type, $items) {
 	$res = '';
 	$tbl = '';
 	$total_rows = count($items);
-	
+
 	if ($total_rows%2 == 0)
 		$center = $total_rows/2;
 	else
 		$center = ($total_rows + 1) / 2;
-		
+
 	for ($i=0; $i<$center; $i++)
 	{
 		$class = ($i%2 == 0) ? "cell" : "cell dark";
@@ -298,21 +298,21 @@ function make_grid_controls($type, $items) {
 		$right[$i] = $items[$i + $center];
 		$name_l = trim($left[$i]['name']);
 		$name_r = trim($right[$i]['name']);
-		
+
 		$opts_l = make_select_options($left[$i]['upt_value']);
 		$opts_r = make_select_options($right[$i]['upt_value']);
-		
+
 		$tbl .= "<tr>\n";
-		
+
 		$tnm_l = 'uptime_' . $name_l;
-		
-		
+
+
 		$tbl .= "\t<td class=\"$class\">$name_l</td>\n";
-		
-		if ($name_l) 
+
+		if ($name_l)
 		{
 			$tbl .= "\t<td class=\"$class\">\n\t<select class=\"select\" id=$tnm_l name=\"$tnm_l\">\n";
-		
+
 			if ($name_l !== 'all') {
 				$tbl .= "\t\t<option value=none  name=\"----\"  {$opts_l['F']}></option>\n";
 				$tbl .= "\t\t<option value=deny  name=\"deny\"  {$opts_l['D']}>Engelle</option>\n";

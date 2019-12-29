@@ -1,7 +1,7 @@
 <?php
 /*
-	Copyright 2013 Ogün Açık
-	
+	Copyright 2013 Ogun Acik
+
 	Copyright 2007 Scott Dale
 	Part of pfSense widgets (www.pfsense.com)
 	originally based on m0n0wall (http://m0n0.ch/wall)
@@ -37,28 +37,28 @@ require_once("pfsense-utils.inc");
 require_once("functions.inc");
 require_once("/usr/local/www/widgets/include/interfaces.inc");
 
-		$i = 0; 
+		$i = 0;
 		$ifdescrs = get_configured_interface_with_descr();
 ?>
 
  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<?php 
+	<?php
 	foreach ($ifdescrs as $ifdescr => $ifname) {
 		$ifinfo = get_interface_info($ifdescr);
 	?>
-	<tr> 
+	<tr>
 	<td class="vncellt" width="40%">
 		<img src="./themes/nuclewall/images/icons/icon_cablenic.gif"/>
 		<strong><u>
 		<span onClick="location.href='/interfaces.php?if=<?=$ifdescr; ?>'" style="cursor:pointer">
 	<?=htmlspecialchars($ifname);?></span></u></strong>
-	<?php 
-		if ($ifinfo['dhcplink']) 
+	<?php
+		if ($ifinfo['dhcplink'])
 			echo "&nbsp;&nbsp;&nbsp;(DHCP)";
 	?>
 	</td>
 	<td width="60%"  class="listr">
-		 <?php if($ifinfo['status'] == "up" || $ifinfo['status'] == "associated") { ?> 
+		 <?php if($ifinfo['status'] == "up" || $ifinfo['status'] == "associated") { ?>
 				<table>
 					<tr>
 						<td>
@@ -103,7 +103,7 @@ require_once("/usr/local/www/widgets/include/interfaces.inc");
 					</td>
 				</tr>
 			</table>
-	  </td></tr><?php 
+	  </td></tr><?php
 }
-?> 
+?>
 </table>

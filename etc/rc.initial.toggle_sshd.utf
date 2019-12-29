@@ -37,7 +37,7 @@ $fp = fopen('php://stdin', 'r');
 if (isset($config['system']['enablesshd'])) {
 	echo "    SSHD servisi şu anda çalışıyor. Kapatmak istiyor musunuz? [e|h]\n    > ";
 	$yn = chop(fgets($fp));
-	
+
 	if ($yn[0] == "e" || $yn[0] == "E")
 	{
 		unset($config['system']['enablesshd']);
@@ -46,25 +46,25 @@ if (isset($config['system']['enablesshd'])) {
 		exec("/etc/sshd");
 		echo "Tamam.\n";
 		exec("ps awux | grep '/usr/sbin/sshd' | grep -v grep | awk '{print $2}' | xargs kill");
-		
+
 		/* close all ssh sessions */
 		exec("ps aux | grep sshd: | grep @ | awk '{print $2}' | xargs kill -9");
 	}
-	
+
 }
 
 else
 {
 	echo "    SSHD servisi şu anda kapalı. Başlatmak istiyor musunuz? [e|h]\n    > ";
 	$yn = chop(fgets($fp));
-	
+
 	if ($yn[0] == "e" || $yn[0] == "E") {
 		$config['system']['enablesshd'] = true;
 		write_config();
 		echo "\n    Servis başlatılıyor...";
 		exec("/etc/sshd");
 		echo "Tamam.\n";
-	}	
+	}
 }
 
 fclose($fp);

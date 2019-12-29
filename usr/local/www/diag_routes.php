@@ -1,7 +1,7 @@
 <?php
 /*
 	diag_routes.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -49,9 +49,9 @@ $pgtitle = array('DURUM', 'YÖNLENDİRME TABLOSU');
 							<?php
 								$netstat = "/usr/bin/netstat -nrW -f inet | sed 1,4d > /tmp/routes";
 								exec($netstat);
-								
+
 								$routes = fopen("/tmp/routes", "r");
-								
+
 								if ($routes)
 								{
 									while (($line = fgets($routes)) !== false)
@@ -67,14 +67,14 @@ $pgtitle = array('DURUM', 'YÖNLENDİRME TABLOSU');
 										echo "<td class=\"cell\">{$fields[6]}</td>\n";
 										echo "</tr>\n";
 									}
-									
+
 									fclose($routes);
-								} 
-	
-								else 
+								}
+
+								else
 								{
 									log_error('routes dosyası açılamadı');
-								} 
+								}
 							?>
 						</table>
 					</td>

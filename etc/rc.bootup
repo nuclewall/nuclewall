@@ -4,7 +4,7 @@
 	rc.bootup
 	part of pfSense by Scott Ullrich
 	originally based on m0n0wall (http://m0n0.ch/wall)
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 
@@ -43,7 +43,7 @@ function rescue_detect_keypress()
 	echo "Seçim için kalan süre: {$timeout}";
 	$key = null;
 	exec("/bin/stty erase " . chr(8));
-	
+
 	while(!in_array($key, array("k", "K")))
 	{
 	        echo chr(8) . "{$timeout}";
@@ -51,18 +51,18 @@ function rescue_detect_keypress()
 	        $key = trim(`KEY=\`dd count=1 2>/dev/null\`; echo \$KEY`);
 	        `/bin/stty icanon`;
 	        $timeout--;
-	        if ($timeout == 0) 
+	        if ($timeout == 0)
 				break;
 	}
-	
+
 	if (in_array($key, array("k", "K")))
 	{
-		putenv("TERM=cons25");  
+		putenv("TERM=cons25");
 		echo "\n\nKurulum baþlatýlýyor...\n";
 		passthru("/usr/bin/env TERM=cons25 /bin/tcsh -c /scripts/lua_installer");
-	 
+
 		if(file_exists("/tmp/install_complete"))
-		{			
+		{
 			passthru("/etc/rc.reboot");
 			exit;
 		}
@@ -99,9 +99,9 @@ function set_password()
 		echo "Parolanýzý daha sonra deðiþtirilebilirsiniz.\n";
 
 		do
-		{	
+		{
 			echo "\nYeni bir yönetici parolasý girip <ENTER> a basýn:\n> ";
-			$password = chop(fgets($fp));	
+			$password = chop(fgets($fp));
 
 			if($password != '')
 			{
@@ -156,7 +156,7 @@ set_device_perms();
 
 unmute_kernel_msgs();
 
-if($g['platform'] == 'cdrom') 
+if($g['platform'] == 'cdrom')
 		rescue_detect_keypress();
 
 parse_config_bootup();
@@ -194,7 +194,7 @@ mwexec_bg("/etc/sshd");
 setup_microcode();
 
 mute_kernel_msgs();
-	
+
 interfaces_configure();
 
 system_hosts_generate();
@@ -242,7 +242,7 @@ mysql_init();
 start_mysql();
 
 if (isset($config['captiveportal']['enable']))
-{ 
+{
 	start_radius();
 }
 
@@ -258,7 +258,7 @@ auto_login();
 
 $kern_hz = `/sbin/sysctl kern.clockrate | /usr/bin/awk '{ print $5 }' | /usr/bin/cut -d"," -f1`;
 $kern_hz = trim($kern_hz, "\r\n");
-if($kern_hz == "1000") 
+if($kern_hz == "1000")
 	mwexec("/sbin/sysctl net.inet.tcp.rexmit_min=30");
 
 if (file_exists("/sbin/shutdown.old"))

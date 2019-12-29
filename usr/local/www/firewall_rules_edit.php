@@ -2,10 +2,10 @@
 /* $Id$ */
 /*
 	firewall_rules_edit.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	part of pfSense (http://www.pfsense.com)
         Copyright (C) 2005 Scott Ullrich (sullrich@gmail.com)
 
@@ -79,11 +79,11 @@ if (isset($id) && $a_filter[$id]) {
 
 	if (isset($a_filter[$id]['floating']) || $if == "FloatingRules") {
 		$pconfig['floating'] = $a_filter[$id]['floating'];
-		if (isset($a_filter[$id]['interface']) && $a_filter[$id]['interface'] <> "") 
+		if (isset($a_filter[$id]['interface']) && $a_filter[$id]['interface'] <> "")
 			$pconfig['interface'] = $a_filter[$id]['interface'];
 	}
-	
-	if (isset($a_filter['floating'])) 
+
+	if (isset($a_filter['floating']))
 		$pconfig['floating'] = "yes";
 
 	if (isset($a_filter[$id]['direction']))
@@ -115,13 +115,13 @@ if (isset($id) && $a_filter[$id]) {
 	if (isset($a_filter[$id]['tcpflags_any']))
 		$pconfig['tcpflags_any'] = true;
 	else {
-		if (isset($a_filter[$id]['tcpflags1']) && $a_filter[$id]['tcpflags1'] <> "") 
+		if (isset($a_filter[$id]['tcpflags1']) && $a_filter[$id]['tcpflags1'] <> "")
 			$pconfig['tcpflags1'] = $a_filter[$id]['tcpflags1'];
-		if (isset($a_filter[$id]['tcpflags2']) && $a_filter[$id]['tcpflags2'] <> "") 
+		if (isset($a_filter[$id]['tcpflags2']) && $a_filter[$id]['tcpflags2'] <> "")
 			$pconfig['tcpflags2'] = $a_filter[$id]['tcpflags2'];
 	}
 
-	if (isset($a_filter[$id]['tag']) && $a_filter[$id]['tag'] <> "") 
+	if (isset($a_filter[$id]['tag']) && $a_filter[$id]['tag'] <> "")
 		$pconfig['tag'] = $a_filter[$id]['tag'];
 	if (isset($a_filter[$id]['tagged']) && $a_filter[$id]['tagged'] <> "")
         	$pconfig['tagged'] = $a_filter[$id]['tagged'];
@@ -146,7 +146,7 @@ if (isset($id) && $a_filter[$id]) {
 
 	/* Multi-WAN next-hop support */
 	$pconfig['gateway'] = $a_filter[$id]['gateway'];
-	
+
 	/* Shaper support */
 	$pconfig['defaultqueue'] = $a_filter[$id]['defaultqueue'];
 	$pconfig['ackqueue'] = $a_filter[$id]['ackqueue'];
@@ -259,7 +259,7 @@ if ($_POST) {
 		if(($_POST['statetype'] == "synproxy state") && ($_POST['gateway'] != ""))
 			$input_errors[] = sprintf("%s ağ geçidi 'varsayılan' olarak ayarlıysa geçerlidir.", $_POST['statetype']);
 	}
-        
+
 	if ( isset($a_filter[$id]['associated-rule-id'])===false &&
 	(!(is_specialnet($_POST['srctype']) || ($_POST['srctype'] == "single"))) ) {
 		$reqdfields[] = "srcmask";
@@ -296,8 +296,8 @@ if ($_POST) {
 	if ( $_POST['srcbeginport_cust'] && $_POST['srcendport_cust']){
 		if (is_alias($_POST['srcendport_cust']) && is_alias($_POST['srcendport_cust']) && $_POST['srcbeginport_cust'] != $_POST['srcendport_cust'])
 			$input_errors[] = 'Kaynak port başlangıç ve bitişi için aynı Takma Ad kullanılmalıdır.';
-		if ((is_alias($_POST['srcbeginport_cust']) && (!is_alias($_POST['srcendport_cust']) && $_POST['srcendport_cust']!='')) || 
-		    ((!is_alias($_POST['srcbeginport_cust']) && $_POST['srcbeginport_cust']!='') && is_alias($_POST['srcendport_cust']))) 
+		if ((is_alias($_POST['srcbeginport_cust']) && (!is_alias($_POST['srcendport_cust']) && $_POST['srcendport_cust']!='')) ||
+		    ((!is_alias($_POST['srcbeginport_cust']) && $_POST['srcbeginport_cust']!='') && is_alias($_POST['srcendport_cust'])))
 			$input_errors[] = 'Başlangıç ve bitiş portları için hem Takma Ad\'ı hem de port numarasını aynı anda kullanamazsınız.';
 	}
 	if ( !$_POST['dstbeginport_cust'] && $_POST['dstendport_cust'])
@@ -306,8 +306,8 @@ if ($_POST) {
 	if ( $_POST['dstbeginport_cust'] && $_POST['dstendport_cust']){
 		if (is_alias($_POST['dstendport_cust']) && is_alias($_POST['dstendport_cust']) && $_POST['dstbeginport_cust'] != $_POST['dstendport_cust'])
 			$input_errors[] = 'Hedef port başlangıç ve bitişi için aynı Takma Ad kullanılmalıdır.';
-		if ((is_alias($_POST['dstbeginport_cust']) && (!is_alias($_POST['dstendport_cust']) && $_POST['dstendport_cust']!='')) || 
-		    ((!is_alias($_POST['dstbeginport_cust']) && $_POST['dstbeginport_cust']!='') && is_alias($_POST['dstendport_cust']))) 
+		if ((is_alias($_POST['dstbeginport_cust']) && (!is_alias($_POST['dstendport_cust']) && $_POST['dstendport_cust']!='')) ||
+		    ((!is_alias($_POST['dstbeginport_cust']) && $_POST['dstbeginport_cust']!='') && is_alias($_POST['dstendport_cust'])))
 			$input_errors[] = 'Başlangıç ve bitiş portları için hem Takma Ad\'ı hem de port numarasını aynı anda kullanamazsınız.';
 	}
 
@@ -358,7 +358,7 @@ if ($_POST) {
 		if ($_POST['defaultqueue'] == "none" )
 			$input_errors[] = "Kabul kuyruğu seçtiğinizde başka bir kuyruk da seçmelisiniz.";
 		else if ($_POST['ackqueue'] == $_POST['defaultqueue'])
-			$input_errors[] = "Kabul kuyruğu ve kuyruk aynı olamaz.";		
+			$input_errors[] = "Kabul kuyruğu ve kuyruk aynı olamaz.";
 	}
 	if (isset($_POST['floating']) && $_POST['pdnpipe'] != "none" && (empty($_POST['direction']) || $_POST['direction'] == "any"))
 		$input_errors[] = "Sınırlayıcıları bir hedef seçmeden değişen kurallarda kullanamazsınız.";
@@ -371,7 +371,7 @@ if ($_POST) {
 			$input_errors[] = "Giriş ve çıkış kuyruğu aynı olamaz.";
 		else if ($pdnpipe[0] == "?" && $dnpipe[0] <> "?")
 			$input_errors[] = "Giriş ve çıkışın için birini kuyruk, diğerini sanal arayüz seçemezsiniz. İkisi de aynı türde olmalıdır.";
-		else if ($dnpipe[0] == "?" && $pdnpipe[0] <> "?")			
+		else if ($dnpipe[0] == "?" && $pdnpipe[0] <> "?")
 			$input_errors[] = "Giriş ve çıkışın için birini kuyruk, diğerini sanal arayüz seçemezsiniz. İkisi de aynı türde olmalıdır.";
 		if ($_POST['direction'] == "out" && empty($_POST['gateway']))
 			$input_errors[] = "Lütfen bir ağ geçidi seçin. Sınırlayıcının düzgün çalışması için genelde arayüzün kullandığı ağ geçidi seçilir.";
@@ -383,7 +383,7 @@ if ($_POST) {
 			$input_errors[] = "TCP veya UDP protokolleri için sadece Katman7 taşıyıcı seçebilirsiniz.";
 		if ($_POST['type'] <> "pass")
 			$input_errors[] = "Pass türü kurallar için sadece Katman7 taşıyıcı seçebilirsiniz.";
-			
+
 	}
 
 	if (!$_POST['tcpflags_any']) {
@@ -399,7 +399,7 @@ if ($_POST) {
 			$input_errors[] = "Ayarlanması gereken TCP bayraklarını belirttiğinizde, haricinde kalması gereken bayrakları da belirtmelisiniz.";
 	}
 
-	// Allow extending of the firewall edit page and include custom input validation 
+	// Allow extending of the firewall edit page and include custom input validation
 	pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/input_validation");
 
 	if (!$input_errors) {
@@ -459,7 +459,7 @@ if ($_POST) {
 		$filterent['os'] = $_POST['os'];
 
 		/* Nosync directive - do not xmlrpc sync this item */
-		
+
 		$filterent['nosync'] = true;
 
 		/* unless both values are provided, unset the values - ticket #650 */
@@ -503,7 +503,7 @@ if ($_POST) {
 		if ($_POST['gateway'] != "") {
 			$filterent['gateway'] = $_POST['gateway'];
 		}
-		
+
 		if (isset($_POST['defaultqueue']) && $_POST['defaultqueue'] != "none") {
 			$filterent['defaultqueue'] = $_POST['defaultqueue'];
 			if (isset($_POST['ackqueue']) && $_POST['ackqueue'] != "none")
@@ -519,7 +519,7 @@ if ($_POST) {
 		if (isset($_POST['l7container']) && $_POST['l7container'] != "none") {
 			$filterent['l7container'] = $_POST['l7container'];
 		}
-		
+
 		if ($_POST['sched'] != "") {
 			$filterent['sched'] = $_POST['sched'];
 		}
@@ -540,7 +540,7 @@ if ($_POST) {
 			$filterent['associated-rule-id'] = $a_filter[$id]['associated-rule-id'];
 		}
 
-		// Allow extending of the firewall edit page and include custom input validation 
+		// Allow extending of the firewall edit page and include custom input validation
 		pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/pre_write_config");
 
 		if (isset($id) && $a_filter[$id])
@@ -586,7 +586,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 	<table class="tabcont" cellpadding="0" cellspacing="0">
 		<tr>
 			<td colspan="2" class="listtopic">KURAL DÜZENLE</td>
-		</tr>	
+		</tr>
 		<?php
 			pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/htmlphpearly");
 		?>
@@ -606,8 +606,8 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				<br>
 				<span>
 					Aşağıda belirtilen kritere uyan paketlere ne yapılacağını seçin.<br>
-					<b>İpucu:</b> Block ile Reject arasındaki fark şudur; reddedilen paket(REJECT) (TCP sıfırlama veya UDP ICM port erişilemez) 
-					sahibine geri gönderilir, engellenen paket(BLOCK) ise sessizce silinir. İki durumda da asıl paket 'çöpe gider'. 
+					<b>İpucu:</b> Block ile Reject arasındaki fark şudur; reddedilen paket(REJECT) (TCP sıfırlama veya UDP ICM port erişilemez)
+					sahibine geri gönderilir, engellenen paket(BLOCK) ise sessizce silinir. İki durumda da asıl paket 'çöpe gider'.
 				</span>
 			</td>
 		</tr>
@@ -619,9 +619,9 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				<span>Kuralı silmeden devre dışı bırakmak için işaretleyin.</span>
 			</td>
 		</tr>
-		
+
 		<?php if ($if == "FloatingRules" || isset($pconfig['floating'])): ?>
-		
+
 		<tr>
 			<td valign="top" class="vncell">Hızlı</td>
 			<td class="vtable">
@@ -630,11 +630,11 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				<span>Bu kurala uyan trafiğin hemen uygulanması için bu seçeneği işaretleyin.</span>
 			</td>
 			</tr>
-			
+
 		<?php endif; ?>
 		<?php $edit_disabled = ""; ?>
 		<?php if( isset($pconfig['associated-rule-id']) ): ?>
-		
+
 		<tr>
 			<td valign="top" class="vncell">İlişkili filtre kuralı</td>
 			<td class="vtable">
@@ -655,15 +655,15 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 					if (!empty($pconfig['interface']))
 						echo "<input name='interface' id='interface' type='hidden' value='{$pconfig['interface']}' >";
 				?>
-				
+
 				<script type="text/javascript">
 				editenabled = 0;
 				</script>
 			</td>
 		</tr>
-		
+
 		<?php endif; ?>
-		
+
 		<tr>
 			<td valign="top" class="vncell">Arayüz</td>
 			<td class="vtable">
@@ -671,7 +671,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				<select name="interface[]" multiple="true" size="3" <?=$edit_disabled;?>>
 				<?php else: ?>
 				<select name="interface" <?=$edit_disabled;?>>
-				
+
 				<?php
 					endif;
 					/* add group interfaces */
@@ -680,29 +680,29 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 							if (have_ruleint_access($ifgen['ifname']))
 								$interfaces[$ifgen['ifname']] = $ifgen['ifname'];
 					$ifdescs = get_configured_interface_with_descr();
-					// Allow extending of the firewall edit page and include custom input validation 
+					// Allow extending of the firewall edit page and include custom input validation
 					pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/pre_interfaces_edit");
-					
+
 					foreach ($ifdescs as $ifent => $ifdesc)
 						if(have_ruleint_access($ifent))
 							$interfaces[$ifent] = $ifdesc;
-						
+
 						if (is_array($pconfig['interface']))
 							$pconfig['interface'] = implode(",", $pconfig['interface']);
-						
+
 						$selected_interfaces = explode(",", $pconfig['interface']);
 						foreach ($interfaces as $iface => $ifacename): ?>
 							<option value="<?=$iface;?>" <?php if ($pconfig['interface'] <> "" && ( strcasecmp($pconfig['interface'], $iface) == 0 || in_array($iface, $selected_interfaces) )) echo "selected"; ?>><?=$ifacename?></option>
 				<?php endforeach; ?>
-				
+
 				</select>
 				<br>
 				Bu kurala uyacak paketlerin hangi arayüzden geleceğinini seçiniz.
 			</td>
 		</tr>
-		
+
 		<?php if ($if == "FloatingRules" || isset($pconfig['floating'])): ?>
-		
+
 		<tr>
 			<td valign="top" class="vncell">Yön</td>
 			<td class="vtable">
@@ -711,16 +711,16 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 					foreach ($directions as $direction): ?>
 					<option value="<?=$direction;?>"
 					<?php if ($direction == $pconfig['direction']): ?>
-						selected="selected" 
+						selected="selected"
 					<?php endif; ?>
 					><?=$direction;?></option>
-					<?php endforeach; ?>      
+					<?php endforeach; ?>
 				</select>
 				<input type="hidden" id="floating" name="floating" value="floating">
 			</td>
 		<tr>
 		<?php endif; ?>
-			
+
 		<tr>
 			<td valign="top" class="vncell">Protokol</td>
 			<td class="vtable">
@@ -736,7 +736,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				<b>İpucu:</b> Çoğu durumda<em>TCP</em> belirtilir.
 			</td>
 		</tr>
-		
+
 		<tr id="icmpbox" name="icmpbox">
 			<td valign="top" class="vncell">ICMP türü</td>
 			<td class="vtable">
@@ -771,14 +771,14 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				Eğer yukarıdan ICMP protokolünü seçtiyseniz burada ICMP türü belirtebilirsiniz.
 			</td>
 		</tr>
-		
+
 		<tr>
 			<td valign="top" class="vncell">Kaynak</td>
 			<td class="vtable">
 				<input <?=$edit_disabled;?> name="srcnot" type="checkbox" id="srcnot" value="yes" <?php if ($pconfig['srcnot']) echo "checked"; ?>>
 				<b>Haricinde</b>
 				<p>Eşleştirmeyi tersine çevirmek için bu seçeneği kullanabilirsiniz.</p>
-				
+
 				<table id="inline1" border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<td>Tür</td>
@@ -794,7 +794,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 								<?php endif; ?>
 								<?php if(have_ruleint_access("pppoe")): ?>
 								<option value="pppoe"   <?php if ($pconfig['src'] == "pppoe") { echo "selected"; } ?>>PPPoE istemci</option>
-								<?php endif; ?>								
+								<?php endif; ?>
 								<?php if(have_ruleint_access("l2tp")): ?>
 								<option value="l2tp"   <?php if ($pconfig['src'] == "l2tp") { echo "selected"; } ?>>L2TP istemci</option>
 								<?php endif; ?>
@@ -822,14 +822,14 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 						</td>
 					</tr>
 				</table><!-- inline1 end -->
-				
+
 				<div id="showadvancedboxspr">
 					<input style="margin:0;padding:0;" <?=$edit_disabled;?> type="button" class="btn btn-link" onClick="show_source_port_range()" value="Gelişmiş">
 				</div>
-				
+
 			</td>
 		</tr>
-		
+
 		<tr style="display:none" id="sprtable" name="sprtable">
 			<td valign="top" class="vncell">Kaynak port aralığı</td>
 			<td class="vtable">
@@ -841,7 +841,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 								<option value="">diğer</option>
 								<option value="any" <?php $bfound = 0; if ($pconfig['srcbeginport'] == "any") { echo "selected"; $bfound = 1; } ?>>Hepsi</option>
 									<?php foreach ($wkports as $wkport => $wkportdesc): ?>
-								<option value="<?=$wkport;?>" 
+								<option value="<?=$wkport;?>"
 									<?php if ($wkport == $pconfig['srcbeginport']) { echo "selected"; $bfound = 1; } ?>><?=htmlspecialchars($wkportdesc);?>
 								</option>
 								<?php endforeach; ?>
@@ -867,14 +867,14 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				Kaynak portları genellikle rastgele seçilir ve neredeyse hiçbir zaman hedef port portla aynı değildir.
 			</td>
 		</tr>
-		
+
 		<tr>
 			<td valign="top" class="vncell">Hedef</td>
 			<td class="vtable">
 				<input <?=$edit_disabled;?> name="dstnot" type="checkbox" id="dstnot" value="yes" <?php if ($pconfig['dstnot']) echo "checked"; ?>>
 				<b>Haricinde</b>
 				<p>Eşleştirmeyi tersine çevirmek için bu seçeneği kullanabilirsiniz.</p>
-				
+
 				<table id="inline3" border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<td>Tür</td>
@@ -890,7 +890,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 								<?php endif; ?>
 								<?php if(have_ruleint_access("pppoe")): ?>
 								<option value="pppoe" <?php if ($pconfig['dst'] == "pppoe") { echo "selected"; } ?>>PPPoE istemci</option>
-								<?php endif; ?>								
+								<?php endif; ?>
 								<?php if(have_ruleint_access("l2tp")): ?>
 								<option value="l2tp" <?php if ($pconfig['dst'] == "l2tp") { echo "selected"; } ?>>L2TP istemci</option>
 								<?php endif; ?>
@@ -905,7 +905,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 							</select>
 						</td>
 					</tr>
-					
+
 					<tr>
 						<td>Adres:</td>
 						<td style="padding:5px;">
@@ -922,7 +922,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				</table><!-- inline3 end -->
 			</td>
 		</tr>
-		
+
 		<tr id="dprtr" name="dprtr">
 			<td valign="top" class="vncell">Hedef port aralığı</td>
 			<td class="vtable">
@@ -960,7 +960,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				</span>
 			</td>
 		</tr>
-		
+
 		<tr>
 			<td valign="top" class="vncell">Günlük</td>
 			<td class="vtable">
@@ -968,7 +968,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				<b>	Bu kural tarafından işlenen paketleri günlükle </b>
 				<br>
 				<span>
-					<b>İpucu:</b> Güvenlik duvarının yerel günlük alanı kısıtlıdır. Her şeyi günlüğe kaydetmeyin. 
+					<b>İpucu:</b> Güvenlik duvarının yerel günlük alanı kısıtlıdır. Her şeyi günlüğe kaydetmeyin.
 					<br>Eğer çok sayıda günlükleme faaliyeti olacaksa bir uzak syslog sunucu kullanabilirsiniz.
 				</span>
 			</td>
@@ -982,11 +982,11 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 			</td>
 		</tr>
 		<?php if (!isset($id) || !($a_filter[$id] && firewall_check_for_advanced_options($a_filter[$id]) <> "")): ?>
-		
+
 		<tr>
 			<td class="vncell"></td>
 			<td class="vtable">
-				<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet"> 
+				<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
 				<input type="button" class="btn btn-default" value="İptal" onclick="history.back()">
 				<?php if (isset($id) && $a_filter[$id]): ?>
 				<input name="id" type="hidden" value="<?=htmlspecialchars($id);?>">
@@ -998,14 +998,14 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 		<tr>
 			<td colspan="2" class="listtopic">GELİŞMİŞ AYARLAR</td>
 		</tr>
-		
+
 		<tr>
 			<td valign="top" class="vncell">Kaynak OS</td>
 			<td class="vtable">
 				<div id="showadvsourceosbox" <?php if ($pconfig['os']) echo "style='display:none'"; ?>>
 					<input class="btn btn-mini" type="button" onClick="show_advanced_sourceos()" value="Göster">
 				</div>
-				
+
 				<div id="showsourceosadv" <?php if (empty($pconfig['os'])) echo "style='display:none'"; ?>> İşletim sistemi:
 					<select name="os" id="os">
 					<?php
@@ -1030,8 +1030,8 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				</div>
 			</td>
 		</tr>
-		
-		<tr id="tcpflags" name="tcpflags"> 
+
+		<tr id="tcpflags" name="tcpflags">
 			<td valign="top" class="vncell">TCP Bayrakları</td>
 			<td class="vtable">
 				<div id="showtcpflagsbox" <?php if ($pconfig['tcpflags_any'] || $pconfig['tcpflags1'] || $pconfig['tcpflags2']) echo "style='display:none'"; ?>>
@@ -1040,7 +1040,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				<div id="showtcpflagsadv" <?php if (empty($pconfig['tcpflags_any']) && empty($pconfig['tcpflags1']) && empty($pconfig['tcpflags2'])) echo "style='display:none'"; ?>>
 					<div id="tcpheader" name="tcpheader">
 						<table id="inline5" border="0" cellspacing="0" cellpadding="0">
-							<?php 
+							<?php
 								$setflags = explode(",", $pconfig['tcpflags1']);
 								$outofflags = explode(",", $pconfig['tcpflags2']);
 								$header = "<td width='40' ></td>";
@@ -1111,7 +1111,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				</div>
 			</td>
 		</tr>
-		
+
 		<tr>
 			<td valign="top" class="vncell">Ağ Geçidi</td>
 			<td class="vtable">
@@ -1127,7 +1127,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 						$gateways = return_gateways_array();
 						// add statically configured gateways to list
 						foreach($gateways as $gwname => $gw) {
-							if($gw == "") 
+							if($gw == "")
 								continue;
 							if($gwname == $pconfig['gateway']) {
 								$selected = " SELECTED";
@@ -1156,7 +1156,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				</div>
 			</td>
 		</tr>
-		
+
 		<tr>
 			<td valign="top" class="vncell">Gelen/Giden</td>
 			<td class="vtable">
@@ -1180,10 +1180,10 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 									$dnqselected = 1;
 									echo " SELECTED";
 								}
-								echo ">{$dnq}</option>"; 
+								echo ">{$dnq}</option>";
 							}
 						?>
-					</select> / 			
+					</select> /
 					<select name="pdnpipe">
 						<?php
 							$dnqselected = 0;
@@ -1198,7 +1198,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 									$dnqselected = 1;
 									echo " SELECTED";
 								}
-								echo ">{$dnq}</option>"; 
+								echo ">{$dnq}</option>";
 							}
 						?>
 					</select>

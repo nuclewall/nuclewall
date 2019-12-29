@@ -1,10 +1,10 @@
 <?php
 /*
 	system.widget.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright 2007 Scott Dale
 	Part of pfSense widgets (www.pfsense.com)
 	originally based on m0n0wall (http://m0n0.ch/wall)
@@ -56,7 +56,7 @@ setlocale(LC_ALL, 'tr_TR.UTF-8');
 		<tr>
 			<td class="vncellt">İşlemci mimarisi</td>
 			<td class="listr">
-			<?php 
+			<?php
 				$cpumodel = "";
 				exec("/sbin/sysctl -n hw.model", $cpumodel);
 				$cpumodel = implode(" ", $cpumodel);
@@ -91,7 +91,7 @@ setlocale(LC_ALL, 'tr_TR.UTF-8');
 							$br = '';
 							if(($breaker % 2) == 0)
 								$br = '<br>';
-								
+
 							echo "<span style='margin: 2px;' class='label label-success'>{$dns}</span>{$br}";
 							$breaker++;
 						}
@@ -108,7 +108,7 @@ setlocale(LC_ALL, 'tr_TR.UTF-8');
 					<?= strftime("%e %B %Y %A", time()); ?>
 				</div>
             </td>
-        </tr>				
+        </tr>
 		<?php if ($config['revision']): ?>
 		<tr>
 			<td class="vncellt">Son değişiklik</td>
@@ -122,7 +122,7 @@ setlocale(LC_ALL, 'tr_TR.UTF-8');
 			<div class="progress-container">
 				<div id="cpubar" class="progress custom progress-danger progress-striped active">
 					<div id="cpuwidtha" class="bar" style="width: <?= $cpuUsage; ?>%;"></div>
-					<span style="visibility: hidden;" id="cpu_usage"></span> 
+					<span style="visibility: hidden;" id="cpu_usage"></span>
 				</div>
 			</div>
 			</td>
@@ -144,7 +144,7 @@ setlocale(LC_ALL, 'tr_TR.UTF-8');
 			<?php $diskusage = disk_usage(); ?>
 			<div class="progress-container">
 				<div title="<?= $diskusage; ?>%" class="progress custom progress-warning progress-striped active">
-					<div class="bar" style="width: <?= $diskusage; ?>%;"></div>				
+					<div class="bar" style="width: <?= $diskusage; ?>%;"></div>
 				</div>
 			</div>
 			</td>
@@ -171,5 +171,5 @@ setlocale(LC_ALL, 'tr_TR.UTF-8');
 		$('uname').innerHTML="<?php echo php_uname("a"); ?>";
 	}
 	setTimeout('getstatus()', 4000);
-	
+
 </script>

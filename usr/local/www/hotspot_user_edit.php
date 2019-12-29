@@ -1,7 +1,7 @@
 <?php
 /*
 	hotspot_user_edit.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 */
@@ -17,10 +17,10 @@ if (file_exists("{$g['vardb_path']}/captiveportal.db"))
 {
 	$captiveportallck = lock('captiveportaldb');
 	$cpcontents = file("{$g['vardb_path']}/captiveportal.db", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-	unlock($captiveportallck);	
+	unlock($captiveportallck);
 }
 
-if($connection) 
+if($connection)
 {
 	if (($_GET['act'] == 'edit') && (isset($_GET['uname'])) && (strlen($_GET['uname']) <= 12))
 	{
@@ -59,17 +59,17 @@ if($connection)
 	{
 		$user = $_POST;
 		unset($input_errors);
-		
+
 		$unameError = false;
 		$currentuser = $_POST['currentuser'];
-		
+
 		$username = $_POST['username'];
 		$usercount = $_POST['usercount'];
 		$usercount_num = intval($_POST['usercount']);
 		$password = $_POST['password'];
 		$password_again = $_POST['password_again'];
 		$description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
-		
+
 		if (empty($currentuser) or $_GET['act'] == 'new')
 		{
 			$reqdfields = explode(" ", "username password password_again usercount");
@@ -82,8 +82,8 @@ if($connection)
 		}
 
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
-				
-		if(preg_match('/[^a-zA-Z0-9_.-]/', $username)) 
+
+		if(preg_match('/[^a-zA-Z0-9_.-]/', $username))
 		{
 			$input_errors[] = "Kullanıcı adı sadece 'a-z', 'A-Z', '0-9', '_', '.', '-' karakterlerinden oluşabilir.";
 			$unameError = true;
@@ -126,7 +126,7 @@ if($connection)
 			$checkUser->execute();
 			$userFound = $checkUser->fetch(PDO::FETCH_ASSOC);
 		}
-		
+
 		if($userFound && $userFound['username'] != $currentuser)
 		{
 			$input_errors[] = "'$username' adında bir kullanıcı zaten var.";
@@ -223,7 +223,7 @@ if($connection)
 			else
 			{
 				$createUser = $pdo->prepare("
-					INSERT INTO 
+					INSERT INTO
 					radcheck(username, attribute, op, value, description)
 					VALUES(:username, 'Password', ':=', :password, :description)
 				");
@@ -233,7 +233,7 @@ if($connection)
 				$createUser->bindParam(':description', $description);
 
 				$createUserCount = $pdo->prepare("
-					INSERT INTO 
+					INSERT INTO
 					radcheck(username, attribute, op, value)
 					VALUES(:username, 'Simultaneous-Use', ':=', :usercount)
 				");
@@ -248,7 +248,7 @@ if($connection)
 				{
 					$savemsg = "'$username' kullanıcısı başarıyla oluşturuldu.";
 				}
-				else 
+				else
 				{
 					$input_errors[] = "'$username' kullanıcısı oluşturulamadı.";
 				}

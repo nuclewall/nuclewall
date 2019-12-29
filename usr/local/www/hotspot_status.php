@@ -1,23 +1,23 @@
 <?php
 /*
 	hotspot_status.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
 	All rights reserved.
-	
+
 	Redistribution and use in source and binary forms, with or without
 	modification, are permitted provided that the following conditions are met:
-	
+
 	1. Redistributions of source code must retain the above copyright notice,
 	   this list of conditions and the following disclaimer.
-	
+
 	2. Redistributions in binary form must reproduce the above copyright
 	   notice, this list of conditions and the following disclaimer in the
 	   documentation and/or other materials provided with the distribution.
-	
+
 	THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
 	INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
 	AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
@@ -49,8 +49,8 @@ if (file_exists("{$g['vardb_path']}/captiveportal.db"))
 {
 	$captiveportallck = lock('captiveportaldb');
 	$cpcontents = file("{$g['vardb_path']}/captiveportal.db", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-	unlock($captiveportallck);	
-} 
+	unlock($captiveportallck);
+}
 else
 {
 	$cpcontents = array();
@@ -79,13 +79,13 @@ foreach ($cpcontents as $cpcontent)
 	$sessionid = $cpent[5];
 	$cpent[3] = str_replace(':', '-', $cpent[3]);
 	$cpent[5] = captiveportal_get_last_activity($cpent[2]);
-	
+
 	if(is_mac($cpent[4]))
 	{
 		$cpent[10] = 'label-success';
 	}
-	
-	$cpdb[$sessionid] = $cpent;	
+
+	$cpdb[$sessionid] = $cpent;
 }
 
 
@@ -167,16 +167,16 @@ foreach ($cpcontents as $cpcontent)
 jQuery("#search").on("keyup", function()
 {
     var value = jQuery(this).val();
-	
+
     jQuery("table.grids tr").each(function(index)
-	{    
+	{
 		if (index !== 0)
 		{
             $row = jQuery(this);
             var ip_addr = $row.find("td#ip_addr:first").text();
 			var mac_addr = $row.find("td#mac_addr:first").text();
 			var username = $row.find("td#username:first").text();
-			
+
 			 if ((mac_addr.indexOf(value) !== 0) && (username.indexOf(value) !== 0) && (ip_addr.indexOf(value) !== 0))
 			{
                 $row.hide();
@@ -201,14 +201,14 @@ jQuery(document).keyup(function(e)
 jQuery("#btn-mac").click(function()
 {
 	jQuery("table.grids tr").show();
-	
+
     jQuery("table.grids tr").each(function(index)
-	{    
+	{
 		if (index !== 0)
 		{
             $row = jQuery(this);
             var p_class = $row.find("td#username span:first").attr("class");
-			
+
 			 if ((p_class.indexOf("label-success") == -1))
 			{
                 $row.hide();
@@ -217,7 +217,7 @@ jQuery("#btn-mac").click(function()
 			{
                 $row.show();
             }
-			
+
         }
     });
 });
@@ -225,14 +225,14 @@ jQuery("#btn-mac").click(function()
 jQuery("#btn-local").click(function()
 {
 	jQuery("table.grids tr").show();
-	
+
     jQuery("table.grids tr").each(function(index)
-	{    
+	{
 		if (index !== 0)
 		{
             $row = jQuery(this);
             var p_class = $row.find("td#username span:first").attr("class");
-			
+
 			 if ((p_class.indexOf("label-info") == -1))
 			{
                 $row.hide();
@@ -241,7 +241,7 @@ jQuery("#btn-local").click(function()
 			{
                 $row.show();
             }
-			
+
         }
     });
 });
@@ -249,14 +249,14 @@ jQuery("#btn-local").click(function()
 jQuery("#btn-external").click(function()
 {
 	jQuery("table.grids tr").show();
-	
+
     jQuery("table.grids tr").each(function(index)
-	{    
+	{
 		if (index !== 0)
 		{
             $row = jQuery(this);
             var p_class = $row.find("td#username span:first").attr("class");
-			
+
 			 if ((p_class.indexOf("label external") == -1))
 			{
                 $row.hide();
@@ -265,7 +265,7 @@ jQuery("#btn-external").click(function()
 			{
                 $row.show();
             }
-			
+
         }
     });
 });

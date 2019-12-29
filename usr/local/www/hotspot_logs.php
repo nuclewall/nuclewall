@@ -1,7 +1,7 @@
 <?php
 /*
 	diag_logs_auth.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 
@@ -40,7 +40,7 @@ $nentries = $config['syslog']['nentries'];
 if (!$nentries)
 	$nentries = 50;
 
-if ($_GET['act'] == 'del') 
+if ($_GET['act'] == 'del')
 	clear_log_file($portal_logfile);
 
 if ($_POST['filtertext'])
@@ -86,7 +86,7 @@ $pgtitle = array('HOTSPOT ', 'OTURUM HAREKETLERÝ');
 							<input style="height:20px" type="text" id="filtertext" name="filtertext" value="<?=$filtertext;?>" class="input-medium">
 							<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Ara</button>
 						</form>
-							
+
 						<table class="grids" width="100%">
 							<tr>
 								<td class="head">
@@ -96,7 +96,7 @@ $pgtitle = array('HOTSPOT ', 'OTURUM HAREKETLERÝ');
 									Eylem
 								</td>
 							</tr>
-								<?php						
+								<?php
 									if($filtertext)
 										dump_clog_auth($portal_logfile, $nentries, array("$filtertext"));
 									else

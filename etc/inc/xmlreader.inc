@@ -73,7 +73,7 @@ function add_elements(&$cfgarray, &$parser)
 				{
 					if (!$parser->isEmptyElement)
 								add_elements($cfgarray[$parser->name][], $parser);
-				} 
+				}
 				else
 				{
 					if ($parser->isEmptyElement)
@@ -133,7 +133,7 @@ function parse_xml_config_raw($cffile, $rootobj, $isstring = "false")
 	{
 		add_elements($parsedcfg, $par);
 		$par->close();
-	} 
+	}
 	else
 		log_error("Error returned while trying to parse {$cffile}");
 
@@ -149,7 +149,7 @@ function parse_xml_config_raw($cffile, $rootobj, $isstring = "false")
 function dump_xml_config_sub(& $writer, $arr)
 {
 	global $listtags;
-	
+
 	foreach ($arr as $ent => $val)
 	{
 		if (is_array($val))
@@ -228,16 +228,16 @@ function dump_xml_config_pkg($arr, $rootobj)
 
 function dump_xml_config_raw($arr, $rootobj)
 {
-	
+
 	$writer = new XMLWriter();
 	$writer->openMemory();
 	$writer->setIndent(true);
 	$writer->setIndentString("\t");
 	$writer->startDocument("1.0", "UTF-8");
 	$writer->startElement($rootobj);
-	
+
 	dump_xml_config_sub($writer, $arr);
-	
+
 	$writer->endElement();
 	$writer->endDocument();
 	$xmlconfig = $writer->outputMemory(true);

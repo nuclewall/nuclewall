@@ -5,11 +5,11 @@ echo "rc.update_bogons.sh is starting up." | logger
 # Sleep for that time, unless an argument is specified.
 
 if [ "$1" = "" ]; then
-    # Grab a random value  
+    # Grab a random value
     value=`od -A n -d -N2 /dev/random | awk '{ print $1 }'`
     echo "rc.update_bogons.sh is sleeping for $value" | logger
     sleep $value
-fi    
+fi
 
 echo "rc.update_bogons.sh is beginning the update cycle." | logger
 
@@ -17,7 +17,7 @@ echo "rc.update_bogons.sh is beginning the update cycle." | logger
 if [ ! -f /tmp/bogons ]; then
 	echo "Could not download http://files.pfsense.org/mirrors/bogon-bn-nonagg.txt" | logger
 	# Relaunch and sleep
-	sh /etc/rc.update_bogons.sh & 
+	sh /etc/rc.update_bogons.sh &
 	exit
 fi
 
@@ -31,8 +31,7 @@ if [ "$BOGON_MD5" = "$ON_DISK_MD5" ]; then
 else
 	echo "Could not download http://files.pfsense.org/mirrors/bogon-bn-nonagg.txt.md5 (md5 mismatch)" | logger
 	# Relaunch and sleep
-	sh /etc/rc.update_bogons.sh & 	
+	sh /etc/rc.update_bogons.sh &
 fi
 
 echo "rc.update_bogons.sh is ending the update cycle." | logger
-

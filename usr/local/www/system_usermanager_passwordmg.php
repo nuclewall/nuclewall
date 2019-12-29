@@ -63,29 +63,29 @@ if ($islocal == false)
 	<tr>
 		<td>
 			<form action="system_usermanager_passwordmg.php" method="post" name="iform" id="iform">
-					<table class="tabcont" cellpadding="0" cellspacing="0">
-						<tr>
-							<td colspan="2" valign="top" class="listtopic"><?=$HTTP_SERVER_VARS['AUTH_USER']?> kullanıcısının parolasını değiştir</td>
-						</tr>
-						<tr>
-							<td valign="top" class="vncell">Yeni Parola</td>
-							<td class="vtable">
-									<input name="passwordfld1" type="password" id="passwordfld1" size="20" />
-							</td>
-						</tr>
-						<tr>
-							<td valign="top" class="vncell">Parola Tekrarı</td>
-							<td class="vtable">
-								<input name="passwordfld2" type="password" id="passwordfld2" size="20" />
-							</td>
-						</tr>
-						<tr>
-							<td class="vncell"></td>
-							<td class="vtable">
-								<input name="save" type="submit" class="btn btn-inverse" value="Kaydet" />
-							</td>
-						</tr>
-					</table>
+				<table class="tabcont" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="2" valign="top" class="listtopic"><?=$HTTP_SERVER_VARS['AUTH_USER']?> kullanıcısının parolasını değiştir</td>
+					</tr>
+					<tr>
+						<td valign="top" class="vncell">Yeni Parola</td>
+						<td class="vtable">
+								<input name="passwordfld1" type="password" id="passwordfld1" size="20" />
+						</td>
+					</tr>
+					<tr>
+						<td valign="top" class="vncell">Parola Tekrarı</td>
+						<td class="vtable">
+							<input name="passwordfld2" type="password" id="passwordfld2" size="20" />
+						</td>
+					</tr>
+					<tr>
+						<td class="vncell"></td>
+						<td class="vtable">
+							<input name="save" type="submit" class="btn btn-inverse" value="Kaydet" />
+						</td>
+					</tr>
+				</table>
 			</form>
 		</td>
 	</tr>

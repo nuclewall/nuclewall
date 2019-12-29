@@ -40,18 +40,17 @@
     Onaylarsanýz, NUCLEWALL fabrika ayarlarýna döndürülüp yeniden baþlatýlacak.
     NOT: HOTSPOT verileri ve olay günlükleri silinmeyecek.
 
-    Onaylýyor musunuz? [e|h]\n    > 
+    Onaylýyor musunuz? [e|h]\n    >
 EOD;
-	
+
 	$yn = chop(fgets($fp));
-	
+
 	if (strcasecmp($yn, "e") == 0 || strcasecmp($yn, "E") == 0)
 	{
 		reset_factory_defaults();
-		echo "    NUCLEWALL þimdi yeniden baþlatýlýyor...";		
+		echo "    NUCLEWALL þimdi yeniden baþlatýlýyor...";
 		system_reboot_sync();
 	}
-	
-	fclose($fp);
 
+	fclose($fp);
 ?>

@@ -1,7 +1,7 @@
 <?php
 /*
 	services_dhcp.php
-	
+
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
 
@@ -107,17 +107,17 @@ if (is_array($config['dhcpd'][$if]))
 		$pconfig['range_from'] = $config['dhcpd'][$if]['range']['from'];
 		$pconfig['range_to'] = $config['dhcpd'][$if]['range']['to'];
 	}
-	
+
 	$pconfig['gateway'] = $config['dhcpd'][$if]['gateway'];
 	$pconfig['domain'] = $config['dhcpd'][$if]['domain'];
 	list($pconfig['dns1'],$pconfig['dns2']) = $config['dhcpd'][$if]['dnsserver'];
 	$pconfig['enable'] = isset($config['dhcpd'][$if]['enable']);
 	$pconfig['denyunknown'] = isset($config['dhcpd'][$if]['denyunknown']);
 	$pconfig['netmask'] = $config['dhcpd'][$if]['netmask'];
-	
+
 	if (!is_array($config['dhcpd'][$if]['staticmap']))
 		$config['dhcpd'][$if]['staticmap'] = array();
-	
+
 	$a_maps = &$config['dhcpd'][$if]['staticmap'];
 }
 
@@ -165,7 +165,7 @@ if ($_POST)
 		$parent_ip = get_interface_ip($_POST['if']);
 		if (is_ipaddr($parent_ip) && $_POST['gateway']) {
 			$parent_sn = get_interface_subnet($_POST['if']);
-			if(!ip_in_subnet($_POST['gateway'], gen_subnet($parent_ip, $parent_sn) . "/" . $parent_sn) && !ip_in_interface_alias_subnet($_POST['if'], $_POST['gateway'])) 
+			if(!ip_in_subnet($_POST['gateway'], gen_subnet($parent_ip, $parent_sn) . "/" . $parent_sn) && !ip_in_interface_alias_subnet($_POST['if'], $_POST['gateway']))
 				$input_errors[] = sprintf("%s ağ geçidi seçilen arayüze ait bir IP adresi değil.", $_POST['gateway']);
 		}
 		if (($_POST['dns1'] && !is_ipaddr($_POST['dns1'])) || ($_POST['dns2'] && !is_ipaddr($_POST['dns2'])))
@@ -185,7 +185,7 @@ if ($_POST)
 			foreach ($a_maps as $map)
 				if (empty($map['ipaddr']))
 					$noip = true;
-		
+
 		if (!$input_errors)
 		{
 			$subnet_start = ip2ulong(long2ip32(ip2long($ifcfgip) & gen_subnet_mask_long($ifcfgsn)));
@@ -260,7 +260,7 @@ if ($_POST)
 			if ($retvaldhcp == 0)
 				clear_subsystem_dirty('staticmaps');
 		}
-		
+
 		if($retvaldhcp == 1 || $retvaldns == 1)
 			$retval = 1;
 		$savemsg = get_std_save_message($retval);

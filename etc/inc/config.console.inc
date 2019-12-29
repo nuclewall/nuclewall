@@ -52,7 +52,7 @@ function set_networking_interfaces_ports() {
 
 	$iflist = get_interface_list();
 
-/* Function flow is based on $key and $auto_assign or the lack thereof */	
+/* Function flow is based on $key and $auto_assign or the lack thereof */
 	$key = null;
 
 /* Only present auto interface option if running from LiveCD and interface mismatch*/
@@ -73,12 +73,12 @@ EOD;
 				$ifa['up'] ? "  (up)" : "(down)", $ifa['dmesg']);
 		}
 	}
-		
+
 	$key = 'n';
 
 	if(!$auto_assign) {
 
-	
+
 		do {
 			echo "\nWAN arayüzü için ethernet kartý ismini girin:\n> ";
 			$wanif = chop(fgets($fp));
@@ -91,48 +91,48 @@ EOD;
 				continue;
 			}
 		} while (!$wanif);
-	
+
 		do {
 			echo "\nLAN arayüzü için ethernet kartý ismini girin:\n> ";
-	
+
 			$lanif = chop(fgets($fp));
-			
+
 			if($lanif == "exit") {
 				exit;
 			}
-			
+
 			if($lanif == "") {
 				if($g['minimum_nic_count'] < 2) {
-					break;	
+					break;
 				} else {
 					fclose($fp);
 					return;
 				}
 			}
-	
+
 			if (!array_key_exists($lanif, $iflist)) {
 				echo "\n'{$lanif}' geçersiz bir ethernet kartý ismi\n";
 				unset($lanif);
 				continue;
 			}
 		} while (!$lanif);
-	
+
 		$i = 0;
 		$optif = array();
-	
+
 		if($lanif <> "") {
 			while (1) {
 				if ($optif[$i])
 					$i++;
 				$i1 = $i + 1;
-		
+
 				if($config['interfaces']['opt' . $i1]['descr'])
 					echo "\nFazladan bir að arayüzü bulundu: {$config['interfaces']['opt' . $i1]['descr']}";
-	
+
 				echo "\nÝsteðe baðlý bir ethernet kartý girebilirsiniz. Yoksa boþ býrakýn.\n> ";
-		
+
 				$optif[$i] = chop(fgets($fp));
-		
+
 				if ($optif[$i]) {
 					if (!array_key_exists($optif[$i], $iflist)) {
 						echo "\n'{$optif[$i]}' geçersiz bir ethernet kartý ismi\n";
@@ -145,42 +145,42 @@ EOD;
 				}
 			}
 		}
-		
+
 		/* check for double assignments */
 		$ifarr = array_merge(array($lanif, $wanif), $optif);
-		
+
 		for ($i = 0; $i < (count($ifarr)-1); $i++) {
 			for ($j = ($i+1); $j < count($ifarr); $j++) {
 				if ($ifarr[$i] == $ifarr[$j]) {
 					echo <<<EOD
-	
+
 Hata: Ayný ethernet kartýný 2 ayrý arayüze tanýmlayamazsýnýz.
-	
+
 EOD;
 					fclose($fp);
 					return;
 				}
 			}
 		}
-	
+
 		echo "\nEthernet kartý-arayüz eþleþtirmeleri aþaðýdaki gibi olacak: \n\n";
-	
+
 		echo "WAN  -> " . $wanif . "\n";
 		if ($lanif != "")
 			echo "LAN  -> " . $lanif . "\n";
 		for ($i = 0; $i < count($optif); $i++) {
 			echo "OPT" . ($i+1) . " -> " . $optif[$i] . "\n";
 		}
-	
+
 		echo <<<EOD
-	
-Onaylýyor musunuz? [e|h]\n> 
+
+Onaylýyor musunuz? [e|h]\n>
 EOD;
-			$key = chop(fgets($fp));		
+			$key = chop(fgets($fp));
 	}
 
 	if (in_array($key, array('e', 'E'))) {
-		if($lanif) 
+		if($lanif)
 		{
 			if (!is_array($config['interfaces']['lan']))
 				$config['interfaces']['lan'] = array();
@@ -193,8 +193,8 @@ EOD;
 echo <<<EODD
 LAN arayüzünü silmeyi seçtiniz.
 
-LAN arayüzünü silmek ve IP adresini kaldýrmak 
-istiyor musunuz? [e|h]\n> 
+LAN arayüzünü silmek ve IP adresini kaldýrmak
+istiyor musunuz? [e|h]\n>
 EODD;
 
 				if (strcasecmp(chop(fgets($fp)), "e") == 0) {
@@ -214,7 +214,7 @@ EODD;
 				if(isset($config['ezshaper']))
 					unset($config['ezshaper']);
 				if(isset($config['nat']))
-					unset($config['nat']);				
+					unset($config['nat']);
 		} else {
 			if(isset($config['interfaces']['lan']['if']))
 				mwexec("/sbin/ifconfig " . $config['interfaces']['lan']['if'] . " delete");
@@ -231,7 +231,7 @@ EODD;
 			if(isset($config['ezshaper']))
 				unset($config['ezshaper']);
 			if(isset($config['nat']))
-				unset($config['nat']);				
+				unset($config['nat']);
 		}
 
 
@@ -239,7 +239,7 @@ EODD;
 			$config['interfaces']['wan'] = array();
 		$config['interfaces']['wan']['if'] = $wanif;
 		$config['interfaces']['wan']['enable'] = true;
-	
+
 
 		for ($i = 0; $i < count($optif); $i++) {
 			if (!is_array($config['interfaces']['opt' . ($i+1)]))
@@ -269,7 +269,7 @@ EODD;
 		echo "Tamam.\n";
 
 		touch("{$g['tmp_path']}/assign_complete");
-		
+
 		echo "\nÝliþkilendirmeler ayarlandý. Devam etmek için <ENTER> a basýn. ";
 		fgets($fp);
 		fclose($fp);
@@ -282,7 +282,6 @@ function interfaces_setup() {
 	global $iflist, $config, $g, $fp;
 
 	$iflist = get_interface_list();
-
 }
 
 ?>

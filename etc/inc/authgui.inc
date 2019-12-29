@@ -32,7 +32,7 @@ if (!isAllowedPage($_SERVER['SCRIPT_NAME']))
 		exit;
 	}
 }
-else 
+else
 	$_SESSION['Post_Login'] = true;
 
 if (!$_SESSION['Post_Login'])
@@ -54,7 +54,7 @@ function display_login_form()
 
 	global $FilterIflist;
 	$local_ip = false;
-	
+
 	if(strstr($_SERVER['HTTP_HOST'], ":"))
 	{
 		$http_host_port = explode(":", $_SERVER['HTTP_HOST']);
@@ -64,7 +64,7 @@ function display_login_form()
 	{
 		$http_host = $_SERVER['HTTP_HOST'];
 	}
-	
+
 	if (empty($FilterIflist))
 	{
 		require_once('filter.inc');
@@ -89,8 +89,8 @@ function display_login_form()
 	<a target="_blank" href="https://support.mozilla.org/tr/kb/%C3%87erezleri%20a%C3%A7%C4%B1p%20kapatma">Chrome</a>
 	</center>
 </div>
-<div id="main" class="img-rounded">    
-	<form id="iform" class="form-horizontal" name="login_iform" method="post" action="<?=$_SERVER['SCRIPT_NAME'];?>">    
+<div id="main" class="img-rounded">
+	<form id="iform" class="form-horizontal" name="login_iform" method="post" action="<?=$_SERVER['SCRIPT_NAME'];?>">
 		<div class="control-group">
 			<label class="control-label" for="usernamefld">Kullanýcý adý</label>
 			<div class="controls">

@@ -4,7 +4,7 @@
 
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2004 Scott Ullrich
 	All rights reserved.
 
@@ -186,7 +186,7 @@ $pgtitle = array('GÜVENLİK DUVARI ', 'TAKMA ADLAR');
 									$tmpaddr = explode(' ', $alias['address']);
 									$addresses = implode(", ", array_slice($tmpaddr, 0, 10));
 									echo $addresses;
-									
+
 									if(count($tmpaddr) > 10)
 									{
 										echo "...";

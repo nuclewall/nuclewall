@@ -5,7 +5,7 @@
 
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2010 Seth Mos <seth.mos@dds.nl>.
 	All rights reserved.
 
@@ -81,7 +81,7 @@ $pgtitle = array('DURUM', 'AĞ GEÇİTLERİ');
 								</td>
 								<td class="cell">
 									<?php
-										if ($gateways_status[$gname]) 
+										if ($gateways_status[$gname])
 											echo $gateways_status[$gname]['monitorip'];
 										else
 											echo $gateway['monitorip'];
@@ -122,8 +122,8 @@ $pgtitle = array('DURUM', 'AĞ GEÇİTLERİ');
 										} elseif ($status['status'] == "none") {
 											$online = "Aktif";
 											$bgcolor = "label-success";
-										}	
-									} 
+										}
+									}
 									else if (isset($gateway['monitor_disable'])) {
 											$online = "Aktif";
 											$bgcolor = "label-success";

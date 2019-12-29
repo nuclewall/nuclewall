@@ -6,7 +6,7 @@
 
 	Copyright (C) 2013-2015 Ogün AÇIK
 	All rights reserved.
-	
+
 	Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
 	All rights reserved.
 
@@ -54,10 +54,10 @@ if ($_POST)
 		if (file_exists("{$g['tmp_path']}/.system_routes.apply"))
 		{
 			$toapplylist = unserialize(file_get_contents("{$g['tmp_path']}/.system_routes.apply"));
-			
+
 			foreach ($toapplylist as $toapply)
 				mwexec("{$toapply}");
-			
+
 			@unlink("{$g['tmp_path']}/.system_routes.apply");
 		}
 
@@ -66,7 +66,7 @@ if ($_POST)
 		setup_gateways_monitor();
 
 		$savemsg = get_std_save_message($retval);
-		
+
 		if ($retval == 0)
 			clear_subsystem_dirty('staticroutes');
 	}

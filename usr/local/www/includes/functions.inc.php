@@ -27,7 +27,7 @@ function get_gatewaystats() {
 	$data = "";
 	$isfirst = true;
 	foreach($a_gateways as $gname => $gw) {
-		if(!$isfirst) 
+		if(!$isfirst)
 			$data .= ",";
 		$isfirst = false;
 		$data .= $gw['name'] . ",";
@@ -73,9 +73,9 @@ function get_uptime() {
 	$boottime = $matches[1];
 	$uptime = time() - $boottime;
 
-	if(intval($boottime) == 0) 
+	if(intval($boottime) == 0)
 		return;
-	if(intval($uptime) == 0) 
+	if(intval($uptime) == 0)
 		return;
 
 	$updays = (int)($uptime / 86400);
@@ -100,7 +100,7 @@ function cpu_usage() {
 	$cpuTicks = array_combine($diff, explode(" ", `/sbin/sysctl -n kern.cp_time`));
 	sleep($duration);
 	$cpuTicks2 = array_combine($diff, explode(" ", `/sbin/sysctl -n kern.cp_time`));
-	
+
 	$totalStart = array_sum($cpuTicks);
 	$totalEnd = array_sum($cpuTicks2);
 
@@ -113,7 +113,7 @@ function cpu_usage() {
 
 	// Calculate the percentage used
 	$cpuUsage = floor(100 * ($totalUsed / ($totalEnd - $totalStart)));
-	
+
 	return $cpuUsage;
 }
 
@@ -134,7 +134,7 @@ function get_pfstate() {
 function has_temp() {
 
 	/* no known temp monitors available at present */
-	
+
 	/* should only reach here if there is no hardware monitor */
 	return false;
 }
@@ -175,7 +175,7 @@ function mem_usage() {
 	$memory = "";
 	exec("/sbin/sysctl -n vm.stats.vm.v_page_count vm.stats.vm.v_inactive_count " .
 		"vm.stats.vm.v_cache_count vm.stats.vm.v_free_count", $memory);
-	
+
 	$totalMem = $memory[0];
 	$availMem = $memory[1] + $memory[2] + $memory[3];
 	$usedMem = $totalMem - $availMem;
@@ -190,7 +190,7 @@ function update_date_time() {
 }
 
 function get_interfacestats() {
-	
+
 	global $config;
 	//build interface list for widget use
 	$ifdescrs = get_configured_interface_list();
@@ -204,10 +204,10 @@ function get_interfacestats() {
 	$array_collisions = array();
 	$array_interrupt = array();
 	$new_data = "";
-	
+
 	//build data arrays
 	foreach ($ifdescrs as $ifdescr => $ifname){
-		$ifinfo = get_interface_info($ifdescr);	
+		$ifinfo = get_interface_info($ifdescr);
 			$new_data .= "{$ifinfo['inpkts']},";
 			$new_data .= "{$ifinfo['outpkts']},";
 			$new_data .= format_bytes($ifinfo['inbytes']) . ",";
@@ -225,7 +225,7 @@ function get_interfacestats() {
 			else
 				$new_data .= "0,";
 	}//end for
-	
+
 	return $new_data;
 
 }
@@ -236,7 +236,7 @@ function get_interfacestatus() {
 
 	//build interface list for widget use
 	$ifdescrs = get_configured_interface_with_descr();
-	
+
 	foreach ($ifdescrs as $ifdescr => $ifname){
 		$ifinfo = get_interface_info($ifdescr);
 		$data .= $ifname . ",";
@@ -253,10 +253,10 @@ function get_interfacestatus() {
 		$data .= ",";
 		if ($ifinfo['status'] != "down")
 			$data .= htmlspecialchars($ifinfo['media']);
-			
+
 		$data .= "~";
-		
-	}	
+
+	}
 	return $data;
 }
 

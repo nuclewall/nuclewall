@@ -53,7 +53,7 @@ function console_get_interface_from_ppp($realif) {
 function prompt_for_enable_dhcp_server() {
 	global $config, $fp, $interface;
 	if($interface == "wan") {
-		if($config['interfaces']['lan']) 
+		if($config['interfaces']['lan'])
 			return "n";
 	}
 
@@ -87,16 +87,16 @@ if ($j > 1) {
 		$x++;
 	}
 	echo "\n    Ayarlamak istediğiniz arayüzün numarasını girin:\n    > ";
-	$intnum = chop(fgets($fp));	
+	$intnum = chop(fgets($fp));
 } else {
 	$intnum = $j;
 }
 
-if($intnum < 1) 
+if($intnum < 1)
 	exit;
 if($intnum > $j)
 	exit;
-	
+
 $index = 1;
 foreach ($ifdescrs as $ifname => $ifdesc) {
 	if ($intnum == $index)  {
@@ -105,7 +105,7 @@ foreach ($ifdescrs as $ifname => $ifdesc) {
 	} else {
 		$index++;
 	}
-}	
+}
 if(!$interface) {
 	echo "    Geçersiz arayüz.\n";
 	exit;
@@ -125,9 +125,9 @@ do {
 			$intbits = '';
 			$isintdhcp = true;
 			$restart_dhcpd = true;
-		} 
+		}
 	}
-	
+
 	if($isintdhcp == false or $interface <> "wan") {
 		do {
 			$upperifname = strtoupper($interface);
@@ -157,7 +157,7 @@ do {
 
 if (!empty($ifaceassigned))
 	$config['interfaces'][$interface]['if'] = $ifaceassigned;
-	
+
 $config['interfaces'][$interface]['ipaddr'] = $intip;
 $config['interfaces'][$interface]['subnet'] = $intbits;
 $config['interfaces'][$interface]['enable'] = true;
@@ -190,7 +190,7 @@ if ($yn == "e") {
 }
 else
 {
-	if($config['dhcpd'][$interface]) 
+	if($config['dhcpd'][$interface])
 		unset($config['dhcpd'][$interface]['enable']);
 	services_dhcpd_configure();
 }
@@ -203,7 +203,7 @@ if (isset($config['system']['webgui']['noantilockout'])) {
 if($config['interfaces']['lan']) {
 	if($config['dhcpd'])
 		if($config['dhcpd']['wan'])
-			unset($config['dhcpd']['wan']);		
+			unset($config['dhcpd']['wan']);
 }
 
 if(!$config['interfaces']['lan']) {
@@ -242,5 +242,5 @@ echo "\n    Devam etmek için <ENTER> a basın. ";
 
 fgets($fp);
 fclose($fp);
-		
+
 ?>
