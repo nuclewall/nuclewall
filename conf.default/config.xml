@@ -575,7 +575,7 @@
 	<cron>
 		<item>
 			<minute>0</minute>
-			<hour>11</hour>
+			<hour>*/5</hour>
 			<mday>*</mday>
 			<month>*</month>
 			<wday>*</wday>
@@ -583,7 +583,7 @@
 			<command>/usr/local/bin/log_rotater</command>
 		</item>
 		<item>
-			<minute>*/50</minute>
+			<minute>*/15</minute>
 			<hour>*</hour>
 			<mday>*</mday>
 			<month>*</month>
@@ -592,8 +592,8 @@
 			<command>/usr/local/sbin/ntpdate_sync_once.sh</command>
 		</item>
 		<item>
-			<minute>0</minute>
-			<hour>0</hour>
+			<minute>*/10</minute>
+			<hour>*</hour>
 			<mday>*</mday>
 			<month>*</month>
 			<wday>*</wday>
