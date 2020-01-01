@@ -1309,12 +1309,19 @@ class TSgTag
 
 function squid_init()
 {
+    $ub_cmd = "/usr/local/bin/blacklist_updater";
+    $ub_log = "/var/log/blacklist_updater.log";
+    $ub_pid = "/var/run/blacklist_updater.pid";
+
 	global $config;
 
 	$conf = $config['installedpackages']['squid']['config'][0];
 
 	if ($conf['squid_enabled'] == 'on' and $conf['squidguard_enabled'] == 'on')
+	{
 		squidguard_resync();
+	    exec(sprintf("%s > %s 2>&1 & echo $! >> %s", $ub_cmd, $ub_log, $ub_pid));
+	}
 
 	else if ($conf['squid_enabled'] == 'on' and !$conf['squidguard_enabled'] == 'on')
 		squid_resync();

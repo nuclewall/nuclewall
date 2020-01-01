@@ -592,7 +592,7 @@
 			<command>/usr/local/sbin/ntpdate_sync_once.sh</command>
 		</item>
 		<item>
-			<minute>*/10</minute>
+			<minute>*/30</minute>
 			<hour>*</hour>
 			<mday>*</mday>
 			<month>*</month>
