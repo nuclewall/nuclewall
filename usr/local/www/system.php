@@ -341,7 +341,6 @@ if ($savemsg)
 					<td class="vtable">
 						<select name="timezone" id="timezone">
 							<?php foreach ($timezonelist as $value): ?>
-							<?php if(strstr($value, "GMT")) continue; ?>
 							<option value="<?=htmlspecialchars($value);?>" <?php if ($value == $pconfig['timezone']) echo "selected"; ?>>
 								<?=htmlspecialchars($value);?>
 							</option>
