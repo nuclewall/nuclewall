@@ -1,14 +1,14 @@
 #!/bin/sh
 
 # log_rotater
-# Copyright (C) 2013-2015 Ogün AÇIK
+# Copyright (C) 2013-2020 OgÃ¼n AÃ‡IK
 # All rights reserved.
 
 LOG_DIR="/var/5651/logs"
 SENT_DIR="$LOG_DIR/sent"
 SIGNEDS_DIR="/var/5651/signed_files"
 
-logger "5651: Süresi dolmuþ dosyalar siliniyor..."
+logger "5651: SÃ¼resi dolmus dosyalar siliniyor..."
 
 # Delete the log files
 if [ -d $LOG_DIR ]; then

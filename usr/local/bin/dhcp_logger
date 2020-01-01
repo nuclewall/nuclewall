@@ -2,8 +2,8 @@
 <?php
 /*
 	dhcp_logger
-	
-	Copyright (C) 2013-2015 Ogün AÇIK
+
+	Copyright (C) 2013-2020 Ogün AÇIK
 	All rights reserved.
 
 */
@@ -48,7 +48,7 @@ while($i < $leases_count)
 		$i++;
 		continue;
 	}
-	
+
 	while($f < $fcount)
 	{
 		switch($data[$f])
@@ -171,7 +171,7 @@ if($leases)
 				fwrite($log, $lease['end'] . "\t\t\t");
 				fwrite($log, $lease['mac'] . "\n");
 			}
-			
+
 			else if($lease['type'] == 'static')
 			{
 				fwrite($log, format_ipaddr($lease['ip']));

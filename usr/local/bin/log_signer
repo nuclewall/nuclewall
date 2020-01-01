@@ -2,8 +2,8 @@
 <?php
 /*
 	log_signer
-	
-	Copyright (C) 2013-2015 Ogün AÇIK
+
+	Copyright (C) 2013-2020 OgÃ¼n AÃ‡IK
 	All rights reserved.
 
 */
@@ -35,37 +35,37 @@ if($files_to_sign)
 			$sha1hash = sha1_file($file);
 
 			$b_file = basename($file);
-			
+
 			$log_file = "$signed_file_dir/" . 'dhcp-' . $ts . '.log';
 			$signed_file = "$signed_file_dir/" . 'dhcp-' . $ts;
 			$sign_file = "$signed_file_dir/". 'dhcp-' . $ts . '.imza';
-			
+
 			rename("$file", $signed_file);
 			rename("$file.imza", $sign_file);
-			
+
 			$log = fopen($log_file, 'w');
-			$info = "$b_file dosyasý $now tarihinde imzalandý.\n\n";
-			$info .= "md5 özeti: $md5hash\n";
-			$info .= "sha1 özeti: $sha1hash\n";
+			$info = "$b_file dosyasÄ± $now tarihinde imzalandÄ±.\n\n";
+			$info .= "md5 Ã¶zeti: $md5hash\n";
+			$info .= "sha1 Ã¶zeti: $sha1hash\n";
 
 			fwrite($log, $info);
 			fclose($log);
-			
+
 			exec("chflags schg $signed_file");
 			exec("chflags schg $sign_file");
 			exec("chflags schg $log_file");
-			
-			syslog(LOG_WARNING, "5651: $file dosyasý imzalandý.");
+
+			syslog(LOG_WARNING, "5651: $file dosyasi imzalandi.");
 		}
-		
+
 		else if($s == 'FAILED')
-			syslog(LOG_WARNING, "5651: $file dosyasý imzalanamadý.");
+			syslog(LOG_WARNING, "5651: $file dosyasi imzalanamadi.");
 	}
 }
 
 else
 {
-	syslog(LOG_WARNING, "5651: Þu anda imzalanacak dosya yok.");
+	syslog(LOG_WARNING, "5651: Su anda imzalanacak dosya yok.");
 }
-
 ?>
+
