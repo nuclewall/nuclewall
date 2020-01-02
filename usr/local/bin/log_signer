@@ -24,27 +24,26 @@ if($files_to_sign)
 {
 	foreach($files_to_sign as $file)
 	{
-		$s = exec("sign_file.sh $file");
+		$signed = exec("sign_file.sh $file");
 
-		if(($s == 'OK') and (file_exists($file . '.imza')))
+		if(($signed == 'OK') and (file_exists($file . '.imza')))
 		{
-			$now = date("d-m-Y H:i:s");
-			$ts = time();
+			$sign_date = date("d-m-Y H:i:s");
 
 			$md5hash = md5_file($file);
 			$sha1hash = sha1_file($file);
 
 			$b_file = basename($file);
 
-			$log_file = "$signed_file_dir/" . 'dhcp-' . $ts . '.log';
-			$signed_file = "$signed_file_dir/" . 'dhcp-' . $ts;
-			$sign_file = "$signed_file_dir/". 'dhcp-' . $ts . '.imza';
+			$signed_log_file = "$signed_file_dir/" . $b_file . '.log';
+			$signed_file = "$signed_file_dir/" . $b_file;
+			$sign_file = "$signed_file_dir/". $b_file . '.imza';
 
 			rename("$file", $signed_file);
 			rename("$file.imza", $sign_file);
 
-			$log = fopen($log_file, 'w');
-			$info = "$b_file dosyası $now tarihinde imzalandı.\n\n";
+			$log = fopen($signed_log_file, 'w');
+			$info = "$b_file dosyası $sign_date tarihinde imzalandı.\n\n";
 			$info .= "md5 özeti: $md5hash\n";
 			$info .= "sha1 özeti: $sha1hash\n";
 
@@ -53,12 +52,12 @@ if($files_to_sign)
 
 			exec("chflags schg $signed_file");
 			exec("chflags schg $sign_file");
-			exec("chflags schg $log_file");
+			exec("chflags schg $signed_log_file");
 
 			syslog(LOG_WARNING, "5651: $file dosyasi imzalandi.");
 		}
 
-		else if($s == 'FAILED')
+		else if($signed == 'FAILED')
 			syslog(LOG_WARNING, "5651: $file dosyasi imzalanamadi.");
 	}
 }
@@ -67,5 +66,5 @@ else
 {
 	syslog(LOG_WARNING, "5651: Su anda imzalanacak dosya yok.");
 }
-?>
 
+?>

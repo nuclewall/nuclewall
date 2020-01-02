@@ -10,12 +10,12 @@
 require('config.gui.inc');
 require('5651_logger.inc');
 
-$today = 'dhcp-' . date('dmY');
+$base_logfile_name = 'dhcp-' . time();
 $log_dir = '/var/5651/logs/';
-$log_file = $log_dir . $today . '.txt';
+$log_file_name = $log_dir . $base_logfile_name . '.txt';
 
 $log_dir_exists = is_dir($log_dir);
-$log_file_exists = file_exists($log_file);
+$log_file_name_exists = file_exists($log_file_name);
 
 if(!$log_dir_exists)
 {
@@ -149,13 +149,13 @@ $log = false;
 
 if($leases)
 {
-	if($log_file_exists)
+	if($log_file_name_exists)
 	{
-		$log = fopen($log_file, 'a');
+		$log = fopen($log_file_name, 'a');
 	}
 	else
 	{
-		$log = fopen($log_file, 'w');
+		$log = fopen($log_file_name, 'w');
 		$title = "IP adresi				Kullanıma Başlama Tarih-Saati		Kullanım Bitiş Tarih-Saati		MAC Adresi\r\n";
 		fwrite($log, $title);
 	}
