@@ -214,7 +214,7 @@ if ($_POST)
 					<td colspan="2" class="listtopic">WINDOWS BAĞLANTI AYARLARI</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Windows </td>
+					<td valign="top" class="vncell">Windows Sunucu Adı</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['smbhostname'];?>" name="smbhostname" type="text" id="smbhostname" tabindex="1" maxlength="40"><br>
 						Kayıtların gönderileceği Windows kurulu bilgisayarın NetBIOS adını veya IP adresini girin.
