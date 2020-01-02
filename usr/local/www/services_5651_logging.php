@@ -77,7 +77,7 @@ if ($_POST)
 
 		if(isset($_POST['enable']))
 		{
-			install_cron_job('/usr/local/bin/dhcp_logger', true, '0', '*/2', '*', '*', '*', 'root');
+			install_cron_job('/usr/local/bin/dhcp_logger', true, '0', '*/1', '*', '*', '*', 'root');
 
 			if($_POST['sign_type'] == 'local')
 			{
@@ -107,7 +107,7 @@ if ($_POST)
 
 				smbfileInit($_POST['smbhostname'], $_POST['smbusername'], $_POST['smbpassword'], $_POST['smbfolder']);
 
-				install_cron_job('/usr/local/bin/log_sender', true,  '0', '*/4', '*', '*', '*', 'root');
+				install_cron_job('/usr/local/bin/log_sender', true,  '*/30', '*', '*', '*', '*', 'root');
 			}
 		}
 
