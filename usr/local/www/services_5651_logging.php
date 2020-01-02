@@ -214,28 +214,28 @@ if ($_POST)
 					<td colspan="2" class="listtopic">WINDOWS BAĞLANTI AYARLARI</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Sunucu Adı</td>
+					<td valign="top" class="vncell">Windows </td>
 					<td class="vtable">
 						<input value="<?=$pconfig['smbhostname'];?>" name="smbhostname" type="text" id="smbhostname" tabindex="1" maxlength="40"><br>
-						Kayıtların gönderileceği Windows kurulu bilgisayarın adını veya IP adresini girin.
+						Kayıtların gönderileceği Windows kurulu bilgisayarın NetBIOS adını veya IP adresini girin.
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Kullanıcı Adı</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['smbusername'];?>" name="smbusername" type="text" id="smbusername" tabindex="3" maxlength="128"><br>
-						Veritabanı kullanıcı adını girin.
+						Windows kullanıcı adını girin. Paylaşılan klasör için bu kullanıcıya gerekli izinlerin verildiğinden emin olun.
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Parola</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['smbpassword'];?>" name="smbpassword" type="password" id="smbpassword" tabindex="4" maxlength="128"><br>
-						Veritabanı parolasını girin.
+						Windows kullanıcısı parolasını girin.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Klasör Adı</td>
+					<td valign="top" class="vncell">Paylaşım Adı</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['smbfolder'];?>" name="smbfolder" type="text" id="smbfolder" tabindex="5" maxlength="128"><br>
 						Windows bilgisayardaki paylaşım klasörünün adını girin.
