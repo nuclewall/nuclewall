@@ -60,7 +60,7 @@ cd \$LOG_DIR
 
 for F in *.txt; do
     test -f "\$F" || exit
-	if smbclient //$hostname/$folder -U $username%$password -c "put \$F"; then
+	if smbclient //$hostname/$folder -A /etc/.smbpass -c "put \$F"; then
 	    mv \$F \$SENT_DIR/\$TODAY/
 	    logger "5651: \$F dosyasi Windows paylasimina gonderildi."
 	else
@@ -70,9 +70,21 @@ done
 
 EOF;
 
+
+    $conf_creds = <<<EOF
+username = $username
+password = $password
+
+EOF;
+
 	$smbfile = '/usr/local/bin/log_sender';
 	file_put_contents($smbfile, $conf);
 	exec("chmod 100 $smbfile");
+
+	$credsfile = '/etc/.smbpass';
+	file_put_contents($credsfile, $conf_creds);
+	exec("chmod 400 $credsfile");
+
 }
 
 ?>
