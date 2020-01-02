@@ -2,7 +2,7 @@
 /*
 	file_handler.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogün AÇIK
 	All rights reserved.
 */
 
@@ -14,7 +14,6 @@ if(($_POST['act'] == 'list') and $_POST['date'])
 {
 	$d = $_POST['date'];
 	$logs_dir = "$root_dir/$d";
-	$org_file_name = "dhcp-$d.txt";
 
 	if(is_dir($logs_dir))
 		$files = scandir($logs_dir);
@@ -41,7 +40,6 @@ if(($_POST['act'] == 'list') and $_POST['date'])
 
 			$html .= <<<EOF
 				<tr>
-					<td class="cell">$org_file_name</td>
 					<td class="cell">{$row['file']}</td>
 					<td class="cell">$date</td>
 					<td class="cell tools">

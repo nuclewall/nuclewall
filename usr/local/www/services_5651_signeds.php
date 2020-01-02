@@ -50,8 +50,7 @@ $today = date('dmY');
 									<table class="grids sortable">
 										<thead>
 											<tr>
-												<td class="head">Orjinal Dosya Adı</td>
-												<td class="head">İmzalanmış Dosya Adı</td>
+												<td class="head">Dosya Adı</td>
 												<td class="head">İmzalanma Tarihi</td>
 												<td class="head"></td>
 											</tr>
