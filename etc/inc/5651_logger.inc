@@ -2,7 +2,7 @@
 /*
 	5651_logger.inc
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogün AÇIK
 	All rights reserved.
 
 */
@@ -51,7 +51,6 @@ function smbfileInit($hostname, $username, $password, $folder)
 LOG_DIR="/var/5651/logs"
 SENT_DIR="\$LOG_DIR/sent"
 
-TS=`date -j -f "%a %b %d %T %Z %Y" "\`date\`" "+%s"`
 TODAY=`date "+%d%m%Y"`
 
 mkdir -p \$SENT_DIR
@@ -59,18 +58,15 @@ mkdir -p \$SENT_DIR/\$TODAY
 
 cd \$LOG_DIR
 
-if [ "$(ls \$LOG_DIR/*.txt)" ]; then
-	for F in *.txt; do
-		if smbclient //$hostname/$folder -U $username%$password -c "put \$F \$TS-\$F"; then
-			mv \$F \$SENT_DIR/\$TODAY/dhcp-\$TS.txt
-			logger "5651: \$F dosyasý Windows bilgisayara gönderildi."
-		else
-			logger "5651: Windows bilgisayarla baðlantý kurulamadý."
-		fi;
-	done
-else
-    logger "5651: Þu anda gönderilecek dosya yok."
-fi
+for F in *.txt; do
+    test -f "\$F" || exit
+	if smbclient //\$hostname/\$folder -U \$username%\$password -c "put \$F"; then
+	    mv \$F \$SENT_DIR/\$TODAY/
+	    logger "5651: \$F dosyas? Windows payla??m?na gönderildi."
+	else
+	    logger "5651: Windows payla??m? ile ba?lant? kurulamad?."
+	fi;
+done
 
 EOF;
 
