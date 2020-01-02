@@ -2,7 +2,7 @@
 /*
 	5651_logger.inc
 
-	Copyright (C) 2013-2020 Ogün AÇIK
+	Copyright (C) 2013-2020 OgÃ¼n AÃ‡IK
 	All rights reserved.
 
 */
@@ -45,7 +45,7 @@ function smbfileInit($hostname, $username, $password, $folder)
 #!/bin/sh
 
 # log_sender
-# Copyright (C) 2013-2015 Ogün AÇIK
+# Copyright (C) 2013-2015 OgÃ¼n AÃ‡IK
 # All rights reserved.
 
 LOG_DIR="/var/5651/logs"
@@ -60,11 +60,11 @@ cd \$LOG_DIR
 
 for F in *.txt; do
     test -f "\$F" || exit
-	if smbclient //\$hostname/\$folder -U \$username%\$password -c "put \$F"; then
+	if smbclient //$hostname/$folder -U $username%$password -c "put \$F"; then
 	    mv \$F \$SENT_DIR/\$TODAY/
-	    logger "5651: \$F dosyas? Windows payla??m?na gönderildi."
+	    logger "5651: \$F dosyasi Windows paylasimina gÃ¶nderildi."
 	else
-	    logger "5651: Windows payla??m? ile ba?lant? kurulamad?."
+	    logger "5651: Windows paylasimi ile baglanti kurulamadi."
 	fi;
 done
 
