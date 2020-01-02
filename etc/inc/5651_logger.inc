@@ -62,7 +62,7 @@ for F in *.txt; do
     test -f "\$F" || exit
 	if smbclient //$hostname/$folder -U $username%$password -c "put \$F"; then
 	    mv \$F \$SENT_DIR/\$TODAY/
-	    logger "5651: \$F dosyasi Windows paylasimina gönderildi."
+	    logger "5651: \$F dosyasi Windows paylasimina gonderildi."
 	else
 	    logger "5651: Windows paylasimi ile baglanti kurulamadi."
 	fi;
