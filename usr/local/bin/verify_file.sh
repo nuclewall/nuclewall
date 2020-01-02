@@ -11,10 +11,10 @@ if [ -f $N_FILE ]; then
 	if [ -f $N_FILE.imza ]; then
 	    # Verify with the token file
 		$N_BIN ts -verify -data $N_FILE -in $N_FILE.imza -token_in -CAfile $N_CA_P/cacert.pem -untrusted $N_CA_P/tsacert.pem
-		
+
 		# Verify with the signed file
 		#$N_BIN ts -verify -data $N_FILE -in $N_FILE.tsr -CAfile $N_CA_P/cacert.pem -untrusted $N_CA_P/tsacert.pem
-	
+
 		# Verify with the tsa request file
 		#$N_BIN ts -verify -queryfile $N_FILE.tsq -in $N_FILE.tsr -CAfile $N_CA_P/cacert.pem -untrusted $N_CA_P/tsacert.pem
 	else

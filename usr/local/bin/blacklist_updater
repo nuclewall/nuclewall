@@ -2,8 +2,8 @@
 <?php
 /*
 	blacklist_updater
-	
-	Copyright (C) 2013-2015 Ogün AÇIK
+
+	Copyright (C) 2013-2020 Ogün AÇIK
 	All rights reserved.
 */
 
@@ -16,7 +16,7 @@ $latest_hash = exec("curl http://www.shallalist.de/Downloads/shallalist.tar.gz.m
 if(file_exists($hash_file))
 {
 	$local_hash = file_get_contents($hash_file);
-	
+
 	if($latest_hash != $local_hash)
 	{
 		$update = true;

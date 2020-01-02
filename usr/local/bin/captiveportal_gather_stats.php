@@ -66,7 +66,7 @@ if ($type == "loggedin") {
 				$previous_user_timestamp = $line;
 			else
 				$previous_user_timestamp = 0;
-		}			
+		}
 	} else {
 		$previous_user_timestamp = 0;
 	}
@@ -74,13 +74,13 @@ if ($type == "loggedin") {
 
 
 	foreach($cpdb as $user) {
-		$user_ip = $user[2];		
+		$user_ip = $user[2];
 		// Record the timestamp
 		$timestamp = $user[0];
 		if ($timestamp > $previous_user_timestamp)
 			$current_user_count = $current_user_count + 1;
 	}
-	
+
 	// Write out the latest timestamp but not if it is empty
 	if (!empty($timestamp)) {
 		$fd = @fopen($tmpfile, "w");
@@ -89,7 +89,7 @@ if ($type == "loggedin") {
 		}
 		@fclose($fd);
 	}
-	
+
 	if($timestamp <= $previous_user_timestamp)
 		$result = 0;
 	else {
@@ -98,7 +98,6 @@ if ($type == "loggedin") {
 } else
 	$result = $no_users;
 
-	
 echo "$result";
-	
+
 ?>
