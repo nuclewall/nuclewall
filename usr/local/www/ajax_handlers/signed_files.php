@@ -35,8 +35,10 @@ if(($_POST['act'] == 'list') and $_POST['date'])
 
 		foreach($r_files as $row)
 		{
-			$p  = explode('-', $row['file']);
-			$ts = $p[1];
+			$p1  = explode('-', $row['file']);
+			$p2  = explode('.', $p1[1]);
+
+			$ts = $p2[0];
 			$date = date("H:i:s d-m-Y", $ts);
 
 			$html .= <<<EOF
