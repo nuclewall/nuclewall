@@ -8,6 +8,8 @@
 
 */
 
+require('config.inc');
+
 $log_dir = '/var/5651/logs/';
 $signed_root_dir = '/var/5651/signed_files/';
 $signed_file_dir = $signed_root_dir . date('dmY');

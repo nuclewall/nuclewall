@@ -6,6 +6,7 @@
 	All rights reserved.
 */
 
+require('config.inc');
 require('guiconfig.inc');
 
 $root_dir = '/var/5651/signed_files';

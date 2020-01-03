@@ -2,11 +2,12 @@
 /*
 	services_5651_signeds.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogün AÇIK
 	All rights reserved.
 
 */
 
+require('config.inc');
 require('guiconfig.inc');
 
 $pgtitle = array('5651: YEREL OLARAK İMZALANMIŞ DOSYALAR');
@@ -50,7 +51,7 @@ $today = date('dmY');
 									<table class="grids sortable">
 										<thead>
 											<tr>
-												<td class="head">Dosya Adı</td>
+												<td class="head">Dosya</td>
 												<td class="head">İmzalanma Tarihi</td>
 												<td class="head"></td>
 											</tr>

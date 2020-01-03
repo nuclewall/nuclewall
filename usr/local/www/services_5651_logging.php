@@ -2,10 +2,11 @@
 /*
 	services_5651_logging.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogün AÇIK
 	All rights reserved.
 */
 
+require('config.inc');
 require('guiconfig.inc');
 require('5651_logger.inc');
 

@@ -7,6 +7,8 @@
 	All rights reserved.
 
 */
+
+require('config.inc');
 require('config.gui.inc');
 require('5651_logger.inc');
 
