@@ -197,7 +197,7 @@ if ($_POST)
 									Belirtilen Saatte
 									<p>
 									'21:45' formatında bir saat girin.<br>
-									<b>NOT: </b>Boş bırakıldığında varsayılan değer 12:30'tur.
+									<b>NOT: </b>Varsayılan değer 12:30'dur.
 									</p>
 								</label>
 								<label class="radio">
@@ -214,7 +214,13 @@ if ($_POST)
 					<td colspan="2" class="listtopic">WINDOWS BAĞLANTI AYARLARI</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Windows Sunucu Adı</td>
+					<td valign="top" class="vncell">Bağlantı durumu</td>
+					<td id="connstatus" class="vtable">
+					<span class="label">Kontrol ediliyor...</span>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" class="vncell">Windows Sunucu</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['smbhostname'];?>" name="smbhostname" type="text" id="smbhostname" tabindex="1" maxlength="40"><br>
 						Kayıtların gönderileceği Windows sunucunun NetBIOS adını veya IP adresini girin.
@@ -231,14 +237,14 @@ if ($_POST)
 					<td valign="top" class="vncell">Parola</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['smbpassword'];?>" name="smbpassword" type="password" id="smbpassword" tabindex="4" maxlength="128"><br>
-						Windows kullanıcısı parolasını girin.
+						Windows kullanıcı parolasını girin.
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Paylaşım Adı</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['smbfolder'];?>" name="smbfolder" type="text" id="smbfolder" tabindex="5" maxlength="128"><br>
-						Windows bilgisayardaki paylaşım klasörünün adını girin.
+						Windows sunucudaki paylaşım klasörünün adını girin.
 					</td>
 				</tr>
 				</tbody>
@@ -281,6 +287,19 @@ if ($_POST)
 	{
 		togglesCustomPages();
 	});
+
+	/* Gather samba connection status */
+    jQuery( document ).ready(function() {
+
+	jQuery.ajax({
+	method: "POST",
+	url: "_samba_status.php",
+	data: { act: "getstatus"}
+	    }).done(function( msg )
+	    {
+		  jQuery("#connstatus").html(msg);
+	    });
+    });
 </script>
 </body>
 </html>
