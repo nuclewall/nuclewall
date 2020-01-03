@@ -45,7 +45,7 @@ function smbfileInit($hostname, $username, $password, $folder)
 #!/bin/sh
 
 # log_sender
-# Copyright (C) 2013-2015 Ogün AÇIK
+# Copyright (C) 2013-2020 Ogün AÇIK
 # All rights reserved.
 
 LOG_DIR="/var/5651/logs"
@@ -62,9 +62,9 @@ for F in *.txt; do
     test -f "\$F" || exit
 	if smbclient //$hostname/$folder -A /etc/.smbpass -c "put \$F"; then
 	    mv \$F \$SENT_DIR/\$TODAY/
-	    logger "5651: \$F dosyasi Windows paylasimina gonderildi."
+	    logger "5651: \$F dosyasi //$hostname/$folder Windows paylasimina gonderildi."
 	else
-	    logger "5651: Windows paylasimi ile baglanti kurulamadi."
+	    logger "5651: //$hostname/$folder ile baglanti kurulamadi."
 	fi;
 done
 
