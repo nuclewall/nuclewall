@@ -78,7 +78,7 @@ password = $password
 EOF;
 
     $conf_connection_tester = <<<EOF
-smbclient //$hostname/$folder -A /etc/.smbpass -c ls
+timelimit -t 2 smbclient //$hostname/$folder -A /etc/.smbpass -c ls
 
 EOF;
 
