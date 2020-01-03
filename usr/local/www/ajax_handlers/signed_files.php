@@ -1,6 +1,6 @@
 <?php
 /*
-	file_handler.php
+	signed_files.php
 
 	Copyright (C) 2013-2020 Ogün AÇIK
 	All rights reserved.
@@ -44,7 +44,7 @@ if(($_POST['act'] == 'list') and $_POST['date'])
 					<td class="cell">{$row['file']}</td>
 					<td class="cell">$date</td>
 					<td class="cell tools">
-						<a title="İndir" href="file_handler.php?act=download&f=$d-$ts"><i class="icon-download-alt"></i></a>
+						<a title="İndir" href="ajax_handlers/signed_files.php?act=download&f=$d-$ts"><i class="icon-download-alt"></i></a>
 						<a name="$d-$ts" title="İmzayı kontrol et" href="#"><i class="icon-check"></i></a>
 					</td>
 				</tr>

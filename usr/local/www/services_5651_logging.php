@@ -294,7 +294,7 @@ if ($_POST)
 
 	jQuery.ajax({
 	method: "POST",
-	url: "_samba_status.php",
+	url: "ajax_handlers/samba_status.php",
 	data: { act: "getstatus"}
 	    }).done(function( msg )
 	    {

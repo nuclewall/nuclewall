@@ -85,7 +85,7 @@ jQuery( document ).ready(function() {
 
 	jQuery.ajax({
 	method: "POST",
-	url: "file_handler.php",
+	url: "ajax_handlers/signed_files.php",
 	data: { act: "list", date: date_i}
 	}).done(function( msg )
 	{
@@ -100,7 +100,7 @@ jQuery("#datetimepicker").on('changeDate', function()
 
 	jQuery.ajax({
 	method: "POST",
-	url: "file_handler.php",
+	url: "ajax_handlers/signed_files.php",
 	data: { act: "list", date: date_r}
 	}).done(function( msg )
 	{
@@ -117,7 +117,7 @@ jQuery("#files").on("click", "a", function()
 
 	jQuery.ajax({
 	method: "POST",
-	url: "file_handler.php",
+	url: "ajax_handlers/signed_files.php",
 	data: { act: "checksign", f: dt}
 })
   .done(function(msg)

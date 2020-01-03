@@ -1,6 +1,6 @@
 <?php
 /*
-	_samba_status.php
+	samba_status.php
 
 	Copyright (C) 2013-2020 Ogün AÇIK
     All rights reserved.
