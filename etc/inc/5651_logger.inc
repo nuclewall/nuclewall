@@ -2,7 +2,7 @@
 /*
 	5651_logger.inc
 
-	Copyright (C) 2013-2020 OgÃ¼n AÃ‡IK
+	Copyright (C) 2013-2020 Ogün AÇIK
 	All rights reserved.
 
 */
@@ -45,7 +45,7 @@ function smbfileInit($hostname, $username, $password, $folder)
 #!/bin/sh
 
 # log_sender
-# Copyright (C) 2013-2015 OgÃ¼n AÃ‡IK
+# Copyright (C) 2013-2015 Ogün AÇIK
 # All rights reserved.
 
 LOG_DIR="/var/5651/logs"
@@ -77,13 +77,22 @@ password = $password
 
 EOF;
 
+    $conf_connection_tester = <<<EOF
+smbclient //$hostname/$folder -A /etc/.smbpass -c ls
+
+EOF;
+
 	$smbfile = '/usr/local/bin/log_sender';
 	file_put_contents($smbfile, $conf);
-	exec("chmod 100 $smbfile");
+	exec("chmod 500 $smbfile");
 
 	$credsfile = '/etc/.smbpass';
 	file_put_contents($credsfile, $conf_creds);
 	exec("chmod 400 $credsfile");
+
+	$conntestfile = '/usr/local/bin/smb_conn_test';
+	file_put_contents($conntestfile, $conf_connection_tester);
+	exec("chmod 500 $conntestfile");
 
 }
 
