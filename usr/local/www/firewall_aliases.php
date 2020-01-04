@@ -229,8 +229,8 @@ $pgtitle = array('GÜVENLİK DUVARI ', 'TAKMA ADLAR');
 		Takma adlar host adları, ağlar veya portlar yerine kullanılabilir.<br>
 	    Güvenlik duvarı kurallarına direkt olarak IP adresleri, sunucu isimleri, ağ adresleri
 		girmek yerine takma adları kullanarak yapacağınız değişiklik sayısını azaltabilirsiniz.<br>
-		URL takma adlarına <b>http://www.google.com</b> şeklindeki url'ler değil
-		<a target="_blank" href="http://www.iplists.com/google.txt">örnekteki</a> gibi IP adres listesi içeren url'ler girilebilir.
+		URL takma adlarına <b>https://www.google.com</b> şeklinde url'ler değil
+		<a target="_blank" href="https://gist.githubusercontent.com/acikogun/baa14d47c1591935bd3dafdc4e3be4f6/raw/ec40ac3b77aa6d5aa65eccc68dea058e8478f625/google.txt">örnekteki</a> gibi IP adres listesi içeren url'ler girilebilir.
 	</span>
 </div>
 </div>
