@@ -1,0 +1,10 @@
+#!/bin/sh
+
+COMPONENT=$1
+MESSAGE=$2
+HOSTNAME=`hostname -s`
+LOGFILE=/var/log/$COMPONENT.log
+
+DATE=`date +'%b  %d %H:%M:%S'`
+
+echo "$DATE $HOSTNAME $COMPONENT: $MESSAGE" >> $LOGFILE
