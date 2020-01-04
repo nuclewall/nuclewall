@@ -323,7 +323,7 @@ if ($_POST) {
 	else
 	{
 		$pconfig['name'] = $_POST['name'];
-		$pconfig['descr'] = base64_encode($_POST['descr']);
+		$pconfig['descr'] = $_POST['descr'];
 		$pconfig['address'] = implode(" ", $address);
 		$pconfig['type'] = $_POST['type'];
 		$pconfig['detail'] = implode("||", $final_address_details);
