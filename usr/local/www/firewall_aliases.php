@@ -206,7 +206,6 @@ $pgtitle = array('GÜVENLİK DUVARI ', 'TAKMA ADLAR');
 								</td>
 							</tr>
 							<?php $i++; endforeach; ?>
-							<?php if(empty($a_aliases)): ?>
 							<tr>
 								<td class="cell" colspan="3">
 								<td class="cell tools">
@@ -215,7 +214,6 @@ $pgtitle = array('GÜVENLİK DUVARI ', 'TAKMA ADLAR');
 									</a>
 								</td>
 							</tr>
-							<?php endif; ?>
 						</table>
 					</td>
 				</tr>
