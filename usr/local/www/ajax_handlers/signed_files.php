@@ -35,10 +35,12 @@ if(($_POST['act'] == 'list') and $_POST['date'])
 
 		foreach($r_files as $row)
 		{
+			// Get timestamp from filename
 			$p1  = explode('-', $row['file']);
 			$p2  = explode('.', $p1[1]);
-
 			$ts = $p2[0];
+
+			// Convert timestamp to date
 			$date = date("H:i:s d-m-Y", $ts);
 
 			$html .= <<<EOF
@@ -66,7 +68,7 @@ else if(($_GET['act'] == 'download') and $_GET['f'])
 {
 	$path  = explode('-', $_GET['f']);
 	$dir = $path[0];
-	$filename = "dhcp-{$path[1]}";
+	$filename = "dhcp-{$path[1]}.txt";
 	$tar_file = '/tmp/' . $filename . '.tar';
 
 	exec("cp $root_dir/$dir/$filename $root_dir/$dir/$filename.imza $root_dir/$dir/$filename.log /tmp/");
@@ -93,7 +95,7 @@ else if(($_POST['act'] == 'checksign') and $_POST['f'])
 {
 	$path  = explode('-', $_POST['f']);
 	$dir = $path[0];
-	$filename = "dhcp-{$path[1]}";
+	$filename = "dhcp-{$path[1]}.txt";
 
 	$verify = exec("verify_file.sh $root_dir/$dir/$filename");
 
