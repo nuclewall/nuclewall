@@ -224,11 +224,12 @@ $pgtitle = array('GÜVENLİK DUVARI ', 'TAKMA ADLAR');
 </form>
 <div class="alert alert-warning">
 	<span style="font-size:14px;">
-		Takma adlar host adları, ağlar veya portlar yerine kullanılabilir.<br>
+		Takma adlar; sunucu adları, ağlar veya portlar yerine kullanılabilir.<br>
 	    Güvenlik duvarı kurallarına direkt olarak IP adresleri, sunucu isimleri, ağ adresleri
 		girmek yerine takma adları kullanarak yapacağınız değişiklik sayısını azaltabilirsiniz.<br>
 		URL takma adlarına <b>https://www.google.com</b> şeklinde url'ler değil
-		<a target="_blank" href="https://gist.githubusercontent.com/acikogun/baa14d47c1591935bd3dafdc4e3be4f6/raw/ec40ac3b77aa6d5aa65eccc68dea058e8478f625/google.txt">örnekteki</a> gibi IP adres listesi içeren url'ler girilebilir.
+		<a target="_blank" href="https://gist.githubusercontent.com/acikogun/baa14d47c1591935bd3dafdc4e3be4f6/raw/81ed77b3077bff0cfa3c76f21924345d24953d19/google.txt">
+		örnekteki</a> gibi IP adres listesi içeren url'ler girilebilir.
 	</span>
 </div>
 </div>
