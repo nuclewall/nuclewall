@@ -186,6 +186,8 @@ if($leases)
 
 	if($log)
 		fclose($log);
+
+	exec("/usr/local/bin/custom_logger 5651 '$log_file_name dosyası oluşturuldu.'");
 }
 
 ?>

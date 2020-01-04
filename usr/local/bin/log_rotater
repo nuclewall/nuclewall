@@ -8,7 +8,7 @@ LOG_DIR="/var/5651/logs"
 SENT_DIR="$LOG_DIR/sent"
 SIGNEDS_DIR="/var/5651/signed_files"
 
-logger "5651: Süresi dolmus dosyalar siliniyor..."
+/usr/local/bin/custom_logger 5651 "180 günden eski kayıtlar siliniyor..."
 
 # Delete the log files
 if [ -d $LOG_DIR ]; then

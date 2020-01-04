@@ -56,17 +56,17 @@ if($files_to_sign)
 			exec("chflags schg $sign_file");
 			exec("chflags schg $signed_log_file");
 
-			syslog(LOG_WARNING, "5651: $file dosyasi imzalandi.");
+			exec("/usr/local/bin/custom_logger 5651 '$file dosyası imzalandı.'");
 		}
 
 		else if($signed == 'FAILED')
-			syslog(LOG_WARNING, "5651: $file dosyasi imzalanamadi.");
+			exec("/usr/local/bin/custom_logger 5651 'HATA: $file dosyası imzalandı.'");
 	}
 }
 
 else
 {
-	syslog(LOG_WARNING, "5651: Su anda imzalanacak dosya yok.");
+    exec("/usr/local/bin/custom_logger 5651 'UYARI: Şu anda imzalanacak dosya yok.'");
 }
 
 ?>

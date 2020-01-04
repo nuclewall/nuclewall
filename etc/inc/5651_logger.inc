@@ -2,7 +2,7 @@
 /*
 	5651_logger.inc
 
-	Copyright (C) 2013-2020 Og�n A�IK
+	Copyright (C) 2013-2020 Ogün AÇIK
 	All rights reserved.
 
 */
@@ -45,7 +45,7 @@ function smbfileInit($hostname, $username, $password, $folder)
 #!/bin/sh
 
 # log_sender
-# Copyright (C) 2013-2020 Og�n A�IK
+# Copyright (C) 2013-2020 Ogün AÇIK
 # All rights reserved.
 
 LOG_DIR="/var/5651/logs"
@@ -60,11 +60,11 @@ cd \$LOG_DIR
 
 for F in *.txt; do
     test -f "\$F" || exit
-	if smbclient //$hostname/$folder -A /etc/.smbpass -c "put \$F"; then
+	if timelimit -t 2 smbclient //$hostname/$folder -A /etc/.smbpass -c "put \$F"; then
 	    mv \$F \$SENT_DIR/\$TODAY/
-	    logger "5651: \$F dosyasi //$hostname/$folder Windows paylasimina gonderildi."
+	    /usr/local/bin/custom_logger 5651 ""\$F" dosyası //$hostname/$folder Windows paylaşımına gönderildi."
 	else
-	    logger "5651: //$hostname/$folder ile baglanti kurulamadi."
+	    /usr/local/bin/custom_logger 5651 "HATA: //$hostname/$folder ile baglantı kurulamadı."
 	fi;
 done
 
