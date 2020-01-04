@@ -28,9 +28,9 @@ if(($_POST['act'] == 'getstatus'))
 EOF;
 	}
 
-	if ($smb_conn_status == 1) {
+	else {
 	    $html = <<<EOF
-		<span class="label label-important">Bağlanamadı</span>
+		<span class="label label-important">Bağlantı yok</span>
 EOF;
 	}
 
