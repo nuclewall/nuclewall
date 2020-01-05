@@ -2,7 +2,7 @@
 /*
 	services_5651_logging.php
 
-	Copyright (C) 2013-2020 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogün Açık
 	All rights reserved.
 */
 
@@ -78,7 +78,7 @@ if ($_POST)
 
 		if(isset($_POST['enable']))
 		{
-			install_cron_job('/usr/local/bin/dhcp_logger', true, '59', '*', '*', '*', '*', 'root');
+			install_cron_job('/usr/local/bin/dhcp_logger', true, '58', '*', '*', '*', '*', 'root');
 
 			if($_POST['sign_type'] == 'local')
 			{
@@ -96,7 +96,7 @@ if ($_POST)
 
 				else if($_POST['sign_time'] == 'onehour')
 				{
-					install_cron_job('/usr/local/bin/log_signer', true,  '0', '*', '*', '*', '*', 'root');
+					install_cron_job('/usr/local/bin/log_signer', true,  '59', '*', '*', '*', '*', 'root');
 				}
 
 				install_cron_job('/usr/local/bin/log_sender', false,  '*', '*', '*', '*', '*', 'root');
