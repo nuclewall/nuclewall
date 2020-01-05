@@ -2,7 +2,7 @@
 /*
 	services_5651_signeds.php
 
-	Copyright (C) 2013-2020 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogün Açık
 	All rights reserved.
 
 */
@@ -53,7 +53,8 @@ $today = date('dmY');
 										<thead>
 											<tr>
 												<td class="head">Dosya</td>
-												<td class="head">İmzalanma Tarihi</td>
+												<td class="head">Oluşturulma Saati</td>
+												<td class="head">İmzalanma Saati</td>
 												<td class="head"></td>
 											</tr>
 										</thead>

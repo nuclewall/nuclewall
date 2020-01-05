@@ -2,7 +2,7 @@
 /*
 	signed_files.php
 
-	Copyright (C) 2013-2020 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogün Açık
 	All rights reserved.
 */
 
@@ -41,12 +41,18 @@ if(($_POST['act'] == 'list') and $_POST['date'])
 			$ts = $p2[0];
 
 			// Convert timestamp to date
-			$date = date("H:i:s d-m-Y", $ts);
+			$log_creation_time = date("H:i:s", $ts);
+
+			// Get file signing time
+			$sign_file_path= $logs_dir . '/' .$row['sign'];
+			$sign_file_creation_time= date("H:i:s", filectime($sign_file_path));
 
 			$html .= <<<EOF
 				<tr>
-					<td class="cell">{$row['file']}</td>
-					<td class="cell">$date</td>
+
+				    <td class="cell">{$row['file']}</td>
+					<td class="cell">{$log_creation_time}</td>
+					<td class="cell">{$sign_file_creation_time}</td>
 					<td class="cell tools">
 						<a title="İndir" href="ajax_handlers/signed_files.php?act=download&f=$d-$ts"><i class="icon-download-alt"></i></a>
 						<a name="$d-$ts" title="İmzayı kontrol et" href="#"><i class="icon-check"></i></a>
@@ -72,7 +78,6 @@ else if(($_GET['act'] == 'download') and $_GET['f'])
 	$tar_file = '/tmp/' . $filename . '.tar';
 
 	exec("cp $root_dir/$dir/$filename $root_dir/$dir/$filename.imza $root_dir/$dir/$filename.log /tmp/");
-	exec("chflags 0 /tmp/$filename /tmp/$filename.imza /tmp/$filename.log");
 	exec("tar -cvf $tar_file -C /tmp $filename $filename.imza $filename.log && rm -f /tmp/$filename /tmp/$filename.imza /tmp/$filename.log");
 
 	if (file_exists($tar_file))
