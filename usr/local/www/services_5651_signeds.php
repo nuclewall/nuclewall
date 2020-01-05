@@ -30,6 +30,7 @@ $today = date('dmY');
 				$tab_array = array();
 				$tab_array[] = array('Genel Ayarlar', false, 'services_5651_logging.php');
 				$tab_array[] = array('İmzalanmış Dosyalar', true, 'services_5651_signeds.php');
+				$tab_array[] = array('Hareketler', false, 'diag_logs_timestamp.php');
 				display_top_tabs($tab_array, true);
 			?>
 		</td>
@@ -39,7 +40,7 @@ $today = date('dmY');
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
 					<td>
-						<table cellpadding="0" cellspacing="0" border=0 width="100%">
+						<table cellpadding="0" cellspacing="0" width="100%">
 							<tr>
 								<td valign="top">
 									<input type="hidden" id="date_i" value="<?=$today?>" />

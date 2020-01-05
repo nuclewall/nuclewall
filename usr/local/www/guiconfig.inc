@@ -487,6 +487,50 @@ function dump_clog($logfile, $tail, $grepfor = "")
 	}
 }
 
+function dump_timestamp_logs($logfile, $tail, $grepfor = "")
+{
+	global $g, $config;
+	$sor = isset($config['syslog']['reverse']) ? "-r" : "";
+	$logarr = "";
+	$grepline = "  ";
+
+	if(is_array($grepfor))
+	{
+		foreach($grepfor as $agrep)
+			$grepline .= " | grep \"$agrep\"";
+	}
+
+	if(is_array($grepinvert))
+	{
+		foreach($grepinvert as $agrep)
+			$grepline .= " | grep -v \"$agrep\"";
+	}
+
+	if(file_exists($logfile) && filesize($logfile) == 0)
+	{
+		$logarr = array("Log file started.");
+	}
+	else
+	{
+		exec("/bin/cat {$logfile}{$grepline}| grep . | /usr/bin/tail {$sor} -n {$tail} | /usr/bin/uniq", $logarr);
+	}
+
+	foreach ($logarr as $logent)
+	{
+		$logent = preg_split("/\s+/", $logent, 6);
+		echo "<tr>\n";
+
+		$dt = strtotime(join(' ', array_slice($logent, 0, 3)));
+		$entry_date_time =  strftime("%T - %e %B", $dt);
+		$entry_text = ($logent[3] == $config['system']['hostname']) ? "" : $logent[3] . " ";
+		$entry_text .= htmlspecialchars($logent[4] . " " . $logent[5]);
+
+		echo "<td class=\"cell logd\">{$entry_date_time}</td>\n";
+		echo "<td class=\"cell logm\">{$entry_text}</td>\n";
+		echo "</tr>\n";
+	}
+}
+
 function dump_clog_auth($logfile, $tail, $grepfor = "")
 {
 	global $g, $config;

@@ -141,6 +141,7 @@ if ($_POST)
 				$tab_array = array();
 				$tab_array[] = array('Genel Ayarlar', true, 'services_5651_logging.php');
 				$tab_array[] = array('İmzalanmış Dosyalar', false, 'services_5651_signeds.php');
+				$tab_array[] = array('Hareketler', false, 'diag_logs_timestamp.php');
 				display_top_tabs($tab_array, true);
 			?>
 		</td>
