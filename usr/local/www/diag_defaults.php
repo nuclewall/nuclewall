@@ -55,7 +55,7 @@ $pgtitle = array('ARAÇLAR', 'AYARLARI SIFIRLA');
 <?php else: ?>
 
 <form action="diag_defaults.php" method="post">
-<table border="0" cellspacing="0" cellpadding="0">
+<table cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">

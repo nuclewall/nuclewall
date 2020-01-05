@@ -16,7 +16,7 @@ $pgtitle = array('DURUM', 'YÖNLENDİRME TABLOSU');
 <body>
 <?php include('fbegin.inc'); ?>
 
-<table border="0" cellspacing="0" cellpadding="0">
+<table cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
 			<table class="tabcont" cellspacing="0" cellpadding="0">

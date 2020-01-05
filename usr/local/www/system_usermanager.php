@@ -278,7 +278,7 @@ if ($_POST)
 					<tr>
 						<td valign="top" class="vncell">İzinler</td>
 						<td class="vtable">
-							<table border="0" cellspacing="0" cellpadding="6">
+							<table cellspacing="0" cellpadding="6">
 								<tr>
 									<td>
 										<label>

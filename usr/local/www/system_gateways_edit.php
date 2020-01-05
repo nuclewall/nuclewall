@@ -238,7 +238,7 @@ function monitor_change() {
 	}
 	echo "<input type='hidden' name='friendlyiface' id='friendlyiface' value='{$pconfig['friendlyiface']}' >\n";
 	?>
-              <table class="tabcont" border="0" cellpadding="0" cellspacing="0">
+              <table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
 					<td colspan="2" valign="top" class="listtopic">AĞ GEÇİDİNİ DÜZENLE</td>
 				</tr>

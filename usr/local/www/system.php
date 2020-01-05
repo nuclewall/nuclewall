@@ -229,7 +229,7 @@ if ($savemsg)
 ?>
 
 <form action="system.php" method="post">
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">

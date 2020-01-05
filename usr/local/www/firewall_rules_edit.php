@@ -779,7 +779,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				<b>Haricinde</b>
 				<p>Eşleştirmeyi tersine çevirmek için bu seçeneği kullanabilirsiniz.</p>
 
-				<table id="inline1" border="0" cellspacing="0" cellpadding="0">
+				<table id="inline1" cellspacing="0" cellpadding="0">
 					<tr>
 						<td>Tür</td>
 						<td style="padding-left:5px;">
@@ -833,7 +833,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 		<tr style="display:none" id="sprtable" name="sprtable">
 			<td valign="top" class="vncell">Kaynak port aralığı</td>
 			<td class="vtable">
-				<table id="inline2" border="0" cellspacing="0" cellpadding="0">
+				<table id="inline2" cellspacing="0" cellpadding="0">
 					<tr>
 						<td>Başlangıç</td>
 						<td style="padding:5px;">
@@ -875,7 +875,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				<b>Haricinde</b>
 				<p>Eşleştirmeyi tersine çevirmek için bu seçeneği kullanabilirsiniz.</p>
 
-				<table id="inline3" border="0" cellspacing="0" cellpadding="0">
+				<table id="inline3" cellspacing="0" cellpadding="0">
 					<tr>
 						<td>Tür</td>
 						<td style="padding:5px;">
@@ -926,7 +926,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 		<tr id="dprtr" name="dprtr">
 			<td valign="top" class="vncell">Hedef port aralığı</td>
 			<td class="vtable">
-				<table id="inline4" border="0" cellspacing="0" cellpadding="0">
+				<table id="inline4" cellspacing="0" cellpadding="0">
 					<tr>
 						<td>Başlangıç</td>
 						<td style="padding:5px;">
@@ -1039,7 +1039,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 				</div>
 				<div id="showtcpflagsadv" <?php if (empty($pconfig['tcpflags_any']) && empty($pconfig['tcpflags1']) && empty($pconfig['tcpflags2'])) echo "style='display:none'"; ?>>
 					<div id="tcpheader" name="tcpheader">
-						<table id="inline5" border="0" cellspacing="0" cellpadding="0">
+						<table id="inline5" cellspacing="0" cellpadding="0">
 							<?php
 								$setflags = explode(",", $pconfig['tcpflags1']);
 								$outofflags = explode(",", $pconfig['tcpflags2']);

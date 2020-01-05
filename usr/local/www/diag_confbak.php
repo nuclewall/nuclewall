@@ -99,7 +99,7 @@ if($savemsg)
 	print_info_box($savemsg);
 ?>
 <?php if ($diff) { ?>
-<table class="tabcont" border="0" cellspacing="0">
+<table class="tabcont" cellspacing="0">
 	<tr>
 		<td>
 			<div class="alert">
@@ -133,7 +133,7 @@ if($savemsg)
 <?php } ?>
 
 <form action="diag_confbak.php" method="GET">
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 		<?php

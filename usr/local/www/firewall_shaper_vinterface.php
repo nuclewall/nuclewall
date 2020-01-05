@@ -352,7 +352,7 @@ $output .= $output_form;
 <?php if (is_subsystem_dirty('shaper')): ?><p>
 <?php print_info_box_np("Hız sınırlayıcı ayarları değiştirildi.<br>Değişikliklerin etkili olması için uygulamalısınız.", true);?>
 <?php endif; ?>
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">

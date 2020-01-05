@@ -317,7 +317,7 @@ include('head.inc');
 <?php if (is_subsystem_dirty('staticmaps')): ?><p>
 <?php print_info_box_np("Sabit IP adresi dağıtımları değiştirildi.<br>Değişikliklerin etkili olabilmesi için uygulamalısınız.", true);?>
 <?php endif; ?>
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<?php

@@ -91,7 +91,7 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' , 'GÜVENLİK DUVARI');
 <script src="/javascript/filter_log.js" type="text/javascript"></script>
 <?php include('fbegin.inc'); ?>
 
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<?php
@@ -140,7 +140,7 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' , 'GÜVENLİK DUVARI');
 							<tr>
 								<td class="wall">
 									<a href="#" onClick="javascript:getURL('diag_logs_filter.php?getrulenum=<?php echo "{$filterent['rulenum']},{$filterent['act']}"; ?>', outputrule);">
-										<img border="0" src="<?php echo find_action_image($filterent['act']);?>" width="11" height="11" align="absmiddle" alt="<?php echo $filterent['act'];?>" title="<?php echo $filterent['act'];?>" />
+										<img src="<?php echo find_action_image($filterent['act']);?>" width="11" height="11" align="absmiddle" alt="<?php echo $filterent['act'];?>" title="<?php echo $filterent['act'];?>" />
 									</a>
 									<?php if ($filterent['count']) echo $filterent['count'];?>
 								</td>

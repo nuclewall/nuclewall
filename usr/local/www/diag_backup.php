@@ -207,7 +207,7 @@ $pgtitle = array('ARAÇLAR', 'YEDEK AL / GERİ YÜKLE');
 </form>
 <?php endif; ?>
 <form action="diag_backup.php" method="post" name="iform" enctype="multipart/form-data">
-<table border="0" cellspacing="0" cellpadding="0">
+<table cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
 		<?php

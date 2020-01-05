@@ -271,7 +271,7 @@ foreach ($data as &$entry)
 $data = msort($data, "dnsresolve");
 $mac_man = load_mac_manufacturer_table();
 ?>
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">

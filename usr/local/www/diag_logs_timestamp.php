@@ -33,7 +33,7 @@ $pgtitle = array('5651' , 'KAYIT VE İMZALAMA HAREKETLERİ');
 <body>
 <?php include('fbegin.inc'); ?>
 
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<?php

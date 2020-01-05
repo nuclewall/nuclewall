@@ -131,7 +131,7 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİTLERİ');
 <?php if (is_subsystem_dirty('staticroutes')): ?><p>
 <?php print_info_box_np('Ağ geçidi ayarları değiştirildi.' . '<br>' . 'Değişikliklerin etkili olabilmesi için uygulamalısınız.', true);?><br>
 <?php endif; ?>
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<?php

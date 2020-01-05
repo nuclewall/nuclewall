@@ -80,7 +80,7 @@ if($_REQUEST['getactivity']) {
 	if ($input_errors)
 		print_input_errors($input_errors);
 ?>
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<table id="backuptable" class="tabcont" cellpadding="0" cellspacing="0">

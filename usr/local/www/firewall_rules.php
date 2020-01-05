@@ -308,7 +308,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 <?php
 	pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/before_table");
 ?>
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="tabnavtbl">
 			<?php

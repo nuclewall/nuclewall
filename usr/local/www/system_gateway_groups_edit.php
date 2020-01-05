@@ -139,7 +139,7 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI' , 'GRUP DÜZENLE');
 
 <?php if ($input_errors) print_input_errors($input_errors); ?>
 <form action="system_gateway_groups_edit.php" method="post" name="iform" id="iform">
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">

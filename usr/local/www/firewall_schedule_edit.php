@@ -761,7 +761,7 @@ margin-left: 1px;
 <div id="inputerrors"></div>
 
 <form action="firewall_schedule_edit.php" method="post" name="iform" id="iform">
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">

@@ -240,7 +240,7 @@ if ($_POST)
 <?php if ($savemsg) print_info_box($savemsg); ?>
 
 <form action='hotspot_datasources.php' method='post' enctype='multipart/form-data' name='iform' id='iform'>
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="tabnavtbl">
 			<?php

@@ -157,7 +157,7 @@ $pgtitle = array('GÜVENLİK DUVARI ', 'TAKMA ADLAR');
 <?php print_info_box_np('Takma adlar listesi değiştirildi' . '<br>' . 'Değişikliklerin etkili olabilmesi için uygulamalısınız.', true);?>
 <?php endif; ?>
 <?php pfSense_handle_custom_code("/usr/local/pkg/firewall_aliases/pre_table"); ?>
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">

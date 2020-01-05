@@ -268,7 +268,7 @@ if($connection)
 <?php if($savemsg) print_info_box($savemsg); ?>
 
 <form action="hotspot_user_edit.php" method="post" name="user_form" id="user_form">
-			<table class="tabcont" border="0" cellpadding="0" cellspacing="0">
+			<table class="tabcont" cellpadding="0" cellspacing="0">
 			<tr>
 				<td colspan="2" valign="top" class="listtopic">YEREL KULLANICI DÜZENLE</td>
 			</tr>

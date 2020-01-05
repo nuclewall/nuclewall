@@ -58,7 +58,7 @@ $pgtitle = array('HOTSPOT ', 'OTURUM HAREKETLERÝ');
 <body>
 <?php include('fbeginansi.inc'); ?>
 
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<?php

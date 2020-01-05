@@ -370,13 +370,13 @@ $types = array("none" => "Hiçbiri", "static" => "Sabit", "dhcp" => "DHCP");
 	<?php endif; ?>
 	<?php if ($savemsg) print_info_box($savemsg); ?>
 
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
 					<td>
-						<table border="0" cellpadding="0" cellspacing="0">
+						<table cellpadding="0" cellspacing="0">
 							<tr>
 								<td colspan="2" valign="top" class="listtopic">GENEL AYARLAR</td>
 							</tr>
@@ -388,7 +388,7 @@ $types = array("none" => "Hiçbiri", "static" => "Sabit", "dhcp" => "DHCP");
 								</td>
 							</tr>
 						</table>
-						<table border="0" cellpadding="0" cellspacing="0">
+						<table cellpadding="0" cellspacing="0">
 							<tr>
 								<td valign="top" class="vncell">İsim</td>
 								<td class="vtable">

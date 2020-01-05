@@ -220,7 +220,7 @@ function prot_change()
     print_info_box($savemsg);
 ?>
 <form action="system_advanced_admin.php" method="post" name="iform" id="iform">
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">

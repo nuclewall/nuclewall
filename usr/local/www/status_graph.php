@@ -146,13 +146,13 @@ function updateBandwidthHosts(data){
 </head>
 <body>
 <?php include('fbegin.inc'); ?>
-<table border="0" cellspacing="0" cellpadding="0">
+<table cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
-			<table class="tabcont" style="padding-right:2px;" border="0" cellspacing="0" cellpadding="0">
+			<table class="tabcont" style="padding-right:2px;" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						<table border="0" cellspacing="0" cellpadding="0">
+						<table cellspacing="0" cellpadding="0">
 							<tr>
 								<td valign="top">
 									<form name="form1" action="status_graph.php" method="get">
@@ -170,7 +170,7 @@ function updateBandwidthHosts(data){
 									<embed src="graph.php?ifnum=<?=htmlspecialchars($curif);?>&ifname=<?=rawurlencode($ifdescrs[htmlspecialchars($curif)]);?>" type="image/svg+xml" width="<?=$width;?>" height="<?=$height;?>" />
 								</td>
 								<td style="padding-left:10px;padding-top:45px;" valign="top">
-									<table class="grids" border="0" cellspacing="0" cellpadding="0">
+									<table class="grids" cellspacing="0" cellpadding="0">
 										<tr>
 											<td class="head">IP Adresi</td>
 											<td class="head">Gelen</td>

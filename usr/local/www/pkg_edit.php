@@ -254,7 +254,7 @@ if ($pkg['custom_php_after_head_command'])
 <form name="iform" action="pkg_edit.php" method="post">
 <input type="hidden" name="xml" value="<?= $xml ?>">
 <?php if ($savemsg) print_info_box($savemsg); ?>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" cellpadding="0" cellspacing="0">
 <?php
 if ($pkg['tabs'] <> "") {
 	$tab_array = array();
