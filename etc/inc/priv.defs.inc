@@ -69,6 +69,7 @@ $priv_list['page-services-menu']['name'] = 'SERVİSLER';
 $priv_list['page-services-menu']['match'] = array();
 $priv_list['page-services-menu']['match'][] = 'services_5651_logging.php*';
 $priv_list['page-services-menu']['match'][] = 'services_5651_signeds.php*';
+$priv_list['page-services-menu']['match'][] = 'diag_logs_timestamp.php*';
 $priv_list['page-services-menu']['match'][] = 'signed_files.php*';
 $priv_list['page-services-menu']['match'][] = 'samba_status.php*';
 $priv_list['page-services-menu']['match'][] = 'services_dnsmasq.php*';
