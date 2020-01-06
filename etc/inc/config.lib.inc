@@ -147,7 +147,7 @@ function restore_backup($file)
 		unlink_if_exists("{$g['tmp_path']}/config.cache");
 		copy("$file","/cf/conf/config.xml");
 		disable_security_checks();
-		log_error("{$g['product_name']} $file ayar dosyasi yeniden yukleniyor...");
+		log_error("{$g['product_name']} $file config file reloading...");
 	}
 }
 
@@ -165,11 +165,11 @@ function parse_config_bootup()
 		{
 			if (strstr($g['platform'], "cdrom"))
 			{
-				echo "Ayarlar sifirlaniyor\n";
+				echo "Resetting settings...\n";
 				reset_factory_defaults(true);
 				if (!file_exists("{$g['conf_path']}/config.xml"))
 				{
-					echo "Ayar dosyasi bulunamadi. Varsayilan ayar yukleniyor...\n";
+					echo "No config file found. Loading default settings...\n";
 				}
 			}
 			else
@@ -305,7 +305,7 @@ function safe_write_file($file, $content, $force_binary)
 	return true;
 }
 
-function write_config($desc='Bilinmeyen', $backup = true)
+function write_config($desc='Unknown', $backup = true)
 {
 	global $config, $g;
 
@@ -323,8 +323,8 @@ function write_config($desc='Bilinmeyen', $backup = true)
 	if (time() > mktime(0, 0, 0, 9, 1, 2004))
 		$config['revision']['time'] = time();
 
-	if ($desc == 'Bilinmeyen')
-		$desc = "{$_SERVER['SCRIPT_NAME']} bilinmeyen bir degisiklik yapildi.";
+	if ($desc == 'Unknown')
+		$desc = "{$_SERVER['SCRIPT_NAME']} an unknown change made.";
 
 	$config['revision']['description'] = "{$username}: " . $desc;
 	$config['revision']['username'] = $username;
@@ -335,7 +335,7 @@ function write_config($desc='Bilinmeyen', $backup = true)
 
 	if (!safe_write_file("{$g['cf_conf_path']}/config.xml", $xmlconfig, false))
 	{
-		log_error("UYARI: Ayar dosyasi acilamiyor.");
+		log_error("WARNING: Can't open the config file.");
 		unlock($lockkey);
 		return -1;
 	}
@@ -353,13 +353,13 @@ function write_config($desc='Bilinmeyen', $backup = true)
 			$config = parse_xml_config("{$g['conf_path']}/config.xml", $g['xml_rootobj']);
 			if ($g['booting'])
 			{
-				echo "\n\n ************** UYARI **************";
-				echo "\n\n Ayar dosyasi hatali oldugu icin bir onceki ayar dosyasi yuklendi. \n";
-				echo "\n Hatali ayar dosyasi{$g['conf_path']}/config.xml.bad olarak kaydedildi.\n\n";
+				echo "\n\n ************** WARNING **************";
+echo "\n\n Configuration could not be validated. A previous configuration was restored. \n";
+				echo "\n The failed configuration file has been saved as {$g['conf_path']}/config.xml.bad \n\n";
 			}
 		}
 		else
-			log_error("config.xml. ayar dosyasi geri yuklenemedi.");
+			log_error("config.xml file couldn't load.");
 	}
 	else
 		generate_config_cache($config);

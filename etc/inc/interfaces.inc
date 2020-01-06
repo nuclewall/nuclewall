@@ -191,11 +191,11 @@ This block of code is only entered for OPTx interfaces that are configured for P
 
 function interfaces_loopback_configure() {
 	if($g['booting'])
-		echo "loopback arayüzü ayarlanýyor...";
+		echo "Configuring loopback interface...";
 	pfSense_interface_setaddress("lo0", "127.0.0.1");
 	interfaces_bring_up("lo0");
 	if($g['booting'])
-		echo "done.\n";
+		echo "Done.\n";
 	return 0;
 }
 
@@ -454,7 +454,7 @@ function interfaces_lagg_configure()
 			}
 		}
 		if($g['booting'])
-			echo "done.\n";
+			echo "Done.\n";
 }
 
 function interface_lagg_configure(&$lagg) {
@@ -686,25 +686,25 @@ function interfaces_configure() {
 
 		else {
 			if ($g['booting'])
-				echo "{$ifname} arayüzü ayarlanýyor...";
+				echo "Configuring {$ifname} interface...";
 			if($g['debug'])
-				log_error("{$ifname} arayüzü ayarlandý.");
+				log_error("{$ifname} interface configured.");
 			interface_configure($if, $reload);
 			if ($g['booting'])
-				echo "Tamam.\n";
+				echo "Done.\n";
 		}
 	}
 
 	 foreach ($delayed_list as $if => $ifname) {
 		if ($g['booting'])
-			echo "{$ifname} arayüzü ayarlanýyor...";
+			echo "Configuring {$ifname} interface...";
         	if ($g['debug'])
-        		log_error("{$ifname} arayüzü ayarlandý.");
+        		log_error("{$ifname} interface configured.");
 
 		interface_configure($if, $reload);
 
 		if ($g['booting'])
-			echo "done.\n";
+			echo "Done.\n";
 	}
 
 	foreach ($bridge_list as $if => $ifname) {
@@ -716,7 +716,7 @@ function interfaces_configure() {
 		interface_configure($if, $reload);
 
 		if ($g['booting'])
-			echo "done.\n";
+			echo "Done.\n";
 	}
 
 	/* configure interface groups */

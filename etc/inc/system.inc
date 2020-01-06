@@ -410,7 +410,7 @@ function system_syslogd_start()
 	$syslogcfg = $config['syslog'];
 
 	if ($g['booting'])
-		echo "Syslog baþlatýlýyor....";
+		echo "Starting Syslog...";
 	else
 		killbypid("{$g['varrun_path']}/syslog.pid");
 
@@ -517,7 +517,7 @@ EOD;
 	}
 
 	if ($g['booting'])
-		echo "Tamam.\n";
+		echo "Done.\n";
 
 	return $retval;
 }
@@ -527,7 +527,7 @@ function system_webgui_start()
 	global $config, $g;
 
 	if ($g['booting'])
-		echo "Web arayüzü baþlatýlýyor...";
+		echo "Starting Web UI...";
 
 	killbypid("{$g['varrun_path']}/lighty-webConfigurator.pid");
 
@@ -561,9 +561,9 @@ function system_webgui_start()
 	if ($g['booting'])
 	{
 		if ($res == 0)
-			echo "Tamam.\n";
+			echo "Done.\n";
 		else
-			echo "Hata!\n";
+			echo "Error!\n";
 	}
 
 	return $res;
@@ -888,7 +888,7 @@ function system_timezone_configure()
 	$syscfg = $config['system'];
 
 	if ($g['booting'])
-		echo "\nSistem tarih ve saati ayarlanýyor...";
+		echo "\nSetting system date and time...";
 
 	$timezone = $syscfg['timezone'];
 	if (!$timezone)
@@ -900,7 +900,7 @@ function system_timezone_configure()
 	mwexec("sync");
 
 	if ($g['booting'])
-		echo "Tamam.\n";
+		echo "Done.\n";
 }
 
 function system_ntp_configure($start_ntpd=true)
@@ -960,7 +960,7 @@ function system_ntp_configure($start_ntpd=true)
 	exec("echo /usr/local/bin/ntpd -g -c {$g['varetc_path']}/ntpd.conf | tcsh");
 
 	// Note that we are starting up
-	log_error("NTPD baþlatýlýyor.");
+	log_error("Starting NTPD...");
 	return;
 }
 
@@ -977,7 +977,7 @@ function sync_system_time()
 	}
 
 	if ($g['booting'])
-		echo "done.\n";
+		echo "Done.\n";
 
 }
 

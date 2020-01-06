@@ -165,7 +165,7 @@ function filter_configure_sync($delete_states_if_needed = true)
 	/* Get interface list to work with. */
 	filter_generate_optcfg_array();
 	if($g['booting'] == true)
-		echo "Güvenlik duvarý ayarlanýyor...";
+		echo "Initializing firewall...";
 
 	/* generate aliases */
 	if($g['booting'] == true)
@@ -204,7 +204,7 @@ function filter_configure_sync($delete_states_if_needed = true)
 		unlink_if_exists("{$g['tmp_path']}/filter_loading");
 		update_filter_reload_status("Filter is disabled.  Not loading rules.");
 		if($g['booting'] == true)
-			echo "Tamam.\n";
+			echo "Done.\n";
 		unlock($filterlck);
 		return;
 	}
@@ -349,9 +349,9 @@ function filter_configure_sync($delete_states_if_needed = true)
 		update_filter_reload_status("Plugins completed.");
 	}
 
-	update_filter_reload_status("Tamam");
+	update_filter_reload_status("Done");
 	if($g['booting'] == true)
-		echo "Tamam.\n";
+		echo "Done.\n";
 
 	unlock($filterlck);
 	return 0;

@@ -63,7 +63,7 @@ function services_dhcpd_configure()
 	$Iflist = get_configured_interface_list();
 
 	if ($g['booting'])
-		echo "DHCP sunucusu baþlatýlýyor...";
+		echo "Starting DHCP server...";
 	else
 		sleep(1);
 
@@ -229,7 +229,7 @@ EOD;
 
 	if ($g['booting'])
 	{
-		echo "Tamam.\n";
+		echo "Done.\n";
 	}
 
 	return 0;
@@ -253,7 +253,7 @@ function services_dnsmasq_configure()
 	if (isset($config['dnsmasq']['enable'])) {
 
 		if ($g['booting'])
-			echo "DNS yönlendirici baþlatýlýyor...";
+			echo "Starting DNS Forwarder...";
 		else
 			sleep(1);
 
@@ -293,7 +293,7 @@ function services_dnsmasq_configure()
 		mwexec_bg("/usr/local/sbin/dnsmasq --local-ttl 1 --all-servers {$dns_rebind} --dns-forward-max=5000 --cache-size=10000 {$args}");
 
 		if ($g['booting'])
-			echo "Tamam.\n";
+			echo "Done.\n";
 	}
 
 	if (!$g['booting'])

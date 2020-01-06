@@ -54,7 +54,7 @@ function openssl_init()
 
 	if(file_exists($initFile) and ($platform == 'pfSense'))
 	{
-		echo "OpenSSL sertifikalarý oluþturuluyor...";
+		echo "Creating OpenSSL certificates...";
 		openSSLConfigInit();
 		system('ca_create.sh && cert_create.sh');
 
@@ -63,12 +63,12 @@ function openssl_init()
 		file_exists("/usr/local/openssl/ca/private/cakey.pem") and
 		file_exists("/usr/local/openssl/ca/private/tsakey.pem"))
 		{
-			echo "Tamam.\n";
+			echo "Done.\n";
 			system("rm -f $initFile");
 		}
 
 		else
-			echo "Hata oluþtu.\n";
+			echo "Error.\n";
 	}
 }
 

@@ -22,13 +22,13 @@ if (!isAllowedPage($_SERVER['SCRIPT_NAME']))
 		$username = empty($_SESSION["Username"]) ? "(system)" : $_SESSION['Username'];
 		if (!empty($_SERVER['REMOTE_ADDR']))
 			$username .= '@' . $_SERVER['REMOTE_ADDR'];
-		log_error("{$username} kullanicisi {$_SERVER['SCRIPT_NAME']} sayfasina erismek istedi fakat erisim kisitli. {$page} sayfasina yonlendiriliyor.");
+		log_error(" User {$username} tried to access {$_SERVER['SCRIPT_NAME']} but has no permission. Redirecting to {$page}.");
 
 		exit;
 	}
 	else
 	{
-		echo("<p>Bu sayfaya erisim izniniz yok</p>");
+		echo("<p>you don't have permission to access this page</p>");
 		exit;
 	}
 }

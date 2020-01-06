@@ -53,7 +53,7 @@ function captiveportal_configure()
 	if (isset($config['captiveportal']['enable']))
 	{
 		if ($g['booting'])
-			echo "HOTSPOT baþlatýlýyor... ";
+			echo "Starting HOTSPOT service... ";
 
 		killbypid("{$g['varrun_path']}/lighty-CaptivePortal.pid");
 
@@ -88,7 +88,7 @@ function captiveportal_configure()
 		captiveportal_init_radius_servers();
 
 		if ($g['booting'])
-			echo "Tamam\n";
+			echo "Done\n";
 	}
 
 	else
@@ -1275,8 +1275,8 @@ function portal_allow($clientip,$clientmac,$username,$password = null, $attribut
 
 	if (is_null($ruleno))
 	{
-		portal_reply_page($redirurl, "error", "Sistemin oturum sayýsý kapasitesi aþýldý");
-		log_error("UYARI! Sistemin oturum sayýsý kapasitesi aþýldý.");
+		portal_reply_page($redirurl, "error", "System reached maximum login capacity");
+		log_error("WARNING!  Captive portal has reached maximum login capacity.");
 		exit;
 	}
 

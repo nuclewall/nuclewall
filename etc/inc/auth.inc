@@ -240,7 +240,7 @@ function local_user_set(& $user)
 
 	if (empty($user['password']))
 	{
-		log_error("Ayarlarýnýzda hata var. {$user['name']} kullanýcýsý için parola girmediniz.");
+		log_error("There is an error in your settings. Password is missing for {$user['name']}");
 		return;
 	}
 
