@@ -60,7 +60,7 @@ function set_networking_interfaces_ports() {
 		$auto_assign = false;
 
 	echo <<<EOD
-Ethernet kartlarý:
+EInterfaces:
 \n
 EOD;
 
@@ -154,7 +154,7 @@ EOD;
 				if ($ifarr[$i] == $ifarr[$j]) {
 					echo <<<EOD
 
-Hata: Ayný ethernet kartýný 2 ayrý arayüze tanýmlayamazsýnýz.
+ERROR: You can't assign the same ethernet to 2 different interfaces.
 
 EOD;
 					fclose($fp);
