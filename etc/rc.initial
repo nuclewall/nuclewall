@@ -51,9 +51,9 @@ fi
 # Check to see if SSH is listening.
 SSHD=`/usr/bin/sockstat -4l | grep "*.$SSHPORT" | wc -l`
 if [ "$SSHD" -gt 0 ]; then
-	sshd_option="8) Stop SSHD(Port: ${SSHPORT}) service";
+	sshd_option="8) Stop SSH service (Port: ${SSHPORT})";
 else
-	sshd_option="8) Start (Port: ${SSHPORT}) service";
+	sshd_option="8) Start SSH service (Port: ${SSHPORT})";
 fi
 
 

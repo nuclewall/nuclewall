@@ -35,7 +35,7 @@ require_once("functions.inc");
 $fp = fopen('php://stdin', 'r');
 
 if (isset($config['system']['enablesshd'])) {
-	echo "    SSHD service is running now. Do you want to stop? [y|n]\n    > ";
+	echo "    SSH service is running now. Do you want to stop? [y|n]\n    > ";
 	$yn = chop(fgets($fp));
 
 	if ($yn[0] == "y" || $yn[0] == "Y")
@@ -55,7 +55,7 @@ if (isset($config['system']['enablesshd'])) {
 
 else
 {
-	echo "    SSHD service is stopped. Do you want to start? [y|n]\n    > ";
+	echo "    SSH service is stopped. Do you want to start? [y|n]\n    > ";
 	$yn = chop(fgets($fp));
 
 	if ($yn[0] == "y" || $yn[0] == "Y") {

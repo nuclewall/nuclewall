@@ -44,7 +44,7 @@
 	NUCLEWALL will reboot after resetting the configuration.
 	NOTE: HOTSPOT data and logs will remain.
 
-    Proceed? [y|n]\n    >
+    Proceed? [y|n]\n    > 
 EOD;
 
 	$yn = chop(fgets($fp));

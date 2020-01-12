@@ -41,7 +41,7 @@
 	echo <<<EOD
     NUCLEWALL will reboot.
 
-    Proceed? [y|n]\n    >
+    Proceed? [y|n]\n    > 
 EOD;
 
 	$yn = chop(fgets($fp));

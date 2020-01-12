@@ -41,7 +41,7 @@ $fp = fopen('php://stdin', 'r');
 echo <<<EOD
     NUCLEWALL will shutdown and halt system.
 
-    Proceed [y|n]\n    >
+    Proceed [y|n]\n    > 
 EOD;
 
 	$yn = chop(fgets($fp));

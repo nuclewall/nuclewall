@@ -38,7 +38,7 @@
 		/* do nothing, we're enabled */
 	} else {
 		if($g['booting'])
-			echo "SSHD service is disabled.";
+			echo "SSH service is disabled.";
 		exit;
 	}
 
@@ -147,7 +147,7 @@
 		system("/usr/bin/nice -n20 /usr/bin/ssh-keygen -t rsa -N '' -f $sshConfigDir/ssh_host_rsa_key");
 		system("/usr/bin/nice -n20 /usr/bin/ssh-keygen -t dsa -N '' -f $sshConfigDir/ssh_host_dsa_key");
 		clear_subsystem_dirty('sshdkeys');
-		echo "Starting SSHD service... ";
+		echo "Starting SSH service... ";
 	}
 
 	/* kill existing sshd process, server only, not the childs */
