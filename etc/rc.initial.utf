@@ -72,7 +72,7 @@ echo ""
 echo "    NUCLEWALL	            OTHER"
 echo "      5) Restart	      ${sshd_option}"
 echo "      6) Poweroff             9) Shell"
-echo "      7) Reset settings"
+echo "      7) Reset settings       0) Logout"
 echo ""
 
 if [ "${option99}" != "" ]; then
@@ -121,9 +121,6 @@ case ${opmode} in
 		else
 			/scripts/lua_installer
 		fi
-		;;
-"")
-		kill $PPID ; exit
 		;;
 esac
 
