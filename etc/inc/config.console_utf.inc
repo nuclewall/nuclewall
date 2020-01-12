@@ -174,7 +174,7 @@ EOD;
 
 		echo <<<EOD
 
-Do you want to proceed [y|n]?\n>
+Proceed? [y|n]?\n> 
 EOD;
 			$key = chop(fgets($fp));
 	}
