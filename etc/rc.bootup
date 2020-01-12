@@ -2,10 +2,8 @@
 <?php
 /*
 	rc.bootup
-	part of pfSense by Scott Ullrich
-	originally based on m0n0wall (http://m0n0.ch/wall)
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2004-2009 Scott Ullrich <sullrich@pfsense.org>.
@@ -39,12 +37,12 @@ function rescue_detect_keypress()
 {
 	$timeout=9;
 	echo "\n";
-	echo "[ Kurulum için K'ye basýn... ]\n";
-	echo "Seçim için kalan süre: {$timeout}";
+	echo "[ Press S to start installer... ]\n";
+	echo "Timeout (seconds): {$timeout}";
 	$key = null;
 	exec("/bin/stty erase " . chr(8));
 
-	while(!in_array($key, array("k", "K")))
+	while(!in_array($key, array("s", "S")))
 	{
 	        echo chr(8) . "{$timeout}";
 	        `/bin/stty -icanon min 0 time 25`;
@@ -55,10 +53,10 @@ function rescue_detect_keypress()
 				break;
 	}
 
-	if (in_array($key, array("k", "K")))
+	if (in_array($key, array("s", "S")))
 	{
 		putenv("TERM=cons25");
-		echo "\n\nKurulum baþlatýlýyor...\n";
+		echo "\n\nStarting installer...\n";
 		passthru("/usr/bin/env TERM=cons25 /bin/tcsh -c /scripts/lua_installer");
 
 		if(file_exists("/tmp/install_complete"))
@@ -95,20 +93,20 @@ function set_password()
 		$success = false;
 		$fp = fopen('php://stdin', 'r');
 
-		echo "\nÞimdi web arayüzü ve SSH eriþiminde kullanacaðýnýz\nyönetici parolasýný belirleyin.\n";
-		echo "Parolanýzý daha sonra deðiþtirilebilirsiniz.\n";
+		echo "\nSet your administrator password for Web UI and SSH access.\n";
+		echo "You can change your password later.\n";
 
 		do
 		{
-			echo "\nYeni bir yönetici parolasý girip <ENTER> a basýn:\n> ";
+			echo "\nEnter a password for administrator and press <ENTER>:\n> ";
 			$password = chop(fgets($fp));
 
 			if($password != '')
 			{
-				echo "Parolanýz '{$password}' olacak. Onaylýyor musunuz? [e|h]\n> ";
+				echo "Your password is: '{$password}' . Proceed? [y|n]\n> ";
 				$key = chop(fgets($fp));
 
-				if(strtolower($key) == "e")
+				if(strtolower($key) == "y")
 				{
 					$admin_user =& getUserEntryByUID(0);
 
@@ -129,13 +127,14 @@ function set_password()
 
 					local_user_set_password($admin_user, $password);
 					local_user_set($admin_user);
-					write_config("Yeni yonetici parolasi belirlendi.");
+					write_config("New admin password is set.");
 
 					$success = true;
 					system("rm /etc/nuclewall/password_init");
-					echo "Yeni yönetici parolasý belirlendi.\n\n";
-					echo "'admin' kullanýcý adý ve belirlediðiniz parola ile\nweb arayüzünde oturum açabilirsiniz.\n\n";
-					echo "Devam etmek için <ENTER> a basýn. ";
+					echo "New administrator password is set.\n\n";
+					echo "Use 'admin' username to login Web UI.\n";
+					echo "Use 'root' username to login SSH.\n\n";
+					echo "Press <ENTER> to continue.";
 					fgets($fp);
 					exit;
 				}
@@ -163,7 +162,7 @@ parse_config_bootup();
 
 while(is_interface_mismatch() == true)
 {
-	echo "\n\nEthernet kartý-arayüz iliþkilendirmeleri yapýlmamýþ. Þimdi yapýlmasý gerekiyor.\n\n";
+	echo "\nNetwork interface mismatch -- Running interface assignment option.\n";
 	$ifaces = get_interface_list();
 	if (is_array($ifaces))
 	{

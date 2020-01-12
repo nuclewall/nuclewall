@@ -19,7 +19,6 @@ HOME=/
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:/usr/local/sbin
 export HOME PATH
 
-/etc/locale/kbdcontrol -l /etc/locale/tr.iso9.q.kbd
 /etc/locale/vidcontrol -f /etc/locale/iso09-8x16.fnt
 
 # Set our operating platform

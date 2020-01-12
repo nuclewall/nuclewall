@@ -3,7 +3,9 @@
 /* $Id$ */
 /*
 	rc.initial.setlanip
-	part of m0n0wall (http://m0n0.ch/wall)
+
+	Copyright (C) 2013-2020 Ogun Acik
+	All rights reserved.
 
 	Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
 	All rights reserved.
@@ -61,9 +63,9 @@ function prompt_for_enable_dhcp_server() {
 		do {
 			$good = false;
 			$upperifname = strtoupper($interface);
-			echo "\n    {$upperifname} arayüzünde DHCP sunucusunu etkinleþtirmek istiyor musunuz? [e|h]\n    > ";
+			echo "\n    Do you want to enable the DHCP server on {$upperifname}? [y|n]\n    >";
 			$yn = strtolower(chop(fgets($fp)));
-			if ($yn[0] == "e" or $yn[0] == "h")
+			if ($yn[0] == "y" or $yn[0] == "n")
 			$good = true;
 		} while (!$good);
 	}
@@ -80,13 +82,13 @@ $j = count($ifdescrs);
 /* grab interface that we will operate on, unless there is only one
 interface */
 if ($j > 1) {
-	echo "    Að arayüzleri:\n\n";
+	echo "    Available interfaces:\n\n";
 	$x=1;
 	foreach($ifdescrs as $iface) {
 		echo "    {$x} - {$iface}\n";
 		$x++;
 	}
-	echo "\n    Ayarlamak istediðiniz arayüzün numarasýný girin:\n    > ";
+	echo "\n    Enter the number of the interface you wish to configure:\n    > ";
 	$intnum = chop(fgets($fp));
 } else {
 	$intnum = $j;
@@ -107,7 +109,7 @@ foreach ($ifdescrs as $ifname => $ifdesc) {
 	}
 }
 if(!$interface) {
-	echo "    Geçersiz arayüz.\n";
+	echo "   Invalid interface!\n";
 	exit;
 }
 
@@ -115,9 +117,9 @@ $ifaceassigned = '';
 do {
 	if($interface == "wan") {
 		$upperifname = strtoupper($interface);
-		echo "    {$upperifname} IP adresinin dinamik olarak(DHCP) belirlenmesini istiyor musunuz? [e|h]\n    > ";
+		echo "    Configure {$upperifname} interface via DHCP?  [y|n]\n    > ";
 		$intdhcp = chop(fgets($fp));
-		if(strtolower($intdhcp) == "e" || strtolower($intdhcp) == "E") {
+		if(strtolower($intdhcp) == "y" || strtolower($intdhcp) == "Y") {
 			$ifppp = console_get_interface_from_ppp(get_real_interface("wan"));
 			if (!empty($ifppp))
 				$ifaceassigned = $ifppp;
@@ -131,18 +133,18 @@ do {
 	if($isintdhcp == false or $interface <> "wan") {
 		do {
 			$upperifname = strtoupper($interface);
-			echo "\n    {$upperifname} için IPv4 adresini girin. Boþ býrakmak için <ENTER> a basýn:\n    > ";
+			echo "\n    Enter the new {$upperifname} IPv4 address. Press <ENTER> for none:\n    > ";
 			$intip = chop(fgets($fp));
 			$addr_blank = false;
 		} while (!(is_ipaddr($intip) || $intip == ''));
 	  	if ($intip != '') {
-	  		echo "\n    Alt að maskesini bit sayýsý(CIDR) olarak girin:\n";
-	  		echo "    Örn: 255.255.255.0 = 24\n";
+	  		echo "\n    Subnet masks are entered as bit counts (as in CIDR notation):\n";
+	  		echo "    Ex:  255.255.255.0 = 24\n";
 	  		echo "         255.255.0.0 = 16\n";
 	  		echo "         255.0.0.0 = 8\n";
 	  		do {
 				$upperifname = strtoupper($interface);
-	  			echo "\n    {$upperifname} için IPv4 alt að maskesini girin:\n    > ";
+	  			echo "\n    Enter the new {$upperifname} IPv4 subnet bit count:\n    > ";
 	  			$intbits = chop(fgets($fp));
 				$restart_dhcpd = true;
 	  		} while (!is_numeric($intbits) || ($intbits < 1) || ($intbits > 31));
@@ -167,7 +169,7 @@ if($g['services_dhcp_server_enable'])
 
 if ($yn == "e") {
 	do {
-		echo "    DHCP adres daðýtým aralýðý için baþlangýç IP adresini girin:\n    > ";
+		echo "    Enter the START address of the client address range:\n    > ";
 		$dhcpstartip = chop(fgets($fp));
 		if ($dhcpstartip === "") {
 			fclose($fp);
@@ -176,7 +178,7 @@ if ($yn == "e") {
 	} while (!(is_ipaddr($dhcpstartip)));
 
 	do {
-		echo "    DHCP adres daðýtým aralýðý için bitiþ IP adresini girin:\n    > ";
+		echo "    Enter the END address of the client address range::\n    > ";
 		$dhcpendip = chop(fgets($fp));
 		if ($dhcpendip === "") {
 			fclose($fp);
@@ -218,8 +220,8 @@ if(!$config['interfaces']['lan']) {
 }
 
 $upperifname = strtoupper($interface);
-echo "\n    {$upperifname} arayüzü için ayarlar kaydediliyor...";
-write_config("{$interface} konsoldan ayarlandi.");
+echo "\n    Changes are saving for {$upperifname}...";
+write_config("{$interface} IP configuration from console menu.");
 interface_reconfigure(strtolower($upperifname));
 filter_configure_sync();
 
@@ -227,19 +229,19 @@ if($restart_dhcpd) {
 	services_dhcpd_configure();
 }
 if($restart_webgui) {
-	echo "    Web arayüzü yeniden baþlatýlýyor...";
+	echo "    Restarting Web UI...";
 	mwexec("/etc/rc.restart_webgui");
 }
 
 if ($intip != '') {
 	if (is_ipaddr($intip)) {
-		echo "\n\n    {$upperifname} arayüzünün yeni IPv4 adresi: " . "{$intip}/{$intbits}\n";
+		echo "\n\n    New IPv4 address for {$upperifname}: " . "{$intip}/{$intbits}\n";
 	} else {
-		echo "\n\n    {$upperifname} arayüzünün yeni IPv4 adresi: " . "{$intip}\n";
+		echo "\n\n    New IPv4 address for {$upperifname}: " . "{$intip}\n";
 	}
 }
 
-echo "\n    Devam etmek için <ENTER> a basýn. ";
+echo "\n    Press <ENTER> to continue. ";
 
 fgets($fp);
 fclose($fp);

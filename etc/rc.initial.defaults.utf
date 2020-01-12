@@ -4,6 +4,9 @@
 	rc.initial.defaults
 	part of m0n0wall (http://m0n0.ch/wall)
 
+	Copyright (C) 2013 - 2020 Ogun Acik
+	All rights reserved.
+
 	Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
 	All rights reserved.
 
@@ -37,18 +40,19 @@
 	$fp = fopen('php://stdin', 'r');
 
 	echo <<<EOD
-    Onaylarsanız, NUCLEWALL fabrika ayarlarına döndürülüp yeniden başlatılacak.
-    NOT: HOTSPOT verileri ve olay günlükleri silinmeyecek.
+	You are about to reset NUCLEWALL to factory defaults.
+	NUCLEWALL will reboot after resetting the configuration.
+	NOTE: HOTSPOT data and logs will remain.
 
-    Onaylıyor musunuz? [e|h]\n    >
+    Proceed? [y|n]\n    >
 EOD;
 
 	$yn = chop(fgets($fp));
 
-	if (strcasecmp($yn, "e") == 0 || strcasecmp($yn, "E") == 0)
+	if (strcasecmp($yn, "y") == 0 || strcasecmp($yn, "Y") == 0)
 	{
 		reset_factory_defaults();
-		echo "    NUCLEWALL şimdi yeniden başlatılıyor...";
+		echo "    NUCLEWALL is now rebooting...";
 		system_reboot_sync();
 	}
 

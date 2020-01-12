@@ -35,16 +35,16 @@ require_once("functions.inc");
 $fp = fopen('php://stdin', 'r');
 
 if (isset($config['system']['enablesshd'])) {
-	echo "    SSHD servisi þu anda çalýþýyor. Kapatmak istiyor musunuz? [e|h]\n    > ";
+	echo "    SSHD service is running now. Do you want to stop? [y|n]\n    > ";
 	$yn = chop(fgets($fp));
 
-	if ($yn[0] == "e" || $yn[0] == "E")
+	if ($yn[0] == "y" || $yn[0] == "Y")
 	{
 		unset($config['system']['enablesshd']);
 		write_config();
-		echo "\n    Servis durduruluyor...";
+		echo "\n    Stopping...";
 		exec("/etc/sshd");
-		echo "Tamam.\n";
+		echo "Done.\n";
 		exec("ps awux | grep '/usr/sbin/sshd' | grep -v grep | awk '{print $2}' | xargs kill");
 
 		/* close all ssh sessions */
@@ -55,15 +55,15 @@ if (isset($config['system']['enablesshd'])) {
 
 else
 {
-	echo "    SSHD servisi þu anda kapalý. Baþlatmak istiyor musunuz? [e|h]\n    > ";
+	echo "    SSHD service is stopped. Do you want to start? [y|n]\n    > ";
 	$yn = chop(fgets($fp));
 
-	if ($yn[0] == "e" || $yn[0] == "E") {
+	if ($yn[0] == "y" || $yn[0] == "Y") {
 		$config['system']['enablesshd'] = true;
 		write_config();
-		echo "\n    Servis baþlatýlýyor...";
+		echo "\n    Starting...";
 		exec("/etc/sshd");
-		echo "Tamam.\n";
+		echo "Done.\n";
 	}
 }
 

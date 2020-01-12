@@ -3,7 +3,7 @@
 # $Id$
 
 if ! /usr/bin/lockf -s -t 30 /tmp/config.lock /usr/bin/true; then
-	echo "Þu anda bir yazma iþlemi yapýldýðýndan dolayý yeniden baþlatýlamýyor."
+	echo "Cannot reboot at this moment, a config write operation is in progress, and 30 seconds have passed."
 	exit 1
 fi
 

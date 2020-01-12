@@ -39,13 +39,13 @@
 	$fp = fopen('php://stdin', 'r');
 
 	echo <<<EOD
-    NUCLEWALL şimdi yeniden başlatılacak.
+    NUCLEWALL will reboot.
 
-    Onaylıyor musunuz? [e|h]\n    >
+    Proceed? [y|n]\n    >
 EOD;
 
 	$yn = chop(fgets($fp));
-	if (strcasecmp($yn, "e") == 0 || strcasecmp($yn, "E") == 0)
+	if (strcasecmp($yn, "y") == 0 || strcasecmp($yn, "Y") == 0)
 		system_reboot_sync();
 
 	fclose($fp);

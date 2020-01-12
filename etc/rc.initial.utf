@@ -2,8 +2,12 @@
 
 # /etc/rc.initial
 # part of pfSense by Scott Ullrich
+
+# Copyright (C) 2013-2020 Ogun Acik
+#
 # Copyright (C) 2004-2011 Scott Ullrich, All rights reserved.
 # originally based on m0n0wall (http://neon1.net/m0n0wall)
+#
 # Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
 # All rights reserved.
 
@@ -17,7 +21,7 @@
 if [ -f "/tmp/donotbootup" ]; then
 	/usr/bin/env prompt="%B[%n@%m]%b%/(%h)||RecoveryConsoleShell: " /bin/tcsh
 	rm "/tmp/donotbootup"
-	echo "5 saniye sonra yeniden başlatılacak. İptal için: Ctrl+c"
+	echo "Rebooting in 5 seconds... CTRL-C to abort..."
 	sleep 5
 	/etc/rc.reboot
 	exit
@@ -47,27 +51,36 @@ fi
 # Check to see if SSH is listening.
 SSHD=`/usr/bin/sockstat -4l | grep "*.$SSHPORT" | wc -l`
 if [ "$SSHD" -gt 0 ]; then
-	sshd_option="8) SSHD(Port: ${SSHPORT}) servisini kapat";
+	sshd_option="8) Stop SSHD(Port: ${SSHPORT}) service";
 else
-	sshd_option="8) SSHD(Port: ${SSHPORT}) servisini aç";
+	sshd_option="8) Start (Port: ${SSHPORT}) service";
+fi
+
+
+if [ "$PLATFORM" = "cdrom" ]; then
+    option99="99) Start NUCLEWALL installation."
 fi
 
 # display a cheap menu
 echo ""
 echo ""
 echo ""
-echo "    ETHERNET KARTLARI		WEB ARAYÜZÜ"
-echo "      1) İlişkilendir		  3) Yeniden başlat"
-echo "      2) IP adreslerini belirle"
+echo "    INTERFACES		    WEB UI"
+echo "      1) Assing		      3) Restart"
+echo "      2) Set IP addresses     4) Allow access from WAN"
 echo ""
-echo "    NUCLEWALL			DİĞER"
-echo "      5) Yeniden başlat		  0) SSH oturumu kapat"
-echo "      6) Kapat			  ${sshd_option}"
-echo "      7) Ayarları sıfırla         9) Kabuk"
+echo "    NUCLEWALL	            OTHER"
+echo "      5) Restart	      ${sshd_option}"
+echo "      6) Poweroff             9) Shell"
+echo "      7) Reset settings"
 echo ""
 
+if [ "${option99}" != "" ]; then
+	/bin/echo "      ${option99}"
+fi
+
 echo
-read -p "    Seçim > " opmode
+read -p "    Option > " opmode
 echo
 
 # see what the user has chosen
@@ -76,29 +89,42 @@ case ${opmode} in
         exit && exit && logout
         ;;
 1)
-        /etc/rc.initial.setports.utf
+        /etc/rc.initial.setports
         ;;
 2)
-        /etc/rc.initial.setlanip.utf
+        /etc/rc.initial.setlanip
         ;;
 3)
-		/usr/bin/killall -9 php; /usr/bin/killall -9 lighttpd; /etc/rc.restart_webgui.utf
+		/usr/bin/killall -9 php; /usr/bin/killall -9 lighttpd; /etc/rc.restart_webgui
+		;;
+4)
+		/etc/rc.allowwan
 		;;
 5)
-        /etc/rc.initial.reboot.utf
+        /etc/rc.initial.reboot
         ;;
 6)
-        /etc/rc.initial.halt.utf
+        /etc/rc.initial.halt
         ;;
 7)
-        /etc/rc.initial.defaults.utf
+        /etc/rc.initial.defaults
         ;;
 8)
-		php -f /etc/rc.initial.toggle_sshd.utf
+		php -f /etc/rc.initial.toggle_sshd
 		;;
 9)
         /bin/tcsh
         ;;
+99)
+		if [ -e /dev/ukbd0 ]; then
+	    	env TERM=cons25 /scripts/lua_installer
+		else
+			/scripts/lua_installer
+		fi
+		;;
+"")
+		kill $PPID ; exit
+		;;
 esac
 
 done

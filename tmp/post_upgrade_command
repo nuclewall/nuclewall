@@ -4,7 +4,7 @@ PFSENSETYPE=`cat /etc/platform`
 KERNELTYPE=`cat /boot/kernel/pfsense_kernel.txt`
 
 if [ $KERNELTYPE = "SMP" ]; then
-	if [ -f /kernels/kernel_SMP.gz ]; then 
+	if [ -f /kernels/kernel_SMP.gz ]; then
 		tar xzpf /kernels/kernel_SMP.gz --exclude loader.conf -C /boot/
 	fi
 fi

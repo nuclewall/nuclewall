@@ -26,7 +26,7 @@ foreach($config["filter"]["rule"] as $key=>$value)
 
 if($rule_exists && !$blockpriv_exists)
 {
-	echo "    Eriþim þu anda zaten açýk. Kapatmak için web arayüzünü kullanýn.\n\n    Devam etmek için <ENTER> a basýn. ";
+	echo "    WAN access is already allowed. Use Web UI to deny.\n\n    Press <ENTER> to continue. ";
 	fgets($fp);
 	fclose($fp);
 	exit;
@@ -34,7 +34,7 @@ if($rule_exists && !$blockpriv_exists)
 
 if(!$rule_exists)
 {
-	echo "    Ýzin verme kuralý ekleniyor...\n";
+	echo "    Adding the firewall rule to allow access the Web UI from WAN interface...\n";
 	$filterent = array();
 	$filterent["type"] = "pass";
 	$filterent["interface"] = "wan";
@@ -43,20 +43,20 @@ if(!$rule_exists)
 	$filterent["statetype"] = "keep state";
 	$filterent["os"] = "";
 	$filterent["console"] = true;
-	$filterent["descr"] = "TlVDTEVXQUxMJ2EgV0FOIGFyYXnDvHrDvG5kZW4gZXJpxZ9pbWUgaXppbiB2ZXIu";
+	$filterent["descr"] = "Allow access to NUCLEWALL Web UI from WAN interface";
 	$config["filter"]["rule"][] = $filterent;
 }
 
 unset($config["interfaces"]["wan"]["blockpriv"]);
 unlink_if_exists("/tmp/config.cache");
-write_config("NUCLEWALL'a WAN arayuzunden erisime izin verildi");
+write_config("Access allowed to NUCLEWALL from WAN interface");
 unlink_if_exists("/tmp/config.cache");
 unset($config['interfaces']['wan']['blockbogons']);
 
 $config = parse_config(true);
-echo "    Ayarlar yeniden yükleniyor...\n";
+echo "    Reloading settings...\n";
 filter_configure_sync();
-echo "    NUCLEWALL'a WAN arayüzünden eriþime izin verildi.\n\n    Devam etmek için <ENTER> a basýn. ";
+echo "    Access allowed to NUCLEWALL from WAN interface.\n\n    Press <ENTER> to continue. ";
 
 fgets($fp);
 fclose($fp);

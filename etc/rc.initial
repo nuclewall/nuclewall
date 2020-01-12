@@ -2,8 +2,12 @@
 
 # /etc/rc.initial
 # part of pfSense by Scott Ullrich
+
+# Copyright (C) 2013-2020 Ogun Acik
+#
 # Copyright (C) 2004-2011 Scott Ullrich, All rights reserved.
 # originally based on m0n0wall (http://neon1.net/m0n0wall)
+#
 # Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
 # All rights reserved.
 
@@ -17,7 +21,7 @@
 if [ -f "/tmp/donotbootup" ]; then
 	/usr/bin/env prompt="%B[%n@%m]%b%/(%h)||RecoveryConsoleShell: " /bin/tcsh
 	rm "/tmp/donotbootup"
-	echo "5 saniye sonra yeniden baþlatýlacak. Ýptal için: Ctrl+c"
+	echo "Rebooting in 5 seconds... CTRL-C to abort..."
 	sleep 5
 	/etc/rc.reboot
 	exit
@@ -47,28 +51,28 @@ fi
 # Check to see if SSH is listening.
 SSHD=`/usr/bin/sockstat -4l | grep "*.$SSHPORT" | wc -l`
 if [ "$SSHD" -gt 0 ]; then
-	sshd_option="8) SSHD(Port: ${SSHPORT}) servisini kapat";
+	sshd_option="8) Stop SSHD(Port: ${SSHPORT}) service";
 else
-	sshd_option="8) SSHD(Port: ${SSHPORT}) servisini aç";
+	sshd_option="8) Start (Port: ${SSHPORT}) service";
 fi
 
 
 if [ "$PLATFORM" = "cdrom" ]; then
-    option99="99) NUCLEWALL kurulumunu baþlat."
+    option99="99) Start NUCLEWALL installation."
 fi
 
 # display a cheap menu
 echo ""
 echo ""
 echo ""
-echo "    ETHERNET KARTLARI		WEB ARAYÜZÜ"
-echo "      1) Ýliþkilendir		  3) Yeniden baþlat"
-echo "      2) IP adreslerini belirle	  4) WAN arayüzünden eriþime izin ver"
+echo "    INTERFACES		    WEB UI"
+echo "      1) Assing		      3) Restart"
+echo "      2) Set IP addresses     4) Allow access from WAN"
 echo ""
-echo "    NUCLEWALL			DÝÐER"
-echo "      5) Yeniden baþlat		  ${sshd_option}"
-echo "      6) Kapat                    9) Kabuk"
-echo "      7) Ayarlarý sýfýrla"
+echo "    NUCLEWALL	            OTHER"
+echo "      5) Restart	      ${sshd_option}"
+echo "      6) Poweroff             9) Shell"
+echo "      7) Reset settings"
 echo ""
 
 if [ "${option99}" != "" ]; then
@@ -76,7 +80,7 @@ if [ "${option99}" != "" ]; then
 fi
 
 echo
-read -p "    Seçim > " opmode
+read -p "    Option > " opmode
 echo
 
 # see what the user has chosen

@@ -32,13 +32,12 @@
 
 	/* parse the configuration and include all functions used below */
 	require_once("config.inc");
-	require_once("config.console_utf.inc");
+	require_once("config.console.inc");
 	require_once("functions.inc");
 	require_once("filter.inc");
 	require_once("shaper.inc");
 	require_once("captiveportal.inc");
 
 	set_networking_interfaces_ports();
-
 	reload_interfaces_sync();
 ?>
