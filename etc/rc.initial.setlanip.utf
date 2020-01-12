@@ -63,7 +63,7 @@ function prompt_for_enable_dhcp_server() {
 		do {
 			$good = false;
 			$upperifname = strtoupper($interface);
-			echo "\n    Do you want to enable the DHCP server on {$upperifname}? [y|n]\n    >";
+			echo "\n    Do you want to enable the DHCP server on {$upperifname}? [y|n]\n    > ";
 			$yn = strtolower(chop(fgets($fp)));
 			if ($yn[0] == "y" or $yn[0] == "n")
 			$good = true;
@@ -220,7 +220,7 @@ if(!$config['interfaces']['lan']) {
 }
 
 $upperifname = strtoupper($interface);
-echo "\n    Changes are saving for {$upperifname}...";
+echo "\n    Saving changes for {$upperifname}...";
 write_config("{$interface} IP configuration from console menu.");
 interface_reconfigure(strtolower($upperifname));
 filter_configure_sync();
