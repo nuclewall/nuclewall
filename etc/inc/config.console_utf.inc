@@ -174,7 +174,7 @@ EOD;
 
 		echo <<<EOD
 
-Proceed? [y|n]?\n> 
+Proceed? [y|n]\n> 
 EOD;
 			$key = chop(fgets($fp));
 	}
@@ -194,7 +194,7 @@ echo <<<EODD
 You have chosen to remove the LAN interface.
 
 Would you like to remove the LAN IP address and
-unload the interface now? [y|n]?>
+unload the interface now? [y|n]>
 EODD;
 
 				if (strcasecmp(chop(fgets($fp)), "y") == 0) {
