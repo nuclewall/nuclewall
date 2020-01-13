@@ -66,9 +66,9 @@ echo "      1) Ýliþkilendir		  3) Yeniden baþlat"
 echo "      2) IP adreslerini belirle	  4) WAN arayüzünden eriþime izin ver"
 echo ""
 echo "    NUCLEWALL			DÝÐER"
-echo "      5) Yeniden baþlat		  0) SSH oturumunu kapat"
-echo "      6) Kapat			  ${sshd_option}"
-echo "      7) Ayarlarý sýfýrla         9) Komut satýrý"
+echo "      5) Yeniden baþlat		  ${sshd_option}"
+echo "      6) Kapat			  9) Komut satýrý"
+echo "      7) Ayarlarý sýfýrla"
 echo ""
 
 if [ "${option99}" != "" ]; then
