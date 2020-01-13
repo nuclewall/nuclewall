@@ -258,7 +258,7 @@ function local_user_set(& $user)
 
 	if (userHasPrivilege($user, "user-shell-access") || userHasPrivilege($user, "page-all"))
 	{
-	    $user_shell = "/etc/rc.initial.utf";
+		$user_shell = "/bin/tcsh";
 	}
 	else
 	{
