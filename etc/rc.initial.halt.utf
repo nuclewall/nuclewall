@@ -41,7 +41,7 @@ $fp = fopen('php://stdin', 'r');
 echo <<<EOD
     NUCLEWALL şimdi kapatılacak.
 
-    Onaylıyor musunuz? [e|h]\n    >
+    Onaylıyor musunuz? [e|h]\n    > 
 EOD;
 
 	$yn = chop(fgets($fp));

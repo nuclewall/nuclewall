@@ -195,7 +195,7 @@ function interfaces_loopback_configure() {
 	pfSense_interface_setaddress("lo0", "127.0.0.1");
 	interfaces_bring_up("lo0");
 	if($g['booting'])
-		echo "done.\n";
+		echo "Tamam.\n";
 	return 0;
 }
 
@@ -454,7 +454,7 @@ function interfaces_lagg_configure()
 			}
 		}
 		if($g['booting'])
-			echo "done.\n";
+			echo "Tamam.\n";
 }
 
 function interface_lagg_configure(&$lagg) {

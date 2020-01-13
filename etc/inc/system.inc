@@ -969,7 +969,7 @@ function sync_system_time()
 	global $config, $g;
 
 	if ($g['booting'])
-		echo "Syncing system time before startup...";
+		echo "Zaman senkronize ediliyor...";
 
 	foreach (explode(' ', $config['system']['timeservers']) as $ts)
 	{
@@ -977,7 +977,7 @@ function sync_system_time()
 	}
 
 	if ($g['booting'])
-		echo "done.\n";
+		echo "Tamam.\n";
 
 }
 

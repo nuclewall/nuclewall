@@ -174,7 +174,7 @@ EOD;
 
 		echo <<<EOD
 
-Onaylıyor musunuz? [e|h]\n>
+Onaylıyor musunuz? [e|h]\n> 
 EOD;
 			$key = chop(fgets($fp));
 	}
@@ -194,7 +194,7 @@ echo <<<EODD
 LAN arayüzünü silmeyi seçtiniz.
 
 LAN arayüzünü silmek ve IP adresini kaldırmak
-istiyor musunuz? [e|h]\n>
+istiyor musunuz? [e|h]\n> 
 EODD;
 
 				if (strcasecmp(chop(fgets($fp)), "e") == 0) {

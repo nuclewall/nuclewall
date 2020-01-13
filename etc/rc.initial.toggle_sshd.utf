@@ -35,7 +35,7 @@ require_once("functions.inc");
 $fp = fopen('php://stdin', 'r');
 
 if (isset($config['system']['enablesshd'])) {
-	echo "    SSHD servisi şu anda çalışıyor. Kapatmak istiyor musunuz? [e|h]\n    > ";
+	echo "    SSH servisi şu anda çalışıyor. Kapatmak istiyor musunuz? [e|h]\n    > ";
 	$yn = chop(fgets($fp));
 
 	if ($yn[0] == "e" || $yn[0] == "E")
@@ -55,7 +55,7 @@ if (isset($config['system']['enablesshd'])) {
 
 else
 {
-	echo "    SSHD servisi şu anda kapalı. Başlatmak istiyor musunuz? [e|h]\n    > ";
+	echo "    SSH servisi şu anda kapalı. Başlatmak istiyor musunuz? [e|h]\n    > ";
 	$yn = chop(fgets($fp));
 
 	if ($yn[0] == "e" || $yn[0] == "E") {

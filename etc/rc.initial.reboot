@@ -41,7 +41,7 @@
 	echo <<<EOD
     NUCLEWALL þimdi yeniden baþlatýlacak.
 
-    Onaylýyor musunuz? [e|h]\n    >
+    Onaylýyor musunuz? [e|h]\n    > 
 EOD;
 
 	$yn = chop(fgets($fp));

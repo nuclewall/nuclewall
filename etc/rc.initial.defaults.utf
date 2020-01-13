@@ -40,7 +40,7 @@
     Onaylarsanız, NUCLEWALL fabrika ayarlarına döndürülüp yeniden başlatılacak.
     NOT: HOTSPOT verileri ve olay günlükleri silinmeyecek.
 
-    Onaylıyor musunuz? [e|h]\n    >
+    Onaylıyor musunuz? [e|h]\n    > 
 EOD;
 
 	$yn = chop(fgets($fp));
