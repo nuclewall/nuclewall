@@ -47,9 +47,9 @@ fi
 # Check to see if SSH is listening.
 SSHD=`/usr/bin/sockstat -4l | grep "*.$SSHPORT" | wc -l`
 if [ "$SSHD" -gt 0 ]; then
-	sshd_option="8) SSHD(Port: ${SSHPORT}) servisini kapat";
+	sshd_option="8) SSH servisini kapat (Port: ${SSHPORT})";
 else
-	sshd_option="8) SSHD(Port: ${SSHPORT}) servisini aç";
+	sshd_option="8) SSH servisini aç (Port: ${SSHPORT})";
 fi
 
 # display a cheap menu
@@ -61,9 +61,9 @@ echo "      1) İlişkilendir		  3) Yeniden başlat"
 echo "      2) IP adreslerini belirle"
 echo ""
 echo "    NUCLEWALL			DİĞER"
-echo "      5) Yeniden başlat		  0) SSH oturumu kapat"
+echo "      5) Yeniden başlat		  0) SSH oturumunu kapat"
 echo "      6) Kapat			  ${sshd_option}"
-echo "      7) Ayarları sıfırla         9) Kabuk"
+echo "      7) Ayarları sıfırla         9) Komut satırı"
 echo ""
 
 echo

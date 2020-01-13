@@ -5,7 +5,7 @@
 	part of pfSense by Scott Ullrich
 	originally based on m0n0wall (http://m0n0.ch/wall)
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2004-2009 Scott Ullrich <sullrich@pfsense.org>.
@@ -135,6 +135,7 @@ function set_password()
 					system("rm /etc/nuclewall/password_init");
 					echo "Yeni yönetici parolasý belirlendi.\n\n";
 					echo "'admin' kullanýcý adý ve belirlediðiniz parola ile\nweb arayüzünde oturum açabilirsiniz.\n\n";
+					echo "'root' kullanýcý adý ve belirlediðiniz parola ile\nSSH ile oturum açabilirsiniz.\n\n";
 					echo "Devam etmek için <ENTER> a basýn. ";
 					fgets($fp);
 					exit;

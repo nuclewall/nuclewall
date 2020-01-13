@@ -47,9 +47,9 @@ fi
 # Check to see if SSH is listening.
 SSHD=`/usr/bin/sockstat -4l | grep "*.$SSHPORT" | wc -l`
 if [ "$SSHD" -gt 0 ]; then
-	sshd_option="8) SSHD(Port: ${SSHPORT}) servisini kapat";
+	sshd_option="8) SSH servisini kapat (Port: ${SSHPORT})";
 else
-	sshd_option="8) SSHD(Port: ${SSHPORT}) servisini aç";
+	sshd_option="8) SSH servisini aç (Port: ${SSHPORT})";
 fi
 
 
@@ -66,9 +66,9 @@ echo "      1) Ýliþkilendir		  3) Yeniden baþlat"
 echo "      2) IP adreslerini belirle	  4) WAN arayüzünden eriþime izin ver"
 echo ""
 echo "    NUCLEWALL			DÝÐER"
-echo "      5) Yeniden baþlat		  ${sshd_option}"
-echo "      6) Kapat                    9) Kabuk"
-echo "      7) Ayarlarý sýfýrla"
+echo "      5) Yeniden baþlat		  0) SSH oturumunu kapat"
+echo "      6) Kapat			  ${sshd_option}"
+echo "      7) Ayarlarý sýfýrla         9) Komut satýrý"
 echo ""
 
 if [ "${option99}" != "" ]; then
