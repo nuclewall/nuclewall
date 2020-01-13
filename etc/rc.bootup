@@ -135,7 +135,7 @@ function set_password()
 					system("rm /etc/nuclewall/password_init");
 					echo "Yeni yönetici parolasý belirlendi.\n\n";
 					echo "'admin' kullanýcý adý ve belirlediðiniz parola ile\nweb arayüzünde oturum açabilirsiniz.\n\n";
-					echo "'root' kullanýcý adý ve belirlediðiniz parola ile\nSSH ile oturum açabilirsiniz.\n\n";
+					echo "'root' kullanýcý adý ve belirlediðiniz parola ile\nSSH oturumu açabilirsiniz.\n\n";
 					echo "Devam etmek için <ENTER> a basýn. ";
 					fgets($fp);
 					exit;
