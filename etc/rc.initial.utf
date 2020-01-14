@@ -85,7 +85,7 @@ case ${opmode} in
 		/usr/bin/killall -9 php; /usr/bin/killall -9 lighttpd; /etc/rc.restart_webgui.utf
 		;;
 4)
-		/etc/rc.allowwan
+		/etc/rc.allowwan.utf
 		;;
 5)
         /etc/rc.initial.reboot.utf
