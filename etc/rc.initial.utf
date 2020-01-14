@@ -58,7 +58,7 @@ echo ""
 echo ""
 echo "    ETHERNET KARTLARI		WEB ARAYÜZÜ"
 echo "      1) İlişkilendir		  3) Yeniden başlat"
-echo "      2) IP adreslerini belirle"
+echo "      2) IP adreslerini belirle	  4) WAN arayüzünden erişime izin ver"
 echo ""
 echo "    NUCLEWALL			DİĞER"
 echo "      5) Yeniden başlat		  0) SSH oturumunu kapat"
@@ -83,6 +83,9 @@ case ${opmode} in
         ;;
 3)
 		/usr/bin/killall -9 php; /usr/bin/killall -9 lighttpd; /etc/rc.restart_webgui.utf
+		;;
+4)
+		/etc/rc.allowwan
 		;;
 5)
         /etc/rc.initial.reboot.utf
