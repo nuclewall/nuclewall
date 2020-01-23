@@ -1,3 +1,4 @@
+[![Download nuclewall](https://img.shields.io/sourceforge/dt/nuclewall.svg)](https://sourceforge.net/projects/nuclewall/files/latest/download)
 # About
 
 - An experimental FreeBSD distribution developed for learning.
