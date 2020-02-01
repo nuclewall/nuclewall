@@ -12,13 +12,15 @@
 
 # Some technical changes
 
-- Most of functions and algorithms are reviewed and made more robust and efficient.
-- IP-MAC access logging compatible with the law of Turkey internet (5651) is implemented.
-- An OpenSSL based Timestamp Authority is developed to sign IP-MAC Address logs, compatible with the law of Turkey internet. (5651)
-- A samba server interface is developed that enables sending access logs to Windows machines over SMB protocol.
-- HOTSPOT user management is restructured with FreeRADIUS and MySQL to implement Authentication, Authorization and Accounting protocols seamlessly.
-- MySQL, PostgreSQL and SQL Server clients are supported. HOTSPOT users can be an external data source, generally a hotel software.
-- HOTSPOT user welcome page is redesigned, mobile page and i8n are supported.
-- Squid and SquidGuard that enables data saving and content filtering features are supported.
-- Web gui is redesigned with jQuery and Bootstrap.
-- Command line interface is redesigned.
+- Reviewed the most of functions and algorithms, made more robust and efficient.
+- Implemented IP-MAC access logging compatible with the law of Turkey internet (5651).
+- Developed an OpenSSL based Timestamp Authority to sign IP-MAC Address logs, compatible with the law of Turkey internet. (5651)
+- Developed a samba server interface that enables sending access logs to Windows machines over SMB protocol.
+- Restructured HOTSPOT user management with FreeRADIUS and MySQL to implement Authentication, Authorization and Accounting protocols seamlessly.
+- Added MySQL, PostgreSQL and SQL Server clients, and developed web interface for connection management.
+  HOTSPOT users can be an external data source, generally a hotel software.
+- Redesigned the HOTSPOT user welcome page, added support for mobile and i18n.
+- Added Squid and SquidGuard packages that enable data saving and content filtering features.
+- Redesigned the Web gui with jQuery and Bootstrap.
+- Redesigned the command line interface.
+- Removed embedded(NanoBSD) and VPN features.
