@@ -116,7 +116,7 @@ DialPeerSetAPN:
 	set $modemCmd "+CGDCONT=$APNum,\"IP\",\"$APN\""
 	call ModemCmd2
 	return
-	
+
 # Null-modem connection
 DialNullModem:
 	log "Connected via null modem connection."
@@ -1393,7 +1393,7 @@ SetBaudrate2:
 	goto ModemCmd2
 
 ##
-## ModemCheckValue 
+## ModemCheckValue
 ##
 ## Check the value in an S-register (or equivalent). If it is
 ## not what we want, then change it and set $valueChanged to "yes",
