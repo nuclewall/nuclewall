@@ -33,21 +33,21 @@ function squidguard_validate_acl($post, $input_errors)
 		check_name_format($name, &$input_errors);
 
 		if (!sg_check_unique_name(F_ACLS, $name))
-			$input_errors[] = "'$name' isimli bir kural zaten var.";
+			$input_errors[] = "A rule named '$name' is already exist.";
 
 		$sgx = array();
 		$sgx[F_NAME] = $post[F_NAME];
 		$sgx['source'] = trim($post['source']);
 
 		if (strlen($sgx['source']) > 150)
-				$input_errors[] = "Çok sayıda kaynak ip adresi, ağ adresi veya alan adı girdiniz.";
+				$input_errors[] = "Too many source addresses.";
 
 		sg_check_src($sgx, &$input_errors);
 
 		if(!empty($description))
 		{
 			if (strlen($description) > 70)
-				$input_errors[] = "'$description' boyutu 70 karakteri geçmemelidir.";
+				$input_errors[] = "'$description' cannot be longer than 70 characters.";
 		}
 
 	}
@@ -253,7 +253,7 @@ function squidguard_before_form_acl($pkg, $is_acl=true) {
 	$dest_items[] = array('name'=>FLT_DEFAULT_ALL,
 						  'upt_value'=>$acls_up[FLT_DEFAULT_ALL],
 						  'ovt_value'=>$acls_over[FLT_DEFAULT_ALL],
-						  'description'=>'Varsayılan erişim');
+						  'description'=>'Default access');
 
 	$i=0;
 	foreach($pkg['fields']['field'] as $field) {
@@ -315,13 +315,13 @@ function make_grid_controls($type, $items) {
 
 			if ($name_l !== 'all') {
 				$tbl .= "\t\t<option value=none  name=\"----\"  {$opts_l['F']}></option>\n";
-				$tbl .= "\t\t<option value=deny  name=\"deny\"  {$opts_l['D']}>Engelle</option>\n";
-				$tbl .= "\t\t<option value=allow name=\"allow\" {$opts_l['A']}>İzin ver</option>\n";
+				$tbl .= "\t\t<option value=deny  name=\"deny\"  {$opts_l['D']}>Deny</option>\n";
+				$tbl .= "\t\t<option value=allow name=\"allow\" {$opts_l['A']}>Allow</option>\n";
 				$tbl .= "\t</select>\n";
 			}
 			else {
-				$tbl .= "\t<option value=allow name=\"allow\" {$opts_l['A']}>İzin ver</option>\n";
-				$tbl .= "\t<option value=deny  name=\"deny\"  {$opts_l['D']}>Engelle </option>\n";
+				$tbl .= "\t<option value=allow name=\"allow\" {$opts_l['A']}>Allow</option>\n";
+				$tbl .= "\t<option value=deny  name=\"deny\"  {$opts_l['D']}>Deny </option>\n";
 				$tbl .= "</select>\n";
 			}
 		}
@@ -336,13 +336,13 @@ function make_grid_controls($type, $items) {
 
 			if ($name_r !== 'all') {
 				$tbl .= "\t\t<option value=none  name=\"----\"  {$opts_r['F']}></option>\n";
-				$tbl .= "\t\t<option value=deny  name=\"deny\"  {$opts_r['D']}>Engelle</option>\n";
-				$tbl .= "\t\t<option value=allow name=\"allow\" {$opts_r['A']}>İzin ver</option>\n";
+				$tbl .= "\t\t<option value=deny  name=\"deny\"  {$opts_r['D']}>Deny </option>\n";
+				$tbl .= "\t\t<option value=allow name=\"allow\" {$opts_r['A']}>Allow</option>\n";
 				$tbl .= "\t</select>\n";
 			}
 			else {
-				$tbl .= "\t<option value=allow name=\"allow\" {$opts_r['A']}>İzin ver</option>\n";
-				$tbl .= "\t<option value=deny  name=\"deny\"  {$opts_r['D']}>Engelle </option>\n";
+				$tbl .= "\t<option value=allow name=\"allow\" {$opts_r['A']}>Allow</option>\n";
+				$tbl .= "\t<option value=deny  name=\"deny\"  {$opts_r['D']}>Deny </option>\n";
 				$tbl .= "</select>\n";
 			}
 		}
@@ -351,8 +351,8 @@ function make_grid_controls($type, $items) {
 	}
 
 	if (!empty($tbl)) {
-		$res .= "\n<table class=\"grids\">\n\t<tbody>\n\t\t<tr>\n\t\t\t<th class=\"head\">Kategori</th>\n\t\t\t<th class=\"head\">Erişim</th>
-		\n\t\t\t<th class=\"head\">Kategori</th>\n\t\t\t<th class=\"head\">Erişim</th>$tbl\n\t</tbody>\n</table>";
+		$res .= "\n<table class=\"grids\">\n\t<tbody>\n\t\t<tr>\n\t\t\t<th class=\"head\">Category</th>\n\t\t\t<th class=\"head\">Access</th>
+		\n\t\t\t<th class=\"head\">Category</th>\n\t\t\t<th class=\"head\">Access</th>$tbl\n\t</tbody>\n</table>";
 	}
 
 	return $res;
@@ -566,7 +566,7 @@ function capability_update_source() {
 			}
 		}
 
-		if ($conf_changed) write_config('Convert old ver. squidguard config.');
+		if ($conf_changed) write_config('Convert old version. Squidguard config.');
 	}
 }
 

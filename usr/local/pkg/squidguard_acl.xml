@@ -3,75 +3,84 @@
 <?xml-stylesheet type="text/xsl" href="../xsl/package.xsl"?>
 <packagegui>
 	<name>squidguardacl</name>
-	<title>PROXY WEB FİLTRESİ: ÖZEL ERİŞİM KURALLARI</title>
+	<title>PROXY WEB FILTER: CUSTOM ACCESS RULES</title>
 	<include_file>/usr/local/pkg/squidguard.inc</include_file>
 	<tabs>
 		<tab>
-			<text>Genel</text>
+			<text>General</text>
 			<url>/pkg_edit.php?xml=squid.xml&amp;id=0</url>
 		</tab>
 		<tab>
-			<text>Önbellek</text>
+			<text>Cache</text>
 			<url>/pkg_edit.php?xml=squid_cache.xml&amp;id=0</url>
 		</tab>
 		<tab>
-			<text>Genel Filtre Kuralları</text>
+			<text>General Filter Rules</text>
 			<url>/pkg_edit.php?xml=squidguard_default.xml&amp;id=0</url>
 		</tab>
 		<tab>
-			<text>Özel Filtre Kuralları</text>
+			<text>Custom Filter Rules</text>
 			<url>/pkg.php?xml=squidguard_acl.xml</url>
 			<active/>
 		</tab>
 	</tabs>
 	<adddeleteeditpagefields>
                 <columnitem>
-                        <fielddescr>Aktiflik</fielddescr>
+                        <fielddescr>Disabled</fielddescr>
                         <fieldname>disabled</fieldname>
                 </columnitem>
                 <columnitem>
-                        <fielddescr>İsim</fielddescr>
+                        <fielddescr>Name</fielddescr>
                         <fieldname>name</fieldname>
                 </columnitem>
                 <columnitem>
-                        <fielddescr>Açıklama</fielddescr>
+                        <fielddescr>Description</fielddescr>
                         <fieldname>description</fieldname>
                 </columnitem>
 	</adddeleteeditpagefields>
 	<fields>
 		<field>
-			<fielddescr>Pasifleştir</fielddescr>
+			<fielddescr>Disabled</fielddescr>
 			<fieldname>disabled</fieldname>
-			<description>Kuralı pasif hale getirmek için işaretleyin.</description>
+			<description>Check this to disable this ACL rule.</description>
 			<type>checkbox</type>
 		</field>
 		<field>
-			<fielddescr>İsim</fielddescr>
+			<fielddescr>Name</fielddescr>
 			<fieldname>name</fieldname>
-			<description>Erişim kuralınız için bir isim belirtin. Türkçe karakter ve boşluk karakteri kullanmayın.</description>
+			<description>Enter a unique name of this rule here.<br>
+			 The name must consist between 2 and 15 symbols [a-Z_0-9]. The first one must be a letter.</description>
 			<type>input</type>
 			<class>input-medium</class>
 			<required/>
 		</field>
 		<field>
-			<fielddescr>Kaynak Adresler</fielddescr>
+			<fielddescr>Client (source)</fielddescr>
 			<fieldname>source</fieldname>
-			<description>Kuralın uygulanacağı IP adresi, IP adres aralığı veya ağ adreslerini aralarında birer boşluk bırakarak girebilirsiniz. Örnek: 10.0.0.5 192.168.1.5-192.168.1.20 172.16.0.0/24 mypc.alanadi.com
+			<description>
+			  Enter client's IP address or domain or "username" here. To separate them use space.<br>
+			  <b>Example:</b><br>
+			  <b>IP:</b> 192.168.0.1 - <b>Subnet:</b> 192.168.0.0/24 or 192.168.1.0/255.255.255.0 - <b>IP-Range:</b> 192.168.1.1-192.168.1.10<br>
+			  <b>Domain:</b> foo.bar matches foo.bar or *.foo.bar<br>
+			  <b>Username:</b> 'user1' <br>
+              <b>Ldap search (Ldap filter must be enabled in General Settings):</b> <br>
+              ldapusersearch ldap://192.168.0.100/DC=domain,DC=com?sAMAccountName?sub?(&(sAMAccountName=%s)(memberOf=CN=it%2cCN=Users%2cDC=domain%2cDC=com))<br>
+              <i>Attention: these line don't have break line, all on one line</i>
 			</description>
 			<type>input</type>
 			<class>input-xxlarge</class>
 		</field>
 		<field>
-			<fielddescr>Açıklama</fielddescr>
+			<fielddescr>Description</fielddescr>
 			<fieldname>description</fieldname>
-			<description>Kuralınız için bir açıklama girmeniz faydalı olabilir.</description>
+			<description>You may enter any description here for your reference</description>
 			<type>input</type>
 			<class>input-xxlarge</class>
 		</field>
 		<field>
-			<fielddescr>Uygulanmış Kurallar</fielddescr>
+			<fielddescr>Target Rules</fielddescr>
 			<fieldname>dest</fieldname>
-			<description>Belirttiğiniz adreslere uygulanacak erişim kurallarını listelerden ayarlayabilirsiniz.</description>
+			<description></description>
 			<type>input</type>
 			<class>input-xxlarge</class>
 		</field>

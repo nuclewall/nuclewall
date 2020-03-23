@@ -28,7 +28,7 @@ if (is_ps_running('squid'))
 		if (($swapstate_pct > 75) || (($diskusedpct > 90) && ($swapstate_size > 1024*1024*1024)))
 		{
 			mwexec_bg("/bin/rm $swapstate; /usr/local/sbin/squid -k rotate");
-			log_error("Squid önbellek dosyasý limiti aþtý. Þimdi sýfýrlanacak.");
+			log_error("Proxy cache file limit exceeded. Resetting now.");
 		}
 	}
 }

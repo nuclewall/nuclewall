@@ -138,64 +138,64 @@ function squid_validate_general($post, $input_errors)
 	$port = $post['proxy_port'] ? $post['proxy_port'] : $port;
 
 	if (substr($post['log_dir'], -1, 1) == '/')
-		$input_errors[] = "Dizin sonuna '/' karakteri eklemeyin.";
+		$input_errors[] = "You may not end log location with an / mark";
 
 	if ($post['log_dir']{0} != '/')
-		$input_errors[] = "Dizin '/' karakteri ile başlamalıdır.";
+		$input_errors[] = "You must start log location with a / mark.";
 
 	if (strlen($post['log_dir']) <= 3)
-		$input_errors[] = 'Girdiğiniz dizin geçerli değil.';
+		$input_errors[] = "That is not a valid log location dir.";
 
 	if (!$post['squid_enabled'] and $post['squidguard_enabled'])
-		$input_errors[] = 'Proxy sunucuyu aktif hale getirmeden, filtrelemeyi kullanamazsınız.';
+		$input_errors[] = "You have to enable Proxy Server to use Proxy Web Filter.";
 
 	$log_rotate = trim($post['log_rotate']);
 
 	if (!empty($log_rotate) && (!is_numeric($log_rotate) or ($log_rotate < 1)))
-		$input_errors[] = "'Logların barınma süresi' alanına girdiğiniz değer geçerli değil.";
+		$input_errors[] = "You must enter a valid number of days in the 'Log rotate' field";
 
 	foreach (array('defined_ip_proxy_off') as $hosts) {
 		foreach (explode(";", $post[$hosts]) as $host) {
 			$host = trim($host);
 			if (!empty($host) && !is_ipaddr($host) && !is_alias($host) && !is_hostname($host) && !is_subnet($host))
-				$input_errors[] = "'$host' geçerli bir ip adresi, ağ adresi, bilgisayar adı veya takma ad (alias) değil.";
+				$input_errors[] = "The entry '$host' is not a valid IP address, hostname, or alias";
 		}
 	}
 	foreach (array('defined_ip_proxy_off_dest') as $hosts) {
 		foreach (explode(";", $post[$hosts]) as $host) {
 			$host = trim($host);
 			if (!empty($host) && !is_ipaddr($host) && !is_alias($host) && !is_hostname($host) && !is_subnet($host))
-				$input_errors[] = "'$host' geçerli bir ip adresi, ağ adresi, bilgisayar adı veya takma ad (alias) değil.";
+				$input_errors[] = "The entry '$host' is not a valid IP address, hostname, or alias";
 		}
 	}
 }
 
 function squid_validate_cache($post, $input_errors)
 {
-	$num_fields = array('harddisk_cache_size' => "Hard disk önbellek boyutu",
-				'memory_cache_size' => "RAM önbellek boyutu",
-				'maximum_object_size' => "En büyük nesne boyutu",
-				'maximum_objsize_in_mem' => "RAM'deki en büyük nesne boyutu"
+	$num_fields = array('harddisk_cache_size' => "Harddisk Cache Size",
+				'memory_cache_size' => "Memory Cache Size",
+				'maximum_object_size' => "Maximum Object Size",
+				'maximum_objsize_in_mem' => "Maximum Object Size in RAM"
 	);
 
 	foreach ($num_fields as $field => $name)
 	{
 		$value = trim($post[$field]);
 		if (!is_numeric($value) || ($value < 0))
-			$input_errors[] = "'$name' alanı için geçerli bir değer girmelisiniz.";
+			$input_errors[] = "You must enter a valid value for '$field'";
 	}
 
 	$value = trim($post['minimum_object_size']);
 	if (!is_numeric($value) || ($value < 0))
-		$input_errors[] = "'En küçük nesne boyutu' için geçerli bir değer girmelisiniz.";
+		$input_errors[] = "You must enter a valid value for 'Minimum Object Size'";
 
 	if (substr($post['harddisk_cache_location'], -1, 1) == '/')
-		$input_errors[] = "Dizin sonuna '/' karakteri eklemeyin.";
+		$input_errors[] = "You may not end log location with an / mark";
 
 	if ($post['harddisk_cache_location']{0} != '/')
-		$input_errors[] = "Dizin '/' karakteri ile başlamalıdır.";
+		$input_errors[] = "You must start log location with a / mark.";
 	if (strlen($post['harddisk_cache_location']) <= 3)
-		$input_errors[] = "Girdiğiniz dizin geçerli değil.";
+		$input_errors[] = "Harddisk Cache Location is not valid.";
 
 	squid_dash_z();
 }

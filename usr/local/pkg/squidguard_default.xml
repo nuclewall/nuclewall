@@ -4,30 +4,30 @@
 <packagegui>
 	<name>squidguarddefault</name>
 	<version>none</version>
-	<title>PROXY WEB FİLTRESİ: GENEL ERİŞİM KURALLARI</title>
+	<title>PROXY WEB FILTER: GENERAL ACCESS RULES</title>
 	<include_file>/usr/local/pkg/squidguard.inc</include_file>
 	<tabs>
 		<tab>
-			<text>Genel</text>
+			<text>General</text>
 			<url>/pkg_edit.php?xml=squid.xml&amp;id=0</url>
 		</tab>
 		<tab>
-			<text>Önbellek</text>
+			<text>Cache</text>
 			<url>/pkg_edit.php?xml=squid_cache.xml&amp;id=0</url>
 		</tab>
 		<tab>
-			<text>Genel Filtre Kuralları</text>
+			<text>General Filter Rules</text>
 			<url>/pkg_edit.php?xml=squidguard_default.xml&amp;id=0</url>
 			<active/>
 		</tab>
 		<tab>
-			<text>Özel Filtre Kuralları</text>
+			<text>Custom Filter Rules</text>
 			<url>/pkg.php?xml=squidguard_acl.xml</url>
 		</tab>
 	</tabs>
 	<fields>
 		<field>
-			<fielddescr>Uygulanmış Kurallar</fielddescr>
+			<fielddescr>Active Rules</fielddescr>
 			<fieldname>dest</fieldname>
 			<description></description>
 			<type>input</type>
