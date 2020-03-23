@@ -55,7 +55,7 @@ $mac_addr = str_replace(':', '-', $clientmac);
 if (!$clientmac)
 {
     captiveportal_logportalauth('unauthenticated', 'noclientmac', $clientip, 'HATA');
-    log_error('İstemcinin MAC adresi tespit edilemedi.');
+    log_error("HOTSPOT could not determine client's IP address.");
     exit;
 }
 
@@ -73,14 +73,14 @@ if($connection)
 	if ($blocked)
 	{
 		portal_reply_page($redirurl, 'error', $hotspot_errors['block'][$lang]);
-		captiveportal_logportalauth('', $clientmac, $clientip, 'ENGELLENMIS MAC ADRESI');
+		captiveportal_logportalauth('', $clientmac, $clientip, 'BLOCKED MAC ADDRESS');
 		exit;
 	}
 }
 
 else
 {
-	log_error('HOTSPOT servisi duzgun calismiyor. Harici veri kaynaklarını kontrol edin.');
+	log_error("HOTSPOT doesn't work correctly. Check external data sources.");
 	exit;
 }
 
@@ -118,8 +118,8 @@ else if ($_POST['accept'])
 
 			if ($auth_list['auth_val'] == 1)
 			{
-				captiveportal_logportalauth($_POST['auth_user'], $clientmac, $clientip, 'HATA', $auth_list['error']);
-				log_error('HOTSPOT servisi duzgun calismiyor. FreeRADIUS sunucusunu kontrol edin.');
+				captiveportal_logportalauth($_POST['auth_user'], $clientmac, $clientip, 'ERROR', $auth_list['error']);
+				log_error("HOTSPOT doesn't work correctly. Check FreeRADIUS server.");
 				exit;
 			}
 
@@ -134,7 +134,7 @@ else if ($_POST['accept'])
 					$error_message = $hotspot_errors['login'][$lang];
 				}
 
-				captiveportal_logportalauth($_POST['auth_user'], $clientmac, $clientip, 'BASARISIZ', $auth_list['reply_message']);
+				captiveportal_logportalauth($_POST['auth_user'], $clientmac, $clientip, 'FAILED', $auth_list['reply_message']);
 				portal_reply_page($redirurl, 'error', $error_message);
 			}
 		}
