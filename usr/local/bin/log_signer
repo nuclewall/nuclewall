@@ -45,9 +45,9 @@ if($files_to_sign)
 			rename("$file.imza", $sign_file);
 
 			$log = fopen($signed_log_file, 'w');
-			$info = "$b_file dosyası $sign_date tarihinde imzalandı.\n\n";
-			$info .= "md5 özeti: $md5hash\n";
-			$info .= "sha1 özeti: $sha1hash\n";
+			$info = "$b_file file signed at $sign_date.\n\n";
+			$info .= "md5 hash: $md5hash\n";
+			$info .= "sha1 hash: $sha1hash\n";
 
 			fwrite($log, $info);
 			fclose($log);
@@ -56,17 +56,17 @@ if($files_to_sign)
 			exec("chflags schg $sign_file");
 			exec("chflags schg $signed_log_file");
 
-			exec("/usr/local/bin/custom_logger 5651 '$file dosyası imzalandı.'");
+			exec("/usr/local/bin/custom_logger 5651 '$file file was signed.'");
 		}
 
 		else if($signed == 'FAILED')
-			exec("/usr/local/bin/custom_logger 5651 'HATA: $file dosyası imzalandı.'");
+			exec("/usr/local/bin/custom_logger 5651 'ERROR: Unable to sign $file file.'");
 	}
 }
 
 else
 {
-    exec("/usr/local/bin/custom_logger 5651 'UYARI: Şu anda imzalanacak dosya yok.'");
+    exec("/usr/local/bin/custom_logger 5651 'WARNING: No file to sign.'");
 }
 
 ?>
