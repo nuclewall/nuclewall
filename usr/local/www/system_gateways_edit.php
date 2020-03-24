@@ -2,7 +2,7 @@
 /*
 	system_gateways_edit.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2015 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2010 Seth Mos <seth.mos@dds.nl>.
@@ -77,23 +77,23 @@ if ($_POST) {
 	unset($input_errors);
 
 	$reqdfields = explode(" ", "name interface");
-	$reqdfieldsn = array("İsim", "Arayüz");
+	$reqdfieldsn = array("Name", "Interface");
 
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 
 	if (! isset($_POST['name']))
 	{
-		$input_errors[] = "Geçerli bir Ağ Geçidi ismi girmediniz.";
+		$input_errors[] = "A valid gateway name must be specified.";
 	}
 
 	if (! is_validaliasname($_POST['name']))
 	{
-		$input_errors[] = "Ağ Geçidi ismi geçersiz karakterler içermemelidir.";
+		$input_errors[] = "The gateway name must not contain invalid characters.";
 	}
 
 	if (($_POST['gateway'] && (!is_ipaddr($_POST['gateway'])) && ($_POST['attribute'] != "system")) && ($_POST['gateway'] != "dynamic"))
 	{
-		$input_errors[] = "Geçerli bir Ağ Geçidi IP adresi girmediniz.";
+		$input_errors[] = "A valid gateway IP address must be specified.";
 	}
 
 	if ($_POST['gateway'] && (is_ipaddr($_POST['gateway'])))
@@ -101,7 +101,7 @@ if ($_POST) {
 		if (!empty($config['interfaces'][$_POST['interface']]['ipaddr']))
 		{
 			if (is_ipaddr($config['interfaces'][$_POST['interface']]['ipaddr']) && (empty($_POST['gateway']) || $_POST['gateway'] == "dynamic"))
-				$input_errors[] = "Sabit IP adresi verilmiş ethernet kartlarına dinamik ağ geçidi değerleri verilemez.";
+				$input_errors[] = "Dynamic gateway values cannot be specified for interfaces with a static ip configuration.";
 		}
 
 		$parent_ip = get_interface_ip($_POST['interface']);
@@ -110,14 +110,14 @@ if ($_POST) {
 		{
 			$parent_sn = get_interface_subnet($_POST['interface']);
 			if(!ip_in_subnet($_POST['gateway'], gen_subnet($parent_ip, $parent_sn) . "/" . $parent_sn) && !ip_in_interface_alias_subnet($_POST['interface'], $_POST['gateway'])) {
-				$input_errors[] = sprintf("%s adresi seçtiğiniz ethernet kartındaki bir ağa ait değil.", $_POST['gateway']);
+				$input_errors[] = sprintf("The gateway address %s does not lie within the chosen interface's subnet.", $_POST['gateway']);
 			}
 		}
 	}
 
 	if (($_POST['monitor'] <> "") && !is_ipaddr($_POST['monitor']) && $_POST['monitor'] != "dynamic")
 	{
-		$input_errors[] = "Geçerli bir Takip IP adresi girmediniz.";
+		$input_errors[] = "A valid monitor IP address must be specified.";
 	}
 
 	if (isset($_POST['name']))
@@ -127,14 +127,14 @@ if ($_POST) {
 			if (isset($id) && ($a_gateways[$id]) && ($a_gateways[$id] === $gateway))
 			{
 				if ($gateway['name'] != $_POST['name'])
-					$input_errors[] = "Ağ Geçidi ismi değiştirilemez.";
+					$input_errors[] = "Changing name on a gateway is not allowed.";
 				continue;
 			}
 
 			if($_POST['name'] <> "")
 			{
 				if (($gateway['name'] <> "") && ($_POST['name'] == $gateway['name']) && ($gateway['attribute'] != "system")) {
-					$input_errors[] = sprintf("%s Ağ Geçidi zaten mevcut.", $_POST['name']);
+					$input_errors[] = sprintf("The gateway name %s already exists.", $_POST['name']);
 					break;
 				}
 			}
@@ -142,7 +142,7 @@ if ($_POST) {
 			if(is_ipaddr($_POST['gateway']))
 			{
 				if (($gateway['gateway'] <> "") && ($_POST['gateway'] == $gateway['gateway']) && ($gateway['attribute'] != "system")) {
-					$input_errors[] = sprintf("%s Ağ Geçidi IP adresi zaten mevcut.", $_POST['gateway']);
+					$input_errors[] = sprintf("The gateway IP address %s already exists.", $_POST['gateway']);
 					break;
 				}
 			}
@@ -150,7 +150,7 @@ if ($_POST) {
 			if(is_ipaddr($_POST['monitor']))
 			{
 				if (($gateway['monitor'] <> "") && ($_POST['monitor'] == $gateway['monitor']) && ($gateway['attribute'] != "system")) {
-					$input_errors[] = sprintf("%s Takip IP adresi zaten kullanımda. Farklı bir adres girmelisiniz.", $_POST['monitor']);
+					$input_errors[] = sprintf("The monitor IP address  %s is already in use. You must choose a different monitor IP.", $_POST['monitor']);
 					break;
 				}
 			}
@@ -213,7 +213,7 @@ if ($_POST) {
 }
 
 
-$pgtitle = array('SİSTEM', 'AĞ GEÇİTLERİ', 'AĞ GEÇİDİNİ DÜZENLE');
+$pgtitle = array('SYSTEM', 'GATEWEAYS', 'EDIT GATEWAY');
 
 ?>
 
@@ -240,10 +240,10 @@ function monitor_change() {
 	?>
               <table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td colspan="2" valign="top" class="listtopic">AĞ GEÇİDİNİ DÜZENLE</td>
+					<td colspan="2" valign="top" class="listtopic">EDIT GATEWAY</td>
 				</tr>
                 <tr>
-                  <td valign="top" class="vncell">Ethernet Kartı</td>
+                  <td valign="top" class="vncell">Interface</td>
                   <td class="vtable">
 		 	<select name='interface'>
 
@@ -258,39 +258,39 @@ function monitor_change() {
 
 				?>
                     </select> <br>
-                    Ağ Geçidinin hangi ethernet kartına uygulanacağını seçin.
+                    Choose which interface this gateway applies to.
 					</td>
                 </tr>
                 <tr>
-                  <td valign="top" class="vncell">İsim</td>
+                  <td valign="top" class="vncell">Name</td>
                   <td class="vtable">
                     <input name="name" type="text" id="name" value="<?=htmlspecialchars($pconfig['name']);?>">
-                    <br>Ağ Geçidi için bir isim girin.</td>
+                    <br>Gateway name</td>
                 </tr>
 		<tr>
-                  <td valign="top" class="vncell">Ağ Geçidi</td>
+                  <td valign="top" class="vncell">Gateway</td>
                   <td class="vtable">
                     <input name="gateway" type="text" class="host" id="gateway" value="<?php if ($pconfig['dynamic']) echo "dynamic"; else echo $pconfig['gateway']; ?>"/>
-                    <br>Ağ Geçidinin IP adresini girin.</td>
+                    <br>Gateway IP address</td>
                 </tr>
 		<tr>
-		  <td valign="top" class="vncell">Varsayılan Ağ Geçidi</td>
+		  <td valign="top" class="vncell">Default Gateway</td>
 		  <td class="vtable">
 			<input name="defaultgw" type="checkbox" id="defaultgw" value="yes" <?php if ($pconfig['defaultgw'] == true) echo "checked"; ?> />
-			<b>Varsayılan Ağ Geçidi</b><br>
-			İşaretlenirse, bu Ağ Geçidi varsayılan Ağ Geçidi olacaktır.
+			<b>Default Gateway</b><br>
+			This will select the above gateway as the default gateway.
 		  </td>
 		</tr>
 		<tr>
-		  <td valign="top" class="vncell">Ağ Geçidi İzlemeyi Kapat</td>
+		  <td valign="top" class="vncell">Disable Gateway Monitoring</td>
 		  <td class="vtable">
 			<input name="monitor_disable" type="checkbox" id="monitor_disable" value="yes" <?php if ($pconfig['monitor_disable'] == true) echo "checked"; ?> onClick="monitor_change()" />
-			<b>Ağ Geçidi izlemeyi kapat</b><br>
-			İzleme kapatılırsa, bu Ağ Geçidinin her zaman çalıştığı düşünülecektir.
+			<b>Disable Gateway Monitoring</b><br>
+			This will consider this gateway as always being up.
 		  </td>
 		</tr>
 		<tr>
-		  <td valign="top" class="vncell">Takip IP adresi</td>
+		  <td valign="top" class="vncell">Monitor IP</td>
 		  <td class="vtable">
 			<?php
 				if ($pconfig['gateway'] == $pconfig['monitor'])
@@ -299,21 +299,23 @@ function monitor_change() {
 					$monitor = htmlspecialchars($pconfig['monitor']);
 			?>
 			<input name="monitor" type="text" id="monitor" value="<?php echo $monitor; ?>" /><br />
-			Ağ Geçidi ICMP ECHO isteklerine cevap vermiyorsa bir Takip IP'si girerek takip edebilirsiniz.
+			 Enter an alternative address here to be used to monitor the link. This is used for the
+			 quality RRD graphs as well as the load balancer entries. Use this if the gateway does not respond
+			 to ICMP echo requests. (pings)
 
 		  </td>
 		</tr>
 		<tr>
-			<td valign="top" class="vncell">Açıklama</td>
+			<td valign="top" class="vncell">Description</td>
 			<td class="vtable">
 				<input name="descr" type="text" id="descr" value="<?=htmlspecialchars($pconfig['descr']);?>">
-				<br>İsteğe bağlı bir açıklama girebilirsiniz.
+				<br>You may enter a description here for your reference.
 			</td>
 		</tr>
 		<tr>
 			<td class="vncell"></td>
 			<td class="vtable">
-				<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
+				<input name="Submit" type="submit" class="btn btn-inverse" value="Save">
 				<input type="button" value="İptal" class="btn btn-default"  onclick="history.back()">
 				<?php if (isset($id) && $a_gateways[$id]): ?>
 				<input name="id" type="hidden" value="<?=htmlspecialchars($id);?>">

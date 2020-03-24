@@ -3,7 +3,7 @@
 /*
 	system_gateway_groups.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2015 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2010 Seth Mos <seth.mos@dds.nl>.
@@ -77,7 +77,7 @@ if ($_GET['act'] == "del")
 	}
 }
 
-$pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI');
+$pgtitle = array('SYSTEM', 'GATEWAY GROUPS');
 
 ?>
 
@@ -90,16 +90,16 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI');
 <input type="hidden" name="y1" value="1">
 <?php if ($savemsg) print_info_box($savemsg); ?>
 <?php if (is_subsystem_dirty('staticroutes')): ?><p>
-<?php print_info_box_np("Ağ geçidi grubu ayarları değiştirildi.<br>Değişikliklerin etkili olabilmesi için uygulamalısınız.", true);?>
+<?php print_info_box_np("The gateway configuration has been changed.<br>You must apply the changes in order for them to take effect.", true);?>
 <?php endif; ?>
 <table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<?php
 				$tab_array = array();
-				$tab_array[0] = array("Ağ Geçitleri", false, "system_gateways.php");
-				$tab_array[1] = array("Yönlendirmeler", false, "system_routes.php");
-				$tab_array[2] = array("Gruplar", true, "system_gateway_groups.php");
+				$tab_array[0] = array("Gateways", false, "system_gateways.php");
+				$tab_array[1] = array("Routes", false, "system_routes.php");
+				$tab_array[2] = array("Groups", true, "system_gateway_groups.php");
 				display_top_tabs($tab_array);
 			?>
 		</td>
@@ -111,10 +111,10 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI');
 					<td>
 						<table class="grids">
 							<tr>
-								<td class="head">Grup Adı</td>
-								<td class="head">Ağ Geçidi</td>
-								<td class="head">Öncelik</td>
-								<td class="head">Açıklama</td>
+								<td class="head">Group Name</td>
+								<td class="head">Gateways</td>
+								<td class="head">Priority</td>
+								<td class="head">Description</td>
 								<td class="head"></td>
 
 							</tr>
@@ -146,7 +146,7 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI');
 										<a href="system_gateway_groups_edit.php?dup=<?=$i;?>">
 											<i class="icon-edit"></i>
 										</a>
-										<a href="system_gateway_groups.php?act=del&id=<?=$i;?>" onclick="return confirm('Silmek istediğinize emin misiniz?')">
+										<a href="system_gateway_groups.php?act=del&id=<?=$i;?>" onclick="return confirm('Do you really want to delete this gateway group?')">
 											<i class="icon-trash"></i>
 										</a>
 
@@ -156,7 +156,7 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI');
 								<tr>
 									<td class="cell" colspan="4"></td>
 									<td class="cell tools">
-											<a title="Ekle" href="system_gateway_groups_edit.php"><i class="icon-plus"></i></a>
+											<a title="Add" href="system_gateway_groups_edit.php"><i class="icon-plus"></i></a>
 									</td>
 								</tr>
 						</table>

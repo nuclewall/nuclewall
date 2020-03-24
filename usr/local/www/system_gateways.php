@@ -3,7 +3,7 @@
 /*
 	system_gateways.php
 
-	Copyright (C) 2015 Ogün AÇIK
+	Copyright (C) 2015 Ogun Acik
 
 	Copyright (C) 2010 Seth Mos <seth.mos@dds.nl>.
 	All rights reserved.
@@ -79,7 +79,7 @@ if ($_GET['act'] == "del")
 				foreach ($group['item'] as $item) {
 					$items = explode("|", $item);
 					if ($items[0] == $a_gateways[$_GET['id']]['name']) {
-						$input_errors[] = "Bu ağ geçidi '{$group['name']}' ağ geçidi grubunda kullanıldığından dolayı silinemez.";
+						$input_errors[] = "Gateway cannot be deleted because it is in use on Gateway Group '{$group['name']}'";
 						$remove = false;
 						break;
 					}
@@ -94,7 +94,7 @@ if ($_GET['act'] == "del")
 			{
 				if ($route['gateway'] == $a_gateways[$_GET['id']]['name'])
 				{
-					$input_errors[] = "Bu ağ geçidi '{$route['network']}' sabit yönlendirmelerinde kullanıldığı için silinemez.";
+					$input_errors[] = "Gateway cannot be deleted because it is in use on Static Routes '{$route['network']}'";
 						$remove = false;
 					break;
 				}
@@ -115,7 +115,7 @@ if ($_GET['act'] == "del")
 	}
 }
 
-$pgtitle = array('SİSTEM', 'AĞ GEÇİTLERİ');
+$pgtitle = array('SYSTEM', 'GATEWAYS');
 
 ?>
 
@@ -129,16 +129,16 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİTLERİ');
 <input type="hidden" name="y1" value="1">
 <?php if ($savemsg) print_info_box($savemsg); ?>
 <?php if (is_subsystem_dirty('staticroutes')): ?><p>
-<?php print_info_box_np('Ağ geçidi ayarları değiştirildi.' . '<br>' . 'Değişikliklerin etkili olabilmesi için uygulamalısınız.', true);?><br>
+<?php print_info_box_np('The gateway configuration has been changed.' . '<br>' . 'You must apply the changes in order for them to take effect.', true);?><br>
 <?php endif; ?>
 <table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<?php
 				$tab_array = array();
-				$tab_array[0] = array("Ağ Geçitleri", true, "system_gateways.php");
-				$tab_array[1] = array("Yönlendirmeler", false, "system_routes.php");
-				$tab_array[2] = array("Gruplar", false, "system_gateway_groups.php");
+				$tab_array[0] = array("Gateways", true, "system_gateways.php");
+				$tab_array[1] = array("Routes", false, "system_routes.php");
+				$tab_array[2] = array("Groups", false, "system_gateway_groups.php");
 				display_top_tabs($tab_array);
 			?>
 		</td>
@@ -150,11 +150,11 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİTLERİ');
 					<td>
 						<table class="grids">
 							<tr>
-								<td class="head">Ad</td>
-								<td class="head">Ethernet Kartı</td>
-								<td class="head">Ağ Geçidi</td>
-								<td class="head">Takip IP'si</td>
-								<td class="head">Açıklama</td>
+								<td class="head">Name</td>
+								<td class="head">Interface</td>
+								<td class="head">Gateway</td>
+								<td class="head">Monitor IP</td>
+								<td class="head">Description</td>
 								<td class="head"></td>
 							</tr>
 									  <?php $i = 0; foreach ($a_gateways as $gateway): ?>
@@ -189,10 +189,10 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİTLERİ');
 								</td>
 
 								<td class="cell tools">
-										<a title="Düzenle" href="system_gateways_edit.php?dup=<?=$i;?>"><i class="icon-edit"></i></a>
+										<a title="Edit" href="system_gateways_edit.php?dup=<?=$i;?>"><i class="icon-edit"></i></a>
 										<?php
 										if (is_numeric($gateway['attribute'])) : ?>
-											<a title="Sil" href="system_gateways.php?act=del&id=<?=$i;?>" onclick="return confirm('<?=gettext("Silmek istediğinize emin misiniz?"); ?>')">
+											<a title="Delete" href="system_gateways.php?act=del&id=<?=$i;?>" onclick="return confirm('Do you really want to delete this gateway?')">
 												<i class="icon-trash"></i>
 											</a>
 										<?php endif; ?>
@@ -203,7 +203,7 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİTLERİ');
 								<td class="cell" colspan="5">
 								</td>
 								<td class="cell tools">
-										<a title="Ekle" href="system_gateways_edit.php">
+										<a title="Add" href="system_gateways_edit.php">
 											<i class="icon-plus"></i>
 										</a>
 								</td>

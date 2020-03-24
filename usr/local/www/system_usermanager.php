@@ -4,7 +4,7 @@
     system_usermanager.php
     part of m0n0wall (http://m0n0.ch/wall)
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2015 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2008 Shrew Soft Inc.
@@ -51,7 +51,7 @@ function print_privs($p, $plist)
 	}
 }
 
-$pgtitle = array('SİSTEM ', 'KULLANICI YÖNETİMİ');
+$pgtitle = array('SYSTEM ', 'USER MANAGEMENT');
 
 $id = $_GET['id'];
 
@@ -80,7 +80,7 @@ if ($_GET['act'] == 'deluser')
 	}
 
 	if($a_user[$id]['uid'] == '0')
-	$input_errors[] = 'Sistem kullanıcısı silinemez.';
+	$input_errors[] = "System user can't be deleted.";
 
 	else
 	{
@@ -88,7 +88,7 @@ if ($_GET['act'] == 'deluser')
 		$userdeleted = $a_user[$id]['name'];
 		unset($a_user[$id]);
 		write_config();
-		$savemsg = "{$userdeleted} kullanıcısı başarıyla silindi.";
+		$savemsg = "User {$userdeleted} deleted successfully.";
 	}
 }
 
@@ -141,19 +141,19 @@ if ($_POST)
 	else
 	{
 		$reqdfields = explode(" ", 'usernamefld passwordfld1');
-		$reqdfieldsn = array('Kullanıcı Adı', 'Parola');
+		$reqdfieldsn = array('Username', 'Password');
 	}
 
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 
 	if (preg_match("/[^a-zA-Z0-9\.\-_]/", $_POST['usernamefld']))
-		$input_errors[] = 'Kullanıcı Adı geçersiz karakterler içeriyor.';
+		$input_errors[] = "The username contains invalid characters.";
 
 	if (strlen($_POST['usernamefld']) > 16)
-		$input_errors[] = 'Kullanıcı Adı 16 karakterden uzun olamaz.';
+		$input_errors[] = "The username is longer than 16 characters.";
 
 	if (($_POST['passwordfld1']) && ($_POST['passwordfld1'] != $_POST['passwordfld2']))
-		$input_errors[] = 'Parolalar uyuşmuyor.';
+		$input_errors[] = "The passwords do not match.";
 
 	if (isset($id) && $a_user[$id])
 		$oldusername = $a_user[$id]['name'];
@@ -166,7 +166,7 @@ if ($_POST)
 		{
 			if ($userent['name'] == $_POST['usernamefld'] && $oldusername != $_POST['usernamefld'])
 			{
-			$input_errors[] = "'{$_POST['usernamefld']}' kullanıcı adı zaten kayıtlı.";
+			$input_errors[] = "Another entry with the same username already exists.";
 				break;
 			}
 		}
@@ -180,7 +180,7 @@ if ($_POST)
 			$ent = explode(":", $s_user);
 			if ($ent[0] == $_POST['usernamefld'] && $oldusername != $_POST['usernamefld'])
 			{
-				$input_errors[] = 'Bu kullanıcı adı sistem tarafından kullanılıyor.';
+				$input_errors[] = "That username is reserved by the system.";
 				break;
 			}
 		}
@@ -256,74 +256,74 @@ if ($_POST)
 			<form action="system_usermanager.php" method="post" name="iform" id="iform">
 				<table class="tabcont" cellpadding="0" cellspacing="0">
 					<tr>
-						<td valign="top" class="vncell">Kullanıcı Adı</td>
+						<td valign="top" class="vncell">Username</td>
 						<td class="vtable">
 							<input required name="usernamefld" type="text" id="usernamefld" value="<?=htmlspecialchars($pconfig['usernamefld']);?>"/>
 							<input name="oldusername" type="hidden" id="oldusername" value="<?=htmlspecialchars($pconfig['usernamefld']);?>" />
 						</td>
 					</tr>
 					<tr>
-						<td valign="top" class="vncell">Parola</td>
+						<td valign="top" class="vncell">Password</td>
 						<td class="vtable">
 							<input name="passwordfld1" type="password" id="passwordfld1" size="20" value="" />
 						</td>
 					</tr>
 					<tr>
-						<td valign="top" class="vncell">Parola Onayı</td>
+						<td valign="top" class="vncell">Password confirmation</td>
 						<td class="vtable">
 							<input name="passwordfld2" type="password" id="passwordfld2" size="20" value="" />
 						</td>
 					</tr>
 					<?php if($pconfig['uid'] != '0'): ?>
 					<tr>
-						<td valign="top" class="vncell">İzinler</td>
+						<td valign="top" class="vncell">Permissions</td>
 						<td class="vtable">
 							<table cellspacing="0" cellpadding="6">
 								<tr>
 									<td>
 										<label>
-											<input <?php if(in_array('user-shell-access', $pconfig['priv'])) echo 'checked'; ?> value="user-shell-access" name="user-shell-access" type="checkbox">SSH(Güvenli Kabuk) Oturumu
+											<input <?php if(in_array('user-shell-access', $pconfig['priv'])) echo 'checked'; ?> value="user-shell-access" name="user-shell-access" type="checkbox">SSH Login
 										</label>
 									</td>
 									<td>
 										<label>
-											<input <?php if(in_array('page-hotspot-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-hotspot-menu" name="hotspot-menu" type="checkbox">HOTSPOT
-										</label>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<label>
-											<input <?php if(in_array('page-system-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-system-menu" name="system-menu" type="checkbox">SİSTEM menüsü
-										</label>
-									</td>
-									<td>
-										<label>
-											<input <?php if(in_array('page-network-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-network-menu" name="network-menu" type="checkbox">AĞ KARTLARI menüsü
+											<input <?php if(in_array('page-hotspot-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-hotspot-menu" name="hotspot-menu" type="checkbox">HOTSPOT menu
 										</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<label>
-											<input <?php if(in_array('page-firewall-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-firewall-menu" name="firewall-menu" type="checkbox">GÜVENLİK DUVARI menüsü
+											<input <?php if(in_array('page-system-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-system-menu" name="system-menu" type="checkbox">SYSTEM menu
+										</label>
+									</td>
+									<td>
+										<label>
+											<input <?php if(in_array('page-network-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-network-menu" name="network-menu" type="checkbox">INTERFACES menu
+										</label>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>
+											<input <?php if(in_array('page-firewall-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-firewall-menu" name="firewall-menu" type="checkbox">FIREWALL menu
 											</label>
 									</td>
 									<td>
 										<label>
-											<input <?php if(in_array('page-services-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-services-menu" name="services-menu" type="checkbox">SERVİSLER menü
+											<input <?php if(in_array('page-services-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-services-menu" name="services-menu" type="checkbox">SERVICES menu
 										</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<label>
-											<input <?php if(in_array('page-status-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-status-menu" name="status-menu" type="checkbox">DURUM menüsü
+											<input <?php if(in_array('page-status-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-status-menu" name="status-menu" type="checkbox">STATUS menu
 										</label>
 									</td>
 									<td>
 										<label>
-											<input <?php if(in_array('page-tools-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-tools-menu" name="tools-menu" type="checkbox">ARAÇLAR menüsü
+											<input <?php if(in_array('page-tools-menu', $pconfig['priv'])) echo 'checked'; ?> value="page-tools-menu" name="tools-menu" type="checkbox">TOOLS menu
 										</label>
 									</td>
 								</tr>
@@ -332,19 +332,19 @@ if ($_POST)
 					</tr>
 					<?php endif; ?>
 					<tr>
-						<td valign="top" class="vncell">Açık Anahtar</td>
+						<td valign="top" class="vncell">Authorized Keys</td>
 						<td class="vtable">
 							<textarea name="authorizedkeys" id="authorizedkeys"><?=htmlspecialchars($pconfig['authorizedkeys']);?></textarea>
 							<p>
-						SSH oturumunun parola yerine <b>Public Key</b> ile otomatik olarak açılmasını istiyorsanız anahtarınızı buraya girebilirsiniz.
+							Paste an authorized keys file here.
 						</p>
 						</td>
 					</tr>
 					<tr>
 						<td class="vncell"></td>
 						<td class="vtable">
-							<input id="submit" name="save" type="submit" class="btn btn-inverse" value="Kaydet" />
-							<a class="btn btn-link" href="system_usermanager.php">Sistem Kullanıcıları</a>
+							<input id="submit" name="save" type="submit" class="btn btn-inverse" value="Save" />
+							<a class="btn btn-link" href="system_usermanager.php">System Users</a>
 							<?php if (isset($id) && $a_user[$id]): ?>
 							<input name="id" type="hidden" value="<?=$id;?>" />
 							<?php endif;?>
@@ -358,8 +358,8 @@ if ($_POST)
 						<td>
 							<table class="grids">
 								<tr>
-									<td class="head">Kullanıcı Adı</td>
-									<td class="head">İzinler</td>
+									<td class="head">Username</td>
+									<td class="head">Permissions</td>
 									<td class="head"></td>
 								</tr>
 									<?php
@@ -368,7 +368,7 @@ if ($_POST)
 									?>
 								<tr>
 									<td class="cell users">
-										<a class="btn-link" title="Düzenle" href="system_usermanager.php?act=edit&id=<?=$i;?>">
+										<a class="btn-link" title="Edit" href="system_usermanager.php?act=edit&id=<?=$i;?>">
 											<?=htmlspecialchars($userent['name']);?>
 										</a>
 									</td>
@@ -376,11 +376,11 @@ if ($_POST)
 											<?php print_privs($userent['priv'], $priv_list); ?>
 									</td>
 									<td class="cell tools">
-										<a title="Düzenle" href="system_usermanager.php?act=edit&id=<?=$i;?>">
+										<a title="Edit" href="system_usermanager.php?act=edit&id=<?=$i;?>">
 											<i class="icon-edit"></i>
 										</a>
 										<?php if($userent['scope'] != "system"): ?>
-										<a title="Sil" href="system_usermanager.php?act=deluser&id=<?=$i;?>" onclick="return confirm('Bu kullanıcıyı silmek istediğinizden emin misiniz?')">
+										<a title="Delete" href="system_usermanager.php?act=deluser&id=<?=$i;?>" onclick="return confirm('Are you sure you want to delete this user?')">
 											<i class="icon-trash"></i>
 										</a>
 										<?php endif; ?>

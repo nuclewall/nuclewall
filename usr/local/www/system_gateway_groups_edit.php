@@ -3,7 +3,7 @@
 /*
 	system_gateway_groups_edit.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2015 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2010 Seth Mos <seth.mos@dds.nl>.
@@ -73,10 +73,10 @@ if ($_POST) {
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 
 	if (! isset($_POST['name'])) {
-		$input_errors[] = 'Geçerli bir ağ geçidi grubu adı belirtilmelidir.';
+		$input_errors[] = 'A valid gateway group name must be specified.';
 	}
 	if (! is_validaliasname($_POST['name'])) {
-		$input_errors[] = 'Grup adı geçersiz karakterler içeriyor.';
+		$input_errors[] = 'The gateway name must not contain invalid characters.';
 	}
 
 	if (isset($_POST['name'])) {
@@ -87,7 +87,7 @@ if ($_POST) {
 					continue;
 
 				if ($gateway_group['name'] == $_POST['name']) {
-					$input_errors[] = sprintf('"%s" adında bir ağ geçidi grubu zaten bulunmaktadır.', $_POST['name']);
+					$input_errors[] = sprintf('A gateway group with this name "%s" already exists.', $_POST['name']);
 					break;
 				}
 			}
@@ -101,11 +101,11 @@ if ($_POST) {
 		}
 
 		if ($_POST['name'] == $gwname)
-			$input_errors[] = sprintf('Ağ geçidi grup adı "%s" ağ geçidi adıyla aynı olamaz.', $_POST['name']);
+			$input_errors[] = sprintf('A gateway group cannot have the same name with a gateway "%s" please choose another name.', $_POST['name']);
 
 	}
 	if(count($pconfig['item']) == 0)
-		$input_errors[] = "Herhangi bir ağ geçidinin önceliği belirtilmedi.";
+		$input_errors[] = "No gateway(s) have been selected to be used in this group.";
 
 	if (!$input_errors) {
 		$gateway_group = array();
@@ -128,7 +128,7 @@ if ($_POST) {
 	}
 }
 
-$pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI' , 'GRUP DÜZENLE');
+$pgtitle = array('SYSTEM', 'GATEWAY GROUPS' , 'EDIT GROUP');
 
 ?>
 
@@ -144,17 +144,17 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI' , 'GRUP DÜZENLE');
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td colspan="2" valign="top" class="listtopic">AĞ GEÇİDİ GRUBU DÜZENLE</td>
+					<td colspan="2" valign="top" class="listtopic">EDIT GATEWAY GROUP</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Grup Adı</td>
+					<td valign="top" class="vncell">Group Name</td>
 					<td class="vtable">
 						<input name="name" type="text" id="name" value="<?=htmlspecialchars($pconfig['name']);?>">
-						<br> Grup adı girin.
+						<br> Enter Gateway Group name
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Ağ Geçidi Önceliği</td>
+					<td valign="top" class="vncell">Gateway Priority</td>
 					<td class="vtable">
 						<?php
 							foreach($a_gateways as $gwname => $gateway) {
@@ -170,22 +170,24 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI' , 'GRUP DÜZENLE');
 									}
 								}
 								echo "<select name='{$gwname}' id='{$gwname}'>";
-								echo "<option value='0' $selected[0] >" . "Yok" . "</option>";
-								echo "<option value='1' $selected[1] >" . "Katman 1" . "</option>";
-								echo "<option value='2' $selected[2] >" . "Katman 2" . "</option>";
-								echo "<option value='3' $selected[3] >" . "Katman 3" . "</option>";
-								echo "<option value='4' $selected[4] >" . "Katman 4" . "</option>";
-								echo "<option value='5' $selected[5] >" . "Katman 5" . "</option>";
+								echo "<option value='0' $selected[0] >" . "None" . "</option>";
+								echo "<option value='1' $selected[1] >" . "Tier 1" . "</option>";
+								echo "<option value='2' $selected[2] >" . "Tier 2" . "</option>";
+								echo "<option value='3' $selected[3] >" . "Tier 3" . "</option>";
+								echo "<option value='4' $selected[4] >" . "Tier 4" . "</option>";
+								echo "<option value='5' $selected[5] >" . "Tier 5" . "</option>";
 								echo "</select> <b>{$gateway['name']} - " . base64_decode($gateway['descr']) ."</b><br />";
 							}
 						?>
 
-					Yük dengeleme ve değiştirme gibi olaylarda hangi ağ geçidine öncelik tanınacağını belirler.
+			The priority selected here defines in what order failover and balancing of links will be done.
+			Multiple links of the same priority will balance connections until all links in the priority will be exhausted.
+			If all links in a priority level are exhausted we will use the next available link(s) in the next priority level.
 
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Olay Tetikleyici</td>
+					<td valign="top" class="vncell">Trigger Level</td>
 					<td class="vtable">
 						<select name='trigger' id='trigger'>
 							<?php
@@ -196,22 +198,21 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİDİ GRUPLARI' , 'GRUP DÜZENLE');
 								}
 							?>
 						</select>
-						<br>Yük dengeleme, ağ geçidi değiştirme gibi olayların hangi
-						durumda tetikleneceğini belirtin.
+						<br>When to trigger exclusion of a member.
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Açıklama</td>
 					<td class="vtable">
 						<input name="descr" type="text" id="descr" value="<?=htmlspecialchars($pconfig['descr']);?>">
-						<br>İsteğe bağlı bir açıklama girebilirsiniz.
+						<br>You may enter a description here for your reference.
 					</td>
 				</tr>
 				<tr>
 					<td class="vncell"></td>
 					<td class="vtable">
-						<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
-						<input type="button" value="İptal" class="btn btn-default"  onclick="history.back()">
+						<input name="Submit" type="submit" class="btn btn-inverse" value="Save">
+						<input type="button" value="Cancel" class="btn btn-default"  onclick="history.back()">
 						<?php if (isset($id) && $a_gateway_groups[$id]): ?>
 						<input name="id" type="hidden" value="<?=htmlspecialchars($id);?>">
 						<?php endif; ?>

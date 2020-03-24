@@ -4,7 +4,7 @@
 	system_routes.php
 	part of m0n0wall (http://m0n0.ch/wall)
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2015 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
@@ -84,7 +84,7 @@ if ($_GET['act'] == "del")
 	}
 }
 
-$pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER');
+$pgtitle = array('SYSTEM', 'STATIC ROUTES');
 
 ?>
 
@@ -97,16 +97,16 @@ $pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER');
 <input type="hidden" name="y1" value="1">
 	<?php if ($savemsg) print_info_box($savemsg); ?>
 	<?php if (is_subsystem_dirty('staticroutes')): ?><p>
-	<?php print_info_box_np("Sabit yönlendirme ayarları değiştirildi.<br>Değişikliklerin etkili olabilmesi için uygulamalısınız.", true);?><br>
+	<?php print_info_box_np("The static route configuration has been changed.<br>You must apply the changes in order for them to take effect.", true);?><br>
 	<?php endif; ?>
 <table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<?php
 				$tab_array = array();
-				$tab_array[0] = array("Ağ Geçitleri", false, "system_gateways.php");
-				$tab_array[1] = array("Yönlendirmeler", true, "system_routes.php");
-				$tab_array[2] = array("Gruplar", false, "system_gateway_groups.php");
+				$tab_array[0] = array("Gateways", false, "system_gateways.php");
+				$tab_array[1] = array("Routes", true, "system_routes.php");
+				$tab_array[2] = array("Groups", false, "system_gateway_groups.php");
 				display_top_tabs($tab_array);
 			?>
 		</td>
@@ -118,10 +118,10 @@ $pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER');
 					<td>
 						<table class="grids sortable">
 							<tr>
-								<td class="head">Ağ</td>
-								<td class="head">Ağ Geçidi</td>
-								<td class="head">Ethernet Kartı</td>
-								<td class="head">Açıklama</td>
+								<td class="head">Network</td>
+								<td class="head">Gateway</td>
+								<td class="head">Interface</td>
+								<td class="head">Description</td>
 								<td class="head"></td>
 							</tr>
 							<tr>
@@ -143,10 +143,10 @@ $pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER');
 									<?=htmlspecialchars(base64_decode($route['descr']));?>&nbsp;
 								</td>
 								<td class="cell tools">
-									<a title="Düzenle" href="system_routes_edit.php?dup=<?=$i;?>">
+									<a title="Edit" href="system_routes_edit.php?dup=<?=$i;?>">
 										<i class="icon-edit"></i>
 									</a>
-									<a title="Sil" href="system_routes.php?act=del&id=<?=$i;?>" onclick="return confirm('<?=gettext("Silmek istediğinize emin misiniz?");?>')">
+									<a title="Delete" href="system_routes.php?act=del&id=<?=$i;?>" onclick="return confirm('Do you really want to delete this route?')">
 										<i class="icon-trash"></i>
 									</a>
 								</td>
@@ -170,9 +170,9 @@ $pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER');
 </table>
 </form>
 <div class="alert alert-warning">
-	<b>NOT :</b>
-	NUCLEWALL tarafından kullanılan herhangi bir ağ için sabit yönlendirme girmeyiniz.
-	<br>Sabit yönlendirmeler, VARSAYILAN AĞ GEÇİDİ ile ulaşamadığınız ağlar içindir.
+	<b>NOTE :</b>
+	Do not enter static routes for networks assigned on any interface of this firewall.<br>
+	Static routes are only used for networks reachable via a different router, and not reachable via your default gateway.
 </div>
 </div>
 </body>

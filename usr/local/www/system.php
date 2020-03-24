@@ -2,7 +2,7 @@
 /*
 	system.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2015 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
@@ -94,24 +94,24 @@ if ($_POST)
 	$pconfig = $_POST;
 
 	$reqdfields = split(" ", "hostname domain");
-	$reqdfieldsn = array("Sunucu Adı", "Alan Adı");
+	$reqdfieldsn = array("Hostname", "Domain");
 
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 
 	if ($_POST['hostname'] && !is_hostname($_POST['hostname']))
-		$input_errors[] = "Sunucu adı sadece a-z, 0-9 ve '-' karakterlerinden oluşabilir.";
+		$input_errors[] = "The hostname may only contain the characters a-z, 0-9 and '-'.";
 
 	if ($_POST['domain'] && !is_domain($_POST['domain']))
-		$input_errors[] = "Alan adı sadece a-z, 0-9, '-' ve '.' karakterlerinden oluşabilir.";
+		$input_errors[] = "The domain may only contain the characters a-z, 0-9, '-' and '.'.";
 
 	if(($_POST['dns1'] && !is_ipaddr($_POST['dns1'])) || ($_POST['dns2'] && !is_ipaddr($_POST['dns2'])))
-		$input_errors[] = "1. ve 2. DNS sunucuları için geçerli bir ip adresi belirtilmelidir.";
+		$input_errors[] = "A valid IP address must be specified for the primary/secondary DNS server.";
 
 	if(($_POST['dns3'] && !is_ipaddr($_POST['dns3'])) || ($_POST['dns4'] && !is_ipaddr($_POST['dns4'])))
-		$input_errors[] = "3. ve 4. DNS sunucuları için geçerli bir ip adresi belirtilmelidir.";
+		$input_errors[] = "A valid IP address must be specified for the third/fourth DNS server.";
 
 	if($_POST['webguiport'] && (!is_numericint($_POST['webguiport']) || ($_POST['webguiport'] < 1) || ($_POST['webguiport'] > 65535)))
-		$input_errors[] = "Web arayüzü için geçerli bir TCP/IP portu belirtilmelidir.";
+		$input_errors[] = "A valid TCP/IP port must be specified for the webConfigurator port.";
 
 	$direct_networks_list = explode(" ", filter_get_direct_networks_list());
 
@@ -126,7 +126,7 @@ if ($_POST)
 				foreach($direct_networks_list as $direct_network)
 				{
 					if(ip_in_subnet($_POST[$dnsitem], $direct_network))
-						$input_errors[] = "'{$_POST[$dnsitem]}' için ağ içindeki bir adresi ağ geçidi olarak belirtemezsiniz";
+						$input_errors[] = "You can not assign a gateway to DNS '{$_POST[$dnsitem]}' server which is on a directly connected network.";
 				}
 			}
 		}
@@ -135,7 +135,7 @@ if ($_POST)
 	foreach(explode(' ', $_POST['timeservers']) as $ts)
 	{
 		if (!is_domain($ts))
-			$input_errors[] = "Bir NTP zaman sunucusu sadece a-z, 0-9, '-' ve '.' karakterlerinden oluşabilir.";
+			$input_errors[] = "A NTP Time Server name may only contain the characters a-z, 0-9, '-' and '.'.";
 	}
 
 	if (!$input_errors)
@@ -212,7 +212,7 @@ if ($_POST)
 	}
 }
 
-$pgtitle = array('SİSTEM', 'GENEL AYARLAR');
+$pgtitle = array('SYSTEM', 'GENERAL SETTINGS');
 
 ?>
 
@@ -234,38 +234,42 @@ if ($savemsg)
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td colspan="2" class="listtopic">SİSTEM</td>
+					<td colspan="2" class="listtopic">SYSTEM</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Güvenlik Duvarını<br> Kapat</td>
+					<td valign="top" class="vncell">Disable Firewall</td>
 					<td class="vtable">
 						<label>
 							<input name="disablefilter" type="checkbox" id="disablefilter" value="yes" <?php if (isset($config['system']['disablefilter'])) echo "checked"; ?> />
-							Güvenlik duvarını <b>devre dışı</b> bırakmak için işaretleyin.
+							Disable all packet filtering.
+							Note: This converts NUCLEWALL into a routing only platform.<br>
+				            Note: This will also turn off NAT.
 						</label>
 					</td>
 
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Sunucu Adı</td>
+					<td valign="top" class="vncell">Hostname</td>
 					<td class="vtable"> <input name="hostname" type="text" id="hostname" value="<?=htmlspecialchars($pconfig['hostname']);?>">
-						<br>Bir sunucu adı girin. Örnek: <em>nuclewall</em>
+						<br>Name of the host, without domain part. Example: <em>nuclewall</em>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Alan adı</td>
+					<td valign="top" class="vncell">Domain</td>
 					<td class="vtable"> <input name="domain" type="text" id="domain" value="<?=htmlspecialchars($pconfig['domain']);?>">
-						<br>Bir alan adı girin. Örnek: <em>sirketim.com, ev, ofis, okulum.com</em>
+						<br>Do not use 'local' as a domain name.
+						It will cause local hosts running mDNS (avahi, bonjour, etc.) to be unable to resolve local hosts not running mDNS.
+						Example: <em>mycorp.com, home, office, myschool.com</em>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">DNS Sunucu Adresleri</td>
+					<td valign="top" class="vncell">DNS servers</td>
 					<td class="vtable">
 						<table>
 							<tr>
-								<td><b>Sunucu Adresi</b></td>
+								<td><b>DNS Server</b></td>
 								<?php if ($multiwan): ?>
-								<td><b>Ağ Geçidi</b></td>
+								<td><b>Use gateway</b></td>
 								<?php endif; ?>
 							</tr>
 							<?php
@@ -310,34 +314,38 @@ if ($savemsg)
 							<?php endfor; ?>
 						</table>
 						<br>
-						Sistemin alan adı çözümlemede kullanacağı DNS adreslerini girebilirsiniz. "DHCPD" ve "DNS Forwarder"
-						servisleri de aynı DNS sucunuları kullanacaktır.
+						Enter IP addresses to by used by the system for DNS resolution.
+					    These are also used for the DHCP service, DNS forwarder and for PPTP VPN clients.
 						<br>
 						<?php if($multiwan): ?>
-						Ayrıca, isteğe bağlı olarak her DNS sunucu için ağ geçidi belirleyebilirsiniz.
+						In addition, optionally select the gateway for each DNS server.
+						When using multiple WAN connections there should be at least one unique DNS server per gateway.
 						<br>
 						<?php endif; ?>
 						<br>
 						<input name="dnsallowoverride" type="checkbox" id="dnsallowoverride" value="yes" <?php if ($pconfig['dnsallowoverride']) echo "checked"; ?>>
 						<b>
-							DNS sunucuların WAN tarafındaki DHCP/PPP sunucular tarafından değiştirilmesine izin ver.
+						  Allow DNS server list to be overridden by DHCP/PPP on WAN.
 						</b>
 						<br>
-						Bu ayar seçili olduğunda, sistem WAN tarafındaki DHCP sunucusunun belirlediği DNS sunucuları kullanacaktır.
-						Böylece üst tarafta gireceğiniz DNS sunucular etkisiz olacaktır.
+						    If this option is set, NUCLEWALL will
+							use DNS servers assigned by a DHCP/PPP server on WAN
+							for its own purposes (including the DNS forwarder).
+							However, they will not be assigned to DHCP and PPTP VPN clients.
 						<br>
 						<br>
 						<input name="dnslocalhost" type="checkbox" id="dnslocalhost" value="yes" <?php if ($pconfig['dnslocalhost']) echo "checked"; ?> />
 						<b>
-							Yerel (127.0.0.1) DNS sunucusunu kullanma
+						    Do not use the DNS Forwarder as a DNS server for the firewall
 						</b>
 						<br>
-						Bu ayar seçili olduğunda,  varsayılan olarak ilk DNS sunucu olan localhost(127.0.0.1) kullanılmayacaktır.
-						Bunun yerine "DNS Forwarder" servisinin çözümlemesi kullanılacaktır. (Aktifse)
+						By default localhost (127.0.0.1) will be used as the first DNS server where the DNS forwarder is enabled,
+						so system can use the DNS forwarder to perform lookups.
+						Checking this box omits localhost from the list of DNS servers.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Zaman Dilimi</td>
+					<td valign="top" class="vncell">Timezone</td>
 					<td class="vtable">
 						<select name="timezone" id="timezone">
 							<?php foreach ($timezonelist as $value): ?>
@@ -346,20 +354,22 @@ if ($savemsg)
 							</option>
 							<?php endforeach; ?>
 						</select>
-						<br>Size en yakın bölgeyi seçin
+						<br>Select the location closest to you
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">NTP Zaman Sunucu Adresi</td>
+					<td valign="top" class="vncell">NTP time server</td>
 					<td class="vtable">
 						<input name="timeservers" type="text" id="timeservers" size="40" value="<?=htmlspecialchars($pconfig['timeservers']);?>">
-						<br>NTP sunucularını aralarında boşluk bırakarak girebilirsiniz. Sunucu ismi giriyorsanız DNS çözümleyicinizin çalıştığından emin olun.
+						<br>
+						Use a space to separate multiple hosts.
+						Remember to set up at least one DNS server if you enter a host name here.
 					</td>
 				</tr>
 				<tr>
 					<td class="vncell"></td>
 					<td class="vtable">
-						<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
+						<input name="Submit" type="submit" class="btn btn-inverse" value="Save">
 					</td>
 				</tr>
 			</table>

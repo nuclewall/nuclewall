@@ -2,7 +2,7 @@
 /*
 	system_advanced_admin.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2015 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2005-2010 Scott Ullrich
@@ -70,15 +70,15 @@ if ($_POST) {
 
   if ($_POST['webguiport'])
     if(!is_port($_POST['webguiport']))
-      $input_errors[] = 'Geçerli bir port numarası belirtmelisiniz.';
+      $input_errors[] = 'You must specify a valid port number for Web UI.';
 
   if ($_POST['max_procs'])
     if(!is_numeric($_POST['max_procs']) || ($_POST['max_procs'] < 1) || ($_POST['max_procs'] > 500))
-      $input_errors[] = 'Maksimum bağlantı miktarı 1 ile 500 arasında bir değer olmalıdır.';
+      $input_errors[] = 'Max Processes must be a number 1 or greater.';
 
   if ($_POST['sshport'])
     if(!is_port($_POST['sshport']))
-      $input_errors[] = 'SSH için geçerli bir port numarası belirtmelisiniz.';
+      $input_errors[] = 'You must specify a valid port number for SSH.';
 
   if($_POST['sshdkeyonly'] == "yes")
     $config['system']['ssh']['sshdkeyonly'] = "enabled";
@@ -195,7 +195,7 @@ if ($_POST) {
   }
 }
 
-$pgtitle = array('SİSTEM', 'ERİŞİM AYARLARI');
+$pgtitle = array('SYSTEM', 'ACCESS SETTINGS');
 
 ?>
 
@@ -225,10 +225,10 @@ function prot_change()
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td colspan="2" class="listtopic">WEB ARAYÜZÜ</td>
+					<td colspan="2" class="listtopic">WEB UI</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Protokol</td>
+					<td valign="top" class="vncell">Protocol</td>
 					<td class="vtable">
 						<?php
 						if ($pconfig['webguiproto'] == "http")
@@ -250,14 +250,14 @@ function prot_change()
 						</div>
 						<?php if (!$certs_available): ?>
 						<br>
-						Herhangi bir sertifika yok. HTTPS kullanabilmek için
-						<a href="system_certmanager.php">Sertifikalar</a>
-						sayfasından bir sertifika oluşturmalısınız.
+						No Certificates have been defined. You must
+						<a href="system_certmanager.php">Create or Import</a>
+						a Certificate before SSL can be enabled
 						<?php endif; ?>
 					</td>
 				</tr>
 				<tr id="ssl_opts">
-					<td valign="top" class="vncell">SSL Sertifikası</td>
+					<td valign="top" class="vncell">SSL Certificate</td>
 					<td class="vtable">
 						<select name="ssl-certref" id="ssl-certref">
 						<?php
@@ -273,23 +273,27 @@ function prot_change()
 					</td>
 				</tr>
 				<tr>
-				<td valign="top" class="vncell">TCP Portu</td>
+				<td valign="top" class="vncell">TCP Port</td>
 				<td class="vtable">
 					<input class="input-small" name="webguiport" type="text" id="webguiport" size="5" value="<?=htmlspecialchars($config['system']['webgui']['port']);?>">
 					<br>
-					Varsayılan portları (HTTP için 80, HTTPS için 443) değiştirmek için özel bir port girebilirsiniz.
+					 Enter a custom port number for the Web UI
+					 above if you want to override the default (80 for HTTP, 443
+					 for HTTPS). Changes will take effect immediately after save.
 				</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">En Fazla Bağlantı Sayısı</td>
+					<td valign="top" class="vncell">Max Processes</td>
 					<td class="vtable">
 						<input class="input-small" name="max_procs" type="text" id="max_procs" size="5" value="<?=htmlspecialchars($pconfig['max_procs']);?>">
 						<br>
-						Web arayüzüne eş zamanlı olarak yapılabilecek en fazla bağlantı sayısını belirtir.
+						Enter the number of webConfigurator processes you
+						want to run. This defaults to 2. Increasing this will allow more
+						users/browsers to access the GUI concurrently.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Engelleme<br>Koruması</td>
+					<td valign="top" class="vncell">Anti-lockout</td>
 					<td class="vtable">
 						<?php
 						if($config['interfaces']['lan'])
@@ -298,51 +302,53 @@ function prot_change()
 							$lockout_interface = "WAN";
 						?>
 						<input name="noantilockout" type="checkbox" id="noantilockout" value="yes" <?php if ($pconfig['noantilockout']) echo "checked"; ?> />
-						<b>Engelleme koruma kuralını kaldır</b>
+						<b>Disable Web UI anti-lockout rule</b>
 						<br>
-						<?php printf("İşaretsiz olduğu zaman, %s etherneti üzerinden web arayüzüne erişime " .
-						"kullanıcıların eklediği engelleme kurallarına bakmaksızın izin verilecektir. " .
-						"Otomatik olarak eklenen bu kuralı kaldırmak için kontrol düğmesini işaretleyin. " .
-						"Böylece web arayüzüne erişim, kullanıcı tarafından eklenen kurallara göre olacaktır.", $lockout_interface); ?>
-						<br><em> Yanlışlıkla, erişimi engelleyen bir kural ekleyip web arayüzüne erişemezseniz, konsol menüsünden etherneti yeniden yapılandırın. </em>
+						<?php printf("When this is unchecked, access to the webConfigurator " .
+								"on the %s interface is always permitted, regardless of the user-defined firewall " .
+								"rule set. Check this box to disable this automatically added rule, so access " .
+								"to the webConfigurator is controlled by the user-defined firewall rules " .
+								"(ensure you have a firewall rule in place that allows you in, or you will " .
+								"lock yourself out!)", $lockout_interface); ?>
+						<br><em> Hint: the &quot;Set interface(s) IP address&quot; option in the console menu resets this setting as well.</em>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="list"></td>
 				</tr>
 				<tr>
-					<td colspan="2" valign="top" class="listtopic">SECURE SHELL (GÜVENLİ KABUK)</td>
+					<td colspan="2" valign="top" class="listtopic">SECURE SHELL</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Secure Shell Sunucusu</td>
+					<td valign="top" class="vncell">Secure Shell Server</td>
 					<td class="vtable">
 						<input name="enablesshd" type="checkbox" id="enablesshd" value="yes" <?php if (isset($pconfig['enablesshd'])) echo "checked"; ?> />
-						<b>Secure Shell erişimini etkinleştir.</b>
+						<b>Enable Secure Shell</b>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Kimlik Kontrolü</td>
+					<td valign="top" class="vncell">Authentication Method</td>
 					<td class="vtable">
 						<input name="sshdkeyonly" type="checkbox" id="sshdkeyonly" value="yes" <?php if ($pconfig['sshdkeyonly']) echo "checked"; ?> />
-						<b>SSH'ye parola ile erişimi engelle (sadece RSA/DSA anahtarları ile erişilir)</b>
+						<b>Disable password login for Secure Shell (RSA key only)</b>
 						<br>
-						Aktif edildiğinde, SSH ile bağlanmak isteyen
-						<a href="system_usermanager.php">Kullanıcılar'ın</a>
-						"authorized keys"leri ayarlanmalıdır.
+						When enabled, authorized keys need to be configured for each
+						<a href="system_usermanager.php">user</a>
+						that has been granted secure shell access.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">SSH Port Numarası</td>
+					<td valign="top" class="vncell">SSH Port</td>
 					<td class="vtable">
 					<input class="input-small" name="sshport" type="text" id="sshport" value="<?php echo $pconfig['sshport']; ?>" />
 					<br>
-					SSH sunucunun dinleme portu. Varsayılan (22) için boş bırakın.
+					 Note: Leave this blank for the default of 22.
 					</td>
 				</tr>
 				<tr>
 					<td class="vncell"></td>
 					<td class="vtable">
-						<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet" />
+						<input name="Submit" type="submit" class="btn btn-inverse" value="Save" />
 					</td>
 				</tr>
 			</table>

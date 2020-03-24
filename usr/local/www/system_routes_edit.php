@@ -78,21 +78,21 @@ if ($_POST) {
 
 	$reqdfields = explode(" ", "network network_subnet gateway");
 	$reqdfieldsn = explode(",",
-			"Hedef ağ" . "," .
-			"Hedef ağ bit sayısı" . "," .
-			"Ağ geçidi");
+			"Destination network" . "," .
+			"Destination network bit count" . "," .
+			"Gateway");
 
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 
 	if (($_POST['network'] && !is_ipaddr($_POST['network']) && !is_alias($_POST['network']))) {
-		$input_errors[] = "Geçerli bir hedef ağ belirtilmelidir.";
+		$input_errors[] = "A valid destination network must be specified.";
 	}
 	if (($_POST['network_subnet'] && !is_numeric($_POST['network_subnet']))) {
-		$input_errors[] = "Geçerli bir hedef ağ bit sayısı belirtilmelidir.";
+		$input_errors[] = "A valid destination network bit count must be specified.";
 	}
 	if ($_POST['gateway']) {
 		if (!isset($a_gateways[$_POST['gateway']]))
-			$input_errors[] = "Geçerli bir ağ geçidi belirtilmelidir.";
+			$input_errors[] = "A valid gateway must be specified.";
 	}
 
 	$current_targets = get_staticroutes(true);
@@ -135,7 +135,7 @@ if ($_POST) {
 		$overlaps = array_diff($overlaps, $old_targets);
 
 	if (count($overlaps)) {
-		$input_errors[] = "Belirtilen hedef ağa zaten bir yönlendirme mevcut." . ": " . implode(", ", $overlaps);
+		$input_errors[] = "A route to this destination network already exists." . ": " . implode(", ", $overlaps);
 	}
 
 	if (!$input_errors) {
@@ -168,7 +168,7 @@ if ($_POST) {
 	}
 }
 
-$pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER', 'YÖNLENDİRME DÜZENLE');
+$pgtitle = array('SYSTEM', 'STATIC ROUTES', 'EDIT ROUTE');
 
 ?>
 
@@ -184,7 +184,7 @@ $pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER', 'YÖNLENDİRME DÜZENLE')
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td colspan="2" valign="top" class="listtopic">SABİT YÖNLENDİRME DÜZENLE</td>
+					<td colspan="2" valign="top" class="listtopic">EDIT STATIC ROUTE</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Hedef Ağ</td>
@@ -198,11 +198,11 @@ $pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER', 'YÖNLENDİRME DÜZENLE')
 						</option>
 						<?php endfor; ?>
 					</select>
-					<br>Sabit yönlendirme için hedef bir ağ girin.
+					<br>Destination network for this static route
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Ağ Geçidi</td>
+					<td valign="top" class="vncell">Gateway</td>
 					<td class="vtable">
 					<select name="gateway" id="gateway">
 					<?php
@@ -214,18 +214,18 @@ $pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER', 'YÖNLENDİRME DÜZENLE')
 						}
 					?>
 					</select> <br>
-						Yönlendirmenin hangi ağ geçidine uygulanacağını seçin.
+					Choose which gateway this route applies to
 				</tr>
 					<tr>
 				<td valign="top" class="vncell">Açıklama</td>
 				<td class="vtable">
 				<input name="descr" type="text" id="descr" value="<?=htmlspecialchars($pconfig['descr']);?>">
-				<br> <span>Yönlendirme için bir açıklama girebilirsiniz.</span></td>
+				<br> <span>You may enter a description here for your reference (not parsed).</span></td>
 				</tr>
 				<tr>
 				<td class="vncell"></td>
 				<td class="vtable">
-				<input class="btn btn-inverse" id="save" name="Submit" type="submit"  value="Kaydet">
+				<input class="btn btn-inverse" id="save" name="Submit" type="submit"  value="Save">
 				<input class="btn btn-default" id="cancel" type="button" value="İptal" onclick="history.back()">
 				<?php if (isset($id) && $a_routes[$id]): ?>
 				<input name="id" type="hidden" value="<?=htmlspecialchars($id);?>">
