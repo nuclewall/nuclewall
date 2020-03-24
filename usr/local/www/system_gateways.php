@@ -192,7 +192,7 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİTLERİ');
 										<a title="Düzenle" href="system_gateways_edit.php?dup=<?=$i;?>"><i class="icon-edit"></i></a>
 										<?php
 										if (is_numeric($gateway['attribute'])) : ?>
-											<a title="Sil" href="system_gateways.php?act=del&id=<?=$i;?>" onclick="return confirm('<?=gettext("Silmek istediğinize emin misiniz?"); ?>')">
+											<a title="Sil" href="system_gateways.php?act=del&id=<?=$i;?>" onclick="return confirm('Silmek istediğinize emin misiniz?')">
 												<i class="icon-trash"></i>
 											</a>
 										<?php endif; ?>

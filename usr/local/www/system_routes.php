@@ -146,7 +146,7 @@ $pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER');
 									<a title="Düzenle" href="system_routes_edit.php?dup=<?=$i;?>">
 										<i class="icon-edit"></i>
 									</a>
-									<a title="Sil" href="system_routes.php?act=del&id=<?=$i;?>" onclick="return confirm('<?=gettext("Silmek istediğinize emin misiniz?");?>')">
+									<a title="Sil" href="system_routes.php?act=del&id=<?=$i;?>" onclick="return confirm('Silmek istediğinize emin misiniz?')">
 										<i class="icon-trash"></i>
 									</a>
 								</td>

@@ -246,7 +246,7 @@ if($pkg['adddeleteeditpagefields']['movable']){
                 }
 
                 function save_changes_to_xml(xml) {
-                	if(confirm("<?=gettext("Do you really want to save changes?");?>")){
+                	if(confirm("Do you really want to save changes?")){
                 		var axel = Math.random() + "";
     					var num = axel * 1000000000000000000;
                 		location.href="/pkg.php?xml=" + xml + "&act=update&ids=" + alertItems() + "&nocache=" + num;
@@ -455,7 +455,7 @@ echo "\t<script type=\"text/javascript\" src=\"javascript/domTT/fadomatic.js\"><
 					<a href="pkg_edit.php?xml=<?=$xml?>&act=edit&id=<?=$i;?>" title="Düzenle">
 					<i class="icon-edit"></i>
 					</a>
-					<a href="pkg.php?xml=<?=$xml?>&act=del&id=<?=$i;?>" onclick="return confirm('<?=gettext("Silmek istediğinize emin misiniz?");?>')" title="Sil">
+					<a href="pkg.php?xml=<?=$xml?>&act=del&id=<?=$i;?>" onclick="return confirm('Silmek istediğinize emin misiniz?')" title="Sil">
 					<i class="icon-trash"></i>
 					</a>
 				</td>
