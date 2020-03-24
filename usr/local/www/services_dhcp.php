@@ -152,33 +152,33 @@ if ($_POST)
 
 	if ($_POST['enable']) {
 		$reqdfields = explode(" ", "range_from range_to");
-		$reqdfieldsn = array("Mevcut IP Adresi Dağıtım Aralığı(Başlangıç)", "Mevcut IP Adresi Dağıtım Aralığı(Bitiş)");
+		$reqdfieldsn = array("Range begin", "Range end");
 
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 
 		if (($_POST['range_from'] && !is_ipaddr($_POST['range_from'])))
-			$input_errors[] = "Geçerli bir IP adresi dağıtım aralığı(başlangıç) girilmelidir.";
+			$input_errors[] = "A valid range must be specified.";
 		if (($_POST['range_to'] && !is_ipaddr($_POST['range_to'])))
-			$input_errors[] = "Geçerli bir IP adresi dağıtım aralığı(bitiş) girilmelidir.";
+			$input_errors[] = "A valid range must be specified.";
 		if (($_POST['gateway'] && !is_ipaddr($_POST['gateway'])))
-			$input_errors[] = "Ağ geçidi için geçerli bir IP adresi girilmelidir";
+			$input_errors[] = "A valid IP address must be specified for the gateway.";
 		$parent_ip = get_interface_ip($_POST['if']);
 		if (is_ipaddr($parent_ip) && $_POST['gateway']) {
 			$parent_sn = get_interface_subnet($_POST['if']);
 			if(!ip_in_subnet($_POST['gateway'], gen_subnet($parent_ip, $parent_sn) . "/" . $parent_sn) && !ip_in_interface_alias_subnet($_POST['if'], $_POST['gateway']))
-				$input_errors[] = sprintf("%s ağ geçidi seçilen arayüze ait bir IP adresi değil.", $_POST['gateway']);
+				$input_errors[] = sprintf("The gateway address %s does not lie within the chosen interface's subnet.", $_POST['gateway']);
 		}
 		if (($_POST['dns1'] && !is_ipaddr($_POST['dns1'])) || ($_POST['dns2'] && !is_ipaddr($_POST['dns2'])))
-			$input_errors[] = "Geçerli DNS sunucu adresleri girilmelidir.";
+			$input_errors[] = "A valid IP address must be specified for the primary/secondary DNS servers.";
 
 		if (($_POST['domain'] && !is_domain($_POST['domain'])))
-			$input_errors[] = "Geçerli bir alan adı girilmelidir";
+			$input_errors[] = "A valid domain name must be specified for the DNS domain.";
 
 
 		if(gen_subnet($ifcfgip, $ifcfgsn) == $_POST['range_from'])
-			$input_errors[] = "Ağ adresini IP adresi dağıtımı başlangıç adresi olarak kullanamazsınız.";
+			$input_errors[] = "You cannot use the network address in the starting subnet range.";
 		if(gen_subnet_max($ifcfgip, $ifcfgsn) == $_POST['range_to'])
-			$input_errors[] = "Ağ adresini IP adresi dağıtımı bitiş adresi olarak kullanamazsınız.";
+			$input_errors[] = "You cannot use the broadcast address in the ending subnet range.";
 
 		$noip = false;
 		if(is_array($a_maps))
@@ -193,11 +193,11 @@ if ($_POST)
 
 			if ((ip2ulong($_POST['range_from']) < $subnet_start) || (ip2ulong($_POST['range_from']) > $subnet_end) ||
 			    (ip2ulong($_POST['range_to']) < $subnet_start) || (ip2ulong($_POST['range_to']) > $subnet_end)) {
-				$input_errors[] = "Belirtilen dağıtım aralığı mevcut ağın dışında.";
+				$input_errors[] = "The specified range lies outside of the current subnet.";
 			}
 
 			if (ip2ulong($_POST['range_from']) > ip2ulong($_POST['range_to']))
-				$input_errors[] = "Dağıtım aralığı hatalı (Başlangıç adresi bitiş adresinden daha büyük).";
+				$input_errors[] = "The range is invalid (first element higher than second element).";
 
 			$dynsubnet_start = ip2ulong($_POST['range_from']);
 			$dynsubnet_end = ip2ulong($_POST['range_to']);
@@ -207,7 +207,7 @@ if ($_POST)
 						continue;
 					if ((ip2ulong($map['ipaddr']) > $dynsubnet_start) &&
 						(ip2ulong($map['ipaddr']) < $dynsubnet_end)) {
-						$input_errors[] = "Otomatik dağıtım aralığı sabit IP dağıtımlarıyla çakışmamalıdır";
+						$input_errors[] = "The DHCP range cannot overlap any static DHCP mappings.";
 						break;
 					}
 				}
@@ -284,7 +284,7 @@ if ($_GET['act'] == 'del')
 	}
 }
 
-$pgtitle = array('SERVİSLER', 'DHCP SUNUCU');
+$pgtitle = array('SERVICES ', 'DHCP SERVER');
 
 include('head.inc');
 
@@ -315,7 +315,7 @@ include('head.inc');
 <?php if ($input_errors) print_input_errors($input_errors); ?>
 <?php if ($savemsg) print_info_box($savemsg); ?>
 <?php if (is_subsystem_dirty('staticmaps')): ?><p>
-<?php print_info_box_np("Sabit IP adresi dağıtımları değiştirildi.<br>Değişikliklerin etkili olabilmesi için uygulamalısınız.", true);?>
+<?php print_info_box_np("The static mapping configuration has been changed.<br>You must apply the changes in order for them to take effect.", true);?>
 <?php endif; ?>
 <table cellpadding="0" cellspacing="0">
 	<tr>
@@ -351,16 +351,16 @@ include('head.inc');
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="listtopic" colspan="2">SABİT IP ADRESİ DAĞITIMLARI</td>
+					<td class="listtopic" colspan="2">STATIC MAPPINGS</td>
 				<tr>
 				<tr>
 					<td colspan="2">
 						<table width="100%" cellpadding="0" cellspacing="0" class="grids sortable">
 							<tr>
-								<td class="head">MAC Adresi</td>
-								<td class="head">IP Adresi</td>
-								<td class="head">Sunucu Adı</td>
-								<td class="head">Açıklama</td>
+								<td class="head">MAC Address</td>
+								<td class="head">IP Address</td>
+								<td class="head">Hostname</td>
+								<td class="head">Description</td>
 								<td class="head"></td>
 							</tr>
 									<?php if(is_array($a_maps)): ?>
@@ -380,10 +380,10 @@ include('head.inc');
 									<?=htmlspecialchars(base64_decode($mapent['descr']));?>
 								</td>
 								<td class="cell tools">
-									<a title="Düzenle" href="services_dhcp_edit.php?if=<?=htmlspecialchars($if);?>&id=<?=$i;?>">
+									<a title="Edit" href="services_dhcp_edit.php?if=<?=htmlspecialchars($if);?>&id=<?=$i;?>">
 										<i class="icon-edit"></i>
 									</a>
-									<a title="Sil" href="services_dhcp.php?if=<?=htmlspecialchars($if);?>&act=del&id=<?=$i;?>" onclick="return confirm('Silmek istediğinizden emin misiniz?')">
+									<a title="Delete" href="services_dhcp.php?if=<?=htmlspecialchars($if);?>&act=del&id=<?=$i;?>" onclick="return confirm('Do you really want to delete this mapping?')">
 										<i class="icon-trash"></i>
 									</a>
 								</td>
@@ -394,7 +394,7 @@ include('head.inc');
 							<tr>
 								<td class="cell" colspan="4"></td>
 								<td class="cell tools">
-									<a title="Ekle" href="services_dhcp_edit.php?if=<?=htmlspecialchars($if);?>">
+									<a title="Add" href="services_dhcp_edit.php?if=<?=htmlspecialchars($if);?>">
 										<i class="icon-plus"></i>
 									</a>
 								</td>
@@ -403,36 +403,36 @@ include('head.inc');
 					</td>
 				</tr>
 				<tr>
-					<td class="listtopic" colspan="2">DHCP SUNUCU AYARLARI</td>
+					<td class="listtopic" colspan="2">DHCP SERVER SETTINGS</td>
 				<tr>
 				<tr>
-					<td valign="top" class="vncell">Aktif et</td>
+					<td valign="top" class="vncell">Enable</td>
 					<td class="vtable">
 						<input name="enable" type="checkbox" value="yes" <?php if ($pconfig['enable']) echo "checked"; ?> onClick="enable_change(false)">
-						<br>DHCP sunucusunu <b><?=htmlspecialchars($iflist[$if]);?></b> arayüzünde etkinleştirmek için işaretleyin.
+						<br>Enable DHCP server on <b><?=htmlspecialchars($iflist[$if]);?></b> interface.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Otomatik IP Adresi Dağıtımını Kapat</td>
+					<td valign="top" class="vncell">Deny Unknown Clients</td>
 					<td class="vtable">
 						<input name="denyunknown" id="denyunknown" type="checkbox" value="yes" <?php if ($pconfig['denyunknown']) echo "checked"; ?>>
-						<br>İşaretlendiğinde, sadece sabit IP adresi verilen istemciler DHCP sunucuyu kullanabilirler.
+						<br>If this is checked, only the clients defined in STATIC MAPPINGS will get DHCP leases from this server
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Alt Ağ</td>
+					<td valign="top" class="vncell">Subnet</td>
 					<td class="vtable">
 						<?=gen_subnet($ifcfgip, $ifcfgsn);?>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Alt Ağ Maskesi</td>
+					<td valign="top" class="vncell">Subnet Mask</td>
 					<td class="vtable">
 						<?=gen_subnet_mask($ifcfgsn);?>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Kullanılabilir IP Dağıtım Aralığı</td>
+					<td valign="top" class="vncell">Available Range</td>
 					<td class="vtable">
 					<?php
 						$range_from = ip2long(long2ip32(ip2long($ifcfgip) & gen_subnet_mask_long($ifcfgsn)));
@@ -448,29 +448,29 @@ include('head.inc');
 					</td>
 				</tr>
 				<tr>
-				<td valign="top" class="vncell">Otomatik IP Adresi Dağıtım Aralığı</td>
+				<td valign="top" class="vncell">Range</td>
 				<td class="vtable">
 					<input name="range_from" type="text" id="range_from" value="<?=htmlspecialchars($pconfig['range_from']);?>">
 					&nbsp;-&nbsp; <input name="range_to" type="text" id="range_to" value="<?=htmlspecialchars($pconfig['range_to']);?>">
 				</td>
 				</tr>
 				<tr>
-				<td valign="top" class="vncell">DNS Sunucu Adresleri</td>
+				<td valign="top" class="vncell">DNS Servers</td>
 				<td class="vtable">
 					<input name="dns1" type="text" id="dns1" value="<?=htmlspecialchars($pconfig['dns1']);?>"><br>
 					<input name="dns2" type="text" id="dns2" value="<?=htmlspecialchars($pconfig['dns2']);?>"><br>
-						Sistemin varsayılan DNS adreslerini kullanmak için boş bırakın.<br>
-						<b>NOT: </b>Sistem DNS adresleri "Sistem->Genel Ayarlar" sayfasından ayarlanır.
+					  NOTE: leave blank to use the system default DNS servers - this interface's IP if DNS forwarder is enabled, <br>
+					  otherwise the servers configured on the "System->General Settings" page.
 				</td>
 				</tr>
 				<tr>
-				<td valign="top" class="vncell">Ağ Geçidi</td>
+				<td valign="top" class="vncell">Gateway</td>
 				<td class="vtable">
 					<input name="gateway" type="text" id="gateway" value="<?=htmlspecialchars($pconfig['gateway']);?>">
 				</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Alan Adı</td>
+					<td valign="top" class="vncell">Domain Name</td>
 					<td class="vtable">
 						<input name="domain" type="text" id="domain" value="<?=htmlspecialchars($pconfig['domain']);?>">
 					 </td>
@@ -479,7 +479,7 @@ include('head.inc');
 					<td class="vncell"></td>
 					<td class="vtable">
 						<input name="if" type="hidden" value="<?=htmlspecialchars($if);?>">
-						<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet" onclick="enable_change(true)">
+						<input name="Submit" type="submit" class="btn btn-inverse" value="Save" onclick="enable_change(true)">
 					</td>
 				</tr>
 			</table>

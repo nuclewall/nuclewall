@@ -170,7 +170,7 @@ $pgtitle = array('STATUS ', 'SERVICES');
 									dnsmasq
 								</td>
 								<td class="cell description sv">
-									DNS resolver
+									DNS Forwarder
 								</td>
 								<td class="cell status">
 								<?php if($dnsmasqrunning) : ?>

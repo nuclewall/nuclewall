@@ -75,13 +75,13 @@ if ($_POST) {
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 
 	if (($_POST['host'] && !is_hostname($_POST['host'])))
-		$input_errors[] = "Sunucu adı sadece A-Z, 0-9 ve '-' karakterlerinden oluşabilir.";
+		$input_errors[] = "The hostname can only contain the characters A-Z, 0-9 and '-'.";
 
 	if (($_POST['domain'] && !is_domain($_POST['domain'])))
-		$input_errors[] = "Geçerli bir alan adı girmelisiniz.";
+		$input_errors[] = "A valid domain must be specified.";
 
 	if (($_POST['ip'] && !is_ipaddr($_POST['ip'])))
-		$input_errors[] = "Geçerli bir IP adresi girmelisiniz.";
+		$input_errors[] = "A valid IP address must be specified.";
 
 	/* check for overlaps */
 	foreach ($a_hosts as $hostent) {
@@ -89,7 +89,7 @@ if ($_POST) {
 			continue;
 
 		if (($hostent['host'] == $_POST['host']) && ($hostent['domain'] == $_POST['domain'])) {
-			$input_errors[] = "Girdiğiniz sunucu/alan adı zaten kayıtlı.";
+			$input_errors[] = "This host/domain already exists.";
 			break;
 		}
 	}
@@ -116,7 +116,7 @@ if ($_POST) {
 	}
 }
 
-$pgtitle = array('SERVİSLER', 'DNS ÇÖZÜMLEYİCİ', 'DNS KAYDI DÜZENLE');
+$pgtitle = array('SERVICES ', 'DNS FORWARDER', 'EDIT DNS RECORD');
 
 ?>
 
@@ -132,43 +132,43 @@ $pgtitle = array('SERVİSLER', 'DNS ÇÖZÜMLEYİCİ', 'DNS KAYDI DÜZENLE');
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td colspan="2" valign="top" class="listtopic">DNS KAYDI DÜZENLE</td>
+					<td colspan="2" valign="top" class="listtopic">EDIT DNS RECORD</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Sunucu Adı</td>
+					<td valign="top" class="vncell">Host</td>
 					<td class="vtable">
 						<input name="host" type="text" class="formfld" id="host" size="40" value="<?=htmlspecialchars($pconfig['host']);?>">
-						<br>Sunucu adını alan adı olmadan girin.<br>
-						Örnek: <em>www</em>
+						<br>Name of the host, without domain part<br>
+						Example: <em>myhost</em>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Alan Adı</td>
+					<td valign="top" class="vncell">Domain</td>
 					<td class="vtable">
 						<input name="domain" type="text" id="domain" value="<?=htmlspecialchars($pconfig['domain']);?>">
-						<br>Sunucunun alan adını girin.<br>
-						Örnek: <em>sunucum.com</em>
+						<br>Domain of the host<br>
+						Example: <em>example.com</em>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">IP Adresi</td>
+					<td valign="top" class="vncell">IP Address</td>
 					<td class="vtable">
 						<input name="ip" type="text" id="ip" value="<?=htmlspecialchars($pconfig['ip']);?>">
-						<br>Sunucunun IP adresini girin.<br>
-						Örnek: <em>192.168.100.100</em>
+						<br>IP address of the host<br>
+						Example: <em>192.168.100.100</em>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Açıklama</td>
+					<td valign="top" class="vncell">Description</td>
 					<td class="vtable">
 						<input name="descr" type="text" id="descr" value="<?=htmlspecialchars($pconfig['descr']);?>">
-						<br>İsteğe bağlı bir açıklama girebilirsiniz.
+						<br>You may enter a description here for your reference
 					</td>
 				</tr>
 				<tr>
 				<td class="vncell"></td>
 				<td class="vtable">
-					<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
+					<input name="Submit" type="submit" class="btn btn-inverse" value="Save">
 					<input class="btn" type="button" value="İptal" onclick="history.back()">
 					<?php if (isset($id) && $a_hosts[$id]): ?>
 					<input name="id" type="hidden" value="<?=htmlspecialchars($id);?>">

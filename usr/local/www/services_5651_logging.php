@@ -10,7 +10,7 @@ require('config.inc');
 require('guiconfig.inc');
 require('5651_logger.inc');
 
-$pgtitle = array('SERVİSLER', ' 5651 SAYILI YASAYA GÖRE KAYIT TUTMA SERVİSİ');
+$pgtitle = array('SERVICES', ' 5651 LAW LOGGING');
 
 if (!is_array($config['digitalsign']))
 {
@@ -34,27 +34,27 @@ if ($_POST)
 
 	if(!empty($_POST['smbhostname']) && !is_hostname($_POST['smbhostname']))
 	{
-		$input_errors[] = 'Geçerli bir sunucu adı girmelisiniz.';
+		$input_errors[] = "Hostname must be a valid hostname.";
 	}
 
 		if(!empty($_POST['sign_hour']) && !check_hour($_POST['sign_hour']))
 	{
-		$input_errors[] = 'Geçerli bir saat girmelisiniz. HH:MM formatında bir saat girin.';
+		$input_errors[] = "Time must be in HH:MM format.";
 	}
 
 	if($_POST['sign_type'] == 'remote')
 	{
 		$reqdfields = split(" ", "smbhostname smbusername smbpassword smbfolder");
-		$reqdfieldsn = array("Sunucu Adı", "Kullanıcı Adı", "Parola", "Klasör Adı");
+		$reqdfieldsn = array("Hostname", "Username", "Password", "Share Folder");
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 	}
 
 	if(strlen($_POST['smbusername']) > 128)
-		$input_errors[] = 'Kullanıcı adı 128 karakteri geçmemelidir.';
+		$input_errors[] = "Username is longer than 128 characters.";
 	if(strlen($_POST['smbpassword']) > 128)
-		$input_errors[] = 'Parola 128 karakteri geçmemelidir.';
+		$input_errors[] = "Password is longer than 128 characters.";
 	if(strlen($_POST['smbfolder']) > 128)
-		$input_errors[] = 'Klasör Adı 128 karakteri geçmemelidir.';
+		$input_errors[] = "Share Folder is longer than 128 characters.";
 
 	if (!$input_errors)
 	{
@@ -119,7 +119,7 @@ if ($_POST)
 			install_cron_job('/usr/local/bin/log_sender', false,  '*', '*', '*', '*', '*', 'root');
 		}
 
-		$savemsg = 'Ayarlar başarıyla kaydedildi.';
+		$savemsg = 'Saved successfully.';
 	}
 }
 
@@ -139,9 +139,9 @@ if ($_POST)
 		<td class='tabnavtbl'>
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Genel Ayarlar', true, 'services_5651_logging.php');
-				$tab_array[] = array('İmzalanmış Dosyalar', false, 'services_5651_signeds.php');
-				$tab_array[] = array('Hareketler', false, 'diag_logs_timestamp.php');
+				$tab_array[] = array('General Settings', true, 'services_5651_logging.php');
+				$tab_array[] = array('Signed Files', false, 'services_5651_signeds.php');
+				$tab_array[] = array('Logs', false, 'diag_logs_timestamp.php');
 				display_top_tabs($tab_array, true);
 			?>
 		</td>
@@ -150,61 +150,59 @@ if ($_POST)
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td valign="top" class="vncell">Aktif</td>
+					<td valign="top" class="vncell">Enabled</td>
 					<td class="vtable">
 						<label>
 						<input name="enable" type="checkbox" value="yes" <?php if ($pconfig['enable']) echo "checked"; ?>>
-						Servisi aktifleştirmek için işaretleyin.
+						Enable service
 						</label>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">İmzalama Yöntemi</td>
+					<td valign="top" class="vncell">Signing Option</td>
 					<td class="vtable">
 						<div class="form-inline">
 							<div class="controls-row">
 								<label class="radio inline">
 									<input <?php if($pconfig['sign_type'] == 'local') echo 'checked'; ?> name="sign_type" type="radio" value="local"/>
-									Yerel (OpenSSL ile)
+									Local (via OpenSSL)
 								</label>
 								<label class="radio inline">
 									<input <?php if($pconfig['sign_type'] == 'remote') echo 'checked'; ?> name="sign_type" type="radio" value="remote"/>
-									Windows bağlantısı (IP Log İmzalayıcı ile)
+									Windows connection (via IP Log Signer)
 								</label>
 							</div>
 						</div>
 						<p>
-							<b>NOT: </b>Yerel imzalama seçeneği tamamen deneysel olup Bilgi Teknolojileri ve İletişim Kurumu tarafından bildirilen bir imzalama
-							seçeneği değildir.
+							<b>WARNING: </b>Local signing is completely experimental.
 						</p>
 						<p>
-							Bilgi Teknolojileri ve İletişim Kurumu'ndan bildirildiği üzere, kayıtların
-							<a class="btn-link" target="_blank" href="https://www.btk.gov.tr/ip-log-imzalayici">IP Log İmzalayıcı</a>
-							tarafından imzalanması önerilir.
+							According to 5651 law, logs must be signed by
+							<a class="btn-link" target="_blank" href="https://www.btk.gov.tr/ip-log-imzalayici">IP Log Signer</a>
 						</p>
 					</td>
 				</tr>
 				<tbody id="local_sign">
 				<tr>
-					<td colspan="2" class="listtopic">YEREL İMZALAMA SEÇENEKLERİ</td>
+					<td colspan="2" class="listtopic">LOCAL SIGNING SETTINGS</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">İmzalama Sıklığı</td>
+					<td valign="top" class="vncell">Signing Frequency</td>
 					<td class="vtable">
 						<div>
 							<div class="controls-row">
 								<label class="radio">
 									<input <?php if($pconfig['sign_time'] == 'customhour') echo 'checked'; ?> name="sign_time" type="radio" value="customhour"/>
 									<input value="<?php if($pconfig['sign_time'] == 'customhour') echo $pconfig['sign_hour']; ?>" name="sign_hour" type="time" id="sign_hour" style="width:100px;">
-									Belirtilen Saatte
+									At a specific time
 									<p>
-									'21:45' formatında bir saat girin.<br>
-									<b>NOT: </b>Varsayılan değer 12:30'dur.
+									Enter a time in '21:45' format.<br>
+									<b>NOTE: </b>Default time is 12:30.
 									</p>
 								</label>
 								<label class="radio">
 									<input <?php if($pconfig['sign_time'] == 'onehour') echo 'checked'; ?> name="sign_time" type="radio" value="onehour"/>
-									1 Saat Aralıklarla
+									Every 1 hour
 								</label>
 							</div>
 						</div>
@@ -213,47 +211,47 @@ if ($_POST)
 				</tbody>
 				<tbody id="smbclient_form">
 				<tr>
-					<td colspan="2" class="listtopic">WINDOWS BAĞLANTI AYARLARI</td>
+					<td colspan="2" class="listtopic">WINDOWS CONNECTION SETTINGS</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Bağlantı durumu</td>
+					<td valign="top" class="vncell">Connection Status</td>
 					<td id="connstatus" class="vtable">
-					<span class="label">Kontrol ediliyor...</span>
+					<span class="label">Checking...</span>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Windows Sunucu</td>
+					<td valign="top" class="vncell">Windows Server</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['smbhostname'];?>" name="smbhostname" type="text" id="smbhostname" tabindex="1" maxlength="40"><br>
-						Kayıtların gönderileceği Windows sunucunun NetBIOS adını veya IP adresini girin.
+						Windows server NetBIOS name or IP address which logs are sent to.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Kullanıcı Adı</td>
+					<td valign="top" class="vncell">Username</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['smbusername'];?>" name="smbusername" type="text" id="smbusername" tabindex="3" maxlength="128"><br>
-						Windows kullanıcı adını girin. Paylaşılan klasör için bu kullanıcıya gerekli izinlerin verildiğinden emin olun.
+						Windows username. Ensure shared folder is permitted to this user.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Parola</td>
+					<td valign="top" class="vncell">Password</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['smbpassword'];?>" name="smbpassword" type="password" id="smbpassword" tabindex="4" maxlength="128"><br>
-						Windows kullanıcı parolasını girin.
+						Windows user password
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Paylaşım Adı</td>
+					<td valign="top" class="vncell">Share Folder</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['smbfolder'];?>" name="smbfolder" type="text" id="smbfolder" tabindex="5" maxlength="128"><br>
-						Windows sunucudaki paylaşım klasörünün adını girin.
+						Enter shared folder name on Windows server
 					</td>
 				</tr>
 				</tbody>
 				<tr>
 					<td class="vncell"></td>
 					<td class="vtable">
-						<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
+						<input name="Submit" type="submit" class="btn btn-inverse" value="Save">
 					</td>
 				</tr>
 			</table>

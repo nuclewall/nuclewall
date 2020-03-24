@@ -65,7 +65,7 @@ if ($_POST)
 	}
 }
 
-$pgtitle = array('SERVİSLER', 'DNS ÇÖZÜMLEYİCİ', 'AYARLAR');
+$pgtitle = array('SERVICES', 'DNS Forwarder', 'SETTINGS');
 
 include('head.inc');
 
@@ -87,7 +87,7 @@ function enable_change(enable_over) {
 
 <form action="services_dnsmasq.php" method="post" name="iform" id="iform">
 <?php if (is_subsystem_dirty('hosts')): ?><p>
-<?php print_info_box_np("Özel DNS kayıtları değiştirildi.<br>Değişikliklerin etkili olabilmesi için uygulamalısınız.", true);?>
+<?php print_info_box_np("The DNS forwarder configuration has been changed.<br>You must apply the changes in order for them to take effect.", true);?>
 <?php endif; ?>
 <?php if ($input_errors) print_input_errors($input_errors); ?>
 <?php if ($savemsg) print_info_box($savemsg); ?>
@@ -97,8 +97,8 @@ function enable_change(enable_over) {
 		<td>
 			<?php
 				$tab_array = array();
-				$tab_array[0] = array("Ayarlar", true, "services_dnsmasq.php");
-				$tab_array[1] = array("Özel DNS Kayıtları", false, "services_dnsmasq_hosts.php");
+				$tab_array[0] = array("Settings", true, "services_dnsmasq.php");
+				$tab_array[1] = array("Static DNS Records", false, "services_dnsmasq_hosts.php");
 				display_top_tabs($tab_array);
 			?>
 		</td>
@@ -107,30 +107,30 @@ function enable_change(enable_over) {
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td valign="top" class="vncell">Aktif</td>
+					<td valign="top" class="vncell">Enable</td>
 					<td class="vtable">
 						<input name="enable" type="checkbox" id="enable" value="yes" <?php if ($pconfig['enable'] == "yes") echo "checked";?> onClick="enable_change(false)">
-						DNS çözümleyiciyi aktifleştirmek için işaretleyin.
+						Enable DNS forwarder.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">DHCP Dağıtımları</td>
+					<td valign="top" class="vncell">DHCP Registration</td>
 					<td class="vtable"><p>
 						<input name="regdhcp" type="checkbox" id="regdhcp" value="yes" <?php if ($pconfig['regdhcp'] == "yes") echo "checked";?>>
-						DHCP istemcilerinin adreslerinin çözümlenmesi için işaretleyin.
+						Register DHCP leases in DNS forwarder.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Sabit DHCP Dağıtımları</td>
+					<td valign="top" class="vncell">Static DHCP</td>
 					<td class="vtable">
 						<input name="regdhcpstatic" type="checkbox" id="regdhcpstatic" value="yes" <?php if ($pconfig['regdhcpstatic'] == "yes") echo "checked";?>>
-						DHCP sunucusuyla sabit IP dağıtılan istemcilerin isimleri DNS çözümleyiciye kayıt etmek için işaretleyin.
+						Register DHCP static mappings in DNS forwarder
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell"></td>
 					<td class="vtable">
-						<input name="submit" type="submit" class="btn btn-inverse" value="Kaydet" onclick="enable_change(true)">
+						<input name="submit" type="submit" class="btn btn-inverse" value="Save" onclick="enable_change(true)">
 					</td>
 				</tr>
 			</table>

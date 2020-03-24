@@ -47,7 +47,7 @@ if ($_GET['act'] == "del") {
 	}
 }
 
-$pgtitle = array('SERVİSLER', 'DNS ÇÖZÜMLEYİCİ', 'ÖZEL DNS KAYITLARI');
+$pgtitle = array('SERVICES ', 'DNS FORWARDER', 'STATIC DNS RECORDS');
 
 ?>
 
@@ -58,15 +58,15 @@ $pgtitle = array('SERVİSLER', 'DNS ÇÖZÜMLEYİCİ', 'ÖZEL DNS KAYITLARI');
 
 <form action="services_dnsmasq_hosts.php" method="post" name="iform" id="iform">
 <?php if (is_subsystem_dirty('hosts')): ?><p>
-<?php print_info_box_np("Özel DNS kayıtları değiştirildi.<br>Değişikliklerin etkili olabilmesi için uygulamalısınız.", true);?>
+<?php print_info_box_np("The DNS forwarder configuration has been changed.<br>You must apply the changes in order for them to take effect.", true);?>
 <?php endif; ?>
 <table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<?php
 				$tab_array = array();
-				$tab_array[0] = array("Ayarlar", false, "services_dnsmasq.php");
-				$tab_array[1] = array("Özel DNS Kayıtları", true, "services_dnsmasq_hosts.php");
+				$tab_array[0] = array("Settings", false, "services_dnsmasq.php");
+				$tab_array[1] = array("Static DNS Records", true, "services_dnsmasq_hosts.php");
 				display_top_tabs($tab_array);
 			?>
 		</td>
@@ -78,10 +78,10 @@ $pgtitle = array('SERVİSLER', 'DNS ÇÖZÜMLEYİCİ', 'ÖZEL DNS KAYITLARI');
 					<td>
 						<table class="grids sortable">
 							<tr>
-								<td class="head">Sunucu Adı</td>
-								<td class="head">Alan Adı</td>
-								<td class="head">IP Adresi</td>
-								<td class="head">Açıklama</td>
+								<td class="head">Hostname</td>
+								<td class="head">Domain</td>
+								<td class="head">IP Address</td>
+								<td class="head">Description</td>
 								<td class="head">
 								</td>
 							</tr>
@@ -100,10 +100,10 @@ $pgtitle = array('SERVİSLER', 'DNS ÇÖZÜMLEYİCİ', 'ÖZEL DNS KAYITLARI');
 									<?=htmlspecialchars(base64_decode($hostent['descr']));?>
 								</td>
 								<td class="cell tools">
-									<a title="Düzenle" href="services_dnsmasq_edit.php?id=<?=$i;?>">
+									<a title="Edit" href="services_dnsmasq_edit.php?id=<?=$i;?>">
 										<i class="icon-edit"></i>
 									</a>
-									<a title="Sil" href="services_dnsmasq_hosts.php?type=host&act=del&id=<?=$i;?>" onclick="return confirm('Bu kaydı silmek istediğinizden emin misiniz?')">
+									<a title="Delete" href="services_dnsmasq_hosts.php?type=host&act=del&id=<?=$i;?>" onclick="return confirm('Do you really want to delete this host?')">
 										<i class="icon-trash"></i>
 									</a>
 								</td>
@@ -112,7 +112,7 @@ $pgtitle = array('SERVİSLER', 'DNS ÇÖZÜMLEYİCİ', 'ÖZEL DNS KAYITLARI');
 							<tr>
 								<td class="cell" colspan="4"></td>
 								<td class="cell tools">
-									<a title="Yeni sunucu kaydı" href="services_dnsmasq_edit.php">
+									<a title="New host record" href="services_dnsmasq_edit.php">
 										<i class="icon-plus"></i>
 									</a>
 								</td>

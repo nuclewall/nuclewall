@@ -10,7 +10,7 @@
 require('config.inc');
 require('guiconfig.inc');
 
-$pgtitle = array('5651: YEREL OLARAK İMZALANMIŞ DOSYALAR');
+$pgtitle = array('5651: LOCALLY SIGNED FILES');
 
 $today = date('dmY');
 ?>
@@ -28,9 +28,9 @@ $today = date('dmY');
 		<td class='tabnavtbl'>
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Genel Ayarlar', false, 'services_5651_logging.php');
-				$tab_array[] = array('İmzalanmış Dosyalar', true, 'services_5651_signeds.php');
-				$tab_array[] = array('Hareketler', false, 'diag_logs_timestamp.php');
+				$tab_array[] = array('General Settings', false, 'services_5651_logging.php');
+				$tab_array[] = array('Signed Files', true, 'services_5651_signeds.php');
+				$tab_array[] = array('Logs', false, 'diag_logs_timestamp.php');
 				display_top_tabs($tab_array, true);
 			?>
 		</td>
@@ -52,9 +52,9 @@ $today = date('dmY');
 									<table class="grids sortable">
 										<thead>
 											<tr>
-												<td class="head">Dosya</td>
-												<td class="head">Oluşturulma Saati</td>
-												<td class="head">İmzalanma Saati</td>
+												<td class="head">File</td>
+												<td class="head">Creation Time</td>
+												<td class="head">Signed Time</td>
 												<td class="head"></td>
 											</tr>
 										</thead>
@@ -73,7 +73,7 @@ $today = date('dmY');
 </div>
 <script type="text/javascript">
 jQuery('#datetimepicker').datetimepicker({
-    language:  'tr',
+    language:  'en',
     weekStart: 1,
     todayBtn:  1,
 	todayHighlight: 1,
@@ -126,13 +126,13 @@ jQuery("#files").on("click", "a", function()
   {
 	if(msg == 'Verification: OK')
 	{
-		jQuery("#sign_alert").text(filename + " dosyasının imzası geçerli.");
+		jQuery("#sign_alert").text(filename + " file is verified.");
 		jQuery("#sign_alert").removeClass("alert-error");
 		jQuery("#sign_alert").addClass("alert-success");
 	}
 	else if(msg == 'Verification: FAILED')
 	{
-		jQuery("#sign_alert").text(filename + " dosyasının imzası geçersiz.");
+		jQuery("#sign_alert").text(filename + " file is changed or corrupted. Not verified.");
 		jQuery("#sign_alert").removeClass("alert-success");
 		jQuery("#sign_alert").addClass("alert-error");
 	}
