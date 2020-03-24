@@ -37,7 +37,7 @@ $a_gateways = return_gateways_array();
 $gateways_status = array();
 $gateways_status = return_gateways_status(true);
 
-$pgtitle = array('DURUM', 'AĞ GEÇİTLERİ');
+$pgtitle = array('STATUS ', 'GATEWAYS');
 ?>
 
 <?php include('head.inc'); ?>
@@ -50,8 +50,8 @@ $pgtitle = array('DURUM', 'AĞ GEÇİTLERİ');
 		<td>
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Ağ Geçitleri', true, 'status_gateways.php');
-				$tab_array[] = array('Ağ Geçidi Grupları', false, 'status_gateway_groups.php');
+				$tab_array[] = array('Gateways', true, 'status_gateways.php');
+				$tab_array[] = array('Gateway Groups', false, 'status_gateway_groups.php');
 				display_top_tabs($tab_array);
 			?>
 		</td>
@@ -63,13 +63,13 @@ $pgtitle = array('DURUM', 'AĞ GEÇİTLERİ');
 					<td>
 						<table class="grids">
 							<tr>
-								<td class="head">İsim</td>
-								<td class="head">Ağ Geçidi</td>
-								<td class="head">İzleme IP'si</td>
+								<td class="head">Name</td>
+								<td class="head">Gateway</td>
+								<td class="head">Monitor IP</td>
 								<td class="head">RTT</td>
-								<td class="head">Kayıp</td>
-								<td class="head">Durum</td>
-								<td class="head">Açıklama</td>
+								<td class="head">Loss</td>
+								<td class="head">Status</td>
+								<td class="head">Description</td>
 							</tr>
 							<?php foreach ($a_gateways as $gname => $gateway) { ?>
 							<tr>
@@ -92,7 +92,7 @@ $pgtitle = array('DURUM', 'AĞ GEÇİTLERİ');
 										if ($gateways_status[$gname])
 											echo $gateways_status[$gname]['delay'];
 										else
-											echo "Veri alınıyor...";
+											echo "Gathering data...";
 									?>
 									<?php $counter++; ?>
 								</td>
@@ -101,7 +101,7 @@ $pgtitle = array('DURUM', 'AĞ GEÇİTLERİ');
 										if ($gateways_status[$gname])
 											echo $gateways_status[$gname]['loss'];
 										else
-											echo "Veri alınıyor...";
+											echo "Gathering data...";
 									?>
 									<?php $counter++; ?>
 								</td>
@@ -111,24 +111,24 @@ $pgtitle = array('DURUM', 'AĞ GEÇİTLERİ');
 									{
 										$status = $gateways_status[$gname];
 										if (stristr($status['status'], "down")) {
-											$online = "Çevrimdışı";
+											$online = "Offline";
 											$bgcolor = "";
 										} elseif (stristr($status['status'], "loss")) {
-											$online = "Uyarı: Paket kaybı";
+											$online = "Warning: Packet loss";
 											$bgcolor = "label-warning";
 										} elseif (stristr($status['status'], "delay")) {
-											$online = "Uyarı: Gecikme";
+											$online = "Warning: Latency";
 											$bgcolor = "label-warning";
 										} elseif ($status['status'] == "none") {
-											$online = "Aktif";
+											$online = "Online";
 											$bgcolor = "label-success";
 										}
 									}
 									else if (isset($gateway['monitor_disable'])) {
-											$online = "Aktif";
+											$online = "Online";
 											$bgcolor = "label-success";
 										} else {
-											$online = "Veril alınıyor...";
+											$online = "Gathering data...";
 											$bgcolor = "label-success";
 										}
 									echo	"<span class=\"label $bgcolor\">$online</span>";
@@ -139,7 +139,7 @@ $pgtitle = array('DURUM', 'AĞ GEÇİTLERİ');
 										array_shift($lastchange);
 										array_shift($lastchange);
 										$lastchange = implode(" ", $lastchange);
-										printf("Son kontrol: %s", $lastchange);
+										printf("Last check: %s", $lastchange);
 									}
 											?>
 								</td>

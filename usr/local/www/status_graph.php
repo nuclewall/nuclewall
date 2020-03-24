@@ -59,7 +59,7 @@ if ($_GET['if']) {
 	$curif = "wan";
 }
 
-$pgtitle = array('DURUM', 'AĞ TRAFİĞİ');
+$pgtitle = array('STATUS ', 'NETWORK TRAFFIC');
 
 include('head.inc');
 

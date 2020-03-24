@@ -2,14 +2,14 @@
 /*
     status_services.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2015 Ogun Acik
 	All rights reserved.
 */
 
 require_once('guiconfig.inc');
 require_once('service-utils.inc');
 
-$pgtitle = array('DURUM ', 'SERVİSLER');
+$pgtitle = array('STATUS ', 'SERVICES');
 
 ?>
 
@@ -26,9 +26,9 @@ $pgtitle = array('DURUM ', 'SERVİSLER');
 					<td>
 						<table class="grids sortable">
 							<tr>
-								<td class="head">Servis Adı</td>
-								<td class="head">Açıklama</td>
-								<td class="head">Durum</td>
+								<td class="head">Service</td>
+								<td class="head">Description</td>
+								<td class="head">Status</td>
 							</tr>
 							<tr>
 								<?php
@@ -38,15 +38,15 @@ $pgtitle = array('DURUM ', 'SERVİSLER');
 									hotspot
 								</td>
 								<td class="cell description sv">
-									Hotspot servisi
+									Hotspot Service
 								</td>
 								<td class="cell status">
 								<?php if($cprunning) : ?>
-									<span title="Çalışıyor" class="label service blue">
+									<span title="Running" class="label service blue">
 										<i class="icon-play icon-white"></i>
 									</span>
 								<?php else: ?>
-									<span title="Durduruldu" class="label service red">
+									<span title="Stopped" class="label service red">
 										<i class="icon-stop icon-white"></i>
 									</span>
 								<?php endif; ?>
@@ -60,15 +60,15 @@ $pgtitle = array('DURUM ', 'SERVİSLER');
 									radiusd
 								</td>
 								<td class="cell description sv">
-									FreeRADIUS sunucusu (hotspot alt servisi)
+									FreeRADIUS Server (part of hotspot)
 								</td>
 								<td class="cell status">
 								<?php if($radiusdrunning) : ?>
-									<span title="Çalışıyor" class="label service blue">
+									<span title="Running" class="label service blue">
 										<i class="icon-play icon-white"></i>
 									</span>
 								<?php else: ?>
-									<span title="Durduruldu" class="label service red">
+									<span title="Stopped" class="label service red">
 										<i class="icon-stop icon-white"></i>
 									</span>
 								<?php endif; ?>
@@ -82,15 +82,15 @@ $pgtitle = array('DURUM ', 'SERVİSLER');
 									mysqld
 								</td>
 								<td class="cell description sv">
-									MySQL sunucusu (hotspot alt servisi)
+									MySQL Server (part of hotspot)
 								</td>
 								<td class="cell status">
 								<?php if($mysqldrunning) : ?>
-									<span title="Çalışıyor" class="label service blue">
+									<span title="Running" class="label service blue">
 										<i class="icon-play icon-white"></i>
 									</span>
 								<?php else: ?>
-									<span title="Durduruldu" class="label service red">
+									<span title="Stopped" class="label service red">
 										<i class="icon-stop icon-white"></i>
 									</span>
 								<?php endif; ?>
@@ -104,15 +104,15 @@ $pgtitle = array('DURUM ', 'SERVİSLER');
 									squid
 								</td>
 								<td class="cell description sv">
-									Squid HTTP proxy sunucusu
+									Squid HTTP Proxy Server
 								</td>
 								<td class="cell status">
 								<?php if($squidrunning) : ?>
-									<span title="Çalışıyor" class="label service blue">
+									<span title="Running" class="label service blue">
 										<i class="icon-play icon-white"></i>
 									</span>
 								<?php else: ?>
-									<span title="Durduruldu" class="label service red">
+									<span title="Stopped" class="label service red">
 										<i class="icon-stop icon-white"></i>
 									</span>
 								<?php endif; ?>
@@ -126,15 +126,15 @@ $pgtitle = array('DURUM ', 'SERVİSLER');
 									squidGuard
 								</td>
 								<td class="cell description sv">
-									SquidGuard web filtreleme (squid alt servisi)
+									SquidGuard Web Filter (part of Squid)
 								</td>
 								<td class="cell status">
 								<?php if($squidgrunning) : ?>
-									<span title="Çalışıyor" class="label service blue">
+									<span title="Running" class="label service blue">
 										<i class="icon-play icon-white"></i>
 									</span>
 								<?php else: ?>
-									<span title="Durduruldu" class="label service red">
+									<span title="Stopped" class="label service red">
 										<i class="icon-stop icon-white"></i>
 									</span>
 								<?php endif; ?>
@@ -148,15 +148,15 @@ $pgtitle = array('DURUM ', 'SERVİSLER');
 									dhcpd
 								</td>
 								<td class="cell description sv">
-									DHCP otomatik IP adresi dağıtım servisi
+									DHCP Server
 								</td>
 								<td class="cell status">
 								<?php if($dhcpdrunning) : ?>
-									<span title="Çalışıyor" class="label service blue">
+									<span title="Running" class="label service blue">
 										<i class="icon-play icon-white"></i>
 									</span>
 								<?php else: ?>
-									<span title="Durduruldu" class="label service red">
+									<span title="Stopped" class="label service red">
 										<i class="icon-stop icon-white"></i>
 									</span>
 								<?php endif; ?>
@@ -170,15 +170,15 @@ $pgtitle = array('DURUM ', 'SERVİSLER');
 									dnsmasq
 								</td>
 								<td class="cell description sv">
-									DNS çözümleme servisi
+									DNS resolver
 								</td>
 								<td class="cell status">
 								<?php if($dnsmasqrunning) : ?>
-									<span title="Çalışıyor" class="label service blue">
+									<span title="Running" class="label service blue">
 										<i class="icon-play icon-white"></i>
 									</span>
 								<?php else: ?>
-									<span title="Durduruldu" class="label service red">
+									<span title="Stopped" class="label service red">
 										<i class="icon-stop icon-white"></i>
 									</span>
 								<?php endif; ?>
@@ -192,15 +192,15 @@ $pgtitle = array('DURUM ', 'SERVİSLER');
 									sshd
 								</td>
 								<td class="cell description sv">
-									SSH (Güvenli Kabuk) sunucusu
+									SSH Server
 								</td>
 								<td class="cell status">
 								<?php if($sshdrunning) : ?>
-									<span title="Çalışıyor" class="label service blue">
+									<span title="Running" class="label service blue">
 										<i class="icon-play icon-white"></i>
 									</span>
 								<?php else: ?>
-									<span title="Durduruldu" class="label service red">
+									<span title="Stopped" class="label service red">
 										<i class="icon-stop icon-white"></i>
 									</span>
 								<?php endif; ?>
@@ -214,15 +214,15 @@ $pgtitle = array('DURUM ', 'SERVİSLER');
 									ntpd
 								</td>
 								<td class="cell description sv">
-									NTP zaman eşitleme servisi
+									NTP Server
 								</td>
 								<td class="cell status">
 								<?php if($ntpdrunning) : ?>
-									<span title="Çalışıyor" class="label service blue">
+									<span title="Running" class="label service blue">
 										<i class="icon-play icon-white"></i>
 									</span>
 								<?php else: ?>
-									<span title="Durduruldu" class="label service red">
+									<span title="Stopped" class="label service red">
 										<i class="icon-stop icon-white"></i>
 									</span>
 								<?php endif; ?>

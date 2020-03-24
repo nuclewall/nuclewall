@@ -37,7 +37,7 @@
 
 require('guiconfig.inc');
 
-$pgtitle = array('DURUM', 'DHCP IP ADRESİ DAĞITIMLARI');
+$pgtitle = array('STATUS ', 'DHCP LEASES');
 
 $leasesfile = "{$g['dhcpd_chroot_path']}/var/db/dhcpd.leases";
 
@@ -170,15 +170,15 @@ while($i < $leases_count)
 				switch($data[$f+2])
 				{
 					case "active":
-						$leases[$l]['act'] = "Otomatik";
+						$leases[$l]['act'] = "active";
 						break;
 					case "free":
-						$leases[$l]['act'] = "Zamanı geçmiş";
-						$leases[$l]['online'] = "Çevrimdışı";
+						$leases[$l]['act'] = "expired";
+						$leases[$l]['online'] = "offline";
 						break;
 					case "backup":
-						$leases[$l]['act'] = "Ayrılmış";
-						$leases[$l]['online'] = "Çevrimdışı";
+						$leases[$l]['act'] = "reserved";
+						$leases[$l]['online'] = "offline";
 						break;
 				}
 				$f = $f+1;
@@ -196,12 +196,12 @@ while($i < $leases_count)
 
 				if (in_array($leases[$l]['ip'], $arpdata))
 				{
-					$leases[$l]['online'] = 'Çevrimiçi';
+					$leases[$l]['online'] = 'online';
 					$leases[$l]['class'] = "label-success";
 				}
 				else
 				{
-					$leases[$l]['online'] = 'Çevrimdışı';
+					$leases[$l]['online'] = 'offline';
 					$leases[$l]['class'] = "";
 				}
 
@@ -246,21 +246,21 @@ foreach($config['interfaces'] as $ifname => $ifarr)
 		{
 			$slease = array();
 			$slease['ip'] = $static['ipaddr'];
-			$slease['type'] = "Sabit";
+			$slease['type'] = "Static";
 			$slease['mac'] = $static['mac'];
 			$slease['start'] = "";
 			$slease['end'] = "";
 			$slease['hostname'] = htmlentities($static['hostname']);
-			$slease['act'] = "Sabit";
+			$slease['act'] = "Static";
 			$online = exec("/usr/sbin/arp -an |/usr/bin/grep {$slease['mac']}| /usr/bin/wc -l|/usr/bin/awk '{print $1;}'");
 			if ($online == 1)
 			{
-				$slease['online'] = 'Çevrimiçi';
+				$slease['online'] = 'online';
 				$slease['class'] = "label-success";
 			}
 			else
 			{
-				$slease['online'] = 'Çevrimdışı';
+				$slease['online'] = 'offline';
 				$slease['class'] = "";
 			}
 			$leases[] = $slease;
@@ -279,13 +279,13 @@ if ($_GET['order'])
 					<td>
 						<table class="grids sortable">
 							<tr>
-								<td class="head">IP Adresi</td>
-								<td class="head">MAC Adresi</td>
-								<td class="head">Sunucu Adı</td>
-								<td class="head">Başlangıç</td>
-								<td class="head">Bitiş</td>
-								<td class="head">Durum</td>
-								<td class="head">Türü</td>
+								<td class="head">IP Address</td>
+								<td class="head">MAC Address</td>
+								<td class="head">Hostname</td>
+								<td class="head">Start</td>
+								<td class="head">End</td>
+								<td class="head">Status</td>
+								<td class="head">Lease Type</td>
 								<td class="head"></td>
 							</tr>
 							<?php
@@ -295,7 +295,7 @@ if ($_GET['order'])
 							{
 								$lip = ip2ulong($data['ip']);
 
-								if ($data['act'] == "Sabit")
+								if ($data['act'] == "Static")
 								{
 									foreach ($config['dhcpd'] as $dhcpif => $dhcpifconf)
 									{
@@ -337,16 +337,16 @@ if ($_GET['order'])
 
 								if(isset($mac_man[$mac_hi]))
 								{
-									echo "<td title=\"HOTSPOT Özel izinli MAC adresleri listesine ekle\" class=\"cell dhcpmac\"><a class=\"btn-link\" href=\"hotspot_mac_edit.php?act=new&mac={$mac_url}\">{$mac}<br>{$mac_man[$mac_hi]}</a></td>\n";
+									echo "<td title=\"Add to Hotspot allowed MAC addresses list\" class=\"cell dhcpmac\"><a class=\"btn-link\" href=\"hotspot_mac_edit.php?act=new&mac={$mac_url}\">{$mac}<br>{$mac_man[$mac_hi]}</a></td>\n";
 								}
 								else
 								{
-									echo "<td title=\"HOTSPOT Özel izinli MAC adresleri listesine ekle\" class=\"cell dhcpmac\"><a class=\"btn-link\" href=\"hotspot_mac_edit.php?act=new&mac={$mac_url}\">{$data['mac']}</a></td>\n";
+									echo "<td title=\"Add to Hotspot allowed MAC addresses list\" class=\"cell dhcpmac\"><a class=\"btn-link\" href=\"hotspot_mac_edit.php?act=new&mac={$mac_url}\">{$data['mac']}</a></td>\n";
 								}
 
 								echo "<td class=\"cell dhcphostname\">" . htmlentities($data['hostname']) . "</td>\n";
 
-								if ($data['type'] != "Sabit")
+								if ($data['type'] != "Static")
 								{
 									echo "<td class=\"cell dhcpdate\">" . adjust_gmt($data['start']) . "</td>\n";
 									echo "<td class=\"cell dhcpdate\">" . adjust_gmt($data['end']) . "</td>\n";
@@ -354,8 +354,8 @@ if ($_GET['order'])
 
 								else
 								{
-									echo "<td class=\"cell\">Yok</td>\n";
-									echo "<td class=\"cell\">Yok</td>\n";
+									echo "<td class=\"cell\">None</td>\n";
+									echo "<td class=\"cell\">none</td>\n";
 								}
 
 								echo "<td class=\"cell dhcpstat\"><span class=\"label {$data['class']}\">{$data['online']}</span></td>\n";
@@ -364,13 +364,13 @@ if ($_GET['order'])
 
 								if ($data['type'] == "dynamic")
 								{
-									echo "<a title=\"IP adresi dağıtımını sabit olarak yap\" href=\"services_dhcp_edit.php?if={$data['if']}&mac={$data['mac']}&hostname={$data['hostname']}\">";
+									echo "<a title=\"Make this release static\" href=\"services_dhcp_edit.php?if={$data['if']}&mac={$data['mac']}&hostname={$data['hostname']}\">";
 									echo "<i class=\"icon-plus\"></i></a>\n";
 								}
 
-								if (($data['type'] == "dynamic") && ($data['online'] != 'Çevrimiçi'))
+								if (($data['type'] == "dynamic") && ($data['online'] != 'online'))
 								{
-									echo "<a title=\"Bu IP dağıtımını sil\" href=\"status_dhcp_leases.php?deleteip={$data['ip']} \">";
+									echo "<a title=\"Delete this lease\" href=\"status_dhcp_leases.php?deleteip={$data['ip']} \">";
 									echo "<i class=\"icon-trash\"></i></a>\n";
 								}
 								echo "</td></tr>\n";
@@ -385,7 +385,7 @@ if ($_GET['order'])
 	</tr>
 </table>
 <?php if($leases == 0): ?>
-<b>DHCP dağıtım dosyası bulunamadı. 'dhcpd' servisinin çalıştığından emin olun.</b>
+<b>No leases file found. Is the DHCP server active.</b>
 <?php endif; ?>
 </div>
 </body>

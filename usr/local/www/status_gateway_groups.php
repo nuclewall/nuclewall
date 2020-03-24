@@ -40,7 +40,7 @@ $a_gateway_groups = &$config['gateways']['gateway_group'];
 
 $gateways_status = return_gateways_status();
 
-$pgtitle = array('DURUM', 'AĞ GEÇİDİ GRUPLARI');
+$pgtitle = array('STATUS ', 'GATEWAY GROUPS');
 
 ?>
 
@@ -54,8 +54,8 @@ $pgtitle = array('DURUM', 'AĞ GEÇİDİ GRUPLARI');
 		<td>
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Ağ Geçitleri', false, 'status_gateways.php');
-				$tab_array[] = array('Ağ Geçidi Grupları', true, 'status_gateway_groups.php');
+				$tab_array[] = array('Gateways', false, 'status_gateways.php');
+				$tab_array[] = array('Gateways Groups', true, 'status_gateway_groups.php');
 				display_top_tabs($tab_array);
 			?>
 		</td>
@@ -67,9 +67,9 @@ $pgtitle = array('DURUM', 'AĞ GEÇİDİ GRUPLARI');
 					<td>
 						<table class="grids">
 							<tr>
-								<td class="head">Grup Adı</td>
-								<td class="head">Ağ Geçitleri</td>
-								<td class="head">Açıklama</td>
+								<td class="head">Group Name</td>
+								<td class="head">Gateways</td>
+								<td class="head">Description</td>
 							</tr>
 							<?php $i = 0; foreach ($a_gateway_groups as $gateway_group): ?>
 							<tr>
@@ -85,7 +85,7 @@ $pgtitle = array('DURUM', 'AĞ GEÇİDİ GRUPLARI');
 									ksort($priorities);
 
 									foreach($priorities as $number => $tier) {
-										echo  sprintf("Katman %s, ", $number);
+										echo  sprintf("Tier %s, ", $number);
 									}
 									echo "<br>";
 									$priority_arr = array();
