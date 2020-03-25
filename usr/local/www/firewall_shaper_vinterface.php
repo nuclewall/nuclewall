@@ -1,6 +1,9 @@
 <?php
 /* $Id$ */
 /*
+	Copyright (C) 2013-2020 Ogun Acik
+	All rights reserved.
+
 	firewall_shaper_vinterface.php
 	Copyright (C) 2004, 2005 Scott Ullrich
 	Copyright (C) 2008 Ermal Luçi
@@ -40,7 +43,7 @@ if($_GET['reset'] <> "") {
 	exit;
 }
 
-$pgtitle = array('GÜVENLİK DUVARI', 'HIZ SINIRLAYICILAR');
+$pgtitle = array('FIREWALL', 'LIMITER');
 
 read_dummynet_config();
 
@@ -95,7 +98,7 @@ if ($_GET)
 				foreach ($config['filter']['rule'] as $rule)
 				{
 					if ($rule['dnpipe'] == $queue->GetNumber() || $rule['pdnpipe'] == $queue->GetNumber())
-						$input_errors[] = "Bu sınırlayıcı bir kural tarafından kullanılıyor. Silmeden önce kuraldan kaldırın.";
+						$input_errors[] = "This pipe/queue is referenced in filter rules, please remove references from there before deleteing.";
 				}
 			}
 
@@ -111,7 +114,7 @@ if ($_GET)
 		}
 		else
 		{
-			$input_errors[] = "{$qname} isminde bir sınırlayıcı bulunamadı.";
+			$input_errors[] = "No queue with name {$qname} was found.";
 			$output_form .= "<p class=\"pgtitle\">" . $dn_default_shaper_msg."</p>";
 			$dontshow = true;
 		}
@@ -154,7 +157,7 @@ if ($_GET)
 			$q->SetQname($pipe);
 		}
 		else
-			$input_errors[] = "Yeni sınırlayıcı yaratılamadı.";
+			$input_errors[] = "Could not create new queue/discipline.";
 
 		if ($q)
 		{
@@ -167,7 +170,7 @@ if ($_GET)
 		if ($queue)
 			$output_form .= $queue->build_form();
 		else
-			$input_errors[] = "Sınırlayıcı bulunamadı.";
+			$input_errors[] = "Queue not found.";
 		break;
 	case "enable":
 		if ($queue) {
@@ -176,7 +179,7 @@ if ($_GET)
 				write_config();
 				mark_subsystem_dirty('shaper');
 		} else
-				$input_errors[] = "Sınırlayıcı bulunamadı.";
+				$input_errors[] = "Queue not found.";
 		break;
 	case "disable":
 		if ($queue) {
@@ -185,7 +188,7 @@ if ($_GET)
 				write_config();
 				mark_subsystem_dirty('shaper');
 		} else
-				$input_errors[] = "Sınırlayıcı bulunamadı.";
+				$input_errors[] = "Queue not found.";
 		break;
 	default:
 		$output_form .= "<p class=\"pgtitle\">" . $dn_default_shaper_msg."</p>";
@@ -236,7 +239,7 @@ else if ($_POST)
 			read_dummynet_config();
 			$output_form .= $tmp->build_form();
 		} else
-			$input_errors[] = "Sınırlayıcı eklenemedi.";
+			$input_errors[] = "Could not add new queue.";
 	}
 	else if ($_POST['apply'])
 	{
@@ -311,7 +314,7 @@ if (is_array($dummynet_pipe_list))
 }
 
 $tree .= <<<EOD
-<li><a title="Ekle" href="firewall_shaper_vinterface.php?pipe=yeni&action=add">
+<li><a title="Add" href="firewall_shaper_vinterface.php?pipe=new_limiter&action=add">
 <i class="icon-plus"></i>
 </a></li>
 EOD;
@@ -321,7 +324,7 @@ if (!$dontshow || $newqueue)
 {
 	$output_form .= "<tr><td class=\"vncell\">";
 	$output_form .= "</td><td class=\"vtable\">";
-	$output_form .= "<input type=\"submit\" name=\"Submit\" value=\"Kaydet\" class=\"btn btn-inverse\"> ";
+	$output_form .= "<input type=\"submit\" name=\"Submit\" value=\"Save\" class=\"btn btn-inverse\"> ";
 	$output_form .= "<a class=\"btn btn-default\" href=\"firewall_shaper_vinterface.php?pipe=";
 	$output_form .= $pipe . "&queue=";
 
@@ -331,7 +334,7 @@ if (!$dontshow || $newqueue)
 	}
 
 	$output_form .= "&action=delete\">";
-	$output_form .= "Sil</a>";
+	$output_form .= "Delete</a>";
 	$output_form .= "</td></tr>";
 }
 
@@ -350,14 +353,14 @@ $output .= $output_form;
 
 <?php if ($savemsg) print_info_box($savemsg); ?>
 <?php if (is_subsystem_dirty('shaper')): ?><p>
-<?php print_info_box_np("Hız sınırlayıcı ayarları değiştirildi.<br>Değişikliklerin etkili olması için uygulamalısınız.", true);?>
+<?php print_info_box_np("The limiter configuration has been changed.<br>You must apply the changes in order for them to take effect.", true);?>
 <?php endif; ?>
 <table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="vncell">Sınırlayıcılar</td>
+					<td class="vncell">Limiters</td>
 					<td class="vtable">
 						<div style="margin:0;"  class="pagination">
 						<?php echo $tree; ?>

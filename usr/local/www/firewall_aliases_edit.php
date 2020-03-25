@@ -3,7 +3,7 @@
 /*
 	firewall_aliases_edit.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2004 Scott Ullrich
@@ -36,7 +36,7 @@
 	ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 	POSSIBILITY OF SUCH DAMAGE.
 */
-setlocale(LC_ALL, 'tr_TR.UTF-8');
+
 $reserved_keywords = array("all", "pass", "block", "out", "queue", "max", "min", "pptp", "pppoe", "L2TP", "OpenVPN", "IPsec");
 
 require('guiconfig.inc');
@@ -44,7 +44,7 @@ require_once('functions.inc');
 require_once('filter.inc');
 require_once('shaper.inc');
 
-$pgtitle = array('GÜVENLİK DUVARI', 'TAKMA ADLAR' ,'DÜZENLE');
+$pgtitle = array('FIREWALL', 'ALIASES' ,'EDIT');
 
 $reserved_ifs = get_configured_interface_list(false, true);
 $reserved_keywords = array_merge($reserved_keywords, $reserved_ifs);
@@ -88,7 +88,7 @@ if (isset($id) && $a_aliases[$id]) {
 	$iflist = get_configured_interface_with_descr(false, true);
 	foreach ($iflist as $if => $ifdesc)
 		if($ifdesc == $pconfig['descr'])
-			$input_errors[] = sprintf("%s adında bir ağ arayüzü zaten mevcut.", $pconfig['descr']);
+			$input_errors[] = sprintf("An interface is already named %s.", $pconfig['descr']);
 
 	if($a_aliases[$id]['type'] == "urltable") {
 		$pconfig['address'] = $a_aliases[$id]['url'];
@@ -121,17 +121,17 @@ if ($_POST) {
 
 	$x = is_validaliasname($_POST['name']);
 	if (!isset($x)) {
-		$input_errors[] = "Ayrılmış bir isim takma ad olarak kullanılamaz.";
+		$input_errors[] = "Reserved word used for alias name.";
 	} else if ($_POST['type'] == "port" && (getservbyname($_POST['name'], "tcp") || getservbyname($_POST['name'], "udp"))) {
-		$input_errors[] = "Ayrılmış bir isim takma ad olarak kullanılamaz.";
+		$input_errors[] = "Reserved word used for alias name..";
 	} else {
 		if (is_validaliasname($_POST['name']) == false)
-			$input_errors[] = "Takma adlar 32 karakterden az olmalı ve \"a-z, A-Z, 0-9, _\" karakterlerinden oluşmalıdır.";
+			$input_errors[] = "The alias name must be less than 32 characters long and may only consist of the characters 'a-z, A-Z, 0-9'.";
 	}
 	if (empty($a_aliases[$id])) {
 		foreach ($a_aliases as $alias) {
 			if ($alias['name'] == $_POST['name']) {
-				$input_errors[] = "Aynı isimde bir takma ad zaten mevcut.";
+				$input_errors[] = "An alias with this name already exists.";
 				break;
 			}
 		}
@@ -139,11 +139,11 @@ if ($_POST) {
 
 	foreach($reserved_keywords as $rk)
 		if($rk == $_POST['name'])
-			$input_errors[] = sprintf("%s anahtar kelimesi takma ad olarak kullanılamaz.", $rk);
+			$input_errors[] = sprintf("Cannot use a reserved keyword as alias name %s.", $rk);
 
 	foreach($config['interfaces'] as $interface) {
 		if($interface['descr'] == $_POST['name']) {
-			$input_errors[] = "Aynı isimde bir ağ arayüzü zaten mevcut.";
+			$input_errors[] = "An interface description with this name already exists.";
 			break;
 		}
 	}
@@ -164,10 +164,10 @@ if ($_POST) {
 			$alias['url'] = $_POST['address0'];
 			$alias['updatefreq'] = $_POST['address_subnet0'] ? $_POST['address_subnet0'] : 7;
 			if (!is_URL($alias['url']) || empty($alias['url'])) {
-				$input_errors[] = "Geçerli bir URL girmelisiniz.";
+				$input_errors[] = "You must provide a valid URL.";
 				$dont_update = true;
 			} elseif (! process_alias_urltable($alias['name'], $alias['url'], 0, true)) {
-				$input_errors[] = "Kullanılabilir bir URL tablosu bulunamadı.";
+				$input_errors[] = "Unable to fetch usable data.";
 				$dont_update = true;
 			}
 		}
@@ -207,14 +207,14 @@ if ($_POST) {
 						}
 					}
 					if($isfirst == 0) {
-						$input_errors[] = "Geçerli bir URL belirtmelisiniz. Kullanılabilir bir veri bulunamadı.";
+						$input_errors[] = "You must provide a valid URL. Could not fetch usable data.";
 						$dont_update = true;
 						break;
 					}
 					$alias['aliasurl'][] = $_POST['address' . $x];
 					mwexec("/bin/rm -rf {$temp_filename}");
 				} else {
-					$input_errors[] = "Geçerli bir URL belirtmelisiniz.";
+					$input_errors[] = "You must provide a valid URL.";
 					$dont_update = true;
 					break;
 				}
@@ -229,12 +229,12 @@ if ($_POST) {
 						$wrongaliases .= " " . $_POST["address{$x}"];
 				} else if ($_POST['type'] == "port") {
 					if (!is_port($_POST["address{$x}"]))
-						$input_errors[] = $_POST["address{$x}"] . ' geçerli bir port veya takma ad değil.';
+						$input_errors[] = $_POST["address{$x}"] . " is not a valid port or alias.";
 				} else if ($_POST['type'] == "host" || $_POST['type'] == "network") {
 					if (!is_ipaddr($_POST["address{$x}"])
 					 && !is_hostname($_POST["address{$x}"])
 					 && !is_iprange($_POST["address{$x}"]))
-						$input_errors[] = sprintf('%1$s geçerli bir %2$s takma ad değil.', $_POST["address{$x}"], $_POST['type']);
+						$input_errors[] = sprintf('%1$s is not a valid %2$s alias.', $_POST["address{$x}"], $_POST['type']);
 				}
 				if (is_iprange($_POST["address{$x}"])) {
 					list($startip, $endip) = explode('-', $_POST["address{$x}"]);
@@ -249,11 +249,11 @@ if ($_POST) {
 				if ($_POST["detail{$x}"] <> "")
 					$final_address_details[] = base64_encode($_POST["detail{$x}"]);
 				else
-					$final_address_details[] = base64_encode(sprintf("%s tarihinde eklendi.", strftime("%T - %d.%m.%Y", time())));
+					$final_address_details[] = base64_encode(sprintf("Entry added %s.", strftime("%T - %d.%m.%Y", time())));
 			}
 		}
 		if ($wrongaliases <> "")
-			$input_errors[] = sprintf('%s takma adları aynı türde olmadıklarından dolayı birleştirilemedi.', $wrongaliases);
+			$input_errors[] = sprintf('The alias(es): %s cannot be nested because they are not of the same type.', $wrongaliases);
 	}
 
 	pfSense_handle_custom_code("/usr/local/pkg/firewall_aliases_edit/input_validation");
@@ -398,23 +398,23 @@ function add_alias_control() {
 }
 EOD;
 
-$network_str = "Ağ";
-$networks_str = "Ağlar";
+$network_str = "Network";
+$networks_str = "Network(s)";
 $cidr_str = "CIDR";
-$description_str = "Açıklama";
-$hosts_str = "IP Adresi";
+$description_str = "Description";
+$hosts_str = "Host(s)";
 $ip_str = "IP";
-$ports_str = "Portlar";
+$ports_str = "Port(s)";
 $port_str = "Port";
 $url_str = "URL";
-$urltable_str = "URL Tablosu";
-$update_freq_str = "Güncelleme aralığı";
+$urltable_str = "URL Table";
+$update_freq_str = "Update Freq.";
 
-$networks_help = "Ağlar CIDR formatında belirtilir. Her girdi için gerekli CIDR'i seçin. Tek bir IP için /32, 255.255.255.0 alt ağ maskesi için /24 gibi. Ayrıca 192.168.1.1-192.168.1.254 gibi bir IP aralığı da girebilirsiniz.";
-$hosts_help = "İstediğiniz kadar IP adresi veya sunucu adı girebilirsiniz. Sunucu adları tam tanımlanmış alan adı (FQDN) şeklinde girilmelidir. DNS çözümlemesinden birden fazla IP adresi dönerse, hepsi kullanılır.";
-$ports_help = "İstediğiniz kadar port girebilirsiniz. 80:88 gibi port aralıkları da girebilirsiniz.";
-$url_help = "İstediğiniz kadar düz metin olarak IP adresi listesi içeren URL girebilirsiniz. Girdiğiniz URL'deki dosya indirilecek ve içindeki IP adresleri takma ad olarak eklenecektir. Girdiğiniz URL'deki IP adresi sayısı 3000'i geçmemelidir.";
-$urltable_help = "Çok sayıda IP adresi içeren tek bir URL girebilirsiniz. Girdiğiniz URL 30.000'e kadar IP adresi içerebilir.";
+$networks_help = "Networks are specified in CIDR format.  Select the CIDR mask that pertains to each entry. /32 specifies a single host, /24 specifies 255.255.255.0, etc. Hostnames (FQDNs) may also be specified, using a /32 mask. You may also enter an IP range such as 192.168.1.1-192.168.1.254 and a list of CIDR networks will be derived to fill the range.";
+$hosts_help = "Enter as many hosts as you would like. Hosts must be specified by their IP address.";
+$ports_help = "Enter as many ports as you wish. Port ranges can be expressed by seperating with a colon.";
+$url_help = "Enter as many URLs as you wish. After saving NUCLEWALL will download the URL and import the items into the alias. Use only with small sets of IP addresses (less than 3000).";
+$urltable_help = "Enter a single URL containing a large number of IPs and/or Subnets. After saving NUCLEWALL will download the URL and create a table file containing these addresses. This will work with large numbers of addresses (30,000+) or small numbers";
 
 $jscriptstr .= <<<EOD
 
@@ -457,7 +457,7 @@ function update_box_type() {
 		document.getElementById ("addressnetworkport").firstChild.data = "{$url_str}";
 		document.getElementById ("onecolumn").firstChild.data = "{$url_str}";
 		document.getElementById ("twocolumn").firstChild.data = "{$update_freq_str}";
-		document.getElementById ("threecolumn").firstChild.data = "Açıklama";
+		document.getElementById ("threecolumn").firstChild.data = "Description";
 
 		document.getElementById ("itemhelp").firstChild.data = "{$urltable_help}";
 		document.getElementById ("addrowbutton").style.display = 'none';
@@ -510,10 +510,10 @@ EOD;
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td colspan="2" valign="top" class="listtopic">TAKMA AD DÜZENLE</td>
+					<td colspan="2" valign="top" class="listtopic">EDIT ALIAS</td>
 				</tr>
 				<tr>
-					<td class="vncell" valign="top">İsim</td>
+					<td class="vncell" valign="top">Name</td>
 					<td class="vtable">
 						<input name="origname" type="hidden" id="origname" value="<?=htmlspecialchars($pconfig['name']);?>" />
 						<input name="name" type="text" id="name" value="<?=htmlspecialchars($pconfig['name']);?>" />
@@ -521,33 +521,33 @@ EOD;
 						<input name="id" type="hidden" value="<?=htmlspecialchars($id);?>" />
 						<?php endif; ?>
 						<br>
-						<span class="vexpl">Takma adlar sadece a-z, A-Z, 0-9 ve _ karakterlerinden oluşabilir.</span>
+						<span class="vexpl">The name of the alias may only consist of the characters "a-z, A-Z, 0-9".</span>
 					</td>
 				</tr>
 				<?php pfSense_handle_custom_code("/usr/local/pkg/firewall_aliases_edit/after_first_tr"); ?>
 				<tr>
-					<td valign="top" class="vncell">Açıklama</td>
+					<td valign="top" class="vncell">Description</td>
 					<td class="vtable">
 						<input name="descr" type="text" id="descr" value="<?=htmlspecialchars($pconfig['descr']);?>" />
 						<br>
-						<span class="vexpl">Takma ad için bir açıklama girebilirsiniz.</span>
+						<span class="vexpl">You may enter a description here for your reference.</span>
 					</td>
 				</tr>
 				<tr>
-					<td class="vncell" valign="top">Tür</td>
+					<td class="vncell" valign="top">Type</td>
 					<td class="vtable">
 						<select name="type" id="type" onchange="update_box_type(); typesel_change();">
-							<option value="host" <?php if ($pconfig['type'] == "host") echo "selected"; ?>>IP Adresi</option>
-							<option value="network" <?php if ($pconfig['type'] == "network") echo "selected"; ?>>Ağ</option>
-							<option value="port" <?php if ($pconfig['type'] == "port") echo "selected"; ?>>Port</option>
+							<option value="host" <?php if ($pconfig['type'] == "host") echo "selected"; ?>>Host(s)</option>
+							<option value="network" <?php if ($pconfig['type'] == "network") echo "selected"; ?>>Network(s)</option>
+							<option value="port" <?php if ($pconfig['type'] == "port") echo "selected"; ?>>Port(s)</option>
 							<option value="url" <?php if ($pconfig['type'] == "url") echo "selected"; ?>>URL</option>
-							<option value="urltable" <?php if ($pconfig['type'] == "urltable") echo "selected"; ?>>URL Tablosu</option>
+							<option value="urltable" <?php if ($pconfig['type'] == "urltable") echo "selected"; ?>>URL Table</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td class="vncell" valign="top">
-						<div id="addressnetworkport">IP Adresleri</div>
+						<div id="addressnetworkport">Host(s)</div>
 					</td>
 					<td class="vtable">
 						<table id="maintable">
@@ -601,7 +601,7 @@ EOD;
 										<input name="detail<?php echo $tracker; ?>" type="text" id="detail<?php echo $tracker; ?>" value="<?=$item4;?>" />
 									</td>
 									<td>
-										<a title="Sil" onclick="removeRow(this); return false;" href="#">
+										<a title="Delete" onclick="removeRow(this); return false;" href="#">
 											<i class="icon-trash"></i>
 										</a>
 									</td>
@@ -615,7 +615,7 @@ EOD;
 						</table>
 						<div id="addrowbutton">
 							<a onclick="javascript:addRowTo('maintable'); typesel_change(); add_alias_control(this); return false;" href="#">
-								<i title="Ekle" class="icon-plus"></i>
+								<i title="Add" class="icon-plus"></i>
 							</a>
 						</div>
 					</td>
@@ -623,9 +623,9 @@ EOD;
 				<tr>
 					<td class="vncell"></td>
 					<td class="vtable">
-						<input id="submit" name="submit" type="submit" class="btn btn-inverse" value="Kaydet" />
+						<input id="submit" name="submit" type="submit" class="btn btn-inverse" value="Save" />
 						<a href="firewall_aliases.php">
-							<input id="cancelbutton" name="cancelbutton" type="button" class="btn btn-default" value="İptal"/>
+							<input id="cancelbutton" name="cancelbutton" type="button" class="btn btn-default" value="Cancel"/>
 						</a>
 					</td>
 				</tr>

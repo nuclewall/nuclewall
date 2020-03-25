@@ -2,7 +2,7 @@
 /*
 	firewall_schedule.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2015 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2004 Scott Ullrich
@@ -34,14 +34,15 @@
 	POSSIBILITY OF SUCH DAMAGE.
 */
 
-$dayArray = array ('Pzt','Sal','Çar','Per','Cum','Cmt','Paz');
-$monthArray = array ('Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık');
+
+$dayArray = array ('Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun');
+$monthArray = array ('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
 require('guiconfig.inc');
 require('filter.inc');
 require('shaper.inc');
 
-$pgtitle = array('GÜVENLİK DUVARI ', 'ZAMANLAMALAR');
+$pgtitle = array('FIREWALL ', 'SCHEDULES');
 
 if (!is_array($config['schedules']['schedule']))
 	$config['schedules']['schedule'] = array();
@@ -68,7 +69,7 @@ if ($_GET['act'] == "del") {
 		}
 
 		if($is_schedule_referenced == true) {
-			$savemsg = sprintf("Zamanlama %s tarafından kullanıldığı için silinemiyor.",$referenced_by);
+			$savemsg = sprintf("Cannot delete Schedule. Currently in use by %s.", $referenced_by);
 		} else {
 			unset($a_schedules[$_GET['id']]);
 			write_config();
@@ -92,9 +93,9 @@ if ($_GET['act'] == "del") {
 		<td>
 			<table width="100%" class="grids">
 				<tr>
-					<td class="head">Adı</td>
-					<td class="head">Zamanlar</td>
-					<td class="head">Açıklama</td>
+					<td class="head">Name</td>
+					<td class="head">Time Range(s)</td>
+					<td class="head">Description</td>
 					<td class="head"></td>
 				</tr>
 				<?php $i = 0; foreach ($a_schedules as $schedule): ?>
@@ -104,7 +105,7 @@ if ($_GET['act'] == "del") {
 						<?php
 						$schedstatus = filter_get_time_based_rule_status($schedule);
 						 if ($schedstatus) { ?>
-							<img src="./themes/nuclewall/images/icons/icon_frmfld_time.png" title="Zamanlama şu anda aktif" border="0">
+							<img src="./themes/nuclewall/images/icons/icon_frmfld_time.png" title="Schedule is currently active" >
 						 <?php } ?>
 
 					</td>
@@ -204,17 +205,17 @@ if ($_GET['act'] == "del") {
 								<td class="times"><?=$dayFriendly;?></td>
 								<td class="times"><?=$timeFriendly;?></td>
 								<td class="times"><?=$description;?></td>
-							<tr/><?php } }?>
+							</tr><?php } }?>
 						</table>
 					</td>
 					<td class="cell description" ondblclick="document.location='firewall_schedule_edit.php?id=<?=$i;?>';">
 						<?=htmlspecialchars(base64_decode($schedule['descr']));?>
 					</td>
 					<td valign="middle" class="cell tools" style="width:20px; max-width:20px;">
-						<a title="Düzenle" href="firewall_schedule_edit.php?id=<?=$i;?>">
+						<a title="Edit" href="firewall_schedule_edit.php?id=<?=$i;?>">
 							<i class="icon-edit"></i>
 						</a>
-					   <a title="Sil" href="firewall_schedule.php?act=del&id=<?=$i;?>" onclick="return confirm('Silmek istediğinizden emin misiniz?')">
+					   <a title="Delete" href="firewall_schedule.php?act=del&id=<?=$i;?>" onclick="return confirm('Do you really want to delete this schedule?')">
 							<i class="icon-trash"></i>
 						</a>
 					</td>
@@ -223,7 +224,7 @@ if ($_GET['act'] == "del") {
 				<tr>
 					<td class="cell" colspan="3"></td>
 					<td class="cell tools">
-						<a title="Zamanlama Ekle" href="firewall_schedule_edit.php">
+						<a title="Add Schedule" href="firewall_schedule_edit.php">
 							<i class="icon-plus"></i>
 						</a>
 					</td>

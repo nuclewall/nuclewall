@@ -2,7 +2,7 @@
 /*
 	firewall_schedule_edit.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2015 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2004 Scott Ullrich
@@ -52,9 +52,8 @@ require_once('functions.inc');
 require_once('filter.inc');
 require_once('shaper.inc');
 
-setlocale(LC_ALL, 'tr_TR.UTF-8');
 
-$pgtitle = array('GÜVENLİK DUVARI ','ZAMANLAMALAR ' ,'DÜZENLE');
+$pgtitle = array('FIREWALL ','SCHEDULES ' ,'EDIT');
 
 $starttimehr = 00;
 $starttimemin = 00;
@@ -62,8 +61,8 @@ $starttimemin = 00;
 $stoptimehr = 23;
 $stoptimemin = 59;
 
-$dayArray = array ('Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz');
-$monthArray = array ('Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık');
+$dayArray = array ('Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun');
+$monthArray = array ('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
 if (!is_array($config['schedules']['schedule']))
 	$config['schedules']['schedule'] = array();
@@ -86,18 +85,18 @@ if (isset($id) && $a_schedules[$id]) {
 if ($_POST) {
 
 	if(strtolower($_POST['name']) == "lan")
-		$input_errors[] = "Zamanlama ismi 'LAN' olamaz.";
+		$input_errors[] = "Schedule may not be named LAN.";
 	if(strtolower($_POST['name']) == "wan")
-		$input_errors[] = "Zamanlama ismi 'WAN' olamaz.";
+		$input_errors[] = "Schedule may not be named WAN.";
 	if(strtolower($_POST['name']) == "")
-		$input_errors[] = "Zamanlama ismi boş bırakılamaz.";
+		$input_errors[] = "Schedule name cannot be blank.";
 
 	$x = is_validaliasname($_POST['name']);
 	if (!isset($x)) {
-		$input_errors[] = "Zamanlama ismi için ayrılmış isimler kullanılamaz.";
+		$input_errors[] = "Reserved word used for schedule name.";
 	} else {
 		if (is_validaliasname($_POST['name']) == false)
-			$input_errors[] = "Zamanlama ismi sadece a-z, A-Z, 0-9 karakterlerinden oluşabilir.";
+			$input_errors[] = "The schedule name may only consist of the characters a-z, A-Z, 0-9.";
 	}
 
 	foreach ($a_schedules as $schedule) {
@@ -105,7 +104,7 @@ if ($_POST) {
 			continue;
 
 		if ($schedule['name'] == $_POST['name']) {
-			$input_errors[] = "Aynı isimde bir zamanlama zaten var.";
+			$input_errors[] = "A Schedule with this name already exists.";
 			break;
 		}
 	}
@@ -162,7 +161,7 @@ if ($_POST) {
 	}
 
 	if (!$timerangeFound)
-		$input_errors[] = "Zamanlama, en az bir zaman aralığı içermelidir.";
+		$input_errors[] = "The schedule must have at least one time range configured.";
 
 	if (!$input_errors) {
 
@@ -207,8 +206,8 @@ $jscriptstr = <<<EOD
 <script type="text/javascript">
 
 var daysSelected = "";
-var month_array = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
-var day_array = ['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'];
+var month_array = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var day_array = ['Mon','Tues','Wed','Thur','Fri','Sat','Sun'];
 var schCounter = 0;
 
 
@@ -351,7 +350,7 @@ function update_month(){
 function checkForRanges(){
 	if (daysSelected != "")
 	{
-		alert("Belittiğiniz zaman aralığını kaydetmediniz. Lütfen 'Ekle'ye tıklayarak kaydedin.");
+		alert("You have not saved the specified time range. Please click 'Add Time' button to save the time range.");
 		return false;
 	}
 	else
@@ -374,14 +373,14 @@ function processEntries(){
 	//do time checks
 	if (starttimehour > stoptimehour)
 	{
-		errors = "Hata: Başlangıç saati bitiş saatinden büyük olamaz.";
+		errors = "Error: Start Hour cannot be greater than Stop Hour.";
 		passedValidiation = false;
 
 	}
 	else if (starttimehour == stoptimehour)
 	{
 		if (starttimemin > stoptimemin){
-			errors = "Hata: Başlangıç dakikası bitiş dakikasından büyük olamaz.";
+			errors = "Error: Start Minute cannot be greater than Stop Minute.";
 			passedValidiation = false;
 		}
 	}
@@ -589,7 +588,7 @@ function addTimeRange(){
 	else
 	{
 		//no days were selected, alert user
-		alert ("Zaman eklerken en azından 1 gün seçmelisiniz.");
+		alert ("You must select at least 1 day before adding time");
 	}
 }
 
@@ -731,7 +730,7 @@ function removeRownoprompt(el) {
 
 
 function removeRow(el) {
-	var check = confirm ("Silmek istediğinizden emin misiniz?");
+	var check = confirm ("Do you really want to delete this time range?");
 	if (check){
 	    var cel;
 	    while (el && el.nodeName.toLowerCase() != "tr")
@@ -766,30 +765,30 @@ margin-left: 1px;
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td colspan="2" valign="top" class="listtopic">ZAMANLAMA DÜZENLE</td>
+					<td colspan="2" valign="top" class="listtopic">EDIT SCHEDULE</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Zamanlama Adı</td>
+					<td valign="top" class="vncell">Schedule Name</td>
 					<td class="vtable">
 						<?php if(is_schedule_inuse($pconfig['name']) == true): ?>
 							<input name="name" type="hidden" id="name"  value="<?=htmlspecialchars($pconfig['name']);?>" />
 						<?php echo $pconfig['name']; ?>
-							<p><b>Not: </b>Bu zamanlama şu anda kullanımda olduğu için adı değiştirilemez.</p>
+							<p><b>Note: </b>This schedule is in use so the name may not be modified!.</p>
 						<?php else: ?>
 							<input name="name" type="text" id="name" maxlength="40" value="<?=htmlspecialchars($pconfig['name']);?>"><br>
-						Sadece a-z, A-Z ve 0-9 karakterlerinden oluşan bir zamanlama ismi belirtin.
+							The name of the schedule may only consist of the characters a-z, A-Z and 0-9.
 						<?php endif; ?>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Açıklama</td>
+					<td valign="top" class="vncell">Description</td>
 					<td class="vtable">
 						<input name="descr" type="text" id="descr" maxlength="40" value="<?=htmlspecialchars($pconfig['descr']);?>"><br>
-						İsteğe bağlı bir açıklama girebilirsiniz.
+						You may enter a description here for your reference.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Ay</td>
+					<td valign="top" class="vncell">Month</td>
 					<td class="vtable">
 						<select name="monthsel" id="monthsel" onchange="update_month();">
 							<?php
@@ -834,13 +833,13 @@ margin-left: 1px;
 											</td>
 										</tr>
 										<tr>
-											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p1');"><u><b>Pts.</b></u></td>
-											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p2');"><u><b>Salı</b></u></td>
-											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p3');"><u><b>Çar.</b></u></td>
-											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p4');"><u><b>Perş.</b></u></td>
-											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p5');"><u><b>Cuma</b></u></td>
-											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p6');"><u><b>Cts.</b></u></td>
-											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p7');"><u><b>Pazar</b></u></td>
+											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p1');"><u><b>Mon</b></u></td>
+											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p2');"><u><b>Tue</b></u></td>
+											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p3');"><u><b>Wed</b></u></td>
+											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p4');"><u><b>Thu</b></u></td>
+											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p5');"><u><b>Fri</b></u></td>
+											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p6');"><u><b>Sat</b></u></td>
+											<td align=center class="head" style="cursor: pointer;" onClick="daytoggle('w1p7');"><u><b>Sun</b></u></td>
 										</tr>
 										<?php
 										$firstmonth = FALSE;
@@ -893,16 +892,17 @@ margin-left: 1px;
 							}
 						} //end for loop
 						?>
-						Üzerine tıklayarak belli bir tarihi veya gün başlığına tıklayarak günleri grup olarak seçebilirsiniz.
+						Click individual date to select that date only. <br>
+						Click the appropriate weekday header to select all occurences of that weekday.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Saat</td>
+					<td valign="top" class="vncell">Time</td>
 					<td class="vtable">
 						<table width="100%" class="grids" cellspacing=2>
 							<tr>
-								<td class="head">Başlangıç</td>
-								<td class="head">Bitiş</td>
+								<td class="head">Start Time</td>
+								<td class="head">Stop Time</td>
 							</tr>
 							<tr>
 								<td class="times">
@@ -954,34 +954,33 @@ margin-left: 1px;
 								</td>
 							</tr>
 						</table>
-						Yukarıda seçtiğiniz gün veya günler için saat aralığı seçiniz.<br>
-						<b>İpucu: </b>Tüm gün için 0:00-23:59 aralığını seçiniz.
+						Select the time range for the day(s) selected on the Month(s) above. A full day is 0:00-23:59.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Zaman Açıklaması</td>
+					<td valign="top" class="vncell">Time Range Description</td>
 					<td class="vtable">
 						<input name="timerangedescr" type="text" id="timerangedescr" maxlength="40">
-						<br>Girdiğiniz zaman aralığı için bir açıklama girebilirsiniz.
+						<br>You may enter a description here for your reference.
 					</td>
 				</tr>
 				<tr>
 					<td class="vncell" valign="top"></td>
 					<td class="vtable">
-						<input type="button" value="Ekle"  class="btn btn-inverse btn-mini"  onclick="javascript:processEntries();">
-						<input type="button" value="Temizle" class="btn btn-mini" onclick="javascript:clearCalendar(); clearTime(); clearDescr();">
+						<input type="button" value="Add Time"  class="btn btn-inverse btn-mini"  onclick="javascript:processEntries();">
+						<input type="button" value="Clear Selection" class="btn btn-mini" onclick="javascript:clearCalendar(); clearTime(); clearDescr();">
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" valign="top" class="listtopic">ZAMANLAR</td>
+					<td colspan="2" valign="top" class="listtopic">SCHEDULES</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="vtable">
 						<table width="100%" class="grids" id="scheduletable">
 							<tr>
-								<td class="head">Günler</td>
-								<td class="head">Saat</td>
-								<td class="head">Açıklama</td>
+								<td class="head">Day(s)</td>
+								<td class="head">Time</td>
+								<td class="head">Description</td>
 								<td class="head" colspan="2"></td>
 							</tr>
 							<?php
@@ -1138,8 +1137,8 @@ margin-left: 1px;
 				<tr>
 					<td valign="top" class="vncell"></td>
 					<td class="vtable">
-						<input id="submit" name="submit" type="submit" onclick="return checkForRanges();" class="btn btn-inverse" value="Kaydet" />
-						<input id="cancelbutton" name="cancelbutton" type="button" class="btn btn-default" value="İptal" onclick="history.back()" />
+						<input id="submit" name="submit" type="submit" onclick="return checkForRanges();" class="btn btn-inverse" value="Save" />
+						<input id="cancelbutton" name="cancelbutton" type="button" class="btn btn-default" value="Cancel" onclick="history.back()" />
 						<?php if (isset($id) && $a_schedules[$id]): ?>
 						<input name="id" type="hidden" value="<?=htmlspecialchars($id);?>" />
 						<?php endif; ?>

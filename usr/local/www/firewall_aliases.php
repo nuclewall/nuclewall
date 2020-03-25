@@ -2,7 +2,7 @@
 /*
 	firewall_aliases.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2004 Scott Ullrich
@@ -94,7 +94,7 @@ if ($_GET['act'] == "del")
 		// Alias in an alias
 		find_alias_reference(array('aliases', 'alias'), array('address'), $alias_name, $is_alias_referenced, $referenced_by);
 		if($is_alias_referenced == true) {
-			$savemsg = sprintf("Takma ad şu anda silinemez. %s tarafından kullanılıyor", $referenced_by);
+			$savemsg = sprintf("Cannot delete alias. Currently in use by %s", $referenced_by);
 		} else {
 			unset($a_aliases[$_GET['id']]);
 			write_config();
@@ -142,7 +142,7 @@ function find_alias_reference($section, $field, $origname, &$is_alias_referenced
 	}
 }
 
-$pgtitle = array('GÜVENLİK DUVARI ', 'TAKMA ADLAR');
+$pgtitle = array('FIREWALL ', 'ALIASES');
 
 ?>
 
@@ -154,7 +154,7 @@ $pgtitle = array('GÜVENLİK DUVARI ', 'TAKMA ADLAR');
 <form action="firewall_aliases.php" method="post">
 <?php if ($savemsg) print_info_box($savemsg); ?>
 <?php if (is_subsystem_dirty('aliases')): ?><p>
-<?php print_info_box_np('Takma adlar listesi değiştirildi' . '<br>' . 'Değişikliklerin etkili olabilmesi için uygulamalısınız.', true);?>
+<?php print_info_box_np('The alias list has been changed' . '<br>' . 'You must apply the changes in order for them to take effect.', true);?>
 <?php endif; ?>
 <?php pfSense_handle_custom_code("/usr/local/pkg/firewall_aliases/pre_table"); ?>
 <table cellpadding="0" cellspacing="0">
@@ -165,9 +165,9 @@ $pgtitle = array('GÜVENLİK DUVARI ', 'TAKMA ADLAR');
 					<td>
 						<table width="100%" class="grids sortable">
 							<tr>
-								<td class="head">Ad</td>
-								<td class="head">İçerik</td>
-								<td class="head">Açıklama</td>
+								<td class="head">Name</td>
+								<td class="head">Values</td>
+								<td class="head">Description</td>
 								<td class="head"></td>
 							</tr>
 							<?php $i = 0; foreach ($a_aliases as $alias): ?>
@@ -197,10 +197,10 @@ $pgtitle = array('GÜVENLİK DUVARI ', 'TAKMA ADLAR');
 									<?=htmlspecialchars(base64_decode($alias['descr']));?>
 								</td>
 								<td class="cell tools">
-									<a title="Düzenle" href="firewall_aliases_edit.php?id=<?=$i;?>">
+									<a title="Edit" href="firewall_aliases_edit.php?id=<?=$i;?>">
 										<i class="icon-edit"></i>
 									</a>
-									<a title="Sil" href="firewall_aliases.php?act=del&id=<?=$i;?>" onclick="return confirm('Bu takma adı silmek istediğinize emin misiniz? Bir kurala eklediyseniz kural geçersiz olacaktır.')">
+									<a title="Delete" href="firewall_aliases.php?act=del&id=<?=$i;?>" onclick="return confirm('Do you really want to delete this alias? All elements that still use it will become invalid.')">
 										<i class="icon-trash"></i>
 									</a>
 								</td>
@@ -209,7 +209,7 @@ $pgtitle = array('GÜVENLİK DUVARI ', 'TAKMA ADLAR');
 							<tr>
 								<td class="cell" colspan="3">
 								<td class="cell tools">
-									<a title="Takma ad ekle" href="firewall_aliases_edit.php">
+									<a title="Add alias" href="firewall_aliases_edit.php">
 										<i class="icon-plus"></i>
 									</a>
 								</td>
@@ -222,16 +222,6 @@ $pgtitle = array('GÜVENLİK DUVARI ', 'TAKMA ADLAR');
 	</tr>
 </table>
 </form>
-<div class="alert alert-warning">
-	<span style="font-size:14px;">
-		Takma adlar; sunucu adları, ağlar veya portlar yerine kullanılabilir.<br>
-	    Güvenlik duvarı kurallarına direkt olarak IP adresleri, sunucu isimleri, ağ adresleri
-		girmek yerine takma adları kullanarak yapacağınız değişiklik sayısını azaltabilirsiniz.<br>
-		URL takma adlarına <b>https://www.google.com</b> şeklinde url'ler değil
-		<a target="_blank" href="https://gist.githubusercontent.com/acikogun/baa14d47c1591935bd3dafdc4e3be4f6/raw/81ed77b3077bff0cfa3c76f21924345d24953d19/google.txt">
-		örnekteki</a> gibi IP adres listesi içeren url'ler girilebilir.
-	</span>
-</div>
 </div>
 </body>
 </html>

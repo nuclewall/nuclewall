@@ -2,7 +2,7 @@
 /*
 	firewall_rules.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	part of pfSense (http://www.pfsense.com)
@@ -39,7 +39,7 @@ require_once('functions.inc');
 require_once('filter.inc');
 require_once('shaper.inc');
 
-$pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR');
+$pgtitle = array('FIREWALL', 'RULES');
 
 function delete_nat_association($id)
 {
@@ -176,7 +176,7 @@ if ($_POST)
 
 		pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/apply");
 
-		$savemsg = 'Değişiklikler uygulandı. Güvenlik duvarı kuralları şimdi yeniden yükleniyor...';
+		$savemsg = 'The settings have been applied. The firewall rules are now reloading in the background.';
 	}
 }
 
@@ -300,7 +300,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 <?php if ($savemsg) print_info_box($savemsg); ?>
 <?php if (is_subsystem_dirty('filter')): ?>
 <?php
-	print_info_box_np("Güvenlik duvarı ayarları değiştirildi.<br>Değişikliklerin etkili olabilmesi için uygulamalısınız.", true);
+	print_info_box_np("The firewall rule configuration has been changed.<br>You must apply the changes in order for them to take effect.", true);
 ?>
 <br>
 <?php endif; ?>
@@ -318,7 +318,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 				else
 					$active = false;
 
-				$tab_array[] = array("Değişen", $active, "firewall_rules.php?if=FloatingRules");
+				$tab_array[] = array("Floating", $active, "firewall_rules.php?if=FloatingRules");
 				$tabscounter = 0; $i = 0; foreach ($iflist as $ifent => $ifname) {
 					if ($ifent == $if)
 						$active = true;
@@ -346,18 +346,18 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<?php
 									pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/pre_id_tablehead");
 								?>
-								<td class="headw">Protokol</td>
-								<td class="headw">Kaynak</td>
+								<td class="headw">Proto</td>
+								<td class="headw">Source</td>
 								<td class="headw">Port</td>
-								<td class="headw">Hedef</td>
+								<td class="headw">Destination</td>
 								<td class="headw">Port</td>
-								<td class="headw">Ağ Geçidi</td>
-								<td class="headw">Sıra</td>
-								<td class="headw">Plan</td>
+								<td class="headw">Gateway</td>
+								<td class="headw">Queue</td>
+								<td class="headw">Schedule</td>
 								<?php
 									pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/pre_desc_tablehead");
 								?>
-								<td class="headw">Açıklama</td>
+								<td class="headw">Description</td>
 								<td class="hwall">
 									<?php
 										$nrules = 0;
@@ -373,7 +373,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 									<?php //if ($nrules == 0): ?>
 											<!--<i class="icon-trash icon-white"></i>-->
 									<?php //endif; ?>
-										<a title="En üste kural ekle" href="firewall_rules_edit.php?if=<?=htmlspecialchars($if);?>&after=-1">
+										<a title="Add rule to top" href="firewall_rules_edit.php?if=<?=htmlspecialchars($if);?>&after=-1">
 											<i class="icon-plus icon-white"></i>
 										</a>
 								</td>
@@ -390,7 +390,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 							<tr id="antilockout">
 							<td class="wall"></td>
 								<td class="wall">
-									<img src="./themes/nuclewall/images/icons/icon_pass.gif" border="0">
+									<img src="./themes/nuclewall/images/icons/icon_pass.gif">
 								</td>
 								<td class="wall"></td>
 								<?php
@@ -399,14 +399,14 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<td class="wall">*</td>
 								<td class="wall">*</td>
 								<td class="wall">*</td>
-								<td class="wall"><?=$iflist[$if];?> dağıtımı</td>
+								<td class="wall"><?=$iflist[$if];?> Address</td>
 								<td class="wall"><?= $alports ?></td>
 								<td class="wall">*</td>
 								<td class="wall">*</td>
 								<td class="wall"></td>
-								<td class="wall description">Temel erişim kuralı</td>
+								<td class="wall description">Anti-Lockout Rule</td>
 								<td class="wall tools">
-									<a title="Düzenle" href="system_advanced_admin.php">
+									<a title="Edit" href="system_advanced_admin.php">
 										<i class="icon-edit"></i>
 									</a>
 								</td>
@@ -418,18 +418,18 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 							<tr id="frrfc1918">
 								<td class="wall"></td>
 								<td class="wall">
-									<img src="./themes/nuclewall/images/icons/icon_block.gif" border="0">
+									<img src="./themes/nuclewall/images/icons/icon_block.gif">
 								</td>
 								<td class="wall"></td>
 								<td class="wall">*</td>
-								<td class="wall">RFC 1918 ağları</td>
+								<td class="wall">RFC 1918 networks</td>
 								<td class="wall">*</td>
 								<td class="wall">*</td>
 								<td class="wall">*</td>
 								<td class="wall">*</td>
 								<td class="wall">*</td>
 								<td class="wall"></td>
-								<td class="wall description">Özel ağları engelle</td>
+								<td class="wall description">Block private networks</td>
 								<td class="wall tools">
 									<a href="interfaces.php?if=<?=htmlspecialchars($if)?>#rfc1918">
 										<i class="icon-edit"></i>
@@ -443,20 +443,20 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 							<tr id="frrfc1918">
 								<td class="wall"></td>
 								<td class="wall">
-									<img src="./themes/nuclewall/images/icons/icon_block.gif" border="0">
+									<img src="./themes/nuclewall/images/icons/icon_block.gif">
 								</td>
 								<td class="wall" ></td>
 								<td class="wall" >*</td>
-								<td class="wall" >Sahte ağlar</td>
+								<td class="wall" >Reserved/not assigned by IANA</td>
 								<td class="wall" >*</td>
 								<td class="wall" >*</td>
 								<td class="wall" >*</td>
 								<td class="wall" >*</td>
 								<td class="wall" >*</td>
 								<td class="wall" ></td>
-								<td class="wall description">Sahte ağları engelle</td>
+								<td class="wall description">Block bogon networks</td>
 								<td class="wall tools">
-									<a title="Düzenle" href="interfaces.php?if=<?=htmlspecialchars($if)?>#rfc1918">
+									<a title="Edit" href="interfaces.php?if=<?=htmlspecialchars($if)?>#rfc1918">
 										<i class="icon-edit"></i>
 									</a>
 								</td>
@@ -475,7 +475,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 										continue;
 									$isadvset = firewall_check_for_advanced_options($filterent);
 									if($isadvset)
-										$advanced_set = "<img src=\"./themes/nuclewall/images/icons/icon_advanced.gif\" title=\"" . "gelişmiş ayar uygulandı" . ": {$isadvset}\" border=\"0\">";
+										$advanced_set = "<img src=\"./themes/nuclewall/images/icons/icon_advanced.gif\" title=\"" . "advanced settings applied" . ": {$isadvset}\" border=\"0\">";
 									else
 										$advanced_set = "";
 								?>
@@ -500,7 +500,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 											}
 										?>
 										<a href="?if=<?=htmlspecialchars($if);?>&act=toggle&id=<?=$i;?>">
-											<img src="./themes/nuclewall/images/icons/icon_<?=$iconfn;?>.gif" border="0">
+											<img src="./themes/nuclewall/images/icons/icon_<?=$iconfn;?>.gif">
 										</a>
 											<?php if (isset($filterent['log'])):
 												$iconfnlog = "log_s";
@@ -508,7 +508,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 													$iconfnlog .= "_d";
 											?>
 										<br>
-										<img src="./themes/nuclewall/images/icons/icon_<?=$iconfnlog;?>.gif" border="0">
+										<img src="./themes/nuclewall/images/icons/icon_<?=$iconfnlog;?>.gif">
 										<?php endif; ?>
 									</td>
 										<?php
@@ -727,7 +727,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 									</td>
 									<td class="wall" onClick="fr_toggle(<?=$nrules;?>)" id="frd<?=$nrules;?>" ondblclick="document.location='firewall_rules_edit.php?id=<?=$i;?>';">
 										<?php if ($printicon) { ?>
-											<img src="./themes/nuclewall/images/icons/<?php echo $image; ?>.gif" title="<?php echo $alttext;?>" border="0">
+											<img src="./themes/nuclewall/images/icons/<?php echo $image; ?>.gif" title="<?php echo $alttext;?>">
 											<?php } ?>
 											<?=$textss;?>
 											<?php echo $schedule_span_begin;?>
@@ -742,15 +742,15 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 										<?=$textss;?><?=htmlspecialchars(base64_decode($filterent['descr']));?><?=$textse;?>
 									</td>
 									<td class="wall tools" style="padding:4px;">
-										<input style=" margin-top: 5px;" name="move_<?=$i;?>" type="image" src="./themes/nuclewall/images/icons/icon_top.png" title="Seçili kuralları bu kuralın önüne taşı" onMouseOver="fr_insline(<?=$nrules;?>, true)" onMouseOut="fr_insline(<?=$nrules;?>, false)">
+										<input style=" margin-top: 5px;" name="move_<?=$i;?>" type="image" src="./themes/nuclewall/images/icons/icon_top.png" title="Move the selected rule top of this rule" onMouseOver="fr_insline(<?=$nrules;?>, true)" onMouseOut="fr_insline(<?=$nrules;?>, false)">
 
-										<a title="Sil" href="firewall_rules.php?act=del&if=<?=htmlspecialchars($if);?>&id=<?=$i;?>">
-											<i class="icon-trash" style="margin-top: -2px; padding-left: 0px;" onclick="return confirm('Silmek istediğinizden emin misiniz?')"></i>
+										<a title="Delete" href="firewall_rules.php?act=del&if=<?=htmlspecialchars($if);?>&id=<?=$i;?>">
+											<i class="icon-trash" style="margin-top: -2px; padding-left: 0px;" onclick="return confirm('Do you really want to delete this rule?')"></i>
 										</a>
-										<a title="Bu kuralı baz alarak yeni bir kural ekle" href="firewall_rules_edit.php?dup=<?=$i;?>">
+										<a title="Add new rules based this rule" href="firewall_rules_edit.php?dup=<?=$i;?>">
 											<i class="icon-plus" style="margin-top: -2px;"></i>
 										</a>
-										<a title="Düzenle" href="firewall_rules_edit.php?id=<?=$i;?>">
+										<a title="Edit" href="firewall_rules_edit.php?id=<?=$i;?>">
 											<i class="icon-edit" style="margin-top: -2px;"></i>
 										</a>
 									</td>
@@ -761,8 +761,9 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<tr>
 									<td class="wall" colspan="13" style="text-align: left;">
 										<span class="gray" style="margin-left: 30px;">
-											Bu ağ arayüzüne kullanıcı tarafından hiç kural eklenmedi.
-											Eklemek için <i class="icon-plus"></i> simgesine tıklayın.
+										    No rules are currently defined for this interface.
+											All incoming connections on this interface will be blocked until you add pass rules.
+											Click <i class="icon-plus"></i> to add a new rule.
 										</span>
 									</td>
 								</tr>
@@ -776,10 +777,10 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<td class="wall" colspan="12"></td>
 								<td class="wall tools" style="padding-bottom: 4px;">
 									<?php if ($nrules != 0): ?>
-										<input name="move_<?=$i;?>" type="image" src="./themes/nuclewall/images/icons/icon_top.png" title="Seçili kuralları sona taşı" onMouseOver="fr_insline(<?=$nrules;?>, true)" onMouseOut="fr_insline(<?=$nrules;?>, false)">
-										<input name="del" type="image" src="./themes/nuclewall/images/icons/icon_x.png" title="Seçili kuralları sil" onclick="return confirm('Seçili kuralları silmek istediğinizden emin misiniz?')">
+										<input name="move_<?=$i;?>" type="image" src="./themes/nuclewall/images/icons/icon_top.png" title="Move selected rules to end" onMouseOver="fr_insline(<?=$nrules;?>, true)" onMouseOut="fr_insline(<?=$nrules;?>, false)">
+										<input name="del" type="image" src="./themes/nuclewall/images/icons/icon_x.png" title="Delete selected rules" onclick="return confirm('Do you really want to delete the selected rules?')">
 									<?php endif; ?>
-									<a title="Kural ekle" href="firewall_rules_edit.php?if=<?=htmlspecialchars($if);?>">
+									<a title="Add rule" href="firewall_rules_edit.php?if=<?=htmlspecialchars($if);?>">
 										<i class="icon-plus" style="margin-top: -2px;"></i>
 									</a>
 								</td>
