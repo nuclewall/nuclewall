@@ -4,7 +4,6 @@ if(Connection_Aborted()) {
 }
 
 require_once('config.inc');
-setlocale(LC_ALL, 'tr_TR.UTF-8');
 
 function get_stats() {
 	$stats['cpu'] = cpu_usage();
@@ -36,30 +35,30 @@ function get_gatewaystats() {
 			$gws = $gateways_status[$gname];
 			switch(strtolower($gws['status'])) {
 			case "none":
-				$online = "Bağlandı";
+				$online = "Connected";
 				$class = 'label label-success';
 				break;
 			case "down":
-				$online = 'Bağlantı yok';
+				$online = 'No connection';
 				$class = 'label label-important';
 				break;
 			case "delay":
-				$online = 'Uyarı: Gecikme';
+				$online = 'Warning: Latency';
 				$class = 'label label-warning';
 				break;
 			case "loss":
-				$online = 'Uyarı, Paket kaybı';
+				$online = 'Warning: Packet loss';
 				$class = 'label label-warning';
 				break;
 			default:
-				$online = 'Veri alınıyor.';
+				$online = 'Gathering data...';
 				break;
 			}
 		} else {
-			$online = 'Veri alınıyor.';
+			$online = 'Gathering data...';
 			$class = 'label';
 		}
-		$data .= ($online == 'Veri alınıyor.') ? "{$online},{$online}," : "{$gws['delay']},{$gws['loss']},";
+		$data .= ($online == 'Gathering data...') ? "{$online},{$online}," : "{$gws['delay']},{$gws['loss']},";
 		$data .= "<span class=\"{$class}\">{$online}</span>";
 	}
 	return $data;

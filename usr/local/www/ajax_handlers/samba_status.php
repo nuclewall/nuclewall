@@ -24,13 +24,13 @@ if(($_POST['act'] == 'getstatus'))
 
 	if ($smb_conn_status == 0) {
 	    $html = <<<EOF
-		<span class="label label-success">Bağlandı</span>
+		<span class="label label-success">Connected</span>
 EOF;
 	}
 
 	else {
 	    $html = <<<EOF
-		<span class="label label-important">Bağlantı yok</span>
+		<span class="label label-important">Not Connected</span>
 EOF;
 	}
 

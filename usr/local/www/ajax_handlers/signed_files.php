@@ -54,8 +54,8 @@ if(($_POST['act'] == 'list') and $_POST['date'])
 					<td class="cell">{$log_creation_time}</td>
 					<td class="cell">{$sign_file_creation_time}</td>
 					<td class="cell tools">
-						<a title="İndir" href="ajax_handlers/signed_files.php?act=download&f=$d-$ts"><i class="icon-download-alt"></i></a>
-						<a name="$d-$ts" title="İmzayı kontrol et" href="#"><i class="icon-check"></i></a>
+						<a title="Download" href="ajax_handlers/signed_files.php?act=download&f=$d-$ts"><i class="icon-download-alt"></i></a>
+						<a name="$d-$ts" title="Check sign" href="#"><i class="icon-check"></i></a>
 					</td>
 				</tr>
 
@@ -66,7 +66,7 @@ EOF;
 
 	else
 	{
-		echo "<tr><td class=\"cell\" colspan=4>Kayıt bulunamadı.</td></tr>";
+		echo "<tr><td class=\"cell\" colspan=4>No records.</td></tr>";
 	}
 }
 
