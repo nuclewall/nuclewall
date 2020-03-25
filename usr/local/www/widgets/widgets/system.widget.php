@@ -38,23 +38,23 @@
 require_once('functions.inc');
 require_once('guiconfig.inc');
 include_once("includes/functions.inc.php");
-setlocale(LC_ALL, 'tr_TR.UTF-8');
+
 ?>
 <table width="100%" cellspacing="0" cellpadding="0">
 	<tbody>
 		<tr>
-			<td class="vncellt">Tam sunucu adı</td>
+			<td class="vncellt">Hostname</td>
 			<td class="listr"><span class="label label-info"><?php echo $config['system']['hostname'] . '.' . $config['system']['domain']; ?></span></td>
 		</tr>
 		<tr>
-			<td valign="top" class="vncellt">Sürüm</td>
+			<td valign="top" class="vncellt">Version</td>
 			<td class="listr">
 				<?php readfile("/etc/version"); ?>
 				(<?php echo php_uname("m"); ?>)
 			</td>
 		</tr>
 		<tr>
-			<td class="vncellt">İşlemci mimarisi</td>
+			<td class="vncellt">CPU Type</td>
 			<td class="listr">
 			<?php
 				$cpumodel = "";
@@ -76,13 +76,13 @@ setlocale(LC_ALL, 'tr_TR.UTF-8');
 			</td>
 		</tr>
 		<tr>
-			<td class="vncellt">Açık kalma süresi</td>
+			<td class="vncellt">Uptime</td>
 			<td class="listr">
 			<?= htmlspecialchars(get_uptime()); ?>
 			</td>
 		</tr>
 		<tr>
-             <td class="vncellt">DNS adresleri</td>
+             <td class="vncellt">DNS server(s)</td>
              <td class="listr">
 					<?php
 						$dns_servers = get_dns_servers();
@@ -99,7 +99,7 @@ setlocale(LC_ALL, 'tr_TR.UTF-8');
 			</td>
 		</tr>
         <tr>
-            <td class="vncellt">Tarih</td>
+            <td class="vncellt">Time</td>
             <td class="listr">
                 <div id="time">
 					<?= strftime("%T", time()); ?>
@@ -111,12 +111,12 @@ setlocale(LC_ALL, 'tr_TR.UTF-8');
         </tr>
 		<?php if ($config['revision']): ?>
 		<tr>
-			<td class="vncellt">Son değişiklik</td>
+			<td class="vncellt">Last config change</td>
 			<td class="listr"><?= strftime("%T <br> %e %B %Y %A", intval($config['revision']['time']));?></td>
 		</tr>
 		<?php endif; ?>
 		<tr>
-			<td class="vncellt">İşlemci kullanımı</td>
+			<td class="vncellt">CPU Usage</td>
 			<td class="listr">
 			<?php $cpuUsage = cpu_usage(); ?>
 			<div class="progress-container">
@@ -128,7 +128,7 @@ setlocale(LC_ALL, 'tr_TR.UTF-8');
 			</td>
 		</tr>
 		<tr>
-			<td class="vncellt">RAM kullanımı</td>
+			<td class="vncellt">RAM Usage</td>
 			<td class="listr">
 			<?php $memUsage = mem_usage(); ?>
 			<div class="progress-container">
@@ -139,7 +139,7 @@ setlocale(LC_ALL, 'tr_TR.UTF-8');
 			</td>
 		</tr>
 		<tr>
-			<td class="vncellt">Disk kullanımı</td>
+			<td class="vncellt">Disk Usage</td>
 			<td class="listr">
 			<?php $diskusage = disk_usage(); ?>
 			<div class="progress-container">

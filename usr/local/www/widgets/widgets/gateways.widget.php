@@ -41,11 +41,11 @@ $counter = 1;
 ?>
 <table border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	  <td width="10%" class="listhdrr left">İsim</td>
-	  <td width="10%" class="listhdrr">Ağ geçidi</td>
+	  <td width="10%" class="listhdrr left">Name</td>
+	  <td width="10%" class="listhdrr">Gateway</td>
 	  <td width="10%" class="listhdrr">RTT</td>
-	  <td width="10%" class="listhdrr">Kayıp</td>
-	  <td width="30%" class="listhdrr">Durum</td>
+	  <td width="10%" class="listhdrr">Loss</td>
+	  <td width="30%" class="listhdrr">Status</td>
 					</tr>
 <?php foreach ($a_gateways as $gname => $gateway) { ?>
 	<tr>
@@ -65,7 +65,7 @@ else
 <?php	if ($gateways_status[$gname])
 	echo $gateways_status[$gname]['delay'];
 else
-	echo 'Veri alınıyor.';
+	echo 'Gathering data...';
 ?>
 	<?php $counter++; ?>
 </td>
@@ -73,27 +73,27 @@ else
 <?php	if ($gateways_status[$gname])
 	echo $gateways_status[$gname]['loss'];
 else
-	echo 'Veri alınıyor.';
+	echo 'Gathering data...';
 ?>
 	<?php $counter++; ?>
 </td>
 	  <td class="listr" id="gateway<?=$counter?>" >
 <?php	if ($gateways_status[$gname]) {
 	if (stristr($gateways_status[$gname]['status'], "down")) {
-							$online = 'Bağlantı yok';
+							$online = 'No connection';
 							$class = 'label label-important';
 					} elseif (stristr($gateways_status[$gname]['status'], "loss")) {
-							$online = 'Uyarı, Paket kaybı';
+							$online = 'Warning: Packet loss';
 							$class = 'label label-warning';
 					} elseif (stristr($gateways_status[$gname]['status'], "delay")) {
-							$online = 'Uyarı: Gecikme';
+							$online = 'Warning: Latency';
 							$class = 'label label-warning';
 					} elseif ($gateways_status[$gname]['status'] == "none") {
-							$online = "Bağlandı";
+							$online = "Connected";
 							$class = 'label label-success';
 	}
 } else {
-	$online = 'Veri alınıyor.';
+	$online = 'Gathering data...';
 	$class = 'label';
 }
 echo "<span class=\"{$class}\">{$online}</span>\n";

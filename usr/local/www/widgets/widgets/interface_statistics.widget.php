@@ -85,25 +85,25 @@ require_once("/usr/local/www/widgets/include/interface_statistics.inc");
 	<table border="0" cellspacing="0" cellpadding="0">
 		<tr><td class="vncellt" style="height:15px;border-top: 1px solid #ccc;"></td></tr>
 		<tr>
-			<td class="vncellt" style="height:25px">Gelen Paket</td>
+			<td class="vncellt" style="height:25px">Packets In</td>
 		</tr>
 		<tr>
-			<td class="vncellt" style="height:25px">Giden Paket</td>
+			<td class="vncellt" style="height:25px">Packets Out</td>
 	   </tr>
 	   <tr>
-		<td class="vncellt" style="height:25px">Gelen Byte</td>
+		<td class="vncellt" style="height:25px">Bytes In</td>
 		</tr>
 	  <tr>
-		<td class="vncellt" style="height:25px">Giden Byte</td>
+		<td class="vncellt" style="height:25px">Bytes Out</td>
 	  </tr>
 	  <tr>
-		<td class="vncellt" style="height:25px">Hatalı Gelen</td>
+		<td class="vncellt" style="height:25px">Errors In</td>
 	 </tr>
 	  <tr>
-		<td class="vncellt" style="height:25px">Hatalı Giden</td>
+		<td class="vncellt" style="height:25px">Errors Out</td>
 	</tr>
 	  <tr>
-		<td class="vncellt" style="height:25px">Çarpışmalar</td>
+		<td class="vncellt" style="height:25px">Collisions</td>
 	 </tr>
 	  </table>
   </div>

@@ -14,15 +14,15 @@ var winCal;
 var dtToday=new Date();
 var Cal;
 var docCal;
-var MonthName=["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran","Temmuz",
-	"Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
-var WeekDayName=["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"];
+var MonthName=["January", "February", "March", "April", "May", "June", "July", "August",
+"September","October", "November","December"];
+var WeekDayName=["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 var exDateTime;//Existing Date and Time
 
 //Configurable parameters
 var cnTop="200";//top coordinate of calendar window.
 var cnLeft="500";//left coordinate of calendar window
-var WindowTitle ="Tarih Seç";//Date Time Picker title.
+var WindowTitle ="Pick Date";//Date Time Picker title.
 var WeekChar=2;//number of character for week day. if 2 then Mo,Tu,We. if 3 then Mon,Tue,Wed.
 var CellWidth=20;//Width of day cell.
 var DateSeparator="/";//Date Separator, you can change it to "/" if you want.

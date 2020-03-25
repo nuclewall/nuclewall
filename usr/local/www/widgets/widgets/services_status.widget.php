@@ -49,9 +49,9 @@ if(isset($_POST['servicestatusfilter'])) {
 
 <table class="grids sortable">
 	<tr>
-		<td class="listlr"><b>Servis Adı</b></td>
-		<td class="listr"><b>Açıklama</b></td>
-		<td class="listr"><b>Durum</b></td>
+		<td class="listlr"><b>Service</b></td>
+		<td class="listr"><b>Description</b></td>
+		<td class="listr"><b>Status</b></td>
 	</tr>
 	<tr>
 		<?php
@@ -61,15 +61,15 @@ if(isset($_POST['servicestatusfilter'])) {
 			hotspot
 		</td>
 		<td class="listr">
-			Hotspot servisi
+			Hotspot Service
 		</td>
 		<td class="listr center">
 		<?php if($cprunning) : ?>
-			<span title="Çalışıyor" class="label service blue">
+			<span title="Running" class="label service blue">
 				<i class="icon-play icon-white"></i>
 			</span>
 		<?php else: ?>
-			<span title="Durduruldu" class="label service red">
+			<span title="Stopped" class="label service red">
 				<i class="icon-stop icon-white"></i>
 			</span>
 		<?php endif; ?>
@@ -83,15 +83,15 @@ if(isset($_POST['servicestatusfilter'])) {
 			radiusd
 		</td>
 		<td class="listr">
-			FreeRADIUS sunucusu
+			FreeRADIUS Server
 		</td>
 		<td class="listr center">
 		<?php if($radiusdrunning) : ?>
-			<span title="Çalışıyor" class="label service blue">
+			<span title="Running" class="label service blue">
 				<i class="icon-play icon-white"></i>
 			</span>
 		<?php else: ?>
-			<span title="Durduruldu" class="label service red">
+			<span title="Stopped" class="label service red">
 				<i class="icon-stop icon-white"></i>
 			</span>
 		<?php endif; ?>
@@ -105,15 +105,15 @@ if(isset($_POST['servicestatusfilter'])) {
 			mysqld
 		</td>
 		<td class="listr">
-			MySQL sunucusu
+			MySQL Server
 		</td>
 		<td class="listr center">
 		<?php if($mysqldrunning) : ?>
-			<span title="Çalışıyor" class="label service blue">
+			<span title="Running" class="label service blue">
 				<i class="icon-play icon-white"></i>
 			</span>
 		<?php else: ?>
-			<span title="Durduruldu" class="label service red">
+			<span title="Stopped" class="label service red">
 				<i class="icon-stop icon-white"></i>
 			</span>
 		<?php endif; ?>
@@ -127,15 +127,15 @@ if(isset($_POST['servicestatusfilter'])) {
 			squid
 		</td>
 		<td class="listr">
-			Squid HTTP proxy sunucusu
+		  Squid HTTP Proxy Server
 		</td>
 		<td class="listr center">
 		<?php if($squidrunning) : ?>
-			<span title="Çalışıyor" class="label service blue">
+			<span title="Running" class="label service blue">
 				<i class="icon-play icon-white"></i>
 			</span>
 		<?php else: ?>
-			<span title="Durduruldu" class="label service red">
+			<span title="Stopped" class="label service red">
 				<i class="icon-stop icon-white"></i>
 			</span>
 		<?php endif; ?>
@@ -149,15 +149,15 @@ if(isset($_POST['servicestatusfilter'])) {
 			squidGuard
 		</td>
 		<td class="listr">
-			SquidGuard web filtreleme
+		    SquidGuard Web Filter
 		</td>
 		<td class="listr center">
 		<?php if($squidgrunning) : ?>
-			<span title="Çalışıyor" class="label service blue">
+			<span title="Running" class="label service blue">
 				<i class="icon-play icon-white"></i>
 			</span>
 		<?php else: ?>
-			<span title="Durduruldu" class="label service red">
+			<span title="Stopped" class="label service red">
 				<i class="icon-stop icon-white"></i>
 			</span>
 		<?php endif; ?>
@@ -171,15 +171,15 @@ if(isset($_POST['servicestatusfilter'])) {
 			dhcpd
 		</td>
 		<td class="listr">
-			DHCP sunucusu
+		    DHCP Server
 		</td>
 		<td class="listr center">
 		<?php if($dhcpdrunning) : ?>
-			<span title="Çalışıyor" class="label service blue">
+			<span title="Running" class="label service blue">
 				<i class="icon-play icon-white"></i>
 			</span>
 		<?php else: ?>
-			<span title="Durduruldu" class="label service red">
+			<span title="Stopped" class="label service red">
 				<i class="icon-stop icon-white"></i>
 			</span>
 		<?php endif; ?>
@@ -193,15 +193,15 @@ if(isset($_POST['servicestatusfilter'])) {
 			dnsmasq
 		</td>
 		<td class="listr">
-			DNS çözümleme servisi
+		    DNS Forwarder
 		</td>
 		<td class="listr center">
 		<?php if($dnsmasqrunning) : ?>
-			<span title="Çalışıyor" class="label service blue">
+			<span title="Running" class="label service blue">
 				<i class="icon-play icon-white"></i>
 			</span>
 		<?php else: ?>
-			<span title="Durduruldu" class="label service red">
+			<span title="Stopped" class="label service red">
 				<i class="icon-stop icon-white"></i>
 			</span>
 		<?php endif; ?>
@@ -215,15 +215,15 @@ if(isset($_POST['servicestatusfilter'])) {
 			sshd
 		</td>
 		<td class="listr">
-			SSH sunucusu
+		    SSH Server
 		</td>
 		<td class="listr center">
 		<?php if($sshdrunning) : ?>
-			<span title="Çalışıyor" class="label service blue">
+			<span title="Running" class="label service blue">
 				<i class="icon-play icon-white"></i>
 			</span>
 		<?php else: ?>
-			<span title="Durduruldu" class="label service red">
+			<span title="Stopped" class="label service red">
 				<i class="icon-stop icon-white"></i>
 			</span>
 		<?php endif; ?>
@@ -237,15 +237,15 @@ if(isset($_POST['servicestatusfilter'])) {
 			ntpd
 		</td>
 		<td class="listr">
-			NTP zaman eşitleme servisi
+		    NTP Server
 		</td>
 		<td class="listr center">
 		<?php if($ntpdrunning) : ?>
-			<span title="Çalışıyor" class="label service blue">
+			<span title="Running" class="label service blue">
 				<i class="icon-play icon-white"></i>
 			</span>
 		<?php else: ?>
-			<span title="Durduruldu" class="label service red">
+			<span title="Stopped" class="label service red">
 				<i class="icon-stop icon-white"></i>
 			</span>
 		<?php endif; ?>
