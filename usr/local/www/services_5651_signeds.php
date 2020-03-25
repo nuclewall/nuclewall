@@ -2,7 +2,7 @@
 /*
 	services_5651_signeds.php
 
-	Copyright (C) 2013-2020 Ogün Açık
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 */

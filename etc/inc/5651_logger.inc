@@ -2,7 +2,7 @@
 /*
 	5651_logger.inc
 
-	Copyright (C) 2013-2020 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 */
@@ -45,7 +45,7 @@ function smbfileInit($hostname, $username, $password, $folder)
 #!/bin/sh
 
 # log_sender
-# Copyright (C) 2013-2020 Ogün AÇIK
+# Copyright (C) 2013-2020 Ogun Acik
 # All rights reserved.
 
 LOG_DIR="/var/5651/logs"

@@ -2,7 +2,7 @@
 /*
 	system_gateways_edit.php
 
-	Copyright (C) 2013-2015 Ogun Acik
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2010 Seth Mos <seth.mos@dds.nl>.

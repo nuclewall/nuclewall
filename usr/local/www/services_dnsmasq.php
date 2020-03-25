@@ -3,7 +3,7 @@
 /*
 	services_dnsmasq.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2003-2004 Bob Zoller <bob@kludgebox.com> and Manuel Kasper <mk@neon1.net>.

@@ -2,7 +2,7 @@
 /*
 	diag_logs_auth.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>.
@@ -49,7 +49,7 @@ if ($_POST['filtertext'])
 if ($filtertext)
 	$filtertextmeta="?filtertext=$filtertext";
 
-$pgtitle = array('HOTSPOT ', 'OTURUM HAREKETLERÝ');
+$pgtitle = array('HOTSPOT ', 'OTURUM HAREKETLERï¿½');
 
 ?>
 
@@ -64,9 +64,9 @@ $pgtitle = array('HOTSPOT ', 'OTURUM HAREKETLERÝ');
 			<?php
 				$tab_array = array();
 				$tab_array[] = array('Aktif Oturumlar', false, 'hotspot_status.php');
-				$tab_array[] = array('Yerel Kullanýcýlar', false, 'hotspot_users.php');
-				$tab_array[] = array('Özel Ýzinli MAC Adresleri', false, 'hotspot_macs.php');
-				$tab_array[] = array('Engellenmiþ MAC Adresleri', false, 'hotspot_blocklist.php');
+				$tab_array[] = array('Yerel Kullanï¿½cï¿½lar', false, 'hotspot_users.php');
+				$tab_array[] = array('ï¿½zel ï¿½zinli MAC Adresleri', false, 'hotspot_macs.php');
+				$tab_array[] = array('Engellenmiï¿½ MAC Adresleri', false, 'hotspot_blocklist.php');
 				$tab_array[] = array('Oturum Hareketleri', true, 'hotspot_logs.php');
 				display_top_tabs($tab_array);
 			?>
@@ -78,7 +78,7 @@ $pgtitle = array('HOTSPOT ', 'OTURUM HAREKETLERÝ');
 				<tr>
 					<td>
 						<div style="margin-right: 10px;" class="pull-left">
-							<a onclick="return confirm('Tüm hotspot olay günlüklerini silmek istediðinizden emin misiniz?.')" class="btn" href="hotspot_logs.php?act=del">
+							<a onclick="return confirm('Tï¿½m hotspot olay gï¿½nlï¿½klerini silmek istediï¿½inizden emin misiniz?.')" class="btn" href="hotspot_logs.php?act=del">
 							<i class="icon-trash"></i>Sil</a>
 						</div>
 

@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright (C) 2013-2015 Ogun Acik
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 */
 

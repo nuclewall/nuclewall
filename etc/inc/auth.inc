@@ -1,9 +1,9 @@
 <?php
 /*
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
-	Copyright (C) 2010 Ermal Luçi
+	Copyright (C) 2010 Ermal Luci
 	All rights reserved.
 
 	Copyright (C) 2007, 2008 Scott Ullrich <sullrich@gmail.com>
@@ -569,7 +569,7 @@ function session_auth()
 			$_SESSION['Username'] = $_POST['usernamefld'];
 			$_SESSION['last_access'] = time();
 			if(! isset($config['system']['webgui']['quietlogin'])) {
-				log_auth("'{$_POST['usernamefld']}' ({$_SERVER['REMOTE_ADDR']}) kullanýcýsý giriþ yaptý.");
+				log_auth("'{$_POST['usernamefld']}' ({$_SERVER['REMOTE_ADDR']}) kullanï¿½cï¿½sï¿½ giriï¿½ yaptï¿½.");
 			}
 			$HTTP_SERVER_VARS['AUTH_USER'] = $_SESSION['Username'];
 			if (isset($_POST['postafterlogin']))
@@ -584,8 +584,8 @@ function session_auth()
 		}
 		else
 		{
-			$_SESSION['Login_Error'] = "Kullanýcý adý veya parola hatalý.";
-			log_auth("'{$_POST['usernamefld']}' ({$_SERVER['REMOTE_ADDR']}) kullanýcýsý oturum açmayý denedi. Baþarýlý deðil.");
+			$_SESSION['Login_Error'] = "Kullanï¿½cï¿½ adï¿½ veya parola hatalï¿½.";
+			log_auth("'{$_POST['usernamefld']}' ({$_SERVER['REMOTE_ADDR']}) kullanï¿½cï¿½sï¿½ oturum aï¿½mayï¿½ denedi. Baï¿½arï¿½lï¿½ deï¿½il.");
 		}
 	}
 
@@ -613,9 +613,9 @@ function session_auth()
 	if (isset($_GET['logout']))
 	{
 		if ($_SESSION['Logout'])
-			log_error("'{$_SESSION['Username']}' ({$_SERVER['REMOTE_ADDR']}) kullanýcýsýnýn oturum süresi doldu.");
+			log_error("'{$_SESSION['Username']}' ({$_SERVER['REMOTE_ADDR']}) kullanï¿½cï¿½sï¿½nï¿½n oturum sï¿½resi doldu.");
 		else
-			log_error("'{$_SESSION['Username']}' ({$_SERVER['REMOTE_ADDR']}) kullanýcýsý oturumunu kapattý.");
+			log_error("'{$_SESSION['Username']}' ({$_SERVER['REMOTE_ADDR']}) kullanï¿½cï¿½sï¿½ oturumunu kapattï¿½.");
 
 		$_SESSION = array();
 

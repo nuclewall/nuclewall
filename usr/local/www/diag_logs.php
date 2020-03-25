@@ -2,7 +2,7 @@
 /*
 	diag_logs.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2004-2009 Scott Ullrich
@@ -53,7 +53,7 @@ if ($_POST['filtertext'])
 if ($filtertext)
 	$filtertextmeta="?filtertext=$filtertext";
 
-$pgtitle = array('OLAY GÜNLÜKLERÝ' , 'SÝSTEM');
+$pgtitle = array('OLAY Gï¿½NLï¿½KLERï¿½' , 'Sï¿½STEM');
 
 ?>
 
@@ -68,7 +68,7 @@ $pgtitle = array('OLAY GÜNLÜKLERÝ' , 'SÝSTEM');
 			<?php
 				$tab_array = array();
 				$tab_array[] = array('Sistem', true, 'diag_logs.php');
-				$tab_array[] = array('Güvenlik Duvarý', false, 'diag_logs_filter.php');
+				$tab_array[] = array('Gï¿½venlik Duvarï¿½', false, 'diag_logs_filter.php');
 				$tab_array[] = array('DHCP', false, 'diag_logs_dhcp.php');
 				$tab_array[] = array('MySQL', false, 'diag_logs_mysql.php');
 				$tab_array[] = array('FreeRADIUS', false, 'diag_logs_radius.php');
@@ -83,7 +83,7 @@ $pgtitle = array('OLAY GÜNLÜKLERÝ' , 'SÝSTEM');
 				<tr>
 					<td>
 						<div style="margin-right: 10px;" class="pull-left">
-							<a onclick="return confirm('Tüm sistem olay günlüklerini silmek istediðinizden emin misiniz?.')" class="btn" href="diag_logs.php?act=del">
+							<a onclick="return confirm('Tï¿½m sistem olay gï¿½nlï¿½klerini silmek istediï¿½inizden emin misiniz?.')" class="btn" href="diag_logs.php?act=del">
 							<i class="icon-trash"></i>Sil</a>
 						</div>
 

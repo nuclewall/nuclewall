@@ -2,7 +2,7 @@
 /*
 	system.widget.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	Copyright 2007 Scott Dale

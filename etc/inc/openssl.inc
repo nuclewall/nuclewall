@@ -2,7 +2,7 @@
 /*
 	openssl.inc
 
-	Copyright (C) 2013-2015 Ogün Açýk
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 */
 

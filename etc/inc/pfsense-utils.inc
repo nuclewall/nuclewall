@@ -1,7 +1,8 @@
 <?php
 /*
  *
- * Copyright (C) 2013-2015 Ogün Açýk
+ * Copyright (C) 2013-2020 Ogun Acik
+
  * Copyright (C) 2004-2007 Scott Ullrich (sullrich@gmail.com)
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without

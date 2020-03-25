@@ -3,7 +3,7 @@
 	util.inc
 	part of the pfSense project (http://www.pfsense.com)
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	originally part of m0n0wall (http://m0n0.ch/wall)
