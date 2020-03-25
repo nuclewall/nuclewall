@@ -106,6 +106,7 @@ textarea {
   text-align: left;
   line-height: 20px;
   text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+  text-decoration-color: rgb(3, 143, 168);
   -moz-text-decoration-color: rgb(3, 143, 168);
 }
 
@@ -121,6 +122,7 @@ textarea {
   line-height: 20px;
   text-shadow: rgb(255, 255, 255) 0px 1px 0px;
   -moz-text-decoration-color: rgb(3, 143, 168);
+  text-decoration-color: rgb(3, 143, 168);
 }
 
 .vtable {
@@ -132,6 +134,7 @@ textarea {
   border-bottom: 1px solid #ccc;
   line-height: 20px;
   text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+  text-decoration-color: rgb(3, 143, 168);
   -moz-text-decoration-color: rgb(3, 143, 168);
   min-width: 600px;
 }
@@ -143,6 +146,7 @@ textarea {
   font-size: 12px;
   padding: 5px;
   text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+  text-decoration-color: rgb(3, 143, 168);
   -moz-text-decoration-color: rgb(3, 143, 168);
 }
 
@@ -158,6 +162,7 @@ textarea {
   padding: 4px;
   padding-right: 10px;
   text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+  text-decoration-color: rgb(3, 143, 168);
   -moz-text-decoration-color: rgb(3, 143, 168);
 }
 
@@ -172,6 +177,7 @@ textarea {
   padding-bottom: 7px;
   color: #525252;
   text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+  text-decoration-color: rgb(3, 143, 168);
   -moz-text-decoration-color: rgb(3, 143, 168);
 }
 
@@ -186,6 +192,7 @@ textarea {
   padding-bottom: 7px;
   color: #525252;
   text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+  text-decoration-color: rgb(3, 143, 168);
   -moz-text-decoration-color: rgb(3, 143, 168);
 }
 
@@ -204,6 +211,7 @@ textarea {
   font-size: 12px;
   padding: 4px;
   text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+  text-decoration-color: rgb(3, 143, 168);
   -moz-text-decoration-color: rgb(3, 143, 168);
 }
 
@@ -211,6 +219,7 @@ textarea {
   font-size: 11px;
   padding-left: 6px;
   text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+  text-decoration-color: rgb(3, 143, 168);
   -moz-text-decoration-color: rgb(3, 143, 168);
 }
 

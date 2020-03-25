@@ -1,4 +1,3 @@
-<!--
 function ext_change() {
 	if (document.iform.beginport.selectedIndex == 0) {
 		document.iform.beginport_cust.disabled = 0;

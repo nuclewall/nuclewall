@@ -55,7 +55,7 @@ var addRowTo = (function() {
 	td.innerHTML = '<a onclick="removeRow(this); return false;" href="#"><img border="0" src="/themes/' + theme + '/images/icons/icon_x.gif" /></a>';
 	tr.appendChild(td);
 	tbody.appendChild(tr);
-	if(rowhelper_onAdd != '') 
+	if(rowhelper_onAdd != '')
 		eval(rowhelper_onAdd);
     });
 })();
@@ -69,7 +69,7 @@ function removeRow(el) {
 	cel = el.getElementsByTagName("td").item(0);
 	el.parentNode.removeChild(el);
     }
-	if(rowhelper_onDelete != '') 
+	if(rowhelper_onDelete != '')
 		eval(rowhelper_onDelete);
 }
 

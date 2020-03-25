@@ -1,6 +1,7 @@
 .cell {
 -webkit-border-horizontal-spacing: 0px;
 -webkit-border-image: none;
+border-image: none;
 -webkit-border-vertical-spacing: 0px;
 background-color: #ffffff;
 border: solid 1px #bbb;
@@ -54,6 +55,7 @@ min-width: 35px;
 .wall {
 -webkit-border-horizontal-spacing: 0px;
 -webkit-border-image: none;
+border-image: none;
 -webkit-border-vertical-spacing: 0px;
 background-color: #ffffff;
 border: solid 1px #bbb;
@@ -94,6 +96,7 @@ vertical-align: middle;
 .head {
 -webkit-border-horizontal-spacing: 0px;
 -webkit-border-image: none;
+border-image: none;
 -webkit-border-vertical-spacing: 0px;
 border: #dc3737 solid 1px;
 background-color: #df0000;
@@ -120,6 +123,7 @@ text-shadow: none;
 .hwall {
 -webkit-border-horizontal-spacing: 0px;
 -webkit-border-image: none;
+border-image: none;
 -webkit-border-vertical-spacing: 0px;
 border: #dc3737 solid 1px;
 background-color: #df0000;
@@ -139,6 +143,7 @@ vertical-align: middle;
 .headw {
 -webkit-border-horizontal-spacing: 0px;
 -webkit-border-image: none;
+border-image: none;
 -webkit-border-vertical-spacing: 0px;
 border: #dc3737 solid 1px;
 background-color: #df0000;
@@ -164,6 +169,7 @@ min-width: 25px;
 .times{
 -webkit-border-horizontal-spacing: 0px;
 -webkit-border-image: none;
+border-image: none;
 -webkit-border-vertical-spacing: 0px;
 background-color: #ffffff;
 border: solid 1px #bbb;
@@ -206,6 +212,7 @@ text-align: left;
 .grids {
 -webkit-border-horizontal-spacing: 0px;
 -webkit-border-image: none;
+border-image: none;
 -webkit-border-vertical-spacing: 0px;
 background-color: transparent;
 border: solid 1px #bbb;

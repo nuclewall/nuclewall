@@ -1,4 +1,3 @@
-<!--
 var portsenabled = 1;
 var dstenabled = 1;
 var showsource = 0;

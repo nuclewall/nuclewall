@@ -19,18 +19,18 @@ var AjaxQueue = {
 	},
 	_processNext: function() { // Method for processing the requests in the queue. Private method. Don't call it explicitly
 		if(Ajax.activeRequestCount < AjaxQueue.batchSize) // Check if the currently processing request count is less than batch size
-		{	
+		{
 			if(AjaxQueue.elementsQueue.first()=="NOTSPECIFIED") { //Check if an elementID was specified
 				// Call Ajax.Request if no ElementID specified
 				//Call Ajax.Request on the first item in the queue and remove it from the queue
-				new Ajax.Request(AjaxQueue.urlQueue.shift(), AjaxQueue.optionsQueue.shift()); 
-				
+				new Ajax.Request(AjaxQueue.urlQueue.shift(), AjaxQueue.optionsQueue.shift());
+
 				var junk = AjaxQueue.elementsQueue.shift();
 			} else {
 				// Call Ajax.Updater if an ElementID was specified.
 				//Call Ajax.Updater on the first item in the queue and remove it from the queue
-				new Ajax.Updater(AjaxQueue.elementsQueue.shift(), AjaxQueue.urlQueue.shift(), AjaxQueue.optionsQueue.shift());				
-			}		
+				new Ajax.Updater(AjaxQueue.elementsQueue.shift(), AjaxQueue.urlQueue.shift(), AjaxQueue.optionsQueue.shift());
+			}
 		}
 	}
 };

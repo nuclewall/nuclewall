@@ -675,4 +675,4 @@ button.close{padding:0;cursor:pointer;background:transparent;border:0;-webkit-ap
 .collapse{position:relative;height:0;overflow:hidden;-webkit-transition:height 0.35s ease;-moz-transition:height 0.35s ease;-o-transition:height 0.35s ease;transition:height 0.35s ease;}.collapse.in{height:auto;}
 .btn-right {float:right;position:relative;top:-20px;right:-15px;}
 #main{width: 480px;height: 195px;position: absolute;padding-top: 95px;left: 50%;top: 100px;margin: 0 0 0 -240px;background-position: 50% 30px;background-image: url(../img/nuclewall-text.png);background-repeat: no-repeat;background-color: #eee;}
-#login_body{background-color:#303030;
+#login_body{background-color:#303030};

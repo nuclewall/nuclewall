@@ -1,4 +1,3 @@
-<!--
 var portsenabled = 1;
 var editenabled = 1;
 
@@ -146,7 +145,7 @@ function show_dsdiv() {
 function show_advanced_noxmlrpc() {
 	document.getElementById("showadvnoxmlrpcsyncbox").innerHTML='';
 	aodiv = document.getElementById('shownoxmlrpcadv');
-	aodiv.style.display = "block";	
+	aodiv.style.display = "block";
 }
 
 function show_advanced_schedule() {

@@ -25,9 +25,9 @@ function fr_insline(id, on) {
 		prevrow = document.getElementById('frheader');
 	}
 
-	var cells = row.getElementsByTagName("td"); 
+	var cells = row.getElementsByTagName("td");
 	var prevcells = prevrow.getElementsByTagName("td");
-	
+
 	for (i = 0; i <= prevcells.length - 1; i++) {
 		if (prevcells[i].id == 'frd' + (id-1)) {
 			if (on) {

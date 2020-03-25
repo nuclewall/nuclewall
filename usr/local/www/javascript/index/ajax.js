@@ -107,7 +107,7 @@ function updateInterfaceStats(x){
 		for (var y=0; y<statistics_split.length-1; y++){
 			if($('stat' + counter)) {
 				$('stat' + counter).update(statistics_split[y]);
-				counter++;	
+				counter++;
 			}
 		}
 	}
