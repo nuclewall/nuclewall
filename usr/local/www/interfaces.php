@@ -80,7 +80,7 @@ $pconfig['enable'] = isset($wancfg['enable']);
 if (is_array($config['aliases']['alias'])) {
 	foreach($config['aliases']['alias'] as $alias) {
 		if($alias['name'] == $wancfg['descr']) {
-			$input_errors[] = sprintf("%s isminde bir takma ad zaten mevcut.", $wancfg['descr']);
+			$input_errors[] = sprintf("Sorry, an alias with the name %s already exists.", $wancfg['descr']);
 		}
 	}
 }
@@ -110,7 +110,7 @@ $pconfig['mss'] = $wancfg['mss'];
 if ($_POST['apply']) {
 	unset($input_errors);
 	if (!is_subsystem_dirty('interfaces'))
-		$intput_errors[] = "Değişiklikleri zaten uyguladınız.";
+		$intput_errors[] = "You have already applied your settings.";
 	else {
 		unlink_if_exists("{$g['tmp_path']}/config.cache");
 		clear_subsystem_dirty('interfaces');
@@ -169,19 +169,19 @@ else if ($_POST)
 	{
 		if ($if != $ifent && $ifdescr == $_POST['descr'])
 		{
-			$input_errors[] = "Belirtilen isimde bir ağ arayüzü zaten mevcut";
+			$input_errors[] = "An interface with the specified description already exists.";
 			break;
 		}
 	}
 
 	if (isset($config['dhcpd']) && isset($config['dhcpd'][$if]['enable']) && $_POST['type'] != "static")
-		$input_errors[] = "Bu ağ arayüzünde bir DHCP sunucu mevcut ve DHCP hizmeti sadece sabit IP ile kullanılabilir. Arayüz ayarlarını değiştirmek için önce DHCP sunucu ayarlarını değiştirmelisiniz.";
+		$input_errors[] = "The DHCP Server is active on this interface and it can be used only with a static IP configuration. Please disable the DHCP Server service on this interface first, then change the interface configuration.";
 
 	switch(strtolower($_POST['type']))
 	{
 		case "static":
 			$reqdfields = explode(" ", "ipaddr subnet gateway");
-			$reqdfieldsn = array("IP adresi", "Alt ağ bit sayısı", "Ağ geçidi");
+			$reqdfieldsn = array("IP Address", "Subnet Bit Count", "Gateway");
 			do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 			break;
 		case "dhcp":
@@ -189,13 +189,13 @@ else if ($_POST)
 	}
 
 	if (($_POST['ipaddr'] && !is_ipaddr($_POST['ipaddr'])))
-		$input_errors[] = "Geçerli bir IP adresi belirtilmelidir.";
+		$input_errors[] = "A valid IP address must be specified.";
 	if (($_POST['subnet'] && !is_numeric($_POST['subnet'])))
-		$input_errors[] = "Geçerli bir alt ağ bit sayısı belirtilmelidir.";
+		$input_errors[] = "A valid subnet bit count must be specified.";
 	if (($_POST['alias-address'] && !is_ipaddr($_POST['alias-address'])))
-		$input_errors[] = "Geçerli bir yedek IP adresi belirtilmelidir.";
+		$input_errors[] = "A valid alias IP address must be specified.";
 	if (($_POST['alias-subnet'] && !is_numeric($_POST['alias-subnet'])))
-		$input_errors[] = "Geçerli bir yede IP adresi alt ağ bit sayısı belirtilmelidir.";
+		$input_errors[] = "A valid alias subnet bit count must be specified.";
 	if ($_POST['gateway'] != "none")
 	{
 		$match = false;
@@ -209,12 +209,12 @@ else if ($_POST)
 
 		if(!$match)
 		{
-			$input_errors[] = "Geçerli bir ağ geçidi belirtilmelidir.";
+			$input_errors[] = "A valid gateway must be specified.";
 		}
 	}
 
 	if ($_POST['mtu'] && ($_POST['mtu'] < 576))
-		$input_errors[] = "MTU 576 byte'tan büyük olmalıdır.";
+		$input_errors[] = "The MTU must be greater than 576 bytes.";
 
 
 	if (!$input_errors)
@@ -248,7 +248,7 @@ else if ($_POST)
 			if($skip == false)
 			{
 				$gateway_item['gateway'] = "dynamic";
-				$gateway_item['descr'] = base64_encode("Dinamik" . $if . "Ağ Geçidi");
+				$gateway_item['descr'] = base64_encode("Dynamic" . $if . "Gateway");
 				$gateway_item['name'] = "GW_" . strtoupper($if);
 				$gateway_item['interface'] = "{$if}";
 			}
@@ -350,10 +350,10 @@ foreach ($mediaopts as $mediaopt)
 		array_push($mediaopts_list, $matches[1]);
 }
 
-$pgtitle = array('AĞ ARAYÜZLERİ', $pconfig['descr']);
+$pgtitle = array('INTERFACES ', $pconfig['descr']);
 
 include('head.inc');
-$types = array("none" => "Hiçbiri", "static" => "Sabit", "dhcp" => "DHCP");
+$types = array("none" => "None", "static" => "Static", "dhcp" => "DHCP");
 
 ?>
 
@@ -366,7 +366,7 @@ $types = array("none" => "Hiçbiri", "static" => "Sabit", "dhcp" => "DHCP");
 <form action="interfaces.php" method="post" name="iform" id="iform">
 	<?php if ($input_errors) print_input_errors($input_errors); ?>
 	<?php if (is_subsystem_dirty('interfaces')): ?>
-	<?php print_info_box_np(sprintf("%s ayarları değiştirildi." ,$wancfg['descr']) . '<br>' .  'Değişikliklerin etkili olabilmesi için uygulayın.', true);?>
+	<?php print_info_box_np(sprintf("The %s configuration has been changed.." ,$wancfg['descr']) . '<br>' .  'You must apply the changes in order for them to take effect.', true);?>
 	<?php endif; ?>
 	<?php if ($savemsg) print_info_box($savemsg); ?>
 
@@ -378,26 +378,26 @@ $types = array("none" => "Hiçbiri", "static" => "Sabit", "dhcp" => "DHCP");
 					<td>
 						<table cellpadding="0" cellspacing="0">
 							<tr>
-								<td colspan="2" valign="top" class="listtopic">GENEL AYARLAR</td>
+								<td colspan="2" valign="top" class="listtopic">GENERAL CONFIGURATION</td>
 							</tr>
 							<tr>
-								<td valign="top" class="vncell">Aktif</td>
+								<td valign="top" class="vncell">Enable</td>
 								<td class="vtable">
 									<input name="enable" type="checkbox" value="yes" <?php if ($pconfig['enable'] == true) echo "checked"; ?>>
-									Ağ arayüzünü aktifleştirmek için işaretleyin
+									Enable Interface
 								</td>
 							</tr>
 						</table>
 						<table cellpadding="0" cellspacing="0">
 							<tr>
-								<td valign="top" class="vncell">İsim</td>
+								<td valign="top" class="vncell">Description</td>
 								<td class="vtable">
 									<input name="descr" type="text" id="descr" value="<?=htmlspecialchars($pconfig['descr']);?>">
-									<br>Ağ arayüzü için bir isim girin
+									<br>Enter a description (name) for the interface here.
 								</td>
 							</tr>
 							<tr>
-								<td valign="middle" class="vncell">Tür</td>
+								<td valign="middle" class="vncell">Type</td>
 								<td class="vtable">
 									<select name="type" id="type">
 									<?php
@@ -418,16 +418,16 @@ $types = array("none" => "Hiçbiri", "static" => "Sabit", "dhcp" => "DHCP");
 								<td class="vtable">
 									<input name="mtu" type="text" id="mtu" value="<?=htmlspecialchars($pconfig['mtu']);?>">
 									<br>
-									Boş bırakırsanız, ağ kartınızın varsayılan MTU değeri kullanılır.<br>
-									Bu değer yaklaşık olarak 1500 byte'tır ve donanımdan donanıma değişebilir.
+									If you leave this field blank, the adapter's default MTU will be used. <br>
+									This is typically 1500 bytes but can vary on some hardware
 								</td>
 							</tr>
 							<tbody style="display: none;" name="static" id="static">
 								<tr>
-									<td colspan="2" class="listtopic">SABİT İP AYARLARI</td>
+									<td colspan="2" class="listtopic">STATIC IP CONFIGURATION</td>
 								</tr>
 								<tr>
-									<td valign="top" class="vncell">IP Adresi</td>
+									<td valign="top" class="vncell">IP Address</td>
 									<td class="vtable">
 										<input name="ipaddr" type="text" id="ipaddr" value="<?=htmlspecialchars($pconfig['ipaddr']);?>">
 										/
@@ -445,10 +445,10 @@ $types = array("none" => "Hiçbiri", "static" => "Sabit", "dhcp" => "DHCP");
 									</td>
 								</tr>
 								<tr>
-									<td valign="top" class="vncell">Ağ Geçitleri</td>
+									<td valign="top" class="vncell">Geteways</td>
 									<td class="vtable">
 										<select name="gateway" class="formselect" id="gateway">
-											<option value="none" selected>Hiçbiri</option>
+											<option value="none" selected>None</option>
 												<?php
 												if(count($a_gateways) > 0) {
 													foreach ($a_gateways as $gateway) {
@@ -468,18 +468,20 @@ $types = array("none" => "Hiçbiri", "static" => "Sabit", "dhcp" => "DHCP");
 							</tbody>
 							<tbody style="display: none;" name="dhcp" id="dhcp">
 								<tr>
-									<td colspan="2" valign="top" class="listtopic">DHCP İSTEMCİ AYARLARI</td>
+									<td colspan="2" valign="top" class="listtopic">DHCP CLIENT CONFIGURATION</td>
 								</tr>
 								<tr>
-									<td valign="top" class="vncell">Sunucu Adı</td>
+									<td valign="top" class="vncell">Hostname</td>
 									<td class="vtable">
 										<input name="dhcphostname" type="text" id="dhcphostname" value="<?=htmlspecialchars($pconfig['dhcphostname']);?>">
 										<br>
-										Bazı internet servis sağlayıcıları bu veriyi DHCP istemcinin kimliğini onaylamak için kullanır.
+										The value in this field is sent as the DHCP client identifier and hostname
+										when requesting a DHCP lease. <br>
+										Some ISPs may require this for client identification.
 									</td>
 								</tr>
 								<tr>
-									<td valign="top" class="vncell">Yedek IP Adresi</td>
+									<td valign="top" class="vncell">Alias IP Address</td>
 									<td class="vtable">
 										<input name="alias-address" type="text" id="alias-address" value="<?=htmlspecialchars($pconfig['alias-address']);?>">
 										<select name="alias-subnet" id="alias-subnet">
@@ -495,39 +497,36 @@ $types = array("none" => "Hiçbiri", "static" => "Sabit", "dhcp" => "DHCP");
 											}
 											?>
 										</select>
-										<br>
-										DHCP sunucunun verdiği IP adresi dışında, ağ kartınıza başka bir IP adresi daha girebilirsiniz.
-										Not: Yanlış bir IP adresi girmek bağlantı sorunlarına yol açabilir.
 									</td>
 								</tr>
 							</tbody>
 
 							<tr>
-								<td colspan="2" valign="top" class="listtopic">ÖZEL AĞLAR</td>
+								<td colspan="2" valign="top" class="listtopic">PRIVATE NETWORKS</td>
 							</tr>
 							<tr>
 								<td valign="middle" class="vncell"></td>
 								<td class="vtable">
 									<a name="rfc1918"></a>
 									<input name="blockpriv" type="checkbox" id="blockpriv" value="yes" <?php if ($pconfig['blockpriv']) echo "checked"; ?>>
-									<strong>Özel ağları engelle</strong><br>
-									İşaretlendiği zaman, RFC 1918 (10/8, 172.16/12, 192.168/16) tarafından özel ağlar için
-									ayrılmış olan adresleri ve loopback (127.0.0.1) adreslerini engeller.
-									NUCLEWALL'un web arayüzüne WAN IP adresinden ulaşmak istiyorsanız engellemeyi kaldırmalısınız.
+									<strong>Block Private Networks</strong><br>
+									When set, this option blocks traffic from IP addresses that are reserved
+								    for private  networks as per RFC 1918 (10/8, 172.16/12, 192.168/16) as well as loopback addresses (127/8)
 								</td>
 							</tr>
 							<tr>
 								<td valign="middle" class="vncell"></td>
 								<td class="vtable">
 									<input name="blockbogons" type="checkbox" id="blockbogons" value="yes" <?php if ($pconfig['blockbogons']) echo "checked"; ?>>
-									<strong>Ayrılmış(Bogon) adresleri engelle</strong><br>
-									IANA tarafından onaylanmış ve ayrılmış olan IP adreslerini engeller.
+									<strong>Block Bogon Networks</strong><br>
+									When set, this option blocks traffic from IP addresses that are reserved
+									(but not RFC 1918) or not yet assigned by IANA
 								</td>
 							</tr>
 							<tr>
 								<td class="vncell"></td>
 								<td class="vtable">
-									<input id="save" name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
+									<input id="save" name="Submit" type="submit" class="btn btn-inverse" value="Save">
 									<input id="cancel" type="button" class="btn btn-default" value="Iptal" onclick="history.back()">
 									<input name="if" type="hidden" id="if" value="<?=$if;?>">
 									<?php if ($wancfg['if'] == $a_ppps[$pppid]['if']) : ?>

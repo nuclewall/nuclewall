@@ -32,7 +32,7 @@
 	POSSIBILITY OF SUCH DAMAGE.
 */
 
-$pgtitle = array('AĞ ARAYÜZLERİ', 'ETHERNET KARTI-ARAYÜZLERİ İLİŞKİLENDİR');
+$pgtitle = array('INTERFACS ', 'ASSIGN');
 
 require('guiconfig.inc');
 require('functions.inc');
@@ -128,7 +128,7 @@ if ($_GET['act'] == "del")
 	$id = $_GET['id'];
 
 	if (link_interface_to_group($id))
-		$input_errors[] = "Bu ağ arayüzü bir gruba ekli. Silmeden önce gruptan çıkartın.";
+		$input_errors[] = "The interface is part of a group. Please remove it from the group to continue.";
 	else
 	{
 		unset($config['interfaces'][$id]['enable']);
@@ -179,7 +179,7 @@ if ($_GET['act'] == "del")
 
 		link_interface_to_vlans($realid, "update");
 
-		$savemsg = "Ağ arayüzü silindi.";
+		$savemsg = "Interface has been deleted.";
 	}
 }
 
@@ -228,10 +228,10 @@ if ($_GET['act'] == "add" && (count($config['interfaces']) < count($portlist)))
 	mwexec("/bin/rm -f /tmp/config.cache");
 	write_config();
 
-	$savemsg = "Ağ arayüzü eklendi.";
+	$savemsg = "Interface has been added.";
 
 } else if ($_GET['act'] == "add")
-	$input_errors[] = "Eklenecek başka ağ arayüzü yok.";
+	$input_errors[] = "No more interfaces available to be assigned.";
 
 include('head.inc');
 
@@ -239,12 +239,12 @@ if(file_exists("/var/run/interface_mismatch_reboot_needed"))
 	if ($_POST)
 	{
 		if($rebootingnow)
-			$savemsg = "Sistem şimdi yeniden başlatılıyor...";
+			$savemsg = "NUCLEWALL is now rebooting. Please wait.";
 		else
-			$savemsg = "Sistemin yeniden başlatılması gerekiyor. Lütfen ayarlarınızı uygulayın.";
+			$savemsg = "Reboot is needed. Please apply the settings in order to reboot.";
 	}
 	else
-		$savemsg = "Ethernet kartı-arayüz ilişkilendirmesi düzgün yapılmamış. Lütfen düzeltip yeniden deneyin.";
+		$savemsg = "Interface mismatch detected. Please resolve the mismatch and click Save.";
 ?>
 
 
@@ -255,7 +255,7 @@ if(file_exists("/var/run/interface_mismatch_reboot_needed"))
 <form action="interfaces_assign.php" method="post" name="iform" id="iform">
 
 <?php if (file_exists("/tmp/reload_interfaces")): ?><p>
-	<?php print_info_box_np("Arayüz ayarları değiştirildi.</br>Değişikliklerin etkili olabilmesi için uygulamalısınız.", true);?>
+	<?php print_info_box_np("The interface configuration has been changed.</br>You must apply the changes in order for them to take effect.", true);?>
 <?php elseif($savemsg): ?>
 	<?php print_info_box($savemsg); ?>
 <?php endif; ?>
@@ -268,8 +268,8 @@ if(file_exists("/var/run/interface_mismatch_reboot_needed"))
 		<td>
 			<table width="100%" class="grids">
 				<tr>
-					<td class="head">Arayüz</td>
-					<td class="head">Ethernet Kartı</td>
+					<td class="head">Interface</td>
+					<td class="head">Network Port</td>
 					<td class="head"></td>
 				</tr>
 					<?php foreach ($config['interfaces'] as $ifname => $iface):
@@ -292,7 +292,7 @@ if(file_exists("/var/run/interface_mismatch_reboot_needed"))
 					</td>
 					<td class="cell tools">
 						<?php if ($ifname != 'wan'): ?>
-						<a title="Sil" href="interfaces_assign.php?act=del&id=<?=$ifname;?>" onclick="return confirm('Silmek istediğinize emin misiniz?')">
+						<a title="Delete" href="interfaces_assign.php?act=del&id=<?=$ifname;?>" onclick="return confirm('Do you really want to delete this interface?')">
 							<i class="icon-trash"></i>
 						</a>
 						<?php endif; ?>
@@ -303,7 +303,7 @@ if(file_exists("/var/run/interface_mismatch_reboot_needed"))
 				<tr>
 					<td class="cell" colspan="2"></td>
 					<td class="cell tools">
-						<a title="Ekle" href="interfaces_assign.php?act=add">
+						<a title="Add" href="interfaces_assign.php?act=add">
 							<i class="icon-plus"></i>
 						</a>
 					</td>
@@ -314,16 +314,11 @@ if(file_exists("/var/run/interface_mismatch_reboot_needed"))
 	</tr>
 	<tr>
 		<td>
-			<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
+			<input name="Submit" type="submit" class="btn btn-inverse" value="Save">
 		</td>
 	</tr>
 </table>
 </form>
-<div class="alert alert-warning">
-	<span>
-		Arayüz ve ethernet kartı ilişkilendirmelerini değiştirmek bağlantı sorunlarına yol açabilir.
-	</span>
-</div>
 </div>
 </body>
 </html>
