@@ -36,8 +36,6 @@
 
 require('guiconfig.inc');
 
-setlocale(LC_ALL, 'tr_TR.ISO8859-9');
-
 $system_logfile = "{$g['varlog_path']}/system.log";
 
 $nentries = $config['syslog']['nentries'];
@@ -53,26 +51,26 @@ if ($_POST['filtertext'])
 if ($filtertext)
 	$filtertextmeta="?filtertext=$filtertext";
 
-$pgtitle = array('OLAY G�NL�KLER�' , 'S�STEM');
+$pgtitle = array('LOGS ' , 'SYSTEM');
 
 ?>
 
-<?php include('headansi.inc'); ?>
+<?php include('head.inc'); ?>
 </head>
 <body>
-<?php include('fbeginansi.inc'); ?>
+<?php include('fbegin.inc'); ?>
 
 <table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Sistem', true, 'diag_logs.php');
-				$tab_array[] = array('G�venlik Duvar�', false, 'diag_logs_filter.php');
+				$tab_array[] = array('System', true, 'diag_logs.php');
+				$tab_array[] = array('Firewall', false, 'diag_logs_filter.php');
 				$tab_array[] = array('DHCP', false, 'diag_logs_dhcp.php');
 				$tab_array[] = array('MySQL', false, 'diag_logs_mysql.php');
 				$tab_array[] = array('FreeRADIUS', false, 'diag_logs_radius.php');
-				$tab_array[] = array('Ayarlar', false, 'diag_logs_settings.php');
+				$tab_array[] = array('Settings', false, 'diag_logs_settings.php');
 				display_top_tabs($tab_array);
 			?>
 		</td>
@@ -83,22 +81,22 @@ $pgtitle = array('OLAY G�NL�KLER�' , 'S�STEM');
 				<tr>
 					<td>
 						<div style="margin-right: 10px;" class="pull-left">
-							<a onclick="return confirm('T�m sistem olay g�nl�klerini silmek istedi�inizden emin misiniz?.')" class="btn" href="diag_logs.php?act=del">
-							<i class="icon-trash"></i>Sil</a>
+							<a onclick="return confirm('Do you want to delete all system logs?.')" class="btn" href="diag_logs.php?act=del">
+							<i class="icon-trash"></i>Delete</a>
 						</div>
 
 						<form class="form-search" id="clearform" name="clearform" action="diag_logs.php" method="post">
 							<input style="height:20px" type="text" id="filtertext" name="filtertext" value="<?=$filtertext;?>" class="input-medium">
-							<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Ara</button>
+							<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Search</button>
 						</form>
 
 						<table class="grids" width="100%">
 							<tr>
 								<td class="head">
-									Tarih
+									Date
 								</td>
 								<td class="head">
-									Mesaj
+									Message
 								</td>
 							</tr>
 							<?php

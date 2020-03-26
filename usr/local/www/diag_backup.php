@@ -56,13 +56,13 @@ if ($_POST['apply']) {
 
 if ($_POST) {
 	unset($input_errors);
-	if (stristr($_POST['Submit'], "Yükle"))
+	if (stristr($_POST['Submit'], "Restore"))
 		$mode = "restore";
 	else if (stristr($_POST['Submit'], "Reinstall"))
 		$mode = "reinstallpackages";
 	else if (stristr($_POST['Submit'], "Clear Package Lock"))
 		$mode = "clearpackagelock";
-	else if (stristr($_POST['Submit'], "Yedek Al"))
+	else if (stristr($_POST['Submit'], "Backup"))
 		$mode = "download";
 	else if (stristr($_POST['Submit'], "Restore version"))
 		$mode = "restore_ver";
@@ -129,22 +129,22 @@ if ($_POST) {
 					/* read the file contents */
 					$data = file_get_contents($_FILES['conffile']['tmp_name']);
 					if(!$data) {
-						log_error(sprintf("Uyarı: %s dosyası okunamıyor.", $_FILES['conffile']['tmp_name']));
+						log_error(sprintf("Warning: Can't read %s.", $_FILES['conffile']['tmp_name']));
 						return 1;
 					}
 
 					if($_POST['restorearea']) {
 						/* restore a specific area of the configuration */
 						if(!stristr($data, $_POST['restorearea'])) {
-							$input_errors[] = "XML etiketinde hata var.";
+							$input_errors[] = "XML tag error.";
 						} else {
 							restore_config_section($_POST['restorearea'], $data);
 							filter_configure();
-							$savemsg = "Ayar dosyası yüklendi. NUCLEWALL şimdi yeniden başlatılacak.";
+							$savemsg = "Config file loaded. NUCLEWALL will reboot now.";
 						}
 					} else {
 						if(!stristr($data, "<" . $g['xml_rootobj'] . ">")) {
-							$input_errors[] = sprintf("%s xml etiketi bulunamadı.", $g['xml_rootobj']);
+							$input_errors[] = sprintf("%s xml tag not found.", $g['xml_rootobj']);
 						} else {
 							/* restore the entire configuration */
 							file_put_contents($_FILES['conffile']['tmp_name'], $data);
@@ -177,19 +177,19 @@ if ($_POST) {
 									exit;
 								}
 							} else {
-								$input_errors[] = "Ayar dosyasındaki ayarlar yüklenemedi.";
+								$input_errors[] = "Can't load setting in config file.";
 							}
 						}
 					}
 				} else {
-					$input_errors[] = "Ayar dosyası yüklenemedi (dosya seçilmedi).";
+					$input_errors[] = "Can't load config file (file not choosen).";
 				}
 			}
 		}
 	}
 }
 
-$pgtitle = array('ARAÇLAR', 'YEDEK AL / GERİ YÜKLE');
+$pgtitle = array('TOOLS ', 'BACKUP / RESTORE');
 
 ?>
 
@@ -203,7 +203,7 @@ $pgtitle = array('ARAÇLAR', 'YEDEK AL / GERİ YÜKLE');
 <?php if (is_subsystem_dirty('restore')): ?><p>
 <form action="reboot.php" method="post">
 <input name="Submit" type="hidden" value="Yes">
-<?php print_info_box("Ayar dosyası yüklendi. NUCLEWALL şimdi yeniden başlatılacak.");?>
+<?php print_info_box("Config file is loaded. NUCLEWALL will reboot now.");?>
 </form>
 <?php endif; ?>
 <form action="diag_backup.php" method="post" name="iform" enctype="multipart/form-data">
@@ -212,8 +212,8 @@ $pgtitle = array('ARAÇLAR', 'YEDEK AL / GERİ YÜKLE');
 		<td>
 		<?php
 			$tab_array = array();
-			$tab_array[0] = array("Değişiklik Geçmişi", false, "diag_confbak.php");
-			$tab_array[1] = array("Yedekle / Geri Al", true, "diag_backup.php");
+			$tab_array[0] = array("Config History", false, "diag_confbak.php");
+			$tab_array[1] = array("Backup/Restore", true, "diag_backup.php");
 			display_top_tabs($tab_array);
 		?>
 		</td>
@@ -222,20 +222,20 @@ $pgtitle = array('ARAÇLAR', 'YEDEK AL / GERİ YÜKLE');
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td colspan="2" class="listtopic">YEDEK AL</td>
+					<td colspan="2" class="listtopic">BACKUP</td>
 				</tr>
 				<tr>
 					<td class="vncell">
-						<p><input name="Submit" type="submit" class="btn btn-inverse" id="download" value="Yedek Al"></p>
+						<p><input name="Submit" type="submit" class="btn btn-inverse" id="download" value="Backup"></p>
 					</td>
 				</tr>
                 <tr>
-					<td colspan="2" class="listtopic">YEDEK DOSYASINI YÜKLE</td>
+					<td colspan="2" class="listtopic">Restore</td>
 				</tr>
 				<tr>
 					<td class="vncell">
 						<input name="conffile" class="btn-mini" type="file" id="conffile" size="40">
-						<input name="Submit" type="submit" class="btn btn-inverse" id="restore" value="Yükle">
+						<input name="Submit" type="submit" class="btn btn-inverse" id="restore" value="Restore">
 					</td>
 				</tr>
 			</table>
@@ -243,9 +243,6 @@ $pgtitle = array('ARAÇLAR', 'YEDEK AL / GERİ YÜKLE');
 	</tr>
 </table>
 </form>
-<div class="alert">
-	<b>NOT : </b>Yedek dosyası yüklenirse NUCLEWALL yeniden başlatılacaktır.
-</div>
 </div>
 </body>
 </html>

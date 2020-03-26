@@ -38,15 +38,15 @@ if($_GET['newver'] != "") {
 	$confvers = unserialize(file_get_contents($g['cf_conf_path'] . '/backup/backup.cache'));
 	if(config_restore($g['conf_path'] . '/backup/config-' . $_GET['newver'] . '.xml') == 0)
 
-	$savemsg = sprintf('%1$s tarihli "%2$s" açıklamalı yedeğe geri alındı.', date("H:i:s d-m-Y", $_GET['newver']), $confvers[$_GET['newver']]['description']);
+	$savemsg = sprintf('Successfully reverted to timestamp %1$s with description "%2$s".', date("H:i:s d-m-Y", $_GET['newver']), $confvers[$_GET['newver']]['description']);
 	else
-		$savemsg = 'Seçilen ayara geri alınamadı.';
+		$savemsg = 'Unable to revert to the selected configuration.';
 }
 
 if($_GET['rmver'] != "") {
 	$confvers = unserialize(file_get_contents($g['cf_conf_path'] . '/backup/backup.cache'));
 	unlink_if_exists($g['conf_path'] . '/backup/config-' . $_GET['rmver'] . '.xml');
-	$savemsg = sprintf('%1$s tarihli "%2$s" açıklamalı yedek silindi.', date("H:i:s d-m-Y", $_GET['rmver']),$confvers[$_GET['rmver']]['description']);
+	$savemsg = sprintf('Deleted backup with timestamp %1$s and description "%2$s".', date("H:i:s d-m-Y", $_GET['rmver']),$confvers[$_GET['rmver']]['description']);
 }
 
 if($_GET['getcfg'] != "") {
@@ -84,7 +84,7 @@ cleanup_backupcache();
 $confvers = get_backups();
 unset($confvers['versions']);
 
-$pgtitle = array('ARAÇLAR', 'DEĞİŞİKLİK GEÇMİŞİ');
+$pgtitle = array('TOOLS ', 'CONFIGURATION HISTORY');
 
 ?>
 
@@ -103,7 +103,7 @@ if($savemsg)
 	<tr>
 		<td>
 			<div class="alert">
-				<b><?php echo date("H:i:s d-m-Y", $oldtime); ?></b> ile <b><?php echo date("H:i:s d-m-Y", $newtime); ?></b> tarihi arasındaki değişiklik farkı.
+				<b>Configuration diff from <?php echo date("H:i:s d-m-Y", $oldtime); ?></b> to <b><?php echo date("H:i:s d-m-Y", $newtime); ?></b>
 			</div>
 		</td>
 	</tr>
@@ -138,8 +138,8 @@ if($savemsg)
 		<td>
 		<?php
 			$tab_array = array();
-			$tab_array[0] = array("Değişiklik Geçmişi", true, "diag_confbak.php");
-			$tab_array[1] = array("Yedekle / Geri Al", false, "diag_backup.php");
+			$tab_array[0] = array("Config History", true, "diag_confbak.php");
+			$tab_array[1] = array("Backup/Restore", false, "diag_backup.php");
 			display_top_tabs($tab_array);
 		?>
 		</td>
@@ -155,10 +155,10 @@ if($savemsg)
 								<td class="head">
 								</td>
 								<td class="head">
-									Tarih
+								    Date
 								</td>
 								<td colspan="2" class="head">
-									Değişiklik
+									Diff
 								</td>
 							</tr>
 
@@ -173,7 +173,7 @@ if($savemsg)
 									<?= $config['revision']['description'] ?>
 								</td class="wall toolc">
 								<td colspan="2">
-									<center><span class="label label-success">Aktif</span><center>
+									<center><span class="label label-success">Current</span><center>
 								</td>
 							</tr>
 								<?php
@@ -182,7 +182,7 @@ if($savemsg)
 										if($version['time'] != 0)
 											$date = date("H:i:s d-m-Y", $version['time']);
 										else
-											$date = 'Bilinmiyor';
+											$date = 'Unknown';
 										$desc = $version['description'];
 								?>
 							<tr>
@@ -200,21 +200,21 @@ if($savemsg)
 									<?= $desc ?>
 								</td>
 								<td class="wall toolc">
-									<a href="diag_confbak.php?newver=<?=$version['time'];?>" onclick="return confirm('Bu ayarı geri yükle?')">
-										<i title="Bu ayarı geri yükle" class="icon-step-backward"></i>
+									<a href="diag_confbak.php?newver=<?=$version['time'];?>" onclick="return confirm('Revert to this configuration?')">
+										<i title="Revert to this configuration" class="icon-step-backward"></i>
 									</a>
-									<a href="diag_confbak.php?rmver=<?=$version['time'];?>" onclick="return confirm('Bu ayarı sil?')">
-										<i title="Bu ayarı sil" class="icon-trash"></i>
+									<a href="diag_confbak.php?rmver=<?=$version['time'];?>" onclick="return confirm('Delete this configuration backup?')">
+										<i title="Delete this backup" class="icon-trash"></i>
 									</a>
 									<a href="diag_confbak.php?getcfg=<?=$version['time'];?>">
-										<i title="Bu ayarı indir" class="icon-download-alt"></i>
+										<i title="Download this backup" class="icon-download-alt"></i>
 									</a>
 								</td>
 							</tr>
 							<?php endforeach; ?>
 							<tr>
 								<td class="wall">
-									<input title="Seçili ayarların farkını göster" class="btn btn-mini" type="submit" name="diff" value="Fark">
+									<input title="Compare selected configs" class="btn btn-mini" type="submit" name="diff" value="Diff">
 								</td>
 								<td class="cell" colspan="4">
 								</td>
@@ -222,7 +222,7 @@ if($savemsg)
 							<?php else: ?>
 							<tr>
 								<td>
-									<?php print_info_box("Yedek bulunamadı."); ?>
+									<?php print_info_box("No backups found."); ?>
 								</td>
 							</tr>
 							<?php endif; ?>

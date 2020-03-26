@@ -55,7 +55,7 @@ if ($_POST['filtertext'])
 if ($filtertext)
 	$filtertextmeta="?filtertext=$filtertext";
 
-$pgtitle = array('OLAY GÜNLÜKLERİ' , 'DHCP SUNUCU');
+$pgtitle = array('LOGS ' , 'DHCP');
 
 ?>
 
@@ -69,12 +69,12 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' , 'DHCP SUNUCU');
 		<td>
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Sistem', false, 'diag_logs.php');
-				$tab_array[] = array('Güvenlik Duvarı', false, 'diag_logs_filter.php');
+				$tab_array[] = array('System', false, 'diag_logs.php');
+				$tab_array[] = array('Firewall', false, 'diag_logs_filter.php');
 				$tab_array[] = array('DHCP', true, 'diag_logs_dhcp.php');
 				$tab_array[] = array('MySQL', false, 'diag_logs_mysql.php');
 				$tab_array[] = array('FreeRADIUS', false, 'diag_logs_radius.php');
-				$tab_array[] = array('Ayarlar', false, 'diag_logs_settings.php');
+				$tab_array[] = array('Settings', false, 'diag_logs_settings.php');
 				display_top_tabs($tab_array);
 			?>
 		</td>
@@ -85,22 +85,22 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' , 'DHCP SUNUCU');
 			<tr>
 				<td>
 					<div style="margin-right: 10px;" class="pull-left">
-						<a onclick="return confirm('DHCP olay günlüklerini silerseniz DHCPD servisi yeniden başlatılacaktır. Onaylıyor musunuz?.')" class="btn" href="diag_logs_dhcp.php?act=del">
-						<i class="icon-trash"></i>Sil</a>
+						<a onclick="return confirm('Clearing the log file will restart the DHCP daemon. Proceed?.')" class="btn" href="diag_logs_dhcp.php?act=del">
+						<i class="icon-trash"></i>Delete</a>
 					</div>
 
 					<form class="form-search" id="clearform" name="clearform" action="diag_logs_dhcp.php" method="post">
 						<input style="height:20px" type="text" id="filtertext" name="filtertext" value="<?=$filtertext;?>" class="input-medium">
-						<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Ara</button>
+						<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Search</button>
 					</form>
 
 					<table class="grids">
 						<tr>
 							<td class="head">
-								Tarih
+								Date
 							</td>
 							<td class="head">
-								Mesaj
+								Message
 							</td>
 						</tr>
 						<?php

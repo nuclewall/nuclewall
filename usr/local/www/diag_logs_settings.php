@@ -51,7 +51,7 @@ if ($_POST)
 	$pconfig = $_POST;
 
 	if (($_POST['nentries'] < 5) || ($_POST['nentries'] > 2000))
-		$input_errors[] = "Gösterilecek kayıt sayısı 5 ile 2000 arasında olmalıdır.";
+		$input_errors[] = "Number of log entries to show must be between 5 and 2000.";
 
 	if (!$input_errors)
 	{
@@ -69,7 +69,7 @@ if ($_POST)
 	}
 }
 
-$pgtitle = array('OLAY GÜNLÜKLERİ' ,'AYARLAR');
+$pgtitle = array('LOGS ' ,'SETTINGS');
 
 ?>
 
@@ -86,12 +86,12 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' ,'AYARLAR');
 		<td>
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Sistem', false, 'diag_logs.php');
-				$tab_array[] = array('Güvenlik Duvarı', false, 'diag_logs_filter.php');
+				$tab_array[] = array('System', false, 'diag_logs.php');
+				$tab_array[] = array('Firewall', false, 'diag_logs_filter.php');
 				$tab_array[] = array('DHCP', false, 'diag_logs_dhcp.php');
 				$tab_array[] = array('MySQL', false, 'diag_logs_mysql.php');
 				$tab_array[] = array('FreeRADIUS', false, 'diag_logs_radius.php');
-				$tab_array[] = array('Ayarlar', true, 'diag_logs_settings.php');
+				$tab_array[] = array('Settings', true, 'diag_logs_settings.php');
 				display_top_tabs($tab_array);
 			?>
 		</td>
@@ -100,14 +100,14 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' ,'AYARLAR');
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="vncell" valign="top">Son Kayıtlar Üstte</td>
+					<td class="vncell" valign="top">Newest entries on top</td>
 					<td class="vtable">
 						<input name="reverse" type="checkbox" id="reverse" value="yes" <?php if ($pconfig['reverse']) echo "checked"; ?>>
-							Günlük kayıtları yeniden eskiye doğru gösterilir.
+						Show log entries in reverse order
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Gösterilecek Kayıt Sayısı</td>
+					<td valign="top" class="vncell">Number of log entries to show</td>
 					<td class="vtable">
 						<input name="nentries" id="nentries" type="text" value="<?=htmlspecialchars($pconfig['nentries']);?>">
 					</td>
@@ -115,7 +115,7 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' ,'AYARLAR');
 				<tr>
                     <td class="vncell"></td>
                     <td class="vtable">
-						<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet" onclick="enable_change(true)">
+						<input name="Submit" type="submit" class="btn btn-inverse" value="Save" onclick="enable_change(true)">
                     </td>
 				</tr>
 			</table>

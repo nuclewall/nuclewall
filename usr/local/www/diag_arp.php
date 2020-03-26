@@ -235,7 +235,7 @@ function _getHostName($mac,$ip) {
 	return "";
 }
 
-$pgtitle = array('DURUM', 'ARP TABLOSU');
+$pgtitle = array('STATUS ', 'ARP TABLE');
 
 ?>
 
@@ -279,10 +279,10 @@ $mac_man = load_mac_manufacturer_table();
 					<td>
 						<table class="grids sortable" width="100%">
 							<tr>
-								<td class="head">IP Adresi</td>
-								<td class="head">MAC Adresi</td>
-								<td class="head">Sunucu Adı</td>
-								<td class="head">Arayüz</td>
+								<td class="head">IP Address</td>
+								<td class="head">MAC Address</td>
+								<td class="head">Hostname</td>
+								<td class="head">Interface</td>
 							</tr>
 							<?php foreach ($data as $entry): ?>
 								<tr>
@@ -296,7 +296,7 @@ $mac_man = load_mac_manufacturer_table();
 										if(isset($mac_man[$mac_hi]))
 											$mac = str_replace(':', '-', $mac_man[$mac_hi]);
 										?>
-									<a title="HOTSPOT Özel izinli MAC adresleri listesine ekle" class="btn-link" href="hotspot_mac_edit.php?act=new&mac=<?=$mac?>"><?=$mac?></a>
+									<a title="Add to Hotspot allowed MAC addresses list" class="btn-link" href="hotspot_mac_edit.php?act=new&mac=<?=$mac?>"><?=$mac?></a>
 									</td>
 									<td class="cell">
 										<?php

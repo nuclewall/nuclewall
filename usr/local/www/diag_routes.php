@@ -7,7 +7,7 @@
 */
 include('guiconfig.inc');
 
-$pgtitle = array('DURUM', 'YÖNLENDİRME TABLOSU');
+$pgtitle = array('STATUS ', 'ROUTES');
 
 ?>
 
@@ -25,25 +25,25 @@ $pgtitle = array('DURUM', 'YÖNLENDİRME TABLOSU');
 						<table class="grids sortable">
 							<tr>
 								<td class="head">
-									Hedef
+									Destination
 								</td>
 								<td class="head">
-									Ağ Geçidi
+									Gateway
 								</td>
 								<td class="head">
-									Bayraklar
+									Flags
 								</td>
 								<td class="head">
-									Referans
+								    Refs
 								</td>
 								<td class="head">
-									Kullanım
+									Use
 								</td>
 								<td class="head">
 									MTU
 								</td>
 								<td class="head">
-									Arayüz
+									Interface
 								</td>
 							</tr>
 							<?php
@@ -73,7 +73,7 @@ $pgtitle = array('DURUM', 'YÖNLENDİRME TABLOSU');
 
 								else
 								{
-									log_error('routes dosyası açılamadı');
+									log_error("Can't load routes");
 								}
 							?>
 						</table>

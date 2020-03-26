@@ -35,7 +35,7 @@ require('guiconfig.inc');
 
 $pfSversion = str_replace("\n", "", file_get_contents("/etc/version"));
 
-$pgtitle = 'DURUM: SİSTEM KAYNAK KULLANIMI';
+$pgtitle = 'STATUS: SYSTEM ACTIVITY';
 
 if($_REQUEST['getactivity']) {
 	$text = `/usr/bin/top -HS`;
@@ -91,7 +91,7 @@ if($_REQUEST['getactivity']) {
 							<tr>
 								<td>
 									<div name='cpuactivitydiv' id='cpuactivitydiv'>
-										Veriler alınıyor...
+										Gathering data...
 									</div>
 								</td>
 							</tr>

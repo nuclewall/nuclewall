@@ -46,6 +46,6 @@ for ($x=2; $x<12; $x++){
 
 //no bandwidth usage found
 if ($someinfo == false)
-    echo "Veri yok.";
+    echo "No data.";
 
 ?>

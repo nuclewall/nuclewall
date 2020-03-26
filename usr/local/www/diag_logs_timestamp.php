@@ -24,7 +24,7 @@ if ($_POST['filtertext'])
 if ($filtertext)
 	$filtertextmeta="?filtertext=$filtertext";
 
-$pgtitle = array('5651' , 'KAYIT VE İMZALAMA HAREKETLERİ');
+$pgtitle = array('5651 ' , 'LOGS');
 
 ?>
 
@@ -38,9 +38,9 @@ $pgtitle = array('5651' , 'KAYIT VE İMZALAMA HAREKETLERİ');
 		<td>
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Genel Ayarlar', false, 'services_5651_logging.php');
-				$tab_array[] = array('İmzalanmış Dosyalar', false, 'services_5651_signeds.php');
-				$tab_array[] = array('Hareketler', true, 'diag_logs_timestamp.php');
+				$tab_array[] = array('General Settings', false, 'services_5651_logging.php');
+				$tab_array[] = array('Signed Files', false, 'services_5651_signeds.php');
+				$tab_array[] = array('Logs', true, 'diag_logs_timestamp.php');
 				display_top_tabs($tab_array, true);
 			?>
 		</td>
@@ -51,22 +51,22 @@ $pgtitle = array('5651' , 'KAYIT VE İMZALAMA HAREKETLERİ');
 			<tr>
 				<td>
 					<div style="margin-right: 10px;" class="pull-left">
-						<a onclick="return confirm('5651 hareket kayıtlarını silmek istediğinizden emin misiniz?.')" class="btn" href="diag_logs_timestamp.php?act=del">
-						<i class="icon-trash"></i>Sil</a>
+						<a onclick="return confirm('Do you want to delete all 5651 signing logs?.')" class="btn" href="diag_logs_timestamp.php?act=del">
+						<i class="icon-trash"></i>Delete</a>
 					</div>
 
 					<form class="form-search" id="clearform" name="clearform" action="diag_logs_timestamp.php" method="post">
 						<input style="height:20px" type="text" id="filtertext" name="filtertext" value="<?=$filtertext;?>" class="input-medium">
-						<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Ara</button>
+						<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Search</button>
 					</form>
 
 					<table class="grids" width="100%">
 						<tr>
 							<td class="head">
-								Tarih
+								Date
 							</td>
 							<td class="head">
-								Mesaj
+								Message
 							</td>
 						</tr>
 						<?php

@@ -46,7 +46,7 @@ if($_GET['getrulenum'] or $_POST['getrulenum'])
 		$rulenum = $_POST['getrulenum'];
 	list($rulenum, $type) = explode(',', $rulenum);
 	$rule = find_rule_by_number($rulenum, $type);
-	echo 'Bu işlemi tetikleyen kural' . ":\n\n{$rule}";
+	echo 'The rule that triggered this action is' . ":\n\n{$rule}";
 	exit;
 }
 
@@ -58,9 +58,9 @@ if($_GET['dnsip'] or $_POST['dnsip'])
 		$dnsip = $_POST['dnsip'];
 	$host = get_reverse_dns($dnsip);
 	if ($host == $ip) {
-		$host = "PTR kaydı yok";
+		$host = "No PTR Record";
 	}
-	echo "IP: {$dnsip}\nSunucu Adı: {$host}";
+	echo "IP: {$dnsip}\nHost: {$host}";
 	exit;
 }
 
@@ -81,7 +81,7 @@ if (!$nentries)
 if ($_GET['act'] == 'del')
 	clear_log_file($filter_logfile);
 
-$pgtitle = array('OLAY GÜNLÜKLERİ' , 'GÜVENLİK DUVARI');
+$pgtitle = array('LOGS ' , 'FIREWALL');
 
 ?>
 
@@ -96,12 +96,12 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' , 'GÜVENLİK DUVARI');
 		<td>
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Sistem', false, 'diag_logs.php');
-				$tab_array[] = array('Güvenlik Duvarı', true, 'diag_logs_filter.php');
+				$tab_array[] = array('System', false, 'diag_logs.php');
+				$tab_array[] = array('Firewall', true, 'diag_logs_filter.php');
 				$tab_array[] = array('DHCP', false, 'diag_logs_dhcp.php');
 				$tab_array[] = array('MySQL', false, 'diag_logs_mysql.php');
 				$tab_array[] = array('FreeRADIUS', false, 'diag_logs_radius.php');
-				$tab_array[] = array('Ayarlar', false, 'diag_logs_settings.php');
+				$tab_array[] = array('Settings', false, 'diag_logs_settings.php');
 				display_top_tabs($tab_array);
 			?>
 		</td>
@@ -112,13 +112,13 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' , 'GÜVENLİK DUVARI');
 				<tr>
 					<td>
 						<div style="margin-right: 10px;" class="pull-left">
-							<a onclick="return confirm('Tüm güvenlik duvarı günlüklerini silmek istediğinizden emin misiniz?.')" class="btn" href="diag_logs_filter.php?act=del">
-							<i class="icon-trash"></i>Sil</a>
+							<a onclick="return confirm('Do you want to delete all filter logs?.')" class="btn" href="diag_logs_filter.php?act=del">
+							<i class="icon-trash"></i>Delete</a>
 						</div>
 
 						<form class="form-search" id="clearform" name="clearform" action="diag_logs_filter.php" method="post">
 							<input style="height:20px" type="text" id="filtertext" name="filtertext" value="<?=$filtertext;?>" class="input-medium">
-							<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Ara</button>
+							<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Search</button>
 						</form>
 					</td>
 				</tr>
@@ -129,12 +129,12 @@ $pgtitle = array('OLAY GÜNLÜKLERİ' , 'GÜVENLİK DUVARI');
 					<td>
 						<table class="grids">
 							<tr>
-								<td class="head">İşlem</td>
-								<td class="head">Tarih</td>
-								<td class="head">Arayüz</td>
-								<td class="head">Kaynak</td>
-								<td class="head">Hedef</td>
-								<td class="head">Protokol</td>
+								<td class="head">Act</td>
+								<td class="head">Time</td>
+								<td class="head">If</td>
+								<td class="head">Source</td>
+								<td class="head">Destination</td>
+								<td class="head">Proto</td>
 							</tr>
 							<?php foreach ($filterlog as $filterent): ?>
 							<tr>

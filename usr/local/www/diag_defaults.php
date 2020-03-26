@@ -35,7 +35,7 @@
 
 require('guiconfig.inc');
 
-$pgtitle = array('ARAÇLAR', 'AYARLARI SIFIRLA');
+$pgtitle = array('TOOLS ', 'FACTORY DEFAULTS');
 
 ?>
 
@@ -44,8 +44,8 @@ $pgtitle = array('ARAÇLAR', 'AYARLARI SIFIRLA');
 <body>
 <?php include('fbegin.inc'); ?>
 
-<?php if ($_POST['Submit'] == "Onayla"):
-	print_info_box("NUCLEWALL şimdi fabrika ayarlarına dönderilip yeniden başlatılacak. Bu işlem birkaç dakika sürebilir."); ?>
+<?php if ($_POST['Submit'] == "Confirm"):
+	print_info_box("NUCLEWALL has been reset to factory defaults and is now rebooting. This may take one minute."); ?>
 	<pre>
 	<?php
 		reset_factory_defaults();
@@ -63,12 +63,12 @@ $pgtitle = array('ARAÇLAR', 'AYARLARI SIFIRLA');
 
 					<td colspan="2" class="vncell">
 						<div class="alert alert-block alert-error fade in">
-						<h4 class="alert-heading">Ayarları sıfırla?</h4>
+						<h4 class="alert-heading">Are you sure you want to proceed?</h4>
 							<p>
-								Onaylarsanız, NUCLEWALL fabrika ayarlarına döndürülüp yeniden başlatılacak.
+								If you approve, NUCLEWALL will reset to factory defaults and reboot.
 							</p>
 							<p>
-								NOT: HOTSPOT verileri ve olay günlükleri silinmeyecek.
+								NOTE: Hotspot data(users, accounting etc.) and logs will be kept.
 							</p>
 							<p>
 
@@ -80,8 +80,8 @@ $pgtitle = array('ARAÇLAR', 'AYARLARI SIFIRLA');
 				<tr>
 					<td class="vncell"></td>
 					<td class="vtable" align="right">
-						<input name="Submit" type="submit" class="btn btn-inverse" value="Onayla">
-						<a href="index.php" class="btn">Vazgeç</a>
+						<input name="Submit" type="submit" class="btn btn-inverse" value="Confirm">
+						<a href="index.php" class="btn">Cancel</a>
 					</td>
 				</tr>
 			</table>
