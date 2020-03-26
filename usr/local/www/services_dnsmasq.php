@@ -65,7 +65,7 @@ if ($_POST)
 	}
 }
 
-$pgtitle = array('SERVICES', 'DNS Forwarder', 'SETTINGS');
+$pgtitle = array('SERVICES', 'DNS FORWARDER', 'SETTINGS');
 
 include('head.inc');
 
