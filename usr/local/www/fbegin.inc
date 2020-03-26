@@ -67,19 +67,19 @@ function output_menu($arrayitem, $target="")
 
 // System
 $system_menu = array();
-$system_menu[] = array("Genel Ayarlar", "/system.php");
-$system_menu[] = array("Erişim Ayarları", "/system_advanced_admin.php");
-$system_menu[] = array("Ağ Geçitleri", "/system_gateways.php");
+$system_menu[] = array("General Settings", "/system.php");
+$system_menu[] = array("Access Settings", "/system_advanced_admin.php");
+$system_menu[] = array("Gateways", "/system_gateways.php");
 if (!isAllowedPage("system_usermanager.php*"))
-	$system_menu[] = array("Kullanıcı Yönetimi", "/system_usermanager_passwordmg.php");
+	$system_menu[] = array("User Management", "/system_usermanager_passwordmg.php");
 else
-	$system_menu[] = array("Kullanıcı Yönetimi", "/system_usermanager.php");
+	$system_menu[] = array("User Management", "/system_usermanager.php");
 $system_menu = array_merge($system_menu, return_ext_menu("System"));
 
 // Interfaces
 $interfaces_menu = array();
 if (!isset($config['system']['webgui']['noassigninterfaces']))
-	$interfaces_menu[] = array("İlişkilendir", "/interfaces_assign.php");
+	$interfaces_menu[] = array("Assign", "/interfaces_assign.php");
 $opts = get_configured_interface_with_descr(false, true);
 foreach ($opts as $oif => $odescr)
 	if (!isset($config['interfaces'][$oif]['ovpn']))
@@ -88,37 +88,35 @@ $interfaces_menu = msort(array_merge($interfaces_menu, return_ext_menu("Interfac
 
 // Firewall
 $firewall_menu = array();
-$firewall_menu[] = array("Takma Adlar", "/firewall_aliases.php");
-$firewall_menu[] = array("Kurallar", "/firewall_rules.php");
-$firewall_menu[] = array("Zamanlamalar", "/firewall_schedule.php");
-$firewall_menu[] = array("Hız Sınırlayıcılar", "/firewall_shaper_vinterface.php");
+$firewall_menu[] = array("Aliases", "/firewall_aliases.php");
+$firewall_menu[] = array("Rules", "/firewall_rules.php");
+$firewall_menu[] = array("Schedules", "/firewall_schedule.php");
+$firewall_menu[] = array("Queues", "/firewall_shaper_vinterface.php");
 
 // Services
 $services_menu = array();
 $services_menu[] = array("Hotspot", "/hotspot_settings.php");
-$services_menu[] = array("5651 Kayıt Tutma", "/services_5651_logging.php");
-$services_menu[] = array("DNS Çözümleyici", "/services_dnsmasq.php");
-$services_menu[] = array("DHCP Sunucu", "/services_dhcp.php");
-$services_menu[] = array("Proxy ve Filtreleme", "/pkg_edit.php?xml=squid.xml&amp;id=0");
+$services_menu[] = array("5651 Logging", "/services_5651_logging.php");
+$services_menu[] = array("DNS Forwarder", "/services_dnsmasq.php");
+$services_menu[] = array("DHCP Server", "/services_dhcp.php");
+$services_menu[] = array("Proxy ve Filter", "/pkg_edit.php?xml=squid.xml&amp;id=0");
 $services_menu = array_merge($services_menu, return_ext_menu("Services"));
-
 
 // Status
 $status_menu = array();
-$status_menu[] = array("Ağ Geçitleri", "/status_gateways.php");
-$status_menu[] = array("DHCP Dağıtımları", "/status_dhcp_leases.php");
-$status_menu[] = array("ARP Tablosu", "/diag_arp.php");
-$status_menu[] = array("Servisler", "/status_services.php");
-$status_menu[] = array("Yönlendirmeler", "/diag_routes.php");
-$status_menu[] = array("Olay Günlükleri", "/diag_logs.php");
-$status_menu[] = array("Ağ Trafiği", "/status_graph.php?if=wan");
-$status_menu[] = array("Kaynak Kullanımı", "/diag_system_activity.php");
-
+$status_menu[] = array("Gateways", "/status_gateways.php");
+$status_menu[] = array("DHCP Leases", "/status_dhcp_leases.php");
+$status_menu[] = array("ARP Table", "/diag_arp.php");
+$status_menu[] = array("Services", "/status_services.php");
+$status_menu[] = array("Routes", "/diag_routes.php");
+$status_menu[] = array("Logs", "/diag_logs.php");
+$status_menu[] = array("Network Traffic", "/status_graph.php?if=wan");
+$status_menu[] = array("System Activity", "/diag_system_activity.php");
 
 // Diagnostics
 $diagnostics_menu = array();
-$diagnostics_menu[] = array("Yedek Al / Yükle", "/diag_backup.php");
-$diagnostics_menu[] = array("Ayarları Sıfırla", "/diag_defaults.php");
+$diagnostics_menu[] = array("Backup/Restore", "/diag_backup.php");
+$diagnostics_menu[] = array("Factory Reset", "/diag_defaults.php");
 
 ?>
 
@@ -126,12 +124,12 @@ $diagnostics_menu[] = array("Ayarları Sıfırla", "/diag_defaults.php");
 	<div style="position:absolute;left:865px">
 	    <div class="btn-toolbar">
 			<div class="btn-group">
-				<a title="Nuclewall'u kapat" href="halt.php">
+				<a title="Poweroff" href="halt.php">
 					<button class="btn btn-mini btn-inverse">
 						<i class="icon-off icon-white"></i>
 					</button>
 				</a>
-				<a title="Nuclewall'u yeniden başlat" href="reboot.php">
+				<a title="Reboot" href="reboot.php">
 					<button class="btn btn-mini btn-inverse">
 						<i class="icon-repeat icon-white"></i>
 					</button>
@@ -143,8 +141,8 @@ $diagnostics_menu[] = array("Ayarları Sıfırla", "/diag_defaults.php");
 					<span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="index.php?logout">Oturumu kapat</a></li>
-					<li><a href="system_usermanager_passwordmg.php">Parola değiştir</a></li>
+					<li><a href="index.php?logout">Logout</a></li>
+					<li><a href="system_usermanager_passwordmg.php">Change Password</a></li>
 				</ul>
 			</div>
 		</div>
@@ -166,7 +164,7 @@ $diagnostics_menu[] = array("Ayarları Sıfırla", "/diag_defaults.php");
 				<div><a style="color:white" href="hotspot_status.php">HOTSPOT</a></div>
 			</li>
 			<li>
-				<div>SİSTEM</div>
+				<div>SYSTEM</div>
 				<ul>
 				<?php
 					output_menu($system_menu);
@@ -174,7 +172,7 @@ $diagnostics_menu[] = array("Ayarları Sıfırla", "/diag_defaults.php");
 				</ul>
 			</li>
 			<li>
-				<div>AĞ KARTLARI</div>
+				<div>INTERFACES</div>
 				<ul>
 				<?php
 					output_menu($interfaces_menu);
@@ -182,7 +180,7 @@ $diagnostics_menu[] = array("Ayarları Sıfırla", "/diag_defaults.php");
 				</ul>
 			</li>
 			<li>
-				<div>GÜVENLİK DUVARI</div>
+				<div>FIREWALL</div>
 				<ul>
 				<?php
 					output_menu($firewall_menu);
@@ -190,7 +188,7 @@ $diagnostics_menu[] = array("Ayarları Sıfırla", "/diag_defaults.php");
 				</ul>
 			</li>
 			<li>
-				<div>SERVİSLER</div>
+				<div>SERVICES</div>
 				<ul>
 				<?
 					output_menu($services_menu);
@@ -198,7 +196,7 @@ $diagnostics_menu[] = array("Ayarları Sıfırla", "/diag_defaults.php");
 				</ul>
 			</li>
 			<li>
-				<div>DURUM</div>
+				<div>STATUS</div>
 				<ul>
 				<?php
 					output_menu($status_menu);
@@ -206,7 +204,7 @@ $diagnostics_menu[] = array("Ayarları Sıfırla", "/diag_defaults.php");
 				</ul>
 			</li>
 			<li>
-				<div>ARAÇLAR</div>
+				<div>TOOLS</div>
 				<ul id="diag">
 				<?
 					output_menu($diagnostics_menu);

@@ -45,7 +45,7 @@ $xml = htmlspecialchars($_GET['xml']);
 if($_POST['xml']) $xml = htmlspecialchars($_POST['xml']);
 
 if($xml == "") {
-			print_info_box_np('HATA: Böyle bir sayfa yok.');
+			print_info_box_np("ERROR: Couldn't find file.");
 			die;
 } else {
 			$pkg = parse_xml_config_pkg("/usr/local/pkg/" . $xml, "packagegui");
@@ -232,11 +232,11 @@ if ($_POST) {
 }
 
 if($pkg['title'] <> "") {
-	$edit = ($only_edit ? '' : ': ' . 'Düzenle');
+	$edit = ($only_edit ? '' : ': ' . 'Edit');
 	$title = $pkg['title'] . $edit;
 }
 else
-	$title = gettext("Package Editor");
+	$title = "Package Editor";
 
 $pgtitle = $title;
 include("head.inc");
@@ -681,9 +681,9 @@ if($pkg['note'] != "")
 	echo "<p><span class=\"red\"><strong>" . "NOT". ":</strong></span> {$pkg['note']}</p>";
 	  echo "<input name=\"id\" type=\"hidden\" value=\"$id\">";
 ?>
-	  <input name="Submit" class="btn btn-inverse" type="submit" value="Kaydet">
+	  <input name="Submit" class="btn btn-inverse" type="submit" value="Save">
 <?php if (!$only_edit): ?>
-	  <input type="button" class="btn" value="İptal" onclick="history.back()">
+	  <input type="button" class="btn" value="Cancel" onclick="history.back()">
 <?php endif; ?>
 	</td>
   </tr>
@@ -693,9 +693,9 @@ if($pkg['note'] != "")
 	<tr>
 		<td class="vncell"></td>
 		<td class="vtable">
-			<input class="btn btn-success" name="Submit" type="submit" value="Kaydet">
+			<input class="btn btn-success" name="Submit" type="submit" value="Save">
 			<?php if (!$only_edit): ?>
-				<input class="btn" type="button" value="İptal" onclick="history.back()">
+				<input class="btn" type="button" value="Cancel" onclick="history.back()">
 			<?php endif; ?>
 		</td>
 	</tr>

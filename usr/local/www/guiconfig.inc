@@ -206,7 +206,7 @@ function do_input_validation($postdata, $reqdfields, $reqdfieldsn, $input_errors
 	{
 		if (is_string($pd) && preg_match("/[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f]/", $pd))
 		{
-			$input_errors[] = "'$pn' alanı geçersiz karakterler içeriyor.";
+			$input_errors[] = "The field '" . $pn . "' contains invalid characters.";
 		}
 	}
 
@@ -214,7 +214,7 @@ function do_input_validation($postdata, $reqdfields, $reqdfieldsn, $input_errors
 	{
 		if ($_POST[$reqdfields[$i]] == "" && $_REQUEST[$reqdfields[$i]] == "")
 		{
-			$input_errors[] = "'$reqdfieldsn[$i]' alanı gereklidir.";
+			$input_errors[] = "The field '" . $reqdfieldsn[$i] . "' is required.";
 		}
 	}
 }
@@ -249,7 +249,7 @@ function verify_gzip_file($fname)
 function print_info_box_np($msg, $save=false) {
 
 	if($save) {
-		$savebutton = "<input name=\"apply\" type=\"submit\" class=\"btn btn-danger btn-right\" id=\"apply\" value=\"Uygula\">";
+		$savebutton = "<input name=\"apply\" type=\"submit\" class=\"btn btn-danger btn-right\" id=\"apply\" value=\"Apply\">";
 		if($_POST['if'])
 			$savebutton .= "<input type='hidden' name='if' value='" . htmlspecialchars($_POST['if']) . "'>";
 		$alert= 'alert-danger';
@@ -272,7 +272,7 @@ EOFnp;
 
 }
 
-function print_info_box_np_undo($msg, $name="apply",$value="Uygula", $undo)
+function print_info_box_np_undo($msg, $name="apply",$value="Apply", $undo)
 {
 
 	if(stristr($msg, "apply") != false || stristr($msg, "save") != false || stristr($msg, "create") != false) {
@@ -312,7 +312,7 @@ function get_std_save_message($ok)
 	global $d_sysrebootreqd_path;
 	$filter_related = false;
 	$filter_pages = array("nat", "filter");
-	$to_return = "Değişiklikler başarıyla uygulandı.";
+	$to_return = "The changes have been applied successfully.";
 	foreach($filter_pages as $fp)
 		if(stristr($_SERVER['SCRIPT_FILENAME'], $fp))
 			$filter_related = true;
@@ -642,7 +642,7 @@ function dump_mysql($logfile, $tail, $grepfor = "")
 
 	else
 	{
-		log_error('Log dosyası açılamadı');
+		log_error("Couldn't open log file");
 	}
 }
 
@@ -690,7 +690,7 @@ function dump_radius($logfile, $tail, $grepfor = "")
 
 	else
 	{
-		log_error('Log dosyası açılamadı');
+		log_error("Couldn't open log file");
 	}
 }
 

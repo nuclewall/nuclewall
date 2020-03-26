@@ -37,13 +37,13 @@ require_once("guiconfig.inc");
 $xml = $_REQUEST['xml'];
 
 if($xml == "") {
-	print_info_box_np("HATA: Böyle bir sayfa yok.");
+	print_info_box_np("ERROR: Couldn't find file.");
 	exit;
 } else {
 	if(file_exists("/usr/local/pkg/" . $xml))
 		$pkg = parse_xml_config_pkg("/usr/local/pkg/" . $xml, "packagegui");
 	else {
-		echo "Dosya bulunamadı " . htmlspecialchars($xml);
+		echo "File not found " . htmlspecialchars($xml);
 		exit;
 	}
 }
@@ -246,7 +246,7 @@ if($pkg['adddeleteeditpagefields']['movable']){
                 }
 
                 function save_changes_to_xml(xml) {
-                	if(confirm("<?=gettext("Do you really want to save changes?");?>")){
+                	if(confirm("Do you really want to save changes?")){
                 		var axel = Math.random() + "";
     					var num = axel * 1000000000000000000;
                 		location.href="/pkg.php?xml=" + xml + "&act=update&ids=" + alertItems() + "&nocache=" + num;
@@ -438,9 +438,9 @@ echo "\t<script type=\"text/javascript\" src=\"javascript/domTT/fadomatic.js\"><
 									else {
 										if ($column['fieldname'] == 'disabled') {
 											if ($fieldname == 'on')
-												echo "<span class=\"label\">Pasif</span>";
+												echo "<span class=\"label\">Disabled</span>";
 											else
-												echo "<span class=\"label label-success\">Aktif</span>";
+												echo "<span class=\"label label-success\">Enabled</span>";
 										}
 										else
 											echo $column['prefix'] . $fieldname ." ". $column['suffix'];
@@ -452,10 +452,10 @@ echo "\t<script type=\"text/javascript\" src=\"javascript/domTT/fadomatic.js\"><
 				<?php } ?>
 
 				<td class="cell tools" >
-					<a href="pkg_edit.php?xml=<?=$xml?>&act=edit&id=<?=$i;?>" title="Düzenle">
+					<a href="pkg_edit.php?xml=<?=$xml?>&act=edit&id=<?=$i;?>" title="Edit">
 					<i class="icon-edit"></i>
 					</a>
-					<a href="pkg.php?xml=<?=$xml?>&act=del&id=<?=$i;?>" onclick="return confirm('<?=gettext("Silmek istediğinize emin misiniz?");?>')" title="Sil">
+					<a href="pkg.php?xml=<?=$xml?>&act=del&id=<?=$i;?>" onclick="return confirm('Do you want to delete?s')" title="Delete">
 					<i class="icon-trash"></i>
 					</a>
 				</td>
