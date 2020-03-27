@@ -202,7 +202,7 @@ $pgtitle = array('SYSTEM', 'GATEWAY GROUPS' , 'EDIT GROUP');
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Açıklama</td>
+					<td valign="top" class="vncell">Description</td>
 					<td class="vtable">
 						<input name="descr" type="text" id="descr" value="<?=htmlspecialchars($pconfig['descr']);?>">
 						<br>You may enter a description here for your reference.

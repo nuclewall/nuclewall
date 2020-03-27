@@ -62,9 +62,9 @@ for F in *.txt; do
     test -f "\$F" || exit
 	if timelimit -t 2 smbclient //$hostname/$folder -A /etc/.smbpass -c "put \$F"; then
 	    mv \$F \$SENT_DIR/\$TODAY/
-	    /usr/local/bin/custom_logger 5651 ""\$F" dosyası //$hostname/$folder Windows paylaşımına gönderildi."
+	    /usr/local/bin/custom_logger 5651 ""\$F" file has been sent to //$hostname/$folder Windows share."
 	else
-	    /usr/local/bin/custom_logger 5651 "HATA: //$hostname/$folder ile baglantı kurulamadı."
+	    /usr/local/bin/custom_logger 5651 "ERROR: Can't connect to //$hostname/$folder."
 	fi;
 done
 

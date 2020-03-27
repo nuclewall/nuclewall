@@ -100,20 +100,19 @@ if ($_POST)
 				<tr>
 					<td valign="top" class="vncell">Username</td>
 					<td class="vtable">
-						<input value="<?=$pconfig['dbusername'];?>" name="dbusername" type="text" id="dbusername" tabindex="3" maxlength="128"><br>
+						<input value="<?=$pconfig['dbusername'];?>" name="dbusername" type="text" id="dbusername" tabindex="3" maxlength="128">
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Password</td>
 					<td class="vtable">
-						<input value="<?=$pconfig['dbpassword'];?>" name="dbpassword" type="password" id="dbpassword" tabindex="4" maxlength="128"><br>
+						<input value="<?=$pconfig['dbpassword'];?>" name="dbpassword" type="password" id="dbpassword" tabindex="4" maxlength="128">
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Database Name</td>
 					<td class="vtable">
-						<input value="<?=$pconfig['database_name'];?>" name="database_name" type="text" id="database_name" tabindex="5" maxlength="128"><br>
-						Kullanıcı sorgulamasının yapılacağı veritabanı adını girin.
+						<input value="<?=$pconfig['database_name'];?>" name="database_name" type="text" id="database_name" tabindex="5" maxlength="128">
 					</td>
 				</tr>
 				<tr>
@@ -123,21 +122,21 @@ if ($_POST)
 					<td valign="top" class="vncell">Table Name</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['table_name'];?>" name="table_name" type="text" id="table_name" tabindex="6" maxlength="128"><br>
-						Kullanıcı sorgulamasının yapılacağı tablo adını girin.
+						Table which hotspot users will be queried.
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Username Field</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['username_field'];?>" name="username_field" type="text" id="username_field" tabindex="7" maxlength="128"><br>
-						Hotspot kullanıcı sorgulamasında kullanıcı adı olarak sorgulanmasını istediğiniz tablo alanının adını girin.
+						Column name of table which maps to hotspot username field.
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Password Field</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['password_field'];?>"  name="password_field" type="text" id="password_field" tabindex="8"><br>
-						Hotspot kullanıcı sorgulamasında parola olarak sorgulanmasını istediğiniz tablo alanının adını girin.
+						Column name of table which maps to hotspot password field.
 					</td>
 				</tr>
 				<tr>

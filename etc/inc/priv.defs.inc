@@ -3,15 +3,15 @@
 $priv_list = array();
 
 $priv_list['user-shell-access'] = array();
-$priv_list['user-shell-access']['name']  = 'SSH(Güvenli Kabuk) Oturumu';
+$priv_list['user-shell-access']['name']  = 'SSH';
 
 $priv_list['page-all'] = array();
-$priv_list['page-all']['name'] = 'Tüm Sayfalar';
+$priv_list['page-all']['name'] = 'All Pages';
 $priv_list['page-all']['match'] = array();
 $priv_list['page-all']['match'][] = '*';
 
 $priv_list['page-essential'] = array();
-$priv_list['page-essential']['name'] = 'Zorunlu Sayfalar';
+$priv_list['page-essential']['name'] = 'Essential Pages';
 $priv_list['page-essential']['match'] = array();
 $priv_list['page-essential']['match'][] = 'index.php*';
 $priv_list['page-essential']['match'][] = 'getstats.php*';
@@ -36,7 +36,7 @@ $priv_list['page-hotspot-menu']['match'][] = 'hotspot_user_edit.php*';
 $priv_list['page-hotspot-menu']['match'][] = 'hotspot_users.php*';
 
 $priv_list['page-system-menu'] = array();
-$priv_list['page-system-menu']['name'] = 'SİSTEM';
+$priv_list['page-system-menu']['name'] = 'SYSTEM';
 $priv_list['page-system-menu']['match'] = array();
 $priv_list['page-system-menu']['match'][] = 'system.php*';
 $priv_list['page-system-menu']['match'][] = 'system_advanced_admin.php*';
@@ -48,13 +48,13 @@ $priv_list['page-system-menu']['match'][] = 'system_gateway_groups.php*';
 $priv_list['page-system-menu']['match'][] = 'system_gateway_groups_edit.php*';
 
 $priv_list['page-network-menu'] = array();
-$priv_list['page-network-menu']['name'] = 'AĞ KARTLARI';
+$priv_list['page-network-menu']['name'] = 'INTERFACES';
 $priv_list['page-network-menu']['match'] = array();
 $priv_list['page-network-menu']['match'][] = 'interfaces.php*';
 $priv_list['page-network-menu']['match'][] = 'interfaces_assign.php*';
 
 $priv_list['page-firewall-menu'] = array();
-$priv_list['page-firewall-menu']['name'] = 'GÜVENLİK DUVARI';
+$priv_list['page-firewall-menu']['name'] = 'FIREWALL';
 $priv_list['page-firewall-menu']['match'] = array();
 $priv_list['page-firewall-menu']['match'][] = 'firewall_aliases.php*';
 $priv_list['page-firewall-menu']['match'][] = 'firewall_aliases_edit.php*';
@@ -65,7 +65,7 @@ $priv_list['page-firewall-menu']['match'][] = 'firewall_schedule_edit.php*';
 $priv_list['page-firewall-menu']['match'][] = 'firewall_shaper_vinterface.php*';
 
 $priv_list['page-services-menu'] = array();
-$priv_list['page-services-menu']['name'] = 'SERVİSLER';
+$priv_list['page-services-menu']['name'] = 'SERVICES';
 $priv_list['page-services-menu']['match'] = array();
 $priv_list['page-services-menu']['match'][] = 'services_5651_logging.php*';
 $priv_list['page-services-menu']['match'][] = 'services_5651_signeds.php*';
@@ -81,7 +81,7 @@ $priv_list['page-services-menu']['match'][] = 'pkg_edit.php*';
 $priv_list['page-services-menu']['match'][] = 'pkg.php*';
 
 $priv_list['page-status-menu'] = array();
-$priv_list['page-status-menu']['name'] = 'DURUM';
+$priv_list['page-status-menu']['name'] = 'STATUS';
 $priv_list['page-status-menu']['match'] = array();
 $priv_list['page-status-menu']['match'] = 'status_gateways.php*';
 $priv_list['page-status-menu']['match'] = 'status_gateway_groups.php*';
@@ -101,7 +101,7 @@ $priv_list['page-status-menu']['match'] = 'ifstats.php*';
 $priv_list['page-status-menu']['match'] = 'graph.php*';
 
 $priv_list['page-tools-menu'] = array();
-$priv_list['page-tools-menu']['name'] = 'ARAÇLAR';
+$priv_list['page-tools-menu']['name'] = 'TOOLS';
 $priv_list['page-tools-menu']['match'] = array();
 $priv_list['page-tools-menu']['match'] = 'diag_backup.php*';
 $priv_list['page-tools-menu']['match'] = 'diag_confbak.php*';

@@ -186,14 +186,14 @@ function init(evt) {
 
 function switch_unit(event)
 {
-  SVGDoc.getElementById('switch_unit').firstChild.data = unit + '/s' + ' a çevir';
+  SVGDoc.getElementById('switch_unit').firstChild.data = 'Switch to ' + unit + '/s';
   unit = (unit == 'bits') ? 'bytes' : 'bits';
 }
 
 function switch_scale(event)
 {
   scale_type = (scale_type == 'up') ? 'follow' : 'up';
-  SVGDoc.getElementById('switch_scale').firstChild.data = 'Otomatik ölçeklendir (' + scale_type + ')';
+  SVGDoc.getElementById('switch_scale').firstChild.data = 'Autoscale (' + scale_type + ')';
 }
 
 function fetch_data() {

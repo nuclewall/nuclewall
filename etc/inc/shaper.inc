@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright (C) 2008 Ermal Luçi
+	Copyright (C) 2008 Ermal Luci
 	All rights reserved.
 
 	Redistribution and use in source and binary forms, with or without

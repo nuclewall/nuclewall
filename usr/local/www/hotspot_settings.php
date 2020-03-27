@@ -36,7 +36,7 @@ if ($_POST)
 	if ($_POST['enable'])
 	{
 		$reqdfields = explode(' ', 'cinterface');
-		$reqdfieldsn = array("Arayüz");
+		$reqdfieldsn = array("Interface");
 
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 

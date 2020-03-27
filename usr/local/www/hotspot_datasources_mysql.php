@@ -100,20 +100,19 @@ if ($_POST)
 				<tr>
 					<td valign="top" class="vncell">Username</td>
 					<td class="vtable">
-						<input value="<?=$pconfig['dbusername'];?>" name="dbusername" type="text" id="dbusername" tabindex="3" maxlength="128"><br>
+						<input value="<?=$pconfig['dbusername'];?>" name="dbusername" type="text" id="dbusername" tabindex="3" maxlength="128">
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Password</td>
 					<td class="vtable">
-						<input value="<?=$pconfig['dbpassword'];?>" name="dbpassword" type="password" id="dbpassword" tabindex="4" maxlength="128"><br>
+						<input value="<?=$pconfig['dbpassword'];?>" name="dbpassword" type="password" id="dbpassword" tabindex="4" maxlength="128">
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Database Name</td>
 					<td class="vtable">
-						<input value="<?=$pconfig['database_name'];?>" name="database_name" type="text" id="database_name" tabindex="5" maxlength="128"><br>
-						Table which hotspot users will be queried.
+						<input value="<?=$pconfig['database_name'];?>" name="database_name" type="text" id="database_name" tabindex="5" maxlength="128">
 					</td>
 				</tr>
 				<tr>
@@ -123,7 +122,7 @@ if ($_POST)
 					<td valign="top" class="vncell">Table Name</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['table_name'];?>" name="table_name" type="text" id="table_name" tabindex="6" maxlength="128"><br>
-						Kullanıcı sorgulamasının yapılacağı tablo adını girin.
+						Table which hotspot users will be queried.
 					</td>
 				</tr>
 				<tr>

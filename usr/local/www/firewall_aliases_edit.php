@@ -7,7 +7,7 @@
 	All rights reserved.
 
 	Copyright (C) 2004 Scott Ullrich
-	Copyright (C) 2009 Ermal Luçi
+	Copyright (C) 2009 Ermal Luci
 	Copyright (C) 2010 Jim Pingle
 	All rights reserved.
 

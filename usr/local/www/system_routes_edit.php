@@ -217,7 +217,7 @@ $pgtitle = array('SYSTEM', 'STATIC ROUTES', 'EDIT ROUTE');
 					Choose which gateway this route applies to
 				</tr>
 					<tr>
-				<td valign="top" class="vncell">Açıklama</td>
+				<td valign="top" class="vncell">Description</td>
 				<td class="vtable">
 				<input name="descr" type="text" id="descr" value="<?=htmlspecialchars($pconfig['descr']);?>">
 				<br> <span>You may enter a description here for your reference (not parsed).</span></td>

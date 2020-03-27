@@ -584,8 +584,8 @@ function session_auth()
 		}
 		else
 		{
-			$_SESSION['Login_Error'] = "Kullan�c� ad� veya parola hatal�.";
-			log_auth("'{$_POST['usernamefld']}' ({$_SERVER['REMOTE_ADDR']}) kullan�c�s� oturum a�may� denedi. Ba�ar�l� de�il.");
+			$_SESSION['Login_Error'] = "Username or Password incorrect";
+			log_auth("Authentication error for '{$_POST['usernamefld']}' from {$_SERVER['REMOTE_ADDR']}");
 		}
 	}
 
@@ -613,9 +613,9 @@ function session_auth()
 	if (isset($_GET['logout']))
 	{
 		if ($_SESSION['Logout'])
-			log_error("'{$_SESSION['Username']}' ({$_SERVER['REMOTE_ADDR']}) kullan�c�s�n�n oturum s�resi doldu.");
+			log_error("Session timed out for user '{$_SESSION['Username']}' from: {$_SERVER['REMOTE_ADDR']}");
 		else
-			log_error("'{$_SESSION['Username']}' ({$_SERVER['REMOTE_ADDR']}) kullan�c�s� oturumunu kapatt�.");
+			log_error("User logged out for user '{$_SESSION['Username']}' from: {$_SERVER['REMOTE_ADDR']}");
 
 		$_SESSION = array();
 

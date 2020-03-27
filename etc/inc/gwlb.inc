@@ -363,7 +363,7 @@ function return_gateways_array($disabled = false) {
 		if (is_ipaddr($gateway['gateway']))
 			$gateway['monitor'] = $gateway['gateway'];
 
-		$gateway['descr'] = base64_encode("Dinamik {$friendly} Ağ Geçidi (Varsayılan)");
+		$gateway['descr'] = base64_encode("Dynamic {$friendly} Gateway (Default)");
 		$gateways_arr[$friendly] = $gateway;
 	}
 

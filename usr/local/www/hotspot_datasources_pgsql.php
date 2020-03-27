@@ -100,19 +100,19 @@ if ($_POST)
 				<tr>
 					<td valign="top" class="vncell">Username</td>
 					<td class="vtable">
-						<input value="<?=$pconfig['dbusername'];?>" name="dbusername" type="text" id="dbusername" tabindex="3" maxlength="128"><br>
+						<input value="<?=$pconfig['dbusername'];?>" name="dbusername" type="text" id="dbusername" tabindex="3" maxlength="128">
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Password</td>
 					<td class="vtable">
-						<input value="<?=$pconfig['dbpassword'];?>" name="dbpassword" type="password" id="dbpassword" tabindex="4" maxlength="128"><br>
+						<input value="<?=$pconfig['dbpassword'];?>" name="dbpassword" type="password" id="dbpassword" tabindex="4" maxlength="128">
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" class="vncell">Database Name</td>
 					<td class="vtable">
-						<input value="<?=$pconfig['database_name'];?>" name="database_name" type="text" id="database_name" tabindex="5" maxlength="128"><br>
+						<input value="<?=$pconfig['database_name'];?>" name="database_name" type="text" id="database_name" tabindex="5" maxlength="128">
 					</td>
 				</tr>
 				<tr>

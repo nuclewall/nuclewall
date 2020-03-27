@@ -156,7 +156,7 @@ function updateBandwidthHosts(data){
 							<tr>
 								<td valign="top">
 									<form name="form1" action="status_graph.php" method="get">
-										Arayüz:
+										Interface:
 										<select name="if" style="z-index: -10;" onchange="document.form1.submit()">
 											<?php
 											foreach ($ifdescrs as $ifn => $ifd) {
