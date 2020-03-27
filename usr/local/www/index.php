@@ -233,7 +233,7 @@ function showAllWidgets(){
 </script>
 EOD;
 
-$pgtitle = array('SİSTEM', 'GENEL DURUM');
+$pgtitle = array('SYSTEM ', 'DASHBOARD');
 
 ?>
 
@@ -257,7 +257,7 @@ echo $jscriptstr;
 
 <form action="index.php" method="post">
 <input type="hidden" value="" name="sequence" id="sequence">
-<input id="submit" name="submit" type="submit" style="display:none" onclick="return updatePref();" class="btn btn-inverse" value="Kaydet" />
+<input id="submit" name="submit" type="submit" style="display:none" onclick="return updatePref();" class="btn btn-inverse" value="Save" />
 </form>
 <div>
 	<?php
@@ -278,11 +278,11 @@ echo $jscriptstr;
 		$widgetname = substr($widget, 0, $periodpos);
 
 		switch($widgetname) {
-			case 'system': $title = 'Sistem'; break;
-			case 'services_status': $title = 'Servisler'; break;
-			case 'interface_statistics': $title = 'Paket İstatistikleri'; break;
-			case 'interfaces': $title = 'Ağ Arayüzleri'; break;
-			case 'gateways': $title = 'Ağ Geçitleri'; break;
+			case 'system': $title = 'System'; break;
+			case 'services_status': $title = 'Services'; break;
+			case 'interface_statistics': $title = 'Packet Statistics'; break;
+			case 'interfaces': $title = 'Interfaces'; break;
+			case 'gateways': $title = 'Gateways'; break;
 		}
 
 		if ($config['widgets'] && $pconfig['sequence'] != ""){

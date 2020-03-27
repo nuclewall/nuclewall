@@ -32,12 +32,12 @@ require('guiconfig.inc');
 require('functions.inc');
 require('captiveportal.inc');
 
-if ($_POST['Submit'] == 'Hayır') {
+if ($_POST['Submit'] == 'No') {
 	header("Location: index.php");
 	exit;
 }
 
-$pgtitle = array("ARAÇLAR", "NUCLEWALL'U YENİDEN BAŞLAT");
+$pgtitle = array("TOOLS ", "REBOOT NUCLEWALL");
 
 ?>
 
@@ -46,20 +46,20 @@ $pgtitle = array("ARAÇLAR", "NUCLEWALL'U YENİDEN BAŞLAT");
 <body>
 <?php include('fbegin.inc'); ?>
 
-<?php if ($_POST['Submit'] == 'Evet'): ?>
+<?php if ($_POST['Submit'] == 'Yes'): ?>
 
 <div class="alert alert-danger">
 	<button type="button" class="close" data-dismiss="alert">×</button>
-	<span style="font-weight:bold; margin-right:20px;">Şimdi yeniden başlatılıyor...</span>
+	<span style="font-weight:bold; margin-right:20px;">Rebooting now...</span>
 	<?php system_reboot(); ?>
 </div>
 <?php else: ?>
 <form action="reboot.php" method="post">
 <div class="alert alert-danger">
 	<button type="button" class="close" data-dismiss="alert">×</button>
-	<span style="margin-right:285px;">Yeniden başlatma işlemini onaylıyor musunuz?</span>
-	<input name="Submit" type="submit" class="btn btn-inverse" value="Evet">
-	<input name="Submit" type="submit" class="btn" value="Hayır">
+	<span style="margin-right:285px;">System will reboot. Proceed?</span>
+	<input name="Submit" type="submit" class="btn btn-inverse" value="Yes">
+	<input name="Submit" type="submit" class="btn" value="No">
 </div>
 </form>
 <?php endif; ?>

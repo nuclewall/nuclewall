@@ -36,12 +36,12 @@ require('guiconfig.inc');
 require('functions.inc');
 require('captiveportal.inc');
 
-if ($_POST['Submit'] == 'Hayır') {
+if ($_POST['Submit'] == 'No') {
 	header("Location: index.php");
 	exit;
 }
 
-$pgtitle = array('ARAÇLAR', "NUCLEWALL'U KAPAT");
+$pgtitle = array('TOOLS ', "POWEROFF NUCLEWALL");
 
 ?>
 
@@ -53,16 +53,16 @@ $pgtitle = array('ARAÇLAR', "NUCLEWALL'U KAPAT");
 <?php if ($_POST['Submit'] == 'Evet'): ?>
 <div class="alert alert-danger">
 	<button type="button" class="close" data-dismiss="alert">×</button>
-	<span style="font-weight:bold; margin-right:20px;">Şimdi kapatılıyor...</span>
+	<span style="font-weight:bold; margin-right:20px;">Shutting down now...</span>
 	<?php system_halt(); ?>
 </div>
 <?php else: ?>
 <form action="halt.php" method="post">
 <div class="alert alert-danger">
 	<button type="button" class="close" data-dismiss="alert">×</button>
-	<span style="margin-right:340px;">Kapatma işlemini onaylıyor musunuz?</span>
-	<input name="Submit" type="submit" class="btn btn-inverse" value="Evet">
-	<input name="Submit" type="submit" class="btn" value="Hayır">
+	<span style="margin-right:340px;">System will shut down. Proceed?</span>
+	<input name="Submit" type="submit" class="btn btn-inverse" value="Yes">
+	<input name="Submit" type="submit" class="btn" value="No">
  </div>
 </form>
 <?php endif; ?>

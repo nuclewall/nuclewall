@@ -83,7 +83,7 @@ $attribs['error']='fill="blue" font-family="Arial" font-size="4"';
 $attribs['collect_initial']='fill="gray" font-family="Tahoma, Verdana, Arial, Helvetica, sans-serif" font-size="4"';
 
 //Error text if we cannot fetch data : depends on which method is used
-$error_text = "Veri alınamıyor" . htmlspecialchars($ifnum);
+$error_text = "Unable to fetch data" . htmlspecialchars($ifnum);
 
 $height=100;            //SVG internal height : do not modify
 $width=200;             //SVG internal width : do not modify
@@ -103,18 +103,18 @@ print('<?xml version="1.0" encoding="utf-8"?>' . "\n");?>
     <text id="grid_txt1" x="<?=$width?>" y="<?=$height/4*1?>" <?=$attribs['grid_txt']?> text-anchor="end"> </text>
     <text id="grid_txt2" x="<?=$width?>" y="<?=$height/4*2?>" <?=$attribs['grid_txt']?> text-anchor="end"> </text>
     <text id="grid_txt3" x="<?=$width?>" y="<?=$height/4*3?>" <?=$attribs['grid_txt']?> text-anchor="end"> </text>
-    <text id="graph_in_lbl" x="5" y="8" <?=$attribs['in']?>>Gelen </text>
-    <text id="graph_out_lbl" x="5" y="16" <?=$attribs['out']?>>Giden </text>
+    <text id="graph_in_lbl" x="5" y="8" <?=$attribs['in']?>>In </text>
+    <text id="graph_out_lbl" x="5" y="16" <?=$attribs['out']?>>Out </text>
     <text id="graph_in_txt" x="25" y="8" <?=$attribs['in']?>> </text>
     <text id="graph_out_txt" x="25" y="16" <?=$attribs['out']?>> </text>
     <text id="ifname" x="<?=$width?>" y="8" <?=$attribs['graphname']?> text-anchor="end"><?=htmlspecialchars($ifname)?></text>
-    <text id="switch_unit" x="<?=$width*0.60?>" y="5" <?=$attribs['switch_unit']?>>Byte'a çevir</text>
-    <text id="switch_scale" x="<?=$width*0.60?>" y="11" <?=$attribs['switch_scale']?>>Otomatik Ölçeklendir (<?=$scale_type?>)</text>
+    <text id="switch_unit" x="<?=$width*0.60?>" y="5" <?=$attribs['switch_unit']?>>Switch to bytes/s</text>
+    <text id="switch_scale" x="<?=$width*0.60?>" y="11" <?=$attribs['switch_scale']?>>Autoscale (<?=$scale_type?>)</text>
     <text id="datetime" x="<?=$width*0.33?>" y="5" <?=$attribs['legend']?>> </text>
-    <text id="graphlast" x="<?=$width*0.60?>" y="17" <?=$attribs['legend']?>>Son <?=$time_interval*$nb_plot?> saniyenin grafiği</text>
+    <text id="graphlast" x="<?=$width*0.60?>" y="17" <?=$attribs['legend']?>>Last <?=$time_interval*$nb_plot?> seconds</text>
     <polygon id="axis_arrow_x" <?=$attribs['axis']?> points="<?=($width) . "," . ($height)?> <?=($width-2) . "," . ($height-2)?> <?=($width-2) . "," . $height?>"/>
     <text id="error" x="<?=$width*0.5?>" y="<?=$height*0.5?>"  visibility="hidden" <?=$attribs['error']?> text-anchor="middle"><?=$error_text?></text>
-    <text id="collect_initial" x="<?=$width*0.5?>" y="<?=$height*0.5?>"  visibility="hidden" <?=$attribs['collect_initial']?> text-anchor="middle">Veri toplanıyor...Lütfen bekleyin.</text>
+    <text id="collect_initial" x="<?=$width*0.5?>" y="<?=$height*0.5?>"  visibility="hidden" <?=$attribs['collect_initial']?> text-anchor="middle">Collecting initial data, please wait.</text>
   </g>
   <script type="text/ecmascript">
     <![CDATA[
@@ -126,14 +126,14 @@ print('<?xml version="1.0" encoding="utf-8"?>' . "\n");?>
 if (typeof getURL == 'undefined') {
   getURL = function(url, callback) {
     if (!url)
-      throw 'URL bulunamadı';
+      throw 'No URL for getURL';
 
     try {
       if (typeof callback.operationComplete == 'function')
         callback = callback.operationComplete;
     } catch (e) {}
     if (typeof callback != 'function')
-      throw 'Fonksiyon bulunamadı';
+      throw 'No callback function for getURL';
 
     var http_request = null;
     if (typeof XMLHttpRequest != 'undefined') {

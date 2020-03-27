@@ -136,7 +136,7 @@ if ($_POST)
 	if (isset($id) && ($a_user[$id]))
 	{
 		$reqdfields = explode(" ", 'usernamefld');
-		$reqdfieldsn = array('Kullanıcı Adı');
+		$reqdfieldsn = array('Username');
 	}
 	else
 	{
