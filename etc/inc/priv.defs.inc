@@ -6,12 +6,12 @@ $priv_list['user-shell-access'] = array();
 $priv_list['user-shell-access']['name']  = 'SSH';
 
 $priv_list['page-all'] = array();
-$priv_list['page-all']['name'] = 'All Pages';
+$priv_list['page-all']['name'] = 'ALL PAGES';
 $priv_list['page-all']['match'] = array();
 $priv_list['page-all']['match'][] = '*';
 
 $priv_list['page-essential'] = array();
-$priv_list['page-essential']['name'] = 'Essential Pages';
+$priv_list['page-essential']['name'] = 'ESSENTIAL PAGES';
 $priv_list['page-essential']['match'] = array();
 $priv_list['page-essential']['match'][] = 'index.php*';
 $priv_list['page-essential']['match'][] = 'getstats.php*';

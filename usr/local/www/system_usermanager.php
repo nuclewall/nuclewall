@@ -46,7 +46,7 @@ function print_privs($p, $plist)
 	{
 		if(key_exists($user_priv , $plist))
 		{
-		echo "<span class=\"\">{$plist[$user_priv]['name']}</span> - ";
+		echo "<span>{$plist[$user_priv]['name']}</span>, ";
 		}
 	}
 }
@@ -373,7 +373,14 @@ if ($_POST)
 										</a>
 									</td>
 									<td class="cell description">
-											<?php print_privs($userent['priv'], $priv_list); ?>
+									    <?php
+											if($userent['uid'] == '0') {
+											    echo "<span>ALL</span>";
+											}
+											else {
+											    print_privs($userent['priv'], $priv_list);
+											}
+										?>
 									</td>
 									<td class="cell tools">
 										<a title="Edit" href="system_usermanager.php?act=edit&id=<?=$i;?>">
