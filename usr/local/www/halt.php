@@ -50,7 +50,7 @@ $pgtitle = array('TOOLS ', "POWEROFF NUCLEWALL");
 <body>
 <?php include('fbegin.inc'); ?>
 
-<?php if ($_POST['Submit'] == 'Evet'): ?>
+<?php if ($_POST['Submit'] == 'Yes'): ?>
 <div class="alert alert-danger">
 	<button type="button" class="close" data-dismiss="alert">×</button>
 	<span style="font-weight:bold; margin-right:20px;">Shutting down now...</span>

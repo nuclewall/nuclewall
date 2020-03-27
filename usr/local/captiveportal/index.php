@@ -54,7 +54,7 @@ $mac_addr = str_replace(':', '-', $clientmac);
 
 if (!$clientmac)
 {
-    captiveportal_logportalauth('unauthenticated', 'noclientmac', $clientip, 'HATA');
+    captiveportal_logportalauth('unauthenticated', 'noclientmac', $clientip, 'ERROR');
     log_error("HOTSPOT could not determine client's IP address.");
     exit;
 }
@@ -99,7 +99,7 @@ else if ($_POST['accept'])
 
 			if($found)
 			{
-				captiveportal_logportalauth($_POST['auth_user'], $clientmac, $clientip, 'YENI OTURUM');
+				captiveportal_logportalauth($_POST['auth_user'], $clientmac, $clientip, 'NEW SESSION');
 				portal_allow($clientip, $clientmac, $_POST['auth_user'], $_POST['auth_pass'], array('url_redirection' => $redirurl), null, 'external');
 				$external = true;
 			}
@@ -107,7 +107,7 @@ else if ($_POST['accept'])
 
 		if(!$external)
 		{
-			$auth_list = radius($_POST['auth_user'], $_POST['auth_pass'], $clientip, $clientmac, 'YENI OTURUM');
+			$auth_list = radius($_POST['auth_user'], $_POST['auth_pass'], $clientip, $clientmac, 'NEW SESSION');
 			$type = 'error';
 
 			if (!empty($auth_list['url_redirection']))

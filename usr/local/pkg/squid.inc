@@ -302,7 +302,7 @@ function squid_resync_general()
 	$icp_port = ($settings['icp_port'] ? $settings['icp_port'] : 0);
 
 	$pidfile = "{$g['varrun_path']}/squid.pid";
-	$language = ($settings['error_language'] ? $settings['error_language'] : 'Turkish');
+	$language = ($settings['error_language'] ? $settings['error_language'] : 'English');
 	$errordir = SQUID_CONFBASE . '/errors/' . $language;
 	$icondir = SQUID_CONFBASE . '/icons';
 	$hostname = ($settings['visible_hostname'] ? $settings['visible_hostname'] : 'nuclewall');
@@ -554,7 +554,7 @@ function squid_resync()
 	sleep(1);
 
 
-	log_error("Ayarlar senkronize ediliyor.");
+	log_error("Synchronizing settings.");
 	mwexec(SQUID_LOCALBASE . "/sbin/squid -k reconfigure");
 
 	filter_configure();
