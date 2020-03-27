@@ -556,7 +556,8 @@ function dump_clog_auth($logfile, $tail, $grepfor = "")
 	}
 	else
 	{
-		exec("/usr/sbin/clog {$logfile}{$grepline}| grep -v \"CLOG\" | grep -v \"\033\" | grep -v \"squid\" | /usr/bin/tail {$sor} -n {$tail} | /usr/bin/uniq", $logarr);
+		exec("/usr/sbin/clog {$logfile}{$grepline}| grep \"logportalauth\" | /usr/bin/tail {$sor} -n {$tail} | /usr/bin/uniq", $logarr);
+
 	}
 
 	foreach ($logarr as $logent)
