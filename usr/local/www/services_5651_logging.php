@@ -119,7 +119,7 @@ if ($_POST)
 			install_cron_job('/usr/local/bin/log_sender', false,  '*', '*', '*', '*', '*', 'root');
 		}
 
-		$savemsg = 'Saved successfully.';
+		$savemsg = 'The changes have been applied successfully.';
 	}
 }
 
