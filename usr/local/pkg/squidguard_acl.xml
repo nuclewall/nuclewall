@@ -48,8 +48,9 @@
 		<field>
 			<fielddescr>Name</fielddescr>
 			<fieldname>name</fieldname>
-			<description>Enter a unique name of this rule here.<br>
-			 The name must consist between 2 and 15 symbols [a-Z_0-9]. The first one must be a letter.</description>
+			<description>Enter a unique name of this rule here.&lt;br&gt;
+			  The name must consist between 2 and 15 symbols [a-Z_0-9]. The first one must be a letter.
+			</description>
 			<type>input</type>
 			<class>input-medium</class>
 			<required/>
@@ -58,14 +59,13 @@
 			<fielddescr>Client (source)</fielddescr>
 			<fieldname>source</fieldname>
 			<description>
-			  Enter client's IP address or domain or "username" here. To separate them use space.<br>
-			  <b>Example:</b><br>
-			  <b>IP:</b> 192.168.0.1 - <b>Subnet:</b> 192.168.0.0/24 or 192.168.1.0/255.255.255.0 - <b>IP-Range:</b> 192.168.1.1-192.168.1.10<br>
-			  <b>Domain:</b> foo.bar matches foo.bar or *.foo.bar<br>
-			  <b>Username:</b> 'user1' <br>
-              <b>Ldap search (Ldap filter must be enabled in General Settings):</b> <br>
-              ldapusersearch ldap://192.168.0.100/DC=domain,DC=com?sAMAccountName?sub?(&(sAMAccountName=%s)(memberOf=CN=it%2cCN=Users%2cDC=domain%2cDC=com))<br>
-              <i>Attention: these line don't have break line, all on one line</i>
+			  Enter client's IP address or domain here. To separate them use space.&lt;br&gt;
+			  Examples:&lt;br&gt;
+			  IP: 192.168.0.1&lt;br&gt;
+			  Subnet: 192.168.0.0/24 or 192.168.1.0/255.255.255.0 &lt;br&gt;
+			  IP-Range: 192.168.1.1-192.168.1.10&lt;br&gt;
+			  Domain: foo.bar, *.foo.bar&lt;br&gt;
+              &lt;i&gt;Attention: these line don't have break line, all on one line&lt;/i&gt;
 			</description>
 			<type>input</type>
 			<class>input-xxlarge</class>

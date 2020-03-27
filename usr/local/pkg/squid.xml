@@ -54,7 +54,7 @@
 			<fieldname>defined_ip_proxy_off</fieldname>
 			<description>Do not forward traffic from these &lt;b&gt;source&lt;/b&gt; IPs, CIDR nets, hostnames,
 			 or aliases through the proxy server but directly through the firewall.
-			 Separate by semi-colons (;). [Applies only to transparent mode]</description>
+			 Separate by semi-colons (;).</description>
 			<type>textarea</type>
 			<cols>50</cols>
 			<rows>5</rows>
@@ -64,7 +64,7 @@
 			<fieldname>defined_ip_proxy_off_dest</fieldname>
 			<description>Do not proxy traffic going to these &lt;b&gt;destination&lt;/b&gt; IPs, CIDR nets, hostnames,
 			 or aliases, but let it pass directly through the firewall.
-			Separate by semi-colons (;). [Applies only to transparent mode]</description>
+			Separate by semi-colons (;).</description>
 			<type>textarea</type>
 			<cols>50</cols>
 			<rows>5</rows>
@@ -120,8 +120,8 @@
 			<fielddescr>Custom Options</fielddescr>
 			<fieldname>custom_options</fieldname>
 			<description>
-			Put your own custom options here,one per line. They'll be added to the configuration.<br>
-			<strong>They need to be squid.conf native options, otherwise squid will NOT work.</strong>
+			Put your own custom options here,one per line. They'll be added to the configuration.&lt;br&gt;
+			They need to be squid.conf native options, otherwise squid will NOT work.
 			</description>
 			<type>textarea</type>
 		</field>
