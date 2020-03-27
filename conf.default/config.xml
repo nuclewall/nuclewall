@@ -171,7 +171,7 @@
 		</user>
 		<nextuid>2000</nextuid>
 		<nextgid>2000</nextgid>
-		<timezone>Etc/GMT-3</timezone>
+		<timezone>CET</timezone>
 		<time-update-interval>300</time-update-interval>
 		<timeservers>0.europe.pool.ntp.org</timeservers>
 		<webgui>
@@ -730,7 +730,7 @@
 	<hotspot>
 		<company>TlVDTEVXQUxMIEhPVFNQT1Q=</company>
 		<page_type>default</page_type>
-		<default_lang>tr</default_lang>
+		<default_lang>en</default_lang>
 	</hotspot>
 	<digitalsign>
 		<sign_type>local</sign_type>
