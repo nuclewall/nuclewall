@@ -805,10 +805,10 @@ function check_name_format ($name, $input_errors)
 	$val = trim($name);
 
 	if ((strlen($val) < 2) || (strlen($val) > 16))
-		$elog[] = "'$val' boyutu 2 ile 16 arasında arasında olmalıdır.";
+	    $elog[] = " Size of name '$val' must be between [2..16].";
 
 	if (!preg_match("/^([a-zA-Z]{1})([a-zA-Z_0-9\-]+)$/i", $val))
-		$elog[] = "'$name' geçersiz bir isim. Geçerli karakterler: ['a-Z', '_', '0-9', '-']. İlk karakter harf olmalıdır.";
+	    $elog[] = " Invalid name $name. Valid name symbols: ['a-Z', '_', '0-9', '-']. First symbol must be a letter.";
 
 	if (!empty($elog)) {
 			$input_errors = (is_array($input_errors)) ? array_merge($input_errors, $elog) : implode("\n", $elog);
@@ -844,7 +844,7 @@ function sg_check_src($sgx, $input_errors)
 	foreach ($src as $s_item) {
 		if ($s_item) {
 			if (!is_ipaddr_valid($s_item) and !is_domain_valid($s_item))
-				$elog[] = "'$s_item' geçerli bir ip adresi veya alan adı değil'.";
+			$elog[] = "Item '$s_item' is not a ip address or a domain or a username.";
 		}
 	}
 
