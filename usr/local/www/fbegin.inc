@@ -99,7 +99,7 @@ $services_menu[] = array("Hotspot", "/hotspot_settings.php");
 $services_menu[] = array("5651 Logging", "/services_5651_logging.php");
 $services_menu[] = array("DNS Forwarder", "/services_dnsmasq.php");
 $services_menu[] = array("DHCP Server", "/services_dhcp.php");
-$services_menu[] = array("Proxy ve Filter", "/pkg_edit.php?xml=squid.xml&amp;id=0");
+$services_menu[] = array("Proxy and Filter", "/pkg_edit.php?xml=squid.xml&amp;id=0");
 $services_menu = array_merge($services_menu, return_ext_menu("Services"));
 
 // Status

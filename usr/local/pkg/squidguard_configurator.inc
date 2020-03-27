@@ -316,7 +316,6 @@ function sg_addlog($module, $log, $level = 0)
 	$logfile = SQUIDGUARD_LOGDIR . SQUIDGUARD_CONFLOGFILE;
 	$log_content = array();
 
-	setlocale(LC_TIME, '');
 	$dt = date("d.m.Y H:i:s");
 
 	if (!empty($squidguard_config)) {

@@ -569,7 +569,7 @@ function session_auth()
 			$_SESSION['Username'] = $_POST['usernamefld'];
 			$_SESSION['last_access'] = time();
 			if(! isset($config['system']['webgui']['quietlogin'])) {
-				log_auth("'{$_POST['usernamefld']}' ({$_SERVER['REMOTE_ADDR']}) kullan�c�s� giri� yapt�.");
+				log_auth("User '{$_POST['usernamefld']}' logged in from ({$_SERVER['REMOTE_ADDR']})");
 			}
 			$HTTP_SERVER_VARS['AUTH_USER'] = $_SESSION['Username'];
 			if (isset($_POST['postafterlogin']))

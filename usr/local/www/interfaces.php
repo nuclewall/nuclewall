@@ -366,7 +366,7 @@ $types = array("none" => "None", "static" => "Static", "dhcp" => "DHCP");
 <form action="interfaces.php" method="post" name="iform" id="iform">
 	<?php if ($input_errors) print_input_errors($input_errors); ?>
 	<?php if (is_subsystem_dirty('interfaces')): ?>
-	<?php print_info_box_np(sprintf("The %s configuration has been changed.." ,$wancfg['descr']) . '<br>' .  'You must apply the changes in order for them to take effect.', true);?>
+	<?php print_info_box_np(sprintf("The %s configuration has been changed." ,$wancfg['descr']) . '<br>' .  'You must apply the changes in order for them to take effect.', true);?>
 	<?php endif; ?>
 	<?php if ($savemsg) print_info_box($savemsg); ?>
 
@@ -527,7 +527,7 @@ $types = array("none" => "None", "static" => "Static", "dhcp" => "DHCP");
 								<td class="vncell"></td>
 								<td class="vtable">
 									<input id="save" name="Submit" type="submit" class="btn btn-inverse" value="Save">
-									<input id="cancel" type="button" class="btn btn-default" value="Iptal" onclick="history.back()">
+									<input id="cancel" type="button" class="btn btn-default" value="Cancel" onclick="history.back()">
 									<input name="if" type="hidden" id="if" value="<?=$if;?>">
 									<?php if ($wancfg['if'] == $a_ppps[$pppid]['if']) : ?>
 									<input name="ppp_port" type="hidden" value="<?=htmlspecialchars($pconfig['port']);?>">

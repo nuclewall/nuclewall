@@ -226,7 +226,7 @@ $pgtitle = array('SYSTEM', 'STATIC ROUTES', 'EDIT ROUTE');
 				<td class="vncell"></td>
 				<td class="vtable">
 				<input class="btn btn-inverse" id="save" name="Submit" type="submit"  value="Save">
-				<input class="btn btn-default" id="cancel" type="button" value="İptal" onclick="history.back()">
+				<input class="btn btn-default" id="cancel" type="button" value="Cancel" onclick="history.back()">
 				<?php if (isset($id) && $a_routes[$id]): ?>
 				<input name="id" type="hidden" value="<?=htmlspecialchars($id);?>">
 				<?php endif; ?>

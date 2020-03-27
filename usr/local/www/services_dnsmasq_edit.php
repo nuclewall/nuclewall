@@ -169,7 +169,7 @@ $pgtitle = array('SERVICES ', 'DNS FORWARDER', 'EDIT DNS RECORD');
 				<td class="vncell"></td>
 				<td class="vtable">
 					<input name="Submit" type="submit" class="btn btn-inverse" value="Save">
-					<input class="btn" type="button" value="İptal" onclick="history.back()">
+					<input class="btn" type="button" value="Cancel" onclick="history.back()">
 					<?php if (isset($id) && $a_hosts[$id]): ?>
 					<input name="id" type="hidden" value="<?=htmlspecialchars($id);?>">
 					<?php endif; ?>

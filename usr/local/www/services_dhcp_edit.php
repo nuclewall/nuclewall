@@ -220,7 +220,7 @@ $logurl = "diag_logs_dhcp.php";
 					<td class="vncell"></td>
 					<td class="vtable">
 						<input name="Submit" type="submit" class="btn btn-inverse" value="Save">
-						<a class="btn" href="services_dhcp.php">İptal</a>
+						<a class="btn" href="services_dhcp.php">Cancel</a>
 						<?php if (isset($id) && $a_maps[$id]): ?>
 						<input name="id" type="hidden" value="<?=htmlspecialchars($id);?>">
 						<?php endif; ?>

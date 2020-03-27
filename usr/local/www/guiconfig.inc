@@ -33,8 +33,6 @@
 	POSSIBILITY OF SUCH DAMAGE.
 */
 
-setlocale(LC_ALL, 'tr_TR.UTF-8');
-
 if (!$omit_nocacheheaders)
 {
 	header("Expires: 0");

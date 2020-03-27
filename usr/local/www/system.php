@@ -241,7 +241,7 @@ if ($savemsg)
 					<td class="vtable">
 						<label>
 							<input name="disablefilter" type="checkbox" id="disablefilter" value="yes" <?php if (isset($config['system']['disablefilter'])) echo "checked"; ?> />
-							Disable all packet filtering.
+							Disable all packet filtering.<br>
 							Note: This converts NUCLEWALL into a routing only platform.<br>
 				            Note: This will also turn off NAT.
 						</label>
@@ -257,8 +257,8 @@ if ($savemsg)
 				<tr>
 					<td valign="top" class="vncell">Domain</td>
 					<td class="vtable"> <input name="domain" type="text" id="domain" value="<?=htmlspecialchars($pconfig['domain']);?>">
-						<br>Do not use 'local' as a domain name.
-						It will cause local hosts running mDNS (avahi, bonjour, etc.) to be unable to resolve local hosts not running mDNS.
+						<br>Do not use 'local' as a domain name.<br>
+						It will cause local hosts running mDNS (avahi, bonjour, etc.) to be unable to resolve local hosts not running mDNS.<br>
 						Example: <em>mycorp.com, home, office, myschool.com</em>
 					</td>
 				</tr>
@@ -314,11 +314,11 @@ if ($savemsg)
 							<?php endfor; ?>
 						</table>
 						<br>
-						Enter IP addresses to by used by the system for DNS resolution.
+						Enter IP addresses to by used by the system for DNS resolution.<br>
 					    These are also used for the DHCP service, DNS forwarder and for PPTP VPN clients.
 						<br>
 						<?php if($multiwan): ?>
-						In addition, optionally select the gateway for each DNS server.
+						In addition, optionally select the gateway for each DNS server.<br>
 						When using multiple WAN connections there should be at least one unique DNS server per gateway.
 						<br>
 						<?php endif; ?>
@@ -330,7 +330,7 @@ if ($savemsg)
 						<br>
 						    If this option is set, NUCLEWALL will
 							use DNS servers assigned by a DHCP/PPP server on WAN
-							for its own purposes (including the DNS forwarder).
+							for its own purposes (including the DNS forwarder).<br>
 							However, they will not be assigned to DHCP and PPTP VPN clients.
 						<br>
 						<br>
@@ -340,7 +340,7 @@ if ($savemsg)
 						</b>
 						<br>
 						By default localhost (127.0.0.1) will be used as the first DNS server where the DNS forwarder is enabled,
-						so system can use the DNS forwarder to perform lookups.
+						so system can use the DNS forwarder to perform lookups.<br>
 						Checking this box omits localhost from the list of DNS servers.
 					</td>
 				</tr>
@@ -362,7 +362,7 @@ if ($savemsg)
 					<td class="vtable">
 						<input name="timeservers" type="text" id="timeservers" size="40" value="<?=htmlspecialchars($pconfig['timeservers']);?>">
 						<br>
-						Use a space to separate multiple hosts.
+						Use a space to separate multiple hosts.<br>
 						Remember to set up at least one DNS server if you enter a host name here.
 					</td>
 				</tr>

@@ -115,7 +115,7 @@ if ($_POST) {
 	unset($input_errors);
 
 	$reqdfields = explode(" ", "name");
-	$reqdfieldsn = array("İsim");
+	$reqdfieldsn = array("Name");
 
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 

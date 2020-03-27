@@ -316,7 +316,7 @@ function monitor_change() {
 			<td class="vncell"></td>
 			<td class="vtable">
 				<input name="Submit" type="submit" class="btn btn-inverse" value="Save">
-				<input type="button" value="İptal" class="btn btn-default"  onclick="history.back()">
+				<input type="button" value="Cancel" class="btn btn-default"  onclick="history.back()">
 				<?php if (isset($id) && $a_gateways[$id]): ?>
 				<input name="id" type="hidden" value="<?=htmlspecialchars($id);?>">
 				<?php endif; ?>

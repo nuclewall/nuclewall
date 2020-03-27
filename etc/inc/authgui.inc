@@ -90,7 +90,7 @@ function display_login_form()
 <div id="main" class="img-rounded">
 	<form id="iform" class="form-horizontal" name="login_iform" method="post" action="<?=$_SERVER['SCRIPT_NAME'];?>">
 		<div class="control-group">
-			<label class="control-label" for="usernamefld">username</label>
+			<label class="control-label" for="usernamefld">Username</label>
 			<div class="controls">
 				<input id="usernamefld" type="text" name="usernamefld" tabindex="1"/>
 			</div>
