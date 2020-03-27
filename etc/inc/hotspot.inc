@@ -52,8 +52,8 @@ function createHtml()
 					<h5 id="title"></h5>
 					<nav style="margin-top:15px;">
 						<ul style="margin:0;" class="pagination pagination-sm">
-							<li id="tr" class="active"><a title="Türkçe" href="#">Türkçe</a></li>
-							<li id="en"><a title="English" href="#">English</a></li>
+						    <li id="en" class="active"><a title="English" href="#">English</a></li>
+							<li id="tr"><a title="Türkçe" href="#">Türkçe</a></li>
 							<li id="de"><a title="Deutsche" href="#">Deutsche</a></li>
 							<li id="ru"><a title="Русский" href="#">Русский</a></li>
 						</ul>
@@ -95,7 +95,7 @@ function createHtml()
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <p><a target="_blank" href="https://nuclewall.github.io/nuclewall" title="NUCLEWALL resmi sayfası"> NUCLEWALL</a></p>
+        <p><a target="_blank" href="https://nuclewall.github.io/nuclewall/index_en.html">NUCLEWALL</a></p>
       </div>
     </div>
   </div>
@@ -147,8 +147,8 @@ function createHtmlErr()
 					<h5 id="title"></h5>
 					<nav style="margin-top:15px;">
 						<ul style="margin:0;" class="pagination pagination-sm">
-							<li id="tr" class="active"><a title="Türkçe" href="#">Türkçe</a></li>
-							<li id="en"><a title="English" href="#">English</a></li>
+							<li id="en" class="active"><a title="English" href="#">English</a></li>
+							<li id="tr"><a title="Türkçe" href="#">Türkçe</a></li>
 							<li id="de"><a title="Deutsche" href="#">Deutsche</a></li>
 							<li id="ru"><a title="Русский" href="#">Русский</a></li>
 						</ul>
@@ -191,7 +191,7 @@ function createHtmlErr()
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <p><a target="_blank" href="https://nuclewall.github.io/nuclewall" title="NUCLEWALL resmi sayfası"> NUCLEWALL</a></p>
+        <p><a target="_blank" href="https://nuclewall.github.io/nuclewall/index_en.html">NUCLEWALL</a></p>
       </div>
     </div>
   </div>
@@ -203,7 +203,7 @@ function createHtmlErr()
 EOD;
 
 	$file = "/usr/local/captiveportal/pages/hotspot_err.html";
-	$file_demo =  "/usr/local/www/hotspot_err.html";
+	$file_demo = "/usr/local/www/hotspot_err.html";
 
 	file_put_contents($file, $html);
 	file_put_contents($file_demo, $html);
@@ -250,11 +250,11 @@ function createMobileHtml()
 		</form>
         <center>
 		<fieldset data-role="controlgroup" data-type="vertical">
-			<input type="radio" name="radio-mini" id="tr" value="tr" checked="checked">
-			<label for="tr">Türkçe</label>
-
-			<input type="radio" name="radio-mini" id="en" value="en">
+		    <input type="radio" name="radio-mini" id="en" value="en" checked="checked">
 			<label for="en">English</label>
+
+			<input type="radio" name="radio-mini" id="tr" value="tr">
+			<label for="tr">Türkçe</label>
 
 			<input type="radio" name="radio-mini" id="de" value="de">
 			<label for="de">Deutsche</label>
@@ -265,7 +265,7 @@ function createMobileHtml()
         </center>
 	</div>
 	<div style="text-align:center;margin-top:20px;" data-theme="b" data-role="footer">
-		<a style="font-size:11px;" href="https://nuclewall.github.io/nuclewall" target="_blank" data-role="button">nuclewall</a>
+		<a style="font-size:11px;" href="https://nuclewall.github.io/nuclewall/index_en.html" target="_blank" data-role="button">NUCLEWALL</a>
 	</div>
 </div>
 <script type="text/javascript" src="pages/js/captiveportal-locale-mobile.js?cache={$GLOBALS['js_mobile_cache']}"></script>
@@ -328,11 +328,11 @@ function createMobileHtmlErr()
 	</div>
 	<center>
 		<fieldset data-role="controlgroup" data-type="vertical">
-			<input type="radio" name="radio-mini" id="tr" value="tr" checked="checked">
-			<label for="tr">Türkçe</label>
+     		<input type="radio" name="radio-mini" id="en" value="en" checked="checked">
+	    	<label for="en">English</label>
 
-			<input type="radio" name="radio-mini" id="en" value="en">
-			<label for="en">English</label>
+			<input type="radio" name="radio-mini" id="tr" value="tr">
+			<label for="tr">Türkçe</label>
 
 			<input type="radio" name="radio-mini" id="de" value="de">
 			<label for="de">Deutsche</label>
@@ -342,7 +342,7 @@ function createMobileHtmlErr()
 		</fieldset>
 	</center>
 	<div style="text-align:center;margin-top:20px;" data-theme="b" data-role="footer">
-		<a style="font-size:11px;" href="https://nuclewall.github.io/nuclewall" target="_blank" data-role="button" >nuclewall</a>
+		<a style="font-size:11px;" href="https://nuclewall.github.io/nuclewall/index_en.html" target="_blank" data-role="button">NUCLEWALL</a>
 	</div>
 </div>
 
@@ -1077,8 +1077,8 @@ function hotspot_init()
 	if(file_exists($initFile) and ($platform == 'pfSense'))
 	{
 		initHtmlFiles();
-		createDefaultJS('tr');
-		createDefaultMobileJS('tr', 'NUCLEWALL HOTSPOT');
+		createDefaultJS('en');
+		createDefaultMobileJS('en', 'NUCLEWALL HOTSPOT');
 		system("rm -f $initFile");
 	}
 }
