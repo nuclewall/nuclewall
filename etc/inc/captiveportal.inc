@@ -3,7 +3,7 @@
 	captiveportal.inc
 	part of pfSense (http://www.pfSense.org)
 	Copyright (C) 2004-2011 Scott Ullrich <sullrich@gmail.com>
-	Copyright (C) 2009 Ermal Luçi <ermal.luci@gmail.com>
+	Copyright (C) 2009 Ermal Luï¿½i <ermal.luci@gmail.com>
 	Copyright (C) 2003-2006 Manuel Kasper <mk@neon1.net>.
 
 	originally part of m0n0wall (http://m0n0.ch/wall)
@@ -530,7 +530,7 @@ function captiveportal_disconnect_client($sessionid, $term_cause = 1, $logoutRea
 		captiveportal_write_db($cpdb, false, $unsetindex);
 
 		captiveportal_disconnect($cpentry, $radiusservers, $term_cause);
-		captiveportal_logportalauth($cpentry[4], $cpentry[3], $cpentry[2], 'OTURUM KAPATILDI');
+		captiveportal_logportalauth($cpentry[4], $cpentry[3], $cpentry[2], 'LOGGED OUT');
 	}
 }
 
@@ -870,7 +870,7 @@ function radius($username, $password, $clientip, $clientmac, $type)
 	{
 		$auth_list = array();
 		$auth_list['auth_val'] = 1;
-		$auth_list['error'] = 'Sistemin oturum sayýsý kapasitesi aþýldý.';
+		$auth_list['error'] = "System reached maximum login capacity";
 		return $auth_list;
 	}
 
@@ -1213,7 +1213,7 @@ function portal_mac_radius($clientmac,$clientip)
     $radmac_secret = $config['captiveportal']['radmac_secret'];
 
     $username = mac_format($clientmac);
-    $auth_list = radius($username, $radmac_secret, $clientip, $clientmac, 'IZINLI MAC ADRESI');
+    $auth_list = radius($username, $radmac_secret, $clientip, $clientmac, 'ALLOWED MAC ADDRESS');
     if ($auth_list['auth_val'] == 2)
         return TRUE;
     if (!empty($auth_list['url_redirection']))
@@ -1276,7 +1276,7 @@ function portal_allow($clientip,$clientmac,$username,$password = null, $attribut
 	if (is_null($ruleno))
 	{
 		portal_reply_page($redirurl, "error", "System reached maximum login capacity");
-		log_error("WARNING!  Captive portal has reached maximum login capacity.");
+		log_error("WARNING: Captive portal has reached maximum login capacity.");
 		exit;
 	}
 
@@ -1323,7 +1323,7 @@ function portal_allow($clientip,$clientmac,$username,$password = null, $attribut
 		{
 			$acct_val = RADIUS_ACCOUNTING_START($ruleno, $username, $sessionid, $radiusservers, $clientip, $clientmac);
 			if ($acct_val == 1)
-				captiveportal_logportalauth($username, $clientmac, $clientip, $type, "FreeRADIUS sunucusuna eriþilirken hata oluþtu.");
+				captiveportal_logportalauth($username, $clientmac, $clientip, $type, "Error while connecting to FreeRADIUS Server");
 		}
 	}
 	else

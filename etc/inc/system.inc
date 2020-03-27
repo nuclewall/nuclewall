@@ -936,7 +936,7 @@ function system_ntp_configure($start_ntpd=true)
 
 	if(!$fd)
 	{
-		log_error("{$g['varetc_path']}/ntpd.conf açýlamadý.");
+		log_error("Couldn't open {$g['varetc_path']}/ntpd.conf.");
 		return;
 	}
 	fwrite($fd, $ntpcfg);

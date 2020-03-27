@@ -94,7 +94,7 @@ function parse_config($parse = false)
 			if ($last_backup)
 				restore_backup("/cf/conf/backup/{$last_backup}");
 			else {
-				log_error(gettext("Could not restore config.xml."));
+				log_error("Could not restore config.xml.");
 				unlock($lockkey);
 				die("Config.xml is corrupted and is 0 bytes.  Could not restore a previous backup.");
 			}
@@ -214,7 +214,7 @@ function parse_config_bootup()
 
 
 *******************************************************************************
-* UYARI!                                                                    *
+* WARNING!                                                                    *
 * The current configuration has been created with a newer version of {$g['product_name']}  *
 * than this one! This can lead to serious misbehavior and even security       *
 * holes! You are urged to either upgrade to a newer version of {$g['product_name']} or     *

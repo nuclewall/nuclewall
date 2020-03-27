@@ -77,35 +77,33 @@ function display_login_form()
 <!DOCTYPE html>
 <html>
 <head>
-<title>Nuclewall - Yönetici Girişi</title>
+<title>NUCLEWALL - Admin Login</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-9"/>
 <link rel="stylesheet" href="themes/nuclewall/bootstrap/css/bootstrap-base.css" media="all"/>
 </head>
 <body id="login_body">
 <div id="cookiealert" class="alert" style="display:none">
 	<center>
-	<strong>Uyarı! </strong>Tarayıcınızda çerezler (cookies) aktifleştirilmemiş. Oturum açabilmek için çerezleri aktifleştirin.
-	Bkz: <a target="_blank" href="https://support.mozilla.org/tr/kb/%C3%87erezleri%20a%C3%A7%C4%B1p%20kapatma">Firefox</a>
-	<a target="_blank" href="https://support.mozilla.org/tr/kb/%C3%87erezleri%20a%C3%A7%C4%B1p%20kapatma">Chrome</a>
+	<strong>Warning: </strong>You must enable cookies to log in.
 	</center>
 </div>
 <div id="main" class="img-rounded">
 	<form id="iform" class="form-horizontal" name="login_iform" method="post" action="<?=$_SERVER['SCRIPT_NAME'];?>">
 		<div class="control-group">
-			<label class="control-label" for="usernamefld">Kullanıcı adı</label>
+			<label class="control-label" for="usernamefld">username</label>
 			<div class="controls">
 				<input id="usernamefld" type="text" name="usernamefld" tabindex="1"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="passwordfld">Parola</label>
+			<label class="control-label" for="passwordfld">Password</label>
 			<div class="controls">
 				<input id="passwordfld" type="password" name="passwordfld" tabindex="2"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<div class="controls">
-				<input type="submit" name="login" class="btn btn-primary" value="Giriş" tabindex="3"/>
+				<input type="submit" name="login" class="btn btn-primary" value="Login" tabindex="3"/>
 			</div>
 		</div>
 		<?php if (isset($_SESSION['Login_Error'])) { ?>

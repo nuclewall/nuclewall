@@ -21,12 +21,12 @@ if(is_process_running('mysqld'))
 	}
 	catch (PDOException $e)
 	{
-		$input_errors[] = "Yerel MySQL sunucusuna bağlanılamadı.";
+		$input_errors[] = "Unable to connect local MySQL Server.";
 		$input_errors[] = $e->getMessage();
 	}
 }
 
 else
 {
-	$input_errors[] = "Yerel MySQL sunucu çalışmıyor. 'mysqld' servisinin çalıştığından emin olun.";
+	$input_errors[] = "Local MySQL Server is not running. Ensure 'mysqld' service is running.";
 }

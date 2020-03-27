@@ -70,7 +70,7 @@ if ($_POST) {
 
 	/* input validation */
 	$reqdfields = explode(" ", "domain ip");
-	$reqdfieldsn = array("Alan Adı", "IP Adresi");
+	$reqdfieldsn = array("Domain", "IP Address");
 
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 

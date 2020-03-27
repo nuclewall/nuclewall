@@ -159,7 +159,7 @@ function parse_filter_line($line) {
 		return $flent;
 	} else {
 		if($g['debug']) {
-			log_error("There was a error parsing rule: $errline.   Please report to mailing list or forum.");
+			log_error("There was a error parsing rule: $errline.");
 		}
 		return "";
 	}

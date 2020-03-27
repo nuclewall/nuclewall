@@ -187,7 +187,7 @@ $pgtitle = array('SYSTEM', 'STATIC ROUTES', 'EDIT ROUTE');
 					<td colspan="2" valign="top" class="listtopic">EDIT STATIC ROUTE</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Hedef Ağ</td>
+					<td valign="top" class="vncell">Destination</td>
 					<td class="vtable">
 					<input name="network" type="text" id="network" value="<?=htmlspecialchars($pconfig['network']);?>">
 				/

@@ -318,9 +318,9 @@ class dummynet_class {
 		if ($data['qlimit'] && (!is_numeric($data['qlimit'])))
             		$input_errors[] = "Queue limit must be an integer";
         	if (!empty($data['newname']) && !preg_match("/^[a-zA-Z0-9_-]+$/", $data['newname']))
-			$input_errors[] = "Sınırlayıcı ismi sadece alfanümerik karakterler, '_' ve '-' karakterlerinden oluşabilir.";
+			$input_errors[] = "Queue names must be alphanumeric and _ or - only.";
         	if (!empty($data['name']) && !preg_match("/^[a-zA-Z0-9_-]+$/", $data['name']))
-			$input_errors[] = "Sınırlayıcı ismi sadece alfanümerik karakterler, '_' ve '-' karakterlerinden oluşabilir.";
+			$input_errors[] = "Queue names must be alphanumeric and _ or - only.";
 	}
 }
 
@@ -410,7 +410,7 @@ class dnpipe_class extends dummynet_class {
 		parent::validate_input($data, $input_errors);
 
 		if ($data['bandwidth'] && (!is_numeric($data['bandwidth'])))
-       		     	$input_errors[] = "Hız sınırı bir tamsayı olmalıdır.";
+       		     	$input_errors[] = "Bandwidth must be an integer.";
 		if ($data['delay'] && (!is_numeric($data['delay'])))
             		$input_errors[] = "Delay must be an integer.";
 		}
@@ -519,7 +519,7 @@ class dnpipe_class extends dummynet_class {
 
         function build_form() {
 		$form = "<tr><td class=\"vncell\">";
-		$form .= "Aktif";
+		$form .= "Active";
 		$form .= "</td><td class=\"vtable\">";
 		$form .= " <input type=\"checkbox\" id=\"enabled\" name=\"enabled\" value=\"on\"";
 		if ($this->GetEnabled() == "on")
@@ -527,14 +527,14 @@ class dnpipe_class extends dummynet_class {
 		else
 			$form .=  "/>";
 		$form .= "</td></tr>";
-		$form .= "<tr><td class=\"vncell\">İsim</td>";
+		$form .= "<tr><td class=\"vncell\">Name</td>";
 		$form .= "<td class=\"vtable\">";
 		$form .= "<input type=\"text\" id=\"newname\" name=\"newname\" value=\"";
 		$form .= $this->GetQname()."\">";
 		$form .= "<input type=\"hidden\" id=\"name\" name=\"name\" value=\"";
 		$form .= $this->GetQname()."\">";
 		$form .= "</td></tr>";
-		$form .= "<tr><td class=\"vncell\">Hız Sınırı";
+		$form .= "<tr><td class=\"vncell\">Queue";
 		$form .= "</td><td class=\"vtable\">";
 		$form .= "<input type=\"text\" id=\"bandwidth\" name=\"bandwidth\" value=\"";
 		$form .= $this->GetBandwidth() . "\">";
@@ -557,21 +557,21 @@ class dnpipe_class extends dummynet_class {
 		$form .= ">Bit/s</option>";
 		$form .= "</select>";
 		$form .= "</td></tr>";
-		$form .= "<tr><td class=\"vncell\">Yönü</td>";
+		$form .= "<tr><td class=\"vncell\">Direction</td>";
 		$form .= "<td class=\"vtable\">";
 		$form .= "<select name=\"mask\">";
 		$form .= "<option value=\"none\"";
 		if ($this->GetMask() == "none")
 			$form .= " selected=\"yes\"";
-		$form .= ">Yok</option>";
+		$form .= ">None</option>";
 		$form .= "<option value=\"srcaddress\"";
 		if ($this->GetMask() == "srcaddress")
 			$form .= " selected=\"yes\"";
-		$form .= ">Kanyak Adresi</option>";
+		$form .= ">Source</option>";
 		$form .= "<option value=\"dstaddress\"";
 		if ($this->GetMask() == "dstaddress")
 			$form .= " selected=\"yes\"";
-		$form .= ">Hedef Adresi</option>";
+		$form .= ">Dest.</option>";
 		$form .= "</select>";
 		$form .= "</td></tr>";
 

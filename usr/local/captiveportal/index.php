@@ -26,7 +26,7 @@ $clientip = $_SERVER['REMOTE_ADDR'];
 
 if (!$clientip)
 {
-	log_error('İstemcinin IP adresi tespit edilemedi.');
+	log_error("Unable to get client's IP address.");
 	exit;
 }
 

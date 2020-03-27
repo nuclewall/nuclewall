@@ -172,9 +172,9 @@ function updateBandwidthHosts(data){
 								<td style="padding-left:10px;padding-top:45px;" valign="top">
 									<table class="grids" cellspacing="0" cellpadding="0">
 										<tr>
-											<td class="head">IP Adresi</td>
-											<td class="head">Gelen</td>
-											<td class="head">Giden</td>
+											<td class="head">IP Address</td>
+											<td class="head">In</td>
+											<td class="head">Out</td>
 									   </tr>
 									   <tr id="host0" style="display:none">
 											<td id="hostip0" class="cell">

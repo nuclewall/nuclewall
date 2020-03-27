@@ -1,9 +1,9 @@
 <?php
 /*
 	interfaces.inc
-	Copyright (C) 2013-2015 Ogün Açýk
+	Copyright (C) 2013-2015 Ogun Acik
 	Copyright (C) 2004-2008 Scott Ullrich
-	Copyright (C) 2008-2009 Ermal Luçi
+	Copyright (C) 2008-2009 Ermal Luci
 	All rights reserved.
 
 	originally part of m0n0wall (http://m0n0.ch/wall)
