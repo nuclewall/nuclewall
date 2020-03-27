@@ -10,7 +10,7 @@ require('guiconfig.inc');
 require_once('connections.inc');
 require('datasources.inc');
 
-$pgtitle = array('HOTSPOT ', 'HARİCİ VERİ KAYNAKLARI');
+$pgtitle = array('HOTSPOT ', 'EXTERNAL DATA SOURCES');
 
 $pconfig['datasource'] = $config['datasources']['external'];
 
@@ -47,7 +47,7 @@ if(!empty($mysql_hostname) && !empty($mysql_port) && !empty($mysql_username) && 
 
 	if($mysql_connection)
 	{
-		$mysql_connection_status = "Bağlandı";
+		$mysql_connection_status = "Connected";
 		$mysql_connection_class = "label label-success";
 
 		if(!empty($mysql_table) && !empty($mysql_uname_field) && !empty($mysql_pass_field))
@@ -58,38 +58,38 @@ if(!empty($mysql_hostname) && !empty($mysql_port) && !empty($mysql_username) && 
 
 			if($mysql_data)
 			{
-				$mysql_data_status = "Kullanılabilir veri var";
+				$mysql_data_status = "Data avilable";
 				$mysql_data_class = "label label-success";
 			}
 
 			else
 			{
-				$mysql_data_status = "Veri bulunamadı";
+				$mysql_data_status = "No data";
 				$mysql_data_class = "label label-important";
 			}
 		}
 
 		else
 		{
-			$mysql_data_status = "Yapılandırılmadı";
+			$mysql_data_status = "Not configured";
 			$mysql_data_class = "label";
 		}
 	}
 
 	else
 	{
-		$mysql_connection_status = "Bağlantı yok";
+		$mysql_connection_status = "No connection";
 		$mysql_connection_class = "label label-important";
-		$mysql_data_status = "Bağlantı yok";
+		$mysql_data_status = "No connection";
 		$mysql_data_class = "label label-important";
 	}
 }
 
 else
 {
-	$mysql_connection_status = "Yapılandırılmadı";
+	$mysql_connection_status = "Not configured";
 	$mysql_connection_class = "label";
-	$mysql_data_status = "Bağlantı yok";
+	$mysql_data_status = "No connection";
 	$mysql_data_class = "label label-important";
 }
 
@@ -99,7 +99,7 @@ if(!empty($pgsql_hostname) && !empty($pgsql_port) && !empty($pgsql_username) && 
 
 	if($pgsql_connection)
 	{
-		$pgsql_connection_status = "Bağlandı";
+		$pgsql_connection_status = "Connected";
 		$pgsql_connection_class = "label label-success";
 
 		if(!empty($pgsql_table) && !empty($pgsql_uname_field) && !empty($pgsql_pass_field))
@@ -110,38 +110,38 @@ if(!empty($pgsql_hostname) && !empty($pgsql_port) && !empty($pgsql_username) && 
 
 			if($pgsql_data)
 			{
-				$pgsql_data_status = "Kullanılabilir veri var";
+				$pgsql_data_status = "Data avilable";
 				$pgsql_data_class = "label label-success";
 			}
 
 			else
 			{
-				$pgsql_data_status = "Veri bulunamadı";
+				$pgsql_data_status = "No data";
 				$pgsql_data_class = "label label-important";
 			}
 		}
 
 		else
 		{
-			$pgsql_data_status = "Yapılandırılmadı";
+			$pgsql_data_status = "Not configured";
 			$pgsql_data_class = "label";
 		}
 	}
 
 	else
 	{
-		$pgsql_connection_status = "Bağlantı yok";
+		$pgsql_connection_status = "No connection";
 		$pgsql_connection_class = "label label-important";
-		$pgsql_data_status = "Bağlantı yok";
+		$pgsql_data_status = "No connection";
 		$pgsql_data_class = "label label-important";
 	}
 }
 
 else
 {
-	$pgsql_connection_status = "Yapılandırılmadı";
+	$pgsql_connection_status = "Not configured";
 	$pgsql_connection_class = "label";
-	$pgsql_data_status = "Bağlantı yok";
+	$pgsql_data_status = "No connection";
 	$pgsql_data_class = "label label-important";
 }
 
@@ -151,7 +151,7 @@ if(!empty($sqlserver_hostname) && !empty($sqlserver_port) && !empty($sqlserver_u
 
 	if($sqlserver_connection)
 	{
-		$sqlserver_connection_status = "Bağlandı";
+		$sqlserver_connection_status = "Connected";
 		$sqlserver_connection_class = "label label-success";
 
 		if(!empty($sqlserver_table) && !empty($sqlserver_uname_field) && !empty($sqlserver_pass_field))
@@ -162,38 +162,38 @@ if(!empty($sqlserver_hostname) && !empty($sqlserver_port) && !empty($sqlserver_u
 
 			if($sqlserver_data)
 			{
-				$sqlserver_data_status = "Kullanılabilir veri var";
+				$sqlserver_data_status = "Data avilable";
 				$sqlserver_data_class = "label label-success";
 			}
 
 			else
 			{
-				$sqlserver_data_status = "Veri bulunamadı";
+				$sqlserver_data_status = "No data";
 				$sqlserver_data_class = "label label-important";
 			}
 		}
 
 		else
 		{
-			$sqlserver_data_status = "Yapılandırılmadı";
+			$sqlserver_data_status = "Not configured";
 			$sqlserver_data_class = "label";
 		}
 	}
 
 	else
 	{
-		$sqlserver_connection_status = "Bağlantı yok";
+		$sqlserver_connection_status = "No connection";
 		$sqlserver_connection_class = "label label-important";
-		$sqlserver_data_status = "Bağlantı yok";
+		$sqlserver_data_status = "No connection";
 		$sqlserver_data_class = "label label-important";
 	}
 }
 
 else
 {
-	$sqlserver_connection_status = "Yapılandırılmadı";
+	$sqlserver_connection_status = "Not configured";
 	$sqlserver_connection_class = "label";
-	$sqlserver_data_status = "Bağlantı yok";
+	$sqlserver_data_status = "No connection";
 	$sqlserver_data_class = "label label-important";
 }
 
@@ -227,7 +227,7 @@ if ($_POST)
 		file_put_contents($external_file, '');
 	}
 
-	$savemsg = 'Değişiklikler başarıyla kaydedildi.';
+	$savemsg = 'The changes have been applied successfully.';
 }
 
 ?>
@@ -245,9 +245,9 @@ if ($_POST)
 		<td class="tabnavtbl">
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Genel Ayarlar', false, 'hotspot_settings.php');
-				$tab_array[] = array('Harici Veri Kaynakları', true, 'hotspot_datasources.php');
-				$tab_array[] = array('Kullanıcı Karşılama Sayfası', false, 'hotspot_form_settings.php');
+				$tab_array[] = array('General Settings', false, 'hotspot_settings.php');
+				$tab_array[] = array('External Data Sources', true, 'hotspot_datasources.php');
+				$tab_array[] = array('User Welcome Page', false, 'hotspot_form_settings.php');
 				display_top_tabs($tab_array, true);
 			?>
 		</td>
@@ -256,11 +256,11 @@ if ($_POST)
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td valign="top" class="vncell">Aktif Veri Kaynağı</td>
+					<td valign="top" class="vncell">Active Data Source</td>
 					<td class="vtable">
-						Yerel +
+						Local +
 						<select name="datasource" required id="datasource">
-							<option <?php if($pconfig['datasource'] == "none") echo "selected"; ?> value="none">Hiçbiri</option>
+							<option <?php if($pconfig['datasource'] == "none") echo "selected"; ?> value="none">None</option>
 						<?php if($mysql_available): ?>
 							<option <?php if($pconfig['datasource'] == "mysql") echo "selected"; ?> value="mysql">MySQL</option>
 						<?php endif; ?>
@@ -274,13 +274,13 @@ if ($_POST)
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Veri Kaynakları</td>
+					<td valign="top" class="vncell">Data Sources</td>
 					<td class="vtable">
 						<table class="grids data">
 							<tr>
-								<td class="head">Veri Kaynağı</td>
-								<td class="head">Bağlantı Durumu</td>
-								<td class="head">Veri Kullanılabilirliği</td>
+								<td class="head">Data Source</td>
+								<td class="head">Connection Status</td>
+								<td class="head">Availability</td>
 							</tr>
 							<tr>
 								<td id="usr" class="cell data">
@@ -309,7 +309,7 @@ if ($_POST)
 				<tr>
 					<td class="vncell"></td>
 					<td class="vtable">
-						<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
+						<input name="Submit" type="submit" class="btn btn-inverse" value="Save">
 					</td>
 				</tr>
 			</table>

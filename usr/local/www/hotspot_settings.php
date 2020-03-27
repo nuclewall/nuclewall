@@ -13,7 +13,7 @@ require('shaper.inc');
 require('captiveportal.inc');
 require('service-utils.inc');
 
-$pgtitle = array('SERVİSLER', 'HOTSPOT ', ' GENEL AYARLAR');
+$pgtitle = array('SERVICES ', 'HOTSPOT ', 'GENERAL SETTINGS');
 
 if (!is_array($config['captiveportal']))
 {
@@ -54,12 +54,12 @@ if ($_POST)
 
 	if ($_POST['timeout'] && (!is_numeric($_POST['timeout']) || ($_POST['timeout'] < 1)))
 	{
-		$input_errors[] = 'Aktif oturum süresi 1 dakikadan az olamaz.';
+		$input_errors[] = 'The timeout must be at least 1 minute.';
 	}
 
 	if ($_POST['idletimeout'] && (!is_numeric($_POST['idletimeout']) || ($_POST['idletimeout'] < 1)))
 	{
-		$input_errors[] = 'Aktif oturum süresi 1 dakikadan az olamaz.';
+		$input_errors[] = 'The idle timeout must be at least 1 minute.';
 	}
 
 	if (!$input_errors)
@@ -101,9 +101,9 @@ if ($_POST)
 		<td class='tabnavtbl'>
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Genel Ayarlar', true, 'hotspot_settings.php');
-				$tab_array[] = array('Harici Veri Kaynakları', false, 'hotspot_datasources.php');
-				$tab_array[] = array('Kullanıcı Karşılama Sayfası', false, 'hotspot_form_settings.php');
+				$tab_array[] = array('General Settings', true, 'hotspot_settings.php');
+				$tab_array[] = array('External Data Sources', false, 'hotspot_datasources.php');
+				$tab_array[] = array('User Welcome Page', false, 'hotspot_form_settings.php');
 				display_top_tabs($tab_array, true);
 			?>
 		</td>
@@ -112,16 +112,16 @@ if ($_POST)
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td valign="top" class="vncell">Aktif</td>
+					<td valign="top" class="vncell">Enabled</td>
 					<td class="vtable">
 						<label>
 						<input name="enable" type="checkbox" value="yes" <?php if ($pconfig['enable']) echo "checked"; ?>>
-						Hotspot'u aktifleştirmek için işaretleyin.
+						Enable Hotspot
 						</label>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Arayüz</td>
+					<td valign="top" class="vncell">Interface</td>
 					<td class="vtable">
 						<select name="cinterface[]" multiple="true" size="<?php echo count($config['interfaces']); ?>" id="cinterface">
 						  <?php
@@ -133,36 +133,39 @@ if ($_POST)
 							  </option>
 						  <?php endforeach; ?>
 						</select><br>
-						Hotspot'un aktif olacağı arayüzü seçin. Çoklu seçim yapabilirsiniz.
+						Select the interface(s) to enable for Hotspot
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Aktif Oturum Süresi<br>(dakika)</td>
+					<td valign="top" class="vncell">Idle Timeout</td>
 					<td class="vtable">
 						<input name="idletimeout" type="text"  id="idletimeout" size="6" value="<?=htmlspecialchars($pconfig['idletimeout']);?>">
-						<p>Oturum açmış olan hotspot kullanıcıların oturumu, burada belirtilen süre geçtikten sonra kapatılacaktır.
-						Yeniden oturum açıp kullanmaya devam edebilirler.</p>
-						<b>Not: </b>Aktif oturum süresi kullanmak istemiyorsanız bu alanı boş bırakın.
+						<p>
+						  Clients will be disconnected after this amount of inactivity.
+						  They may log in again immediately, though.<br>
+						  Leave this field blank for no idle timeout
+						</p>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Oturum Süresi<br>(dakika)</td>
+					<td valign="top" class="vncell">Hard Timeout</td>
 					<td class="vtable">
 						<input name="timeout" type="text"  id="timeout" size="6" value="<?=htmlspecialchars($pconfig['timeout']);?>">
-						<p>Burada belirtilen zaman dolduğunda, aktif oturum süresine bakılmaksızın tüm kullanıcıların oturumu kapatılacaktır.
-						Yeniden oturum açıp kullanmaya devam edebilirler.</p>
-						<b>Not: </b>Oturum süresi kullanmak istemiyorsanız bu alanı boş bırakın.
-						<br>Fakat, aktif oturum süresi kullanmıyorsanız bu alanı kullanmanız önerilir.
+						<p>
+						   Clients will be disconnected after this amount of time, regardless of activity.
+						   They may log in again immediately, though.<br>
+						   Leave this field blank for no hard timeout (not recommended unless an idle timeout is set)
+						</p>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">DNS trafiği</td>
+					<td valign="top" class="vncell">DNS Traffic</td>
 					<td class="vtable">
 						<label>
 						<input name="allow_dns" type="checkbox" value="yes" <?php if ($pconfig['allow_dns']) echo "checked"; ?>>
-						Harici DNS trafiğine izin ver.
-						<p>Hotspot'a oturum açmamış kullanıcıların harici DNS sunucularına erişmesine izin verir.
-						İzin verilmezse, harici DNS sunucu kullanan kullanıcılar HOTSPOT oturum açma sayfasına otomatik olarak yönlendirilmezler.
+						  Allow external DNS traffic.
+						<p>Allows not logged in users access to external DNS servers.
+						 If not, users who use custom DNS servers may not be redirected to Hotspot login page.
 						</p>
 						</label>
 					</td>
@@ -170,7 +173,7 @@ if ($_POST)
 				<tr>
 					<td class="vncell"></td>
 					<td class="vtable">
-						<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
+						<input name="Submit" type="submit" class="btn btn-inverse" value="Save">
 					</td>
 				</tr>
 			</table>

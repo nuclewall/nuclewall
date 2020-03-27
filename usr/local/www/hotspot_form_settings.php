@@ -9,7 +9,7 @@
 require('guiconfig.inc');
 require('hotspot.inc');
 
-$pgtitle = array('SERVİSLER', ' HOTSPOT ', ' KULLANICI KARŞILAMA SAYFASI');
+$pgtitle = array('SERVICES ', 'HOTSPOT ', 'USER WELCOME PAGE');
 
 if (!is_array($config['hotspot']))
 {
@@ -59,22 +59,22 @@ if ($_POST)
 	$pconfig = $_POST;
 
 	$reqdfields = split(" ", "company page_type");
-	$reqdfieldsn = array("İşletme Adı", "Sayfa Metinleri");
+	$reqdfieldsn = array("Company Name", "Page Text");
 
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 
 	if(strlen($_POST['company']) > 25)
-		$input_errors[] = 'İşletme adı en fazla 25 karakter olabilir.';
+		$input_errors[] = 'Company name must be shorter than 25 characters.';
 
     if (is_uploaded_file($_FILES['logo']['tmp_name']))
 	{
 		if(!getimagesize($_FILES['logo']['tmp_name']))
-			$input_errors[] = "'{$_FILES['logo']['name']}' dosyası bir görüntü dosyası değil.";
+			$input_errors[] = "'{$_FILES['logo']['name']}' is not a image file.";
 
 		$size = filesize($_FILES['logo']['tmp_name']);
 
 		if($size > 524288)
-			$input_errors[] = 'Logo boyutu en fazla 512 KB olabilir.';
+			$input_errors[] = 'Logo file size must be maximum 512 KB.';
 	}
 
 	$tr_enabled = isset($_POST['tr_enabled']);
@@ -85,77 +85,77 @@ if ($_POST)
 	if($_POST['page_type'] == "custom")
 	{
 		if(!$tr_enabled and !$en_enabled and !$de_enabled and !$ru_enabled)
-			$input_errors[] = 'Özel sayfa metinlerinde en az bir dil aktif edilmelidir.';
+			$input_errors[] = 'You have to enabled at least one language to use custom page texts.';
 
 		$default_enabled = $_POST['default_lang'] . "_enabled";
 
 		if(!${$default_enabled})
-			$input_errors[] = 'Varsayılan olarak seçilen dil aktif edilmemiş.';
+			$input_errors[] = 'The language you set default is not activated.';
 	}
 
 	if($tr_enabled)
 	{
 		$reqdfields = split(" ", "tr_title tr_uname tr_password tr_button");
-		$reqdfieldsn = array("Form başlığı(Türkçe)", "Kullanıcı adı alanı metni(Türkçe)", "Parola alanı metni(Türkçe)", "Giriş butonu metni(Türkçe)");
+		$reqdfieldsn = array("Form title(Turkish)", "Username field text(Turkish)", "Password field text(Turkish)", "Login button text(Turkish)");
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 	}
 
 	if(strlen($_POST['tr_title']) > 40)
-		$input_errors[] = 'Form başlığı en fazla 40 karakter olabilir.(Türkçe)';
+		$input_errors[] = 'Form title must be shorter than 40 characters.(Turkish)';
 	if(strlen($_POST['tr_uname']) > 20)
-		$input_errors[] = 'Kullanıcı adı alanı metni en fazla 20 karakter olabilir.(Türkçe)';
+		$input_errors[] = 'Username field text must be shorter than 20 characters.(Turkish)';
 	if(strlen($_POST['tr_password']) > 20)
-		$input_errors[] = 'Parola alanı metni en fazla 20 karakter olabilir.(Türkçe)';
+		$input_errors[] = 'Password field text must be shorter than 20 characters.(Turkish)';
 	if(strlen($_POST['tr_button']) > 15)
-		$input_errors[] = 'Giriş butonu metni en fazla 15 karakter olabilir.(Türkçe)';
+		$input_errors[] = 'Login button text must be shorter than 15 characters.(Turkish)';
 
 	if($en_enabled)
 	{
 		$reqdfields = split(" ", "en_title en_uname en_password en_button");
-		$reqdfieldsn = array("Form başlığı(İngilizce)", "Kullanıcı adı alanı metni(İngilizce)", "Parola alanı metni(İngilizce)", "Giriş butonu metni(İngilizce)");
+		$reqdfieldsn = array("Form title(English)", "Username field text(English)", "Password field text(English)", "Login button text(English)");
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 	}
 
 	if(strlen($_POST['en_title']) > 40)
-		$input_errors[] = 'Form başlığı en fazla 40 karakter olabilir.(İngilizce)';
+		$input_errors[] = 'Form title must be shorter than 40 characters.(English)';
 	if(strlen($_POST['en_uname']) > 20)
-		$input_errors[] = 'Kullanıcı adı alanı metni en fazla 20 karakter olabilir.(İngilizce)';
+		$input_errors[] = 'Username field text must be shorter than 20 characters.(English)';
 	if(strlen($_POST['en_password']) > 20)
-		$input_errors[] = 'Parola alanı metni en fazla 20 karakter olabilir.(İngilizce)';
+		$input_errors[] = 'Password field text must be shorter than 20 characters.(English)';
 	if(strlen($_POST['en_button']) > 15)
-		$input_errors[] = 'Giriş butonu metni en fazla 15 karakter olabilir.(İngilizce)';
+		$input_errors[] = 'Login button text must be shorter than 15 characters.(English)';
 
 	if($de_enabled)
 	{
 		$reqdfields = split(" ", "de_title de_uname de_password de_button");
-		$reqdfieldsn = array("Form başlığı(Almanca)", "Kullanıcı adı alanı metni(Almanca)", "Parola alanı metni(Almanca)", "Giriş butonu metni(Almanca)");
+		$reqdfieldsn = array("Form title(German)", "Username field text(German)", "Password field text(German)", "Login button text(German)");
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 	}
 
 	if(strlen($_POST['de_title']) > 40)
-		$input_errors[] = 'Form başlığı en fazla 40 karakter olabilir.(Almanca)';
+		$input_errors[] = 'Form title must be shorter than 40 characters.(German)';
 	if(strlen($_POST['de_uname']) > 20)
-		$input_errors[] = 'Kullanıcı adı alanı metni en fazla 20 karakter olabilir.(Almanca)';
+		$input_errors[] = 'Username field text must be shorter than 20 characters.(German)';
 	if(strlen($_POST['de_password']) > 20)
-		$input_errors[] = 'Parola alanı metni en fazla 20 karakter olabilir.(Almanca)';
+		$input_errors[] = 'Password field text must be shorter than 20 characters.(German)';
 	if(strlen($_POST['de_button']) > 15)
-		$input_errors[] = 'Giriş butonu metni en fazla 15 karakter olabilir.(Almanca)';
+		$input_errors[] = 'Login button text must be shorter than 15 characters.(German)';
 
 	if($ru_enabled)
 	{
 		$reqdfields = split(" ", "ru_title ru_uname ru_password ru_button");
-		$reqdfieldsn = array("Form başlığı(Rusça)", "Kullanıcı adı alanı metni(Rusça)", "Parola alanı metni(Rusça)", "Giriş butonu metni(Rusça)");
+		$reqdfieldsn = array("Form title(Russian)", "Username field text(Russian)", "Password field text(Russian)", "Login button text(Russian)");
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 	}
 
 	if(strlen($_POST['ru_title']) > 40)
-		$input_errors[] = 'Form başlığı en fazla 40 karakter olabilir.(Rusça)';
+		$input_errors[] = 'Form title must be shorter than 40 characters.(Russian)';
 	if(strlen($_POST['ru_uname']) > 20)
-		$input_errors[] = 'Kullanıcı adı alanı metni en fazla 20 karakter olabilir.(Rusça)';
+		$input_errors[] = 'Username field text must be shorter than 20 characters.(Russian)';
 	if(strlen($_POST['ru_password']) > 20)
-		$input_errors[] = 'Parola alanı metni en fazla 20 karakter olabilir.(Rusça)';
+		$input_errors[] = 'Password field text must be shorter than 20 characters.(Russian)';
 	if(strlen($_POST['ru_button']) > 15)
-		$input_errors[] = 'Giriş butonu metni en fazla 15 karakter olabilir.(Rusça)';
+		$input_errors[] = 'Login button text must be shorter than 15 characters.(Russian)';
 
 	if (!$input_errors)
 	{
@@ -206,12 +206,12 @@ if ($_POST)
 
 		else
 		{
-			$input_errors[] = 'Sayfalar oluşturulamadı';
+			$input_errors[] = 'Unable to create pages.';
 		}
 
 		initHtmlFiles();
 
-		$savemsg = 'Ayarlar başarıyla kaydedildi.';
+		$savemsg = 'The changes have been applied successfully.';
 	}
 }
 
@@ -230,9 +230,9 @@ if ($_POST)
 		<td class='tabnavtbl'>
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Genel Ayarlar', false, 'hotspot_settings.php');
-				$tab_array[] = array('Harici Veri Kaynakları', false, 'hotspot_datasources.php');
-				$tab_array[] = array('Kullanıcı Karşılama Sayfası', true, 'hotspot_form_settings.php');
+				$tab_array[] = array('General Settings', false, 'hotspot_settings.php');
+				$tab_array[] = array('External Data Sources', false, 'hotspot_datasources.php');
+				$tab_array[] = array('User Welcome Page', true, 'hotspot_form_settings.php');
 				display_top_tabs($tab_array, true);
 			?>
 		</td>
@@ -241,55 +241,55 @@ if ($_POST)
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td valign="top" class="vncell">Sayfaları göster</td>
+					<td valign="top" class="vncell">Show Pages</td>
 					<td class="vtable">
-						<a target="_blank" class="btn btn-link" href="hotspot.html">PC ve Tablet</a>
-						<a target="_blank" class="btn btn-link" href="hotspot_mobile.html">Mobil Cihaz</a>
+						<a target="_blank" class="btn btn-link" href="hotspot.html">PC and Tablet</a>
+						<a target="_blank" class="btn btn-link" href="hotspot_mobile.html">Mobile</a>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" class="listtopic">GENEL AYARLAR</td>
+					<td colspan="2" class="listtopic">GENERAL SETTINGS</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Varsayılan Dil</td>
+					<td valign="top" class="vncell">Default Language</td>
 					<td class="vtable">
 						<select id="default_lang" name="default_lang">
-							<option <?php if($pconfig['default_lang'] == "tr") echo "selected"; ?> value="tr">Türkçe</option>
-							<option <?php if($pconfig['default_lang'] == "en") echo "selected"; ?> value="en">İngilizce</option>
-							<option <?php if($pconfig['default_lang'] == "de") echo "selected"; ?> value="de">Almanca</option>
-							<option <?php if($pconfig['default_lang'] == "ru") echo "selected"; ?> value="ru">Rusça</option>
+							<option <?php if($pconfig['default_lang'] == "tr") echo "selected"; ?> value="tr">Turkish</option>
+							<option <?php if($pconfig['default_lang'] == "en") echo "selected"; ?> value="en">English</option>
+							<option <?php if($pconfig['default_lang'] == "de") echo "selected"; ?> value="de">German</option>
+							<option <?php if($pconfig['default_lang'] == "ru") echo "selected"; ?> value="ru">Russian</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Logo<br>(PC'ler için)</td>
+					<td valign="top" class="vncell">Logo<br>For PCs</td>
 					<td class="vtable">
 					<img width="90px" height="75px" class="thumbnail" src="pages/img/captiveportal-nuclewall?cache=<?php echo filemtime($pageTarget);?>">
 						<input style="margin-top:10px;" name="logo" type="file" id="logo">
 						<p>
-						<b>Not: </b>Logo dosyası boyutu en fazla 512 KB olabilir.<br>
-							Tavsiye edilen görüntü boyutu 120x100 pikseldir.
+						<b>Note: </b>Logo file size must be maximum 512 KB.<br>
+							Recommended image resolution is 120x100 pixels.
 						</p>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">İşletme Adı<br>(Mobil cihazlar İçin)</td>
+					<td valign="top" class="vncell">Company Name<br>(For mobile devices)</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['company'];?>" name="company" type="text" required id="company" maxlength="25" width="100">
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Sayfa Metinleri</td>
+					<td valign="top" class="vncell">Page Texts</td>
 					<td class="vtable">
 						<div class="form-inline">
 							<div class="controls-row">
 								<label class="radio inline">
 									<input <?php if($pconfig['page_type'] == "default") echo "checked"; ?> name="page_type" type="radio" value="default"/>
-									Varsayılan
+									Default
 								</label>
 								<label class="radio inline">
 									<input <?php if($pconfig['page_type'] == "custom") echo "checked"; ?> name="page_type" type="radio" value="custom"/>
-									Özel
+									Custom
 								</label>
 							</div>
 						</div>
@@ -297,177 +297,177 @@ if ($_POST)
 				</tr>
 				<tbody id="custom_pages">
 				<tr>
-					<td colspan="2" class="listtopic">ÖZEL SAYFA METİNLERİ</td>
+					<td colspan="2" class="listtopic">CUSTOM PAGE TEXTS</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Dil</td>
+					<td valign="top" class="vncell">Language</td>
 					<td class="vtable">
 						<div class="form-inline">
 							<div class="controls-row">
 								<label class="radio inline">
 									<input checked name="lang" type="radio" value="tr"/>
-									Türkçe
+									Turkish
 								</label>
 								<label class="radio inline">
 									<input name="lang" type="radio" value="en"/>
-									İngilizce
+									English
 								</label>
 								<label class="radio inline">
 									<input name="lang" type="radio" value="de"/>
-									Almanca
+									German
 								</label>
 								<label class="radio inline">
 									<input name="lang" type="radio" value="ru"/>
-									Rusça
+									Russian
 								</label>
 							</div>
 						</div>
 					</td>
 				</tr>
 				<tr name="row" id="text_tr">
-					<td valign="top" class="vncell">Türkçe</td>
+					<td valign="top" class="vncell">Turkish</td>
 					<td class="vtable">
 						<table>
 							<tr>
-								<td valign="top">Aktif</td>
+								<td valign="top">Enabled</td>
 								<td>
 								<input <?php if($pconfig['tr_enabled']) echo "checked"; ?> name="tr_enabled" type="checkbox">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Form başlığı</td>
+								<td valign="top">Form title</td>
 								<td>
-									<input value="<?=$pconfig['tr_title']; ?>" placeholder="'İnternet erişimi için giriş yapın' gibi." name="tr_title" type="text" id="tr_title" style="width:290px;" maxlength="40">
+									<input value="<?=$pconfig['tr_title']; ?>" placeholder="Ex. 'İnternet erişimi için giriş yapın'." name="tr_title" type="text" id="tr_title" style="width:290px;" maxlength="40">
 
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Kullanıcı adı alanı metni</td>
+								<td valign="top">Username field text</td>
 								<td>
-									<input value="<?=$pconfig['tr_uname']; ?>" placeholder="'Kullanıcı Adı', 'Oda No' gibi." name="tr_uname" type="text" id="tr_uname" maxlength="20">
+									<input value="<?=$pconfig['tr_uname']; ?>" placeholder="Ex. 'Username', 'Oda No'." name="tr_uname" type="text" id="tr_uname" maxlength="20">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Parola alanı metni</td>
+								<td valign="top">Password field text</td>
 								<td>
-									<input value="<?=$pconfig['tr_password']; ?>" placeholder="'Parola', 'TC Kimlik No' gibi." name="tr_password" type="text" id="tr_password" maxlength="20">
+									<input value="<?=$pconfig['tr_password']; ?>" placeholder="Ex. 'Password', 'TC Kimlik No'." name="tr_password" type="text" id="tr_password" maxlength="20">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Giriş butonu metni</td>
+								<td valign="top">Login button text</td>
 								<td>
-									<input value="<?=$pconfig['tr_button']; ?>" placeholder="'Giriş', 'Oturum Aç' gibi." name="tr_button" type="text" id="tr_button" maxlength="20">
+									<input value="<?=$pconfig['tr_button']; ?>" placeholder="Ex. 'Giriş', 'Oturum Aç'." name="tr_button" type="text" id="tr_button" maxlength="20">
 								</td>
 							</tr>
 						</table>
 					</td>
 				</tr>
 				<tr name="row" id="text_en">
-					<td valign="top" class="vncell">İngilizce</td>
+					<td valign="top" class="vncell">English</td>
 					<td class="vtable">
 						<table>
 							<tr>
-								<td valign="top">Aktif</td>
+								<td valign="top">Enabled</td>
 								<td>
 								<input <?php if($pconfig['en_enabled']) echo "checked"; ?> name="en_enabled" type="checkbox">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Form başlığı</td>
+								<td valign="top">Form title</td>
 								<td>
-									<input value="<?=$pconfig['en_title']; ?>" placeholder="'Log in to access the Internet' gibi." name="en_title" type="text" id="en_title" style="width:290px;" maxlength="40">
+									<input value="<?=$pconfig['en_title']; ?>" placeholder="Ex. 'Log in to access the Internet'." name="en_title" type="text" id="en_title" style="width:290px;" maxlength="40">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Kullanıcı adı alanı metni</td>
+								<td valign="top">Username field text</td>
 								<td>
-									<input value="<?=$pconfig['en_uname']; ?>" placeholder="'Username', 'Room Number' gibi." name="en_uname" type="text" id="en_uname" maxlength="20">
+									<input value="<?=$pconfig['en_uname']; ?>" placeholder="Ex. 'Username', 'Room Number'." name="en_uname" type="text" id="en_uname" maxlength="20">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Parola alanı metni</td>
+								<td valign="top">Password field text</td>
 								<td>
-									<input value="<?=$pconfig['en_password']; ?>" placeholder="'Password', 'Passport Number' gibi." name="en_password" type="text" id="en_password" maxlength="20">
+									<input value="<?=$pconfig['en_password']; ?>" placeholder="Ex. 'Password', 'Passport Number'." name="en_password" type="text" id="en_password" maxlength="20">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Giriş butonu metni</td>
+								<td valign="top">Login button text</td>
 								<td>
-									<input value="<?=$pconfig['en_button']; ?>" placeholder="'Log In' gibi." name="en_button" type="text" id="en_button" maxlength="20">
+									<input value="<?=$pconfig['en_button']; ?>" placeholder="'Log In'." name="en_button" type="text" id="en_button" maxlength="20">
 								</td>
 							</tr>
 						</table>
 					</td>
 				</tr>
 				<tr name="row" id="text_de">
-					<td valign="top" class="vncell">Almanca</td>
+					<td valign="top" class="vncell">German</td>
 					<td class="vtable">
 						<table>
 							<tr>
-								<td valign="top">Aktif</td>
+								<td valign="top">Enabled</td>
 								<td>
 								<input <?php if($pconfig['de_enabled']) echo "checked"; ?> name="de_enabled" type="checkbox">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Form başlığı</td>
+								<td valign="top">Form title</td>
 								<td>
-									<input value="<?=$pconfig['de_title']; ?>" placeholder="'Anmelden um auf das Internet zuzugreifen' gibi." name="de_title" type="text" id="de_title" style="width:290px;" maxlength="40">
+									<input value="<?=$pconfig['de_title']; ?>" placeholder="Ex. 'Anmelden um auf das Internet zuzugreifen'." name="de_title" type="text" id="de_title" style="width:290px;" maxlength="40">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Kullanıcı adı alanı metni</td>
+								<td valign="top">Username field text</td>
 								<td>
-									<input value="<?=$pconfig['de_uname']; ?>" placeholder="'Benutzername' gibi." name="de_uname" type="text" id="de_uname" maxlength="20">
+									<input value="<?=$pconfig['de_uname']; ?>" placeholder="Ex. 'Benutzername'." name="de_uname" type="text" id="de_uname" maxlength="20">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Parola alanı metni</td>
+								<td valign="top">Password field text</td>
 								<td>
-									<input value="<?=$pconfig['de_password']; ?>"  placeholder="'Passwort' gibi." name="de_password" type="text" id="de_password" maxlength="20">
+									<input value="<?=$pconfig['de_password']; ?>"  placeholder="Ex. 'Passwort'." name="de_password" type="text" id="de_password" maxlength="20">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Giriş butonu metni</td>
+								<td valign="top">Login button text</td>
 								<td>
-									<input value="<?=$pconfig['de_button']; ?>" placeholder="'Anmelden' gibi." name="de_button" type="text" id="de_button" maxlength="20">
+									<input value="<?=$pconfig['de_button']; ?>" placeholder="Ex. 'Anmelden'." name="de_button" type="text" id="de_button" maxlength="20">
 								</td>
 							</tr>
 						</table>
 					</td>
 				</tr>
 				<tr name="row" id="text_ru">
-					<td valign="top" class="vncell">Rusça</td>
+					<td valign="top" class="vncell">Russian</td>
 					<td class="vtable">
 						<table>
 							<tr>
-								<td valign="top">Aktif</td>
+								<td valign="top">Enabled</td>
 								<td>
 								<input <?php if($pconfig['ru_enabled']) echo "checked"; ?> name="ru_enabled" type="checkbox">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Form başlığı</td>
+								<td valign="top">Form Title</td>
 								<td>
-									<input value="<?=$pconfig['ru_title']; ?>" placeholder="' Логин для доступа в Интернет' gibi." name="ru_title" type="text" id="ru_title" style="width:290px;" maxlength="40">
+									<input value="<?=$pconfig['ru_title']; ?>" placeholder="Ex. 'Логин для доступа в Интернет'." name="ru_title" type="text" id="ru_title" style="width:290px;" maxlength="40">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Kullanıcı adı alanı metni</td>
+								<td valign="top">Username field text</td>
 								<td>
-									<input value="<?=$pconfig['ru_uname']; ?>"  placeholder="'Имя пользователя' gibi." name="ru_uname" type="text" id="ru_uname" maxlength="20">
+									<input value="<?=$pconfig['ru_uname']; ?>"  placeholder="Ex. 'Имя пользователя'." name="ru_uname" type="text" id="ru_uname" maxlength="20">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Parola alanı metni</td>
+								<td valign="top">Password field text</td>
 								<td>
-									<input value="<?=$pconfig['ru_password']; ?>"  placeholder="'Пароль' gibi." name="ru_password" type="text" id="ru_password" maxlength="20">
+									<input value="<?=$pconfig['ru_password']; ?>"  placeholder="Ex. 'Пароль'." name="ru_password" type="text" id="ru_password" maxlength="20">
 								</td>
 							</tr>
 							<tr>
-								<td valign="top">Giriş butonu metni</td>
+								<td valign="top">Login button text</td>
 								<td>
-									<input value="<?=$pconfig['ru_button']; ?>"  placeholder="'Вход' gibi." name="ru_button" type="text" id="ru_button" maxlength="20">
+									<input value="<?=$pconfig['ru_button']; ?>"  placeholder="Ex.'Вход'." name="ru_button" type="text" id="ru_button" maxlength="20">
 								</td>
 							</tr>
 						</table>
@@ -477,7 +477,7 @@ if ($_POST)
 				<tr>
 					<td class="vncell"></td>
 					<td class="vtable">
-						<input name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
+						<input name="Submit" type="submit" class="btn btn-inverse" value="Save">
 					</td>
 				</tr>
 			</table>

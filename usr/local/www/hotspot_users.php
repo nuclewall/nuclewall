@@ -10,7 +10,7 @@ require('guiconfig.inc');
 require('captiveportal.inc');
 require('local_connection.inc');
 
-$pgtitle = array('HOTSPOT ', 'YEREL KULLANICILAR');
+$pgtitle = array('HOTSPOT ', 'LOCAL USERS');
 
 /* Get active captiveportal sessions */
 if (file_exists("{$g['vardb_path']}/captiveportal.db"))
@@ -46,7 +46,7 @@ if ($connection)
 			$deluser->bindParam(':username', $username);
 			$deluser->execute();
 
-			/* Check user whether if logged in captiveportal */
+			/* Check user if it logged in captiveportal */
 			if(isset($cpcontents))
 			{
 				foreach ($cpcontents as $cpcontent)
@@ -61,7 +61,7 @@ if ($connection)
 					}
 				}
 
-				/* Logout the user from captiveportal */
+				/* Logout user from captiveportal */
 				if($ufound)
 					captiveportal_disconnect_client($usession);
 			}
@@ -75,15 +75,15 @@ if ($connection)
 			$delacct->bindParam(':username', $username);
 			$delacct->execute();
 
-			$savemsg = "'$username' kullanıcısı silindi.";
+			$savemsg = "User '$username' deleted.";
 		}
 		else
 		{
-			$input_errors[] = "'$username' kullanıcısı bulunamadı.";
+			$input_errors[] = "Unable to find user '$username'.";
 		}
 	}
 
-	/* Get user list */
+	/* Get users list */
 	$statement = $pdo->prepare("
 		SELECT username, description,
 		DATE_FORMAT(registration,'%d-%m-%Y %H:%i:%s') AS date,
@@ -111,11 +111,11 @@ if ($connection)
 		<td class="tabnavtbl">
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Aktif Oturumlar', false, 'hotspot_status.php');
-				$tab_array[] = array('Yerel Kullanıcılar', true, 'hotspot_users.php');
-				$tab_array[] = array('Özel İzinli MAC Adresleri', false, 'hotspot_macs.php');
-				$tab_array[] = array('Engellenmiş MAC Adresleri', false, 'hotspot_blocklist.php');
-				$tab_array[] = array('Oturum Hareketleri', false, 'hotspot_logs.php');
+				$tab_array[] = array('Sessions', false, 'hotspot_status.php');
+				$tab_array[] = array('Local Users', true, 'hotspot_users.php');
+				$tab_array[] = array('Allowed MAC Addresses', false, 'hotspot_macs.php');
+				$tab_array[] = array('Blocked MAC Addresses', false, 'hotspot_blocklist.php');
+				$tab_array[] = array('Audit Logs', false, 'hotspot_logs.php');
 				display_top_tabs($tab_array, true);
 			?>
 		</td>
@@ -127,20 +127,20 @@ if ($connection)
 					<td>
 						<?php if ($connection): ?>
 							<div style="margin-right: 10px;" class="pull-left">
-								<a class="btn" href="hotspot_user_edit.php?act=new"><i class="icon-user"></i>Yeni</a>
+								<a class="btn" href="hotspot_user_edit.php?act=new"><i class="icon-user"></i>New</a>
 							</div>
 							<div class="controls">
 								<div class="input-prepend">
 								  <span class="add-on"><i class="icon-search"></i></span>
-								  <input id="search" placeholder="Kullanıcı ara..." class="input-medium" style="height:20px" type="text">
+								  <input id="search" placeholder="Search user..." class="input-medium" style="height:20px" type="text">
 								</div>
 							</div>
 						<table class="grids sortable">
 							<tr>
-								<td class="head users">Hesap Adı</td>
-								<td class="head users">Son Değişiklik</td>
-								<td class="head users">Kullanıcı Türü</td>
-								<td class="head users">Açıklama</td>
+								<td class="head users">Account</td>
+								<td class="head users">Last Change</td>
+								<td class="head users">Account Type</td>
+								<td class="head users">Description</td>
 								<td class="head users"></td>
 							</tr>
 								<?php while (($result = $statement->fetch(PDO::FETCH_ASSOC)) !== false): ?>
@@ -151,19 +151,19 @@ if ($connection)
 								<td class="cell count">
 									<?php
 										if($simulaneous_use > 1)
-											echo "<span class='badge label-info'>" . "Grup ($simulaneous_use)" . "</span>";
+											echo "<span class='badge label-info'>" . "Group ($simulaneous_use)" . "</span>";
 										else if($simulaneous_use == 1)
-											echo "<span class='badge'>" . "Tekil" . "</span>";
+											echo "<span class='badge'>" . "Single" . "</span>";
 								        else
-											echo "Belirtilmedi";
+											echo "Not specified";
 									?>
 								</td>
 								<td class="cell description"><?=$result['description'];?></td>
 								<td class="cell tools">
-									<a title="Düzenle" href="hotspot_user_edit.php?act=edit&uname=<?=$result['username'];?>">
+									<a title="Edit" href="hotspot_user_edit.php?act=edit&uname=<?=$result['username'];?>">
 										<i class="icon-edit"></i>
 									</a>
-									<a title="Sil" href="hotspot_users.php?act=del&uname=<?=$result['username'];?>" onclick="return confirm('Bu kullanıcıyı silmek istediğinizden emin misiniz?.')">
+									<a title="Delete" href="hotspot_users.php?act=del&uname=<?=$result['username'];?>" onclick="return confirm('Do you want to delete this user?')">
 										<i class="icon-trash"></i>
 									</a>
 								</td>

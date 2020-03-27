@@ -10,7 +10,7 @@ require('guiconfig.inc');
 require('captiveportal.inc');
 require('local_connection.inc');
 
-$pgtitle = array('HOTSPOT ', 'MAC ADRESİ ENGELLE');
+$pgtitle = array('HOTSPOT ', 'BLOCK MAC ADDRESS');
 
 /* Get active captiveportal sessions */
 if (file_exists("{$g['vardb_path']}/captiveportal.db"))
@@ -43,7 +43,7 @@ if($connection)
 
 		if(!$macFound)
 		{
-			$input_errors[] = "'$mac_addr' MAC adresi bulunamadı.";
+			$input_errors[] = "Unable to find MAC Address '$mac_addr'.";
 		}
 	}
 
@@ -81,12 +81,12 @@ if($connection)
 
 		if(!is_mac($mac_addr))
 		{
-			$input_errors[] = "'$mac_addr' geçerli bir MAC adresi değil.";
+			$input_errors[] = "'$mac_addr' is not a valid MAC Address.";
 			$macError = true;
 		}
 
 		if(strlen($description) > 60)
-			$input_errors[] = 'Açıklama uzunluğu 60 karakteri geçmemelidir.';
+		$input_errors[] = 'Description must be shorter than 60 characters.';
 
 		if(!$macError)
 		{
@@ -104,7 +104,7 @@ if($connection)
 
 		if($macFound && $macFound['mac_addr'] != $currentmac)
 		{
-			$input_errors[] = "'$mac_addr' MAC adresi zaten engellenmiş.";
+			$input_errors[] = "MAC Address '$mac_addr' already blocked.";
 		}
 
 		if(!$input_errors)
@@ -140,7 +140,7 @@ if($connection)
 				}
 				else
 				{
-					$input_errors[] = 'MAC adresi güncellenemedi.';
+					$input_errors[] = 'Unable to block MAC Address.';
 				}
 			}
 			else
@@ -158,11 +158,11 @@ if($connection)
 
 				if($macCreated)
 				{
-					$savemsg = "'$mac_addr' MAC adresinin internete erişimi engellendi.";
+					$savemsg = "'$mac_addr' is blocked.";
 				}
 				else
 				{
-					$input_errors[] = "'$mac_addr' MAC adresi engellenemedi.";
+					$input_errors[] = "Unable to block '$mac_addr'.";
 				}
 			}
 		}
@@ -180,18 +180,18 @@ if($connection)
 <form action="hotspot_blocklist_edit.php" method="post" name="user_form" id="user_form">
 			<table class="tabcont"  cellpadding="0" cellspacing="0">
 			<tr>
-				<td colspan="2" valign="top" class="listtopic">MAC ADRESİ DÜZENLE</td>
+				<td colspan="2" valign="top" class="listtopic">BLOCK MAC ADDRESS</td>
 			</tr>
 			<tr>
-				<td valign="top" class="vncell">MAC Adresi</td>
+				<td valign="top" class="vncell">MAC Address</td>
 				<td class="vtable">
 					<input value="<?=$macFound['mac'];?>" class="span3" name="mac_addr"  type="text" required pattern="([0-9A-Fa-f]{2}[-]){5}([0-9A-Fa-f]{2})"  id="mac_addr" form="user_form" tabindex="1" maxlength="20">
-					<br><i>MAC adresi '01-23-45-67-89-ab' formatında olmalıdır.</i>
+					<br><i>Valid MAC Address format: '01-23-45-67-89-ab'</i>
 					<input value="<?=$mac_addr;?>" name="currentmac"  type="hidden" pattern="([0-9A-Fa-f]{2}[-]){5}([0-9A-Fa-f]{2})"  id="mac_addr" form="user_form">
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="vncell">Engelleme Nedeni</td>
+				<td valign="top" class="vncell">Description</td>
 				<td class="vtable">
 					<textarea class="span3" name="description" maxlength="60" id="description" form="user_form" tabindex="2"><?=$macFound['description'];?></textarea>
 				</td>
@@ -199,8 +199,8 @@ if($connection)
 			<tr>
 				<td class="vncell"></td>
 				<td class="vtable">
-					<input class="btn btn-danger" name="button" type="submit" id="button" form="user_form" tabindex="3" value="Engelle">
-					<a tabindex="4" href="hotspot_blocklist.php" class="btn btn-link">Engellenmiş MAC Adresleri</a>
+					<input class="btn btn-danger" name="button" type="submit" id="button" form="user_form" tabindex="3" value="Block">
+					<a tabindex="4" href="hotspot_blocklist.php" class="btn btn-link">Blocked MAC Addresses</a>
 				</td>
 			</tr>
 		</table>

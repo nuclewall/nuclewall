@@ -58,7 +58,7 @@ else
 
 $concurrent = count($cpcontents);
 
-$pgtitle = array("HOTSPOT : AKTİF OTURUMLAR ({$concurrent})");
+$pgtitle = array("HOTSPOT : SESSIONS ({$concurrent})");
 
 ?>
 
@@ -95,11 +95,11 @@ foreach ($cpcontents as $cpcontent)
 		<td class='tabnavtbl'>
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Aktif Oturumlar', true, 'hotspot_status.php');
-				$tab_array[] = array('Yerel Kullanıcılar', false, 'hotspot_users.php');
-				$tab_array[] = array('Özel İzinli MAC Adresleri', false, 'hotspot_macs.php');
-				$tab_array[] = array('Engellenmiş MAC Adresleri', false, 'hotspot_blocklist.php');
-				$tab_array[] = array('Oturum Hareketleri', false, 'hotspot_logs.php');
+				$tab_array[] = array('Sessions', true, 'hotspot_status.php');
+				$tab_array[] = array('Local Users', false, 'hotspot_users.php');
+				$tab_array[] = array('Allowed MAC Addresses', false, 'hotspot_macs.php');
+				$tab_array[] = array('Blocked MAC Addresses', false, 'hotspot_blocklist.php');
+				$tab_array[] = array('Audit Logs', false, 'hotspot_logs.php');
 				display_top_tabs($tab_array, true);
 			?>
 		</td>
@@ -112,21 +112,21 @@ foreach ($cpcontents as $cpcontent)
 						<div class="controls">
 							<div class="input-prepend">
 								<span class="add-on"><i class="icon-search"></i></span>
-								<input id="search" placeholder="IP, MAC veya kullanıcı adı ara" class="input-medium" style="height:20px; width: 210px; margin-right: 20px;" type="text">
+								<input id="search" placeholder="Search IP, MAC or Account" class="input-medium" style="height:20px; width: 210px; margin-right: 20px;" type="text">
 							</div>
-							<span>Veri kaynağına göre göster:</span>
-							<button id="btn-all" class="btn btn-danger btn-mini">Hepsi</button>
-							<button id="btn-local" class="btn btn-info btn-mini">Yerel</button>
-							<button id="btn-external" class="btn btn-mini">Harici</button>
-							<button id="btn-mac" class="btn btn-success btn-mini">Özel İzinli MAC Ad.</button>
+							<span>Filter by data source:</span>
+							<button id="btn-all" class="btn btn-danger btn-mini">All</button>
+							<button id="btn-local" class="btn btn-info btn-mini">Local</button>
+							<button id="btn-external" class="btn btn-mini">External</button>
+							<button id="btn-mac" class="btn btn-success btn-mini">Allowed Mac Add.</button>
 						</div>
 						<table class="grids sortable">
 							<tr>
-								<td class="head">IP Adresi</td>
-								<td class="head">MAC Adresi</td>
-								<td class="head">Kullanıcı Adı</td>
-								<td class="head">Oturum Açılışı</td>
-								<td class="head">Son Etkinlik</td>
+								<td class="head">IP Address</td>
+								<td class="head">MAC Address</td>
+								<td class="head">Account Name</td>
+								<td class="head">Session Start</td>
+								<td class="head">Last Activity</td>
 								<td class="head"></td>
 							</tr>
 							<?php foreach ($cpdb as $sid => $cpent): ?>
@@ -137,18 +137,18 @@ foreach ($cpcontents as $cpcontent)
 								<td class="cell dhcpdate"><?php echo strftime("%d-%m-%Y %H:%M", $cpent[0]);?></td>
 								<td class="cell dhcpdate"><?php if ($cpent[5]) echo strftime("%d-%m-%Y %H:%M", $cpent[5]);?></td>
 								<td class="cell tools hotspot">
-									<a title="Oturumu kapat" href="hotspot_status.php?act=del&id=<?=$sid;?>" onclick="return confirm('Bu kullanıcının oturumu kapatılsın mı?')">
+									<a title="Logout" href="hotspot_status.php?act=del&id=<?=$sid;?>" onclick="return confirm('Do you want to end this user session?')">
 										<i class="icon-user"></i>
 									</a>
 									<?php if($cpent[10] == 'label-success'): ?>
-									<a title="Özel izinli MAC adreslerinden kaldır" href="hotspot_macs.php?act=del&mac=<?=$cpent[3];?>" onclick="return confirm('Özel izinli MAC adresleri listesinden kaldır?')">
+									<a title="Remove from allowed MAC addresses list" href="hotspot_macs.php?act=del&mac=<?=$cpent[3];?>" onclick="return confirm('Do you want to remove this from allowed MAC addresses list?')">
 										<i class="icon-trash"></i>
 									</a>
 									<?php else: ?>
-									<a title="MAC adresini engelle" href="hotspot_blocklist_edit.php?act=new&mac=<?=$cpent[3];?>">
+									<a title="Block MAC address" href="hotspot_blocklist_edit.php?act=new&mac=<?=$cpent[3];?>">
 										<i class="icon-ban-circle"></i>
 									</a>
-									<a title="Özel izinli MAC adresleri listesine ekle" href="hotspot_mac_edit.php?act=new&mac=<?=$cpent[3];?>">
+									<a title="Add to allowed MAC addresses list" href="hotspot_mac_edit.php?act=new&mac=<?=$cpent[3];?>">
 										<i class="icon-check"></i>
 									</a>
 									<?php endif; ?>

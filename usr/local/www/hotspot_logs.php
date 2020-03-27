@@ -32,8 +32,6 @@
 
 require('guiconfig.inc');
 
-setlocale(LC_ALL, 'tr_TR.ISO8859-9');
-
 $portal_logfile = "{$g['varlog_path']}/portalauth.log";
 
 $nentries = $config['syslog']['nentries'];
@@ -49,25 +47,25 @@ if ($_POST['filtertext'])
 if ($filtertext)
 	$filtertextmeta="?filtertext=$filtertext";
 
-$pgtitle = array('HOTSPOT ', 'OTURUM HAREKETLER�');
+$pgtitle = array('HOTSPOT ', 'AUDIT LOGS');
 
 ?>
 
-<?php include('headansi.inc'); ?>
+<?php include('head.inc'); ?>
 </head>
 <body>
-<?php include('fbeginansi.inc'); ?>
+<?php include('fbegin.inc'); ?>
 
 <table cellpadding="0" cellspacing="0">
 	<tr>
 		<td>
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Aktif Oturumlar', false, 'hotspot_status.php');
-				$tab_array[] = array('Yerel Kullan�c�lar', false, 'hotspot_users.php');
-				$tab_array[] = array('�zel �zinli MAC Adresleri', false, 'hotspot_macs.php');
-				$tab_array[] = array('Engellenmi� MAC Adresleri', false, 'hotspot_blocklist.php');
-				$tab_array[] = array('Oturum Hareketleri', true, 'hotspot_logs.php');
+				$tab_array[] = array('Sessions', false, 'hotspot_status.php');
+				$tab_array[] = array('Local Users', false, 'hotspot_users.php');
+				$tab_array[] = array('Allowed MAC Addresses', false, 'hotspot_macs.php');
+				$tab_array[] = array('Blocked MAC Addresses', false, 'hotspot_blocklist.php');
+				$tab_array[] = array('Audit Logs', true, 'hotspot_logs.php');
 				display_top_tabs($tab_array);
 			?>
 		</td>
@@ -78,22 +76,22 @@ $pgtitle = array('HOTSPOT ', 'OTURUM HAREKETLER�');
 				<tr>
 					<td>
 						<div style="margin-right: 10px;" class="pull-left">
-							<a onclick="return confirm('T�m hotspot olay g�nl�klerini silmek istedi�inizden emin misiniz?.')" class="btn" href="hotspot_logs.php?act=del">
-							<i class="icon-trash"></i>Sil</a>
+							<a onclick="return confirm('Do you want to delete all Hotspot audit logs?.')" class="btn" href="hotspot_logs.php?act=del">
+							<i class="icon-trash"></i>Delete</a>
 						</div>
 
 						<form class="form-search" id="clearform" name="clearform" action="hotspot_logs.php" method="post">
 							<input style="height:20px" type="text" id="filtertext" name="filtertext" value="<?=$filtertext;?>" class="input-medium">
-							<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Ara</button>
+							<button id="filtersubmit" name="filtersubmit" type="submit" class="btn"><i class="icon-search"></i>Search</button>
 						</form>
 
 						<table class="grids" width="100%">
 							<tr>
 								<td class="head">
-									Tarih
+									Date
 								</td>
 								<td class="head">
-									Eylem
+									Log
 								</td>
 							</tr>
 								<?php

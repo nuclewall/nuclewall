@@ -10,7 +10,7 @@ require('guiconfig.inc');
 require('captiveportal.inc');
 require('local_connection.inc');
 
-$pgtitle = array('HOTSPOT ', 'ÖZEL İZİNLİ MAC ADRESLERİ');
+$pgtitle = array('HOTSPOT ', 'ALLOWED MAC ADDRESSES');
 
 /* Get active captiveportal sessions */
 if (file_exists("{$g['vardb_path']}/captiveportal.db"))
@@ -46,7 +46,7 @@ if ($connection)
 			$delmac->bindParam(':mac', $mac_addr);
 			$delmac->execute();
 
-			/* Check user whether if logged in captiveportal */
+			/* Check user if logged in captiveportal */
 			if(isset($cpcontents))
 			{
 				foreach ($cpcontents as $cpcontent)
@@ -75,12 +75,12 @@ if ($connection)
 			$delacct->bindParam(':mac', $mac_addr);
 			$delacct->execute();
 
-			$savemsg = "'$mac_addr' MAC adresi silindi.";
+			$savemsg = "Deleted MAC Address '$mac_addr'.";
 		}
 
 		else
 		{
-			$input_errors[] = "'$mac_addr' MAC adresi bulunamadı.";
+			$input_errors[] = "Unable to find MAC Address '$mac_addr'.";
 		}
 	}
 
@@ -109,11 +109,11 @@ if ($connection)
 		<td class="tabnavtbl">
 			<?php
 				$tab_array = array();
-				$tab_array[] = array('Aktif Oturumlar', false, 'hotspot_status.php');
-				$tab_array[] = array('Yerel Kullanıcılar', false, 'hotspot_users.php');
-				$tab_array[] = array('Özel İzinli MAC Adresleri', true, 'hotspot_macs.php');
-				$tab_array[] = array('Engellenmiş MAC Adresleri', false, 'hotspot_blocklist.php');
-				$tab_array[] = array('Oturum Hareketleri', false, 'hotspot_logs.php');
+				$tab_array[] = array('Sessions', false, 'hotspot_status.php');
+				$tab_array[] = array('Local Users', false, 'hotspot_users.php');
+				$tab_array[] = array('Allowed MAC Addresses', true, 'hotspot_macs.php');
+				$tab_array[] = array('Blocked MAC Addresses', false, 'hotspot_blocklist.php');
+				$tab_array[] = array('Audit Logs', false, 'hotspot_logs.php');
 				display_top_tabs($tab_array, true);
 			?>
 		</td>
@@ -125,21 +125,21 @@ if ($connection)
 					<td>
 						<?php if ($connection): ?>
 							<div style="margin-right: 10px;" class="pull-left">
-								<a class="btn" href="hotspot_mac_edit.php?act=new"><i class="icon-ok-circle"></i>Yeni</a>
+								<a class="btn" href="hotspot_mac_edit.php?act=new"><i class="icon-ok-circle"></i>New</a>
 							</div>
 
 							<div class="controls">
 								<div class="input-prepend">
 								  <span class="add-on"><i class="icon-search"></i></span>
-								  <input id="search" placeholder="MAC adresi ara..." class="input-medium" style="height:20px" type="text">
+								  <input id="search" placeholder="Search MAC Address..." class="input-medium" style="height:20px" type="text">
 								</div>
 							</div>
 
 						<table class="grids sortable">
 							<tr>
-								<td class="head users">MAC Adresi</td>
-								<td class="head users">Son Değişiklik</td>
-								<td class="head users">Açıklama</td>
+								<td class="head users">MAC Address</td>
+								<td class="head users">Last Change</td>
+								<td class="head users">Description</td>
 								<td class="head users"></td>
 							</tr>
 								<?php while (($result = $statement->fetch(PDO::FETCH_ASSOC)) !== false): ?>
@@ -149,10 +149,10 @@ if ($connection)
 
 								<td class="cell description"><?=$result['description'];?></td>
 								<td class="cell tools">
-									<a title="Düzenle" href="hotspot_mac_edit.php?act=edit&mac=<?=$result['mac'];?>">
+									<a title="Edit" href="hotspot_mac_edit.php?act=edit&mac=<?=$result['mac'];?>">
 										<i class="icon-edit"></i>
 									</a>
-									<a title="Sil" href="hotspot_macs.php?act=del&mac=<?=$result['mac'];?>" onclick="return confirm('Bu MAC adresini silmek istediğinizden emin misiniz?.')">
+									<a title="Delete" href="hotspot_macs.php?act=del&mac=<?=$result['mac'];?>" onclick="return confirm('Do you want to delete this MAC Address?')">
 										<i class="icon-trash"></i>
 									</a>
 								</td>

@@ -10,7 +10,7 @@ require('guiconfig.inc');
 require('captiveportal.inc');
 require('local_connection.inc');
 
-$pgtitle = array('HOTSPOT ', 'KULLANICI DÜZENLE');
+$pgtitle = array('HOTSPOT ', 'EDIT USER');
 
 /* Get active captiveportal sessions */
 if (file_exists("{$g['vardb_path']}/captiveportal.db"))
@@ -51,7 +51,7 @@ if($connection)
 		}
 		else
 		{
-			$input_errors[] = "'$username' kullanıcısı bulunamadı.";
+			$input_errors[] = "Unable to find user '$username'.";
 		}
 	}
 
@@ -73,45 +73,45 @@ if($connection)
 		if (empty($currentuser) or $_GET['act'] == 'new')
 		{
 			$reqdfields = explode(" ", "username password password_again usercount");
-			$reqdfieldsn = array('Kullanıcı Adı', 'Parola', 'Parola Tekrarı', 'Kullanıcı Sayısı');
+			$reqdfieldsn = array('Username', 'Password', 'Password Again', 'Simultaneous Session Count');
 		}
 		else
 		{
 			$reqdfields = explode(" ", "username", "usercount");
-			$reqdfieldsn = array('Kullanıcı Adı', 'Kullanıcı Sayısı');
+			$reqdfieldsn = array('Username', 'Simultaneous Session');
 		}
 
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 
 		if(preg_match('/[^a-zA-Z0-9_.-]/', $username))
 		{
-			$input_errors[] = "Kullanıcı adı sadece 'a-z', 'A-Z', '0-9', '_', '.', '-' karakterlerinden oluşabilir.";
+			$input_errors[] = "Account Name can be consist of 'a-z', 'A-Z', '0-9', '_', '.', '-' characters only.";
 			$unameError = true;
 		}
 
 		if(strlen($username) > 12 || strlen($username) < 3)
 		{
-			$input_errors[] = "Kullanıcı adı uzunluğu 3-12 karakter arasında olmalıdır.";
+			$input_errors[] = "Account name must be between 3-12 characters.";
 			$unameError = true;
 		}
 
 		if($usercount_num > 500 || $usercount_num < 1)
-			$input_errors[] = "Grup sayısı 1-500 aralığında bir değer olmalıdır.";
+			$input_errors[] = "Simultaneous Session Count must be between 1-500.";
 
 		if(!empty($password) and !empty($password_again))
 		{
 			if(preg_match('/[^a-zA-Z0-9_.-@<>!]/', $password))
-				$input_errors[] = "Parola 'a-z', 'A-Z', '0-9', '_', '.', '-', '<', '>', '@', '!' karakterlerinden oluşabilir.";
+				$input_errors[] = "Password can be consist of 'a-z', 'A-Z', '0-9', '_', '.', '-', '<', '>', '@', '!' characters only.";
 
 			if(strlen($password) > 15 || strlen($password) < 6)
-				$input_errors[] = 'Parola uzunluğu 6-15 karakter arasında olmalıdır.';
+				$input_errors[] = 'Password length must be between 6-15 characters.';
 
 			if($password != $password_again)
-				$input_errors[] = 'Parolalar uyuşmuyor.';
+				$input_errors[] = "Passwords dont't match.";
 		}
 
 		if(strlen($description) > 60)
-			$input_errors[] = 'Açıklama uzunluğu 60 karakteri geçmemelidir.';
+			$input_errors[] = 'Description must be shorter than 60 characters.';
 
 		if(!$unameError)
 		{
@@ -129,7 +129,7 @@ if($connection)
 
 		if($userFound && $userFound['username'] != $currentuser)
 		{
-			$input_errors[] = "'$username' adında bir kullanıcı zaten var.";
+			$input_errors[] = "User '$username' already exists.";
 		}
 
 		if(!$input_errors)
@@ -215,7 +215,7 @@ if($connection)
 				}
 				else
 				{
-					$input_errors[] = 'Kullanıcı güncellenemedi.';
+					$input_errors[] = 'Unable to update user.';
 				}
 			}
 
@@ -246,11 +246,11 @@ if($connection)
 
 				if($userCreated && $countCreated)
 				{
-					$savemsg = "'$username' kullanıcısı başarıyla oluşturuldu.";
+					$savemsg = "'$username' user created.";
 				}
 				else
 				{
-					$input_errors[] = "'$username' kullanıcısı oluşturulamadı.";
+					$input_errors[] = "Unable to create user '$username'.";
 				}
 			}
 		}
@@ -270,35 +270,35 @@ if($connection)
 <form action="hotspot_user_edit.php" method="post" name="user_form" id="user_form">
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 			<tr>
-				<td colspan="2" valign="top" class="listtopic">YEREL KULLANICI DÜZENLE</td>
+				<td colspan="2" valign="top" class="listtopic">EDIT LOCAL USER</td>
 			</tr>
 			<tr>
-				<td valign="top" class="vncell">Hesap Adı</td>
+				<td valign="top" class="vncell">Account Name</td>
 				<td class="vtable">
 					<input value="<?=$user['username'];?>" class="span3" name="username"  type="text" required pattern="[a-zA-Z0-9_.-]{3,12}"  id="username" form="user_form" tabindex="1" maxlength="12">
 					<input value="<?=$_GET['uname'];?>" name="currentuser"  type="hidden" pattern="[a-zA-Z0-9_.-]{3,12}"  id="currentuser">
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="vncell">Kullanıcı Sayısı</td>
+				<td valign="top" class="vncell">Simultaneous Session Count</td>
 				<td class="vtable">
 					<input value="<?php if($count['value']) echo $count['value']; else echo '1';?>" class="span1" name="usercount" type="number"  required id="usercount" form="user_form" max="500" min="1" step="1" tabindex="2">
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="vncell">Parola</td>
+				<td valign="top" class="vncell">Password</td>
 				<td class="vtable">
 					<input <?php if($_GET['act'] == 'new') echo 'required';?> name="password" type="password" pattern="[a-zA-Z0-9_.-@<>!]{6,15}" id="password" form="user_form" tabindex="3" maxlength="15">
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="vncell">Parola Tekrarı</td>
+				<td valign="top" class="vncell">Password Again</td>
 				<td class="vtable">
 					<input <?php if($_GET['act'] == 'new') echo 'required';?> name="password_again" type="password" pattern="[a-zA-Z0-9_.-@<>!]{6,20}" id="password_again" form="user_form" tabindex="4" maxlength="20">
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="vncell">Açıklama</td>
+				<td valign="top" class="vncell">Description</td>
 				<td class="vtable">
 					<textarea class="span3" name="description" maxlength="60" id="description" form="user_form" tabindex="5"><?=$user['description'];?></textarea>
 				</td>
@@ -306,8 +306,8 @@ if($connection)
 			<tr>
 				<td class="vncell"></td>
 				<td class="vtable">
-					<input class="btn btn-inverse" name="button" type="submit" id="button" form="user_form" tabindex="6" value="Kaydet">
-					<a tabindex="7" href="hotspot_users.php" class="btn btn-link">Yerel Kullanıcılar</a>
+					<input class="btn btn-inverse" name="button" type="submit" id="button" form="user_form" tabindex="6" value="Save">
+					<a tabindex="7" href="hotspot_users.php" class="btn btn-link">Local Users</a>
 				</td>
 			</tr>
 		</table>

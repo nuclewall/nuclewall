@@ -8,7 +8,7 @@
 
 require('guiconfig.inc');
 
-$pgtitle = array('HOTSPOT ', 'HARİCİ VERİ KAYNAKLARI ', ' MICROSOFT SQL SERVER');
+$pgtitle = array('HOTSPOT ', 'EXTERNAL DATA SOURCES ', 'MICROSOFT SQL SERVER');
 
 if (!is_array($config['datasources']['sqlserver']))
 {
@@ -33,18 +33,18 @@ if ($_POST)
 
 	if($datasource == "sqlserver")
 	{
-		$input_errors[] = "Microsoft SQL Server veri kaynağı şu anda kullanımda olduğu için değişiklik yapılamıyor.
-		Değişiklik yapabilmek için, 'Harici Veri Kaynakları' sayfasındaki 'Aktif Veri Kaynağı' seçeneğini 'Hiçbiri' olarak değiştirin.";
+		$input_errors[] = "Microsoft SQL Server data source is in use now.
+		Disable it from 'External Data Sources' page to change parameters.";
 	}
 
 	if (!empty($_POST['hostname']) && !is_hostname($_POST['hostname']))
 	{
-		$input_errors[] = 'Geçerli bir sunucu adı girmelisiniz.';
+		$input_errors[] = 'A valid hostname must be specified.';
 	}
 
 	if (!is_port($_POST['port']))
 	{
-		$input_errors[] = 'Geçerli bir port numarası girmelisiniz.';
+		$input_errors[] = 'A valid port number must be specified.';
 	}
 
 	if (!$input_errors)
@@ -60,7 +60,7 @@ if ($_POST)
 
 		write_config();
 
-		$savemsg = 'Değişiklikler başarıyla kaydedildi.';
+		$savemsg = 'The changes have been applied successfully.';
 
 	}
 }
@@ -81,62 +81,60 @@ if ($_POST)
 		<td>
 			<table class="tabcont" cellpadding="0" cellspacing="0">
 				<tr>
-					<td colspan="2" class="listtopic">Microsoft SQL Server VERİTABANI BAĞLANTI AYARLARI</td>
+					<td colspan="2" class="listtopic">Microsoft SQL Server CONNECTION SETTINGS</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Sunucu Adı</td>
+					<td valign="top" class="vncell">Hostname</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['hostname'];?>" name="hostname" type="text" id="hostname" tabindex="1" maxlength="40"><br>
-						SQL Server veritabanının kurulu olduğu sunucunun adını(hostname), tam adını(fqdn) veya IP adresini girin.
+						Hostname or IP address of SQL Server instance.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Port Numarası</td>
+					<td valign="top" class="vncell">Port Number</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['port'];?>" name="port" type="number" id="port" max="65535" min="1" step="1" tabindex="2"><br>
-						SQL Server veritabanının hizmet verdiği port numarasını girin. Varsayılan port numarası <b>1433</b>'dir.
+						Port number of SQL Server instance. Default is <b>1433</b>.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Kullanıcı Adı</td>
+					<td valign="top" class="vncell">Username</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['dbusername'];?>" name="dbusername" type="text" id="dbusername" tabindex="3" maxlength="128"><br>
-						Veritabanı kullanıcı adını girin.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Parola</td>
+					<td valign="top" class="vncell">Password</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['dbpassword'];?>" name="dbpassword" type="password" id="dbpassword" tabindex="4" maxlength="128"><br>
-						Veritabanı parolasını girin.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Veritabanı Adı</td>
+					<td valign="top" class="vncell">Database Name</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['database_name'];?>" name="database_name" type="text" id="database_name" tabindex="5" maxlength="128"><br>
 						Kullanıcı sorgulamasının yapılacağı veritabanı adını girin.
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" class="listtopic">VERİ KAYNAĞI AYARLARI</td>
+					<td colspan="2" class="listtopic">DATA SOURCE SETTINGS</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Tablo Adı</td>
+					<td valign="top" class="vncell">Table Name</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['table_name'];?>" name="table_name" type="text" id="table_name" tabindex="6" maxlength="128"><br>
 						Kullanıcı sorgulamasının yapılacağı tablo adını girin.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Kullanıcı Adı Alanı</td>
+					<td valign="top" class="vncell">Username Field</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['username_field'];?>" name="username_field" type="text" id="username_field" tabindex="7" maxlength="128"><br>
 						Hotspot kullanıcı sorgulamasında kullanıcı adı olarak sorgulanmasını istediğiniz tablo alanının adını girin.
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" class="vncell">Parola Alanı</td>
+					<td valign="top" class="vncell">Password Field</td>
 					<td class="vtable">
 						<input value="<?=$pconfig['password_field'];?>"  name="password_field" type="text" id="password_field" tabindex="8"><br>
 						Hotspot kullanıcı sorgulamasında parola olarak sorgulanmasını istediğiniz tablo alanının adını girin.
@@ -145,8 +143,8 @@ if ($_POST)
 				<tr>
 					<td class="vncell"></td>
 					<td class="vtable">
-						<input tabindex="9" name="Submit" type="submit" class="btn btn-inverse" value="Kaydet">
-						<a tabindex="10" href="hotspot_datasources.php" class="btn">Geri</a>
+						<input tabindex="9" name="Submit" type="submit" class="btn btn-inverse" value="Save">
+						<a tabindex="10" href="hotspot_datasources.php" class="btn">Back</a>
 					</td>
 				</tr>
 			</table>
