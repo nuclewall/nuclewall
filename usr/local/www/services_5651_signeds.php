@@ -10,7 +10,7 @@
 require('config.inc');
 require('guiconfig.inc');
 
-$pgtitle = array('5651: LOCALLY SIGNED FILES');
+$pgtitle = array('5651: SIGNED FILES(LOCAL)');
 
 $today = date('dmY');
 ?>

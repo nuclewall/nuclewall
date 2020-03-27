@@ -671,7 +671,7 @@
 				<proxy_port>3128</proxy_port>
 				<visible_hostname>nuclewall</visible_hostname>
 				<admin_email>admin@nuclewall</admin_email>
-				<error_language>Turkish</error_language>
+				<error_language>English</error_language>
 				<custom_options>tcp_outgoing_address 127.0.0.1</custom_options>
 			</config>
 		</squid>

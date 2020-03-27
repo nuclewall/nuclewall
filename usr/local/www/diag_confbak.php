@@ -63,7 +63,7 @@ if($_GET['getcfg'] != "") {
 	exit;
 }
 
-if (($_GET['diff'] == 'Fark') && isset($_GET['oldtime']) && isset($_GET['newtime'])
+if (($_GET['diff'] == 'Diff') && isset($_GET['oldtime']) && isset($_GET['newtime'])
       && is_numeric($_GET['oldtime']) && (is_numeric($_GET['newtime']) || ($_GET['newtime'] == 'current'))) {
 	$diff = "";
 	$oldfile = $g['conf_path'] . '/backup/config-' . $_GET['oldtime'] . '.xml';

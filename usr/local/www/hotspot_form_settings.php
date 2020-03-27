@@ -85,7 +85,7 @@ if ($_POST)
 	if($_POST['page_type'] == "custom")
 	{
 		if(!$tr_enabled and !$en_enabled and !$de_enabled and !$ru_enabled)
-			$input_errors[] = 'You have to enabled at least one language to use custom page texts.';
+			$input_errors[] = 'You have to enable at least one language to use custom page texts.';
 
 		$default_enabled = $_POST['default_lang'] . "_enabled";
 
@@ -254,8 +254,8 @@ if ($_POST)
 					<td valign="top" class="vncell">Default Language</td>
 					<td class="vtable">
 						<select id="default_lang" name="default_lang">
+						    <option <?php if($pconfig['default_lang'] == "en") echo "selected"; ?> value="en">English</option>
 							<option <?php if($pconfig['default_lang'] == "tr") echo "selected"; ?> value="tr">Turkish</option>
-							<option <?php if($pconfig['default_lang'] == "en") echo "selected"; ?> value="en">English</option>
 							<option <?php if($pconfig['default_lang'] == "de") echo "selected"; ?> value="de">German</option>
 							<option <?php if($pconfig['default_lang'] == "ru") echo "selected"; ?> value="ru">Russian</option>
 						</select>
@@ -305,12 +305,12 @@ if ($_POST)
 						<div class="form-inline">
 							<div class="controls-row">
 								<label class="radio inline">
-									<input checked name="lang" type="radio" value="tr"/>
-									Turkish
-								</label>
-								<label class="radio inline">
 									<input name="lang" type="radio" value="en"/>
 									English
+								</label>
+								<label class="radio inline">
+									<input checked name="lang" type="radio" value="tr"/>
+									Turkish
 								</label>
 								<label class="radio inline">
 									<input name="lang" type="radio" value="de"/>

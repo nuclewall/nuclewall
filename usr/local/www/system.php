@@ -241,9 +241,10 @@ if ($savemsg)
 					<td class="vtable">
 						<label>
 							<input name="disablefilter" type="checkbox" id="disablefilter" value="yes" <?php if (isset($config['system']['disablefilter'])) echo "checked"; ?> />
-							Disable all packet filtering.<br>
+							Disable all packet filtering.<p>
 							Note: This converts NUCLEWALL into a routing only platform.<br>
 				            Note: This will also turn off NAT.
+							</p>
 						</label>
 					</td>
 
