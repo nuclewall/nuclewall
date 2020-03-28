@@ -512,14 +512,12 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 										<?php endif; ?>
 									</td>
 										<?php
-											$span_end = "";
 											$alias_src_span_begin = "";
 											$alias_src_port_span_begin = "";
 											$alias_dst_span_begin = "";
 											$alias_dst_port_span_begin = "";
 
 											$alias_popup = rule_popup($filterent['source']['address'],pprint_port($filterent['source']['port']),$filterent['destination']['address'],pprint_port($filterent['destination']['port']));
-											$span_end = "</U></span>";
 
 											$alias_src_span_begin = $alias_popup["src"];
 
@@ -634,39 +632,13 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 															}
 														}
 														$sched_caption_escaped = str_replace("'", "\'", $schedule['descr']);
-														$schedule_span_begin = "<span style=\"cursor: help;\" onmouseover=\"domTT_activate(this, event, 'content', '<h1>{$sched_caption_escaped}</h1><p>{$sched_content}</p>', 'trail', true, 'delay', 0, 'fade', 'both', 'fadeMax', 93, 'styleClass', 'niceTitle');\" onmouseout=\"this.style.color = ''; domTT_mouseout(this, event);\"><U>";
+														$schedule_span_begin = "<span onmouseover=\"domTT_activate(this, event, 'content', '<p>{$sched_caption_escaped}</p><p>{$sched_content}</p>', 'trail', true, 'delay', 0, 'fade', 'both', 'fadeMax', 93, 'styleClass', 'niceTitle');\" onmouseout=\"this.style.color = ''; domTT_mouseout(this, event);\"><U>";
 														$schedule_span_end = "</U></span>";
 													}
 												}
 											}
 											$printicon = false;
 											$alttext = "";
-											$image = "";
-											if (!isset($filterent['disabled'])){
-												 if ($schedstatus)
-												 {
-													if ($iconfn == "block" || $iconfn == "reject")
-													{
-														$image = "icon_block";
-														$alttext = "Traffic matching this rule is currently being denied";
-													}
-													else
-													{
-														$image = "icon_pass";
-														$alttext = "Traffic matching this rule is currently being allowed";
-													}
-													$printicon = true;
-												  }
-												  else if ($filterent['sched'])
-												  {
-													if ($iconfn == "block" || $iconfn == "reject")
-														$image = "icon_block_d";
-													else
-														$image = "icon_block";
-													$alttext = "This rule is not currently active because its period has expired";
-													$printicon = true;
-												  }
-											}
 										?>
 									<td class="wall" onClick="fr_toggle(<?=$nrules;?>)" id="frd<?=$nrules;?>" ondblclick="document.location='firewall_rules_edit.php?id=<?=$i;?>';">
 										<?=$textss;?>
@@ -682,7 +654,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 											if (isset($filterent['protocol'])) {
 												echo strtoupper($filterent['protocol']);
 												if (strtoupper($filterent['protocol']) == "ICMP" && !empty($filterent['icmptype'])) {
-													echo ' <span style="cursor: help;" title="ICMP type: ' . $icmptypes[$filterent['icmptype']] . '"><u>';
+													echo ' <span title="ICMP type: ' . $icmptypes[$filterent['icmptype']] . '"><u>';
 													echo $filterent['icmptype'];
 													echo '</u></span>';
 												}
@@ -727,7 +699,6 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 									</td>
 									<td class="wall" onClick="fr_toggle(<?=$nrules;?>)" id="frd<?=$nrules;?>" ondblclick="document.location='firewall_rules_edit.php?id=<?=$i;?>';">
 										<?php if ($printicon) { ?>
-											<img src="./themes/nuclewall/images/icons/<?php echo $image; ?>.gif" title="<?php echo $alttext;?>">
 											<?php } ?>
 											<?=$textss;?>
 											<?php echo $schedule_span_begin;?>
@@ -739,7 +710,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 											pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/pre_descr_tr");
 										?>
 									<td class="wall description" onClick="fr_toggle(<?=$nrules;?>)" ondblclick="document.location='firewall_rules_edit.php?id=<?=$i;?>';">
-										<?=$textss;?><?=htmlspecialchars(base64_decode($filterent['descr']));?><?=$textse;?>
+										<?=$textss;?><?=htmlspecialchars($filterent['descr']);?><?=$textse;?>
 									</td>
 									<td class="wall tools" style="padding:4px;">
 										<input style=" margin-top: 5px;" name="move_<?=$i;?>" type="image" src="./themes/nuclewall/images/icons/icon_top.png" title="Move the selected rule top of this rule" onMouseOver="fr_insline(<?=$nrules;?>, true)" onMouseOut="fr_insline(<?=$nrules;?>, false)">

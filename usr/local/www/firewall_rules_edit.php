@@ -110,7 +110,7 @@ if (isset($id) && $a_filter[$id]) {
 
 	$pconfig['disabled'] = isset($a_filter[$id]['disabled']);
 	$pconfig['log'] = isset($a_filter[$id]['log']);
-	$pconfig['descr'] = base64_decode($a_filter[$id]['descr']);
+	$pconfig['descr'] = $a_filter[$id]['descr'];
 
 	if (isset($a_filter[$id]['tcpflags_any']))
 		$pconfig['tcpflags_any'] = true;
@@ -498,7 +498,7 @@ if ($_POST) {
 			$filterent['log'] = true;
 		else
 			unset($filterent['log']);
-		strncpy($filterent['descr'], base64_encode($_POST['descr']), 52);
+		strncpy($filterent['descr'], $_POST['descr'], 52);
 
 		if ($_POST['gateway'] != "") {
 			$filterent['gateway'] = $_POST['gateway'];
