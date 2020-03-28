@@ -352,7 +352,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<td class="headw">Destination</td>
 								<td class="headw">Port</td>
 								<td class="headw">Gateway</td>
-								<td class="headw">Queue</td>
+								<td class="headw">Limiter</td>
 								<td class="headw">Schedule</td>
 								<?php
 									pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/pre_desc_tablehead");

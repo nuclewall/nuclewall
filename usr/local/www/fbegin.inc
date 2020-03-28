@@ -91,7 +91,7 @@ $firewall_menu = array();
 $firewall_menu[] = array("Aliases", "/firewall_aliases.php");
 $firewall_menu[] = array("Rules", "/firewall_rules.php");
 $firewall_menu[] = array("Schedules", "/firewall_schedule.php");
-$firewall_menu[] = array("Queues", "/firewall_shaper_vinterface.php");
+$firewall_menu[] = array("Limiters", "/firewall_shaper_vinterface.php");
 
 // Services
 $services_menu = array();

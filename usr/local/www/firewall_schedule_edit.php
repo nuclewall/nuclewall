@@ -906,7 +906,7 @@ margin-left: 1px;
 							</tr>
 							<tr>
 								<td class="times">
-									Saat
+									Hour
 									<select name="starttimehour" id="starttimehour">
 										<?php
 											for ($i=0; $i<24; $i++)
@@ -917,7 +917,7 @@ margin-left: 1px;
 											}
 										?>
 									</select>
-									Dk.
+									Min.
 									<select name="starttimemin" id="starttimemin">
 										<option value="00">00</option>
 										<option value="15">15</option>
@@ -927,7 +927,7 @@ margin-left: 1px;
 									</select>
 								</td>
 								<td class="times">
-									Saat
+									Hour
 									<select name="stoptimehour" id="stoptimehour">
 									<?php
 											for ($i=0; $i<24; $i++)
@@ -943,7 +943,7 @@ margin-left: 1px;
 											}
 										?>
 									</select>
-									Dk.
+									Min.
 									<select name="stoptimemin" id="stoptimemin">
 										<option value="00">00</option>
 										<option value="15">15</option>
