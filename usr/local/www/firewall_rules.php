@@ -463,8 +463,6 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 							</tr>
 							<?php endif; ?>
 
-
-
 							<tbody id="dragtable">
 								<?php $nrules = 0; for ($i = 0; isset($a_filter[$i]); $i++):
 									pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/row_start");
@@ -634,40 +632,14 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 															}
 														}
 														$sched_caption_escaped = str_replace("'", "\'", $schedule['descr']);
-														$schedule_span_begin = "<span style=\"cursor: help;\" onmouseover=\"domTT_activate(this, event, 'content', '<h1>{$sched_caption_escaped}</h1><p>{$sched_content}</p>', 'trail', true, 'delay', 0, 'fade', 'both', 'fadeMax', 93, 'styleClass', 'niceTitle');\" onmouseout=\"this.style.color = ''; domTT_mouseout(this, event);\"><U>";
+														$schedule_span_begin = "<span onmouseover=\"domTT_activate(this, event, 'content', '<p>{$sched_caption_escaped}</p><p>{$sched_content}</p>', 'trail', true, 'delay', 0, 'fade', 'both', 'fadeMax', 93, 'styleClass', 'niceTitle');\" onmouseout=\"this.style.color = ''; domTT_mouseout(this, event);\"><U>";
 														$schedule_span_end = "</U></span>";
 													}
 												}
 											}
 											$printicon = false;
-											$alttext = "";
-											$image = "";
-											if (!isset($filterent['disabled'])){
-												 if ($schedstatus)
-												 {
-													if ($iconfn == "block" || $iconfn == "reject")
-													{
-														$image = "icon_block";
-														$alttext = "Traffic matching this rule is currently being denied";
-													}
-													else
-													{
-														$image = "icon_pass";
-														$alttext = "Traffic matching this rule is currently being allowed";
-													}
-													$printicon = true;
-												  }
-												  else if ($filterent['sched'])
-												  {
-													if ($iconfn == "block" || $iconfn == "reject")
-														$image = "icon_block_d";
-													else
-														$image = "icon_block";
-													$alttext = "This rule is not currently active because its period has expired";
-													$printicon = true;
-												  }
-											}
 										?>
+
 									<td class="wall" onClick="fr_toggle(<?=$nrules;?>)" id="frd<?=$nrules;?>" ondblclick="document.location='firewall_rules_edit.php?id=<?=$i;?>';">
 										<?=$textss;?>
 										<?php if (isset($filterent['id'])) echo $filterent['id']; else echo ""; ?>
@@ -727,7 +699,6 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 									</td>
 									<td class="wall" onClick="fr_toggle(<?=$nrules;?>)" id="frd<?=$nrules;?>" ondblclick="document.location='firewall_rules_edit.php?id=<?=$i;?>';">
 										<?php if ($printicon) { ?>
-											<img src="./themes/nuclewall/images/icons/<?php echo $image; ?>.gif" title="<?php echo $alttext;?>" border="0">
 											<?php } ?>
 											<?=$textss;?>
 											<?php echo $schedule_span_begin;?>
