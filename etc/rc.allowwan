@@ -43,7 +43,7 @@ if(!$rule_exists)
 	$filterent["statetype"] = "keep state";
 	$filterent["os"] = "";
 	$filterent["console"] = true;
-	$filterent["descr"] = base64_encode("Allow access to NUCLEWALL Web UI");
+	$filterent["descr"] = "Allow access to NUCLEWALL Web UI";
 	$config["filter"]["rule"][] = $filterent;
 }
 

@@ -135,7 +135,7 @@ function find_alias_reference($section, $field, $origname, &$is_alias_referenced
 			if($fieldfound && $fieldref == $origname) {
 				$is_alias_referenced = true;
 				if(is_array($item))
-					$referenced_by = base64_decode($item['descr']);
+					$referenced_by = $item['descr'];
 				break;
 			}
 		}
@@ -194,7 +194,7 @@ $pgtitle = array('FIREWALL ', 'ALIASES');
 									?>
 								</td>
 								<td class="cell description" ondblclick="document.location='firewall_aliases_edit.php?id=<?=$i;?>';">
-									<?=htmlspecialchars(base64_decode($alias['descr']));?>
+									<?=htmlspecialchars($alias['descr']);?>
 								</td>
 								<td class="cell tools">
 									<a title="Edit" href="firewall_aliases_edit.php?id=<?=$i;?>">

@@ -83,7 +83,7 @@ if (isset($id) && $a_aliases[$id]) {
 	$pconfig['detail'] = $a_aliases[$id]['detail'];
 	$pconfig['address'] = $a_aliases[$id]['address'];
 	$pconfig['type'] = $a_aliases[$id]['type'];
-	$pconfig['descr'] = html_entity_decode(base64_decode($a_aliases[$id]['descr']));
+	$pconfig['descr'] = html_entity_decode($a_aliases[$id]['descr']);
 
 	$iflist = get_configured_interface_with_descr(false, true);
 	foreach ($iflist as $if => $ifdesc)
@@ -247,9 +247,9 @@ if ($_POST) {
 					$address[] = $tmpaddress;
 				}
 				if ($_POST["detail{$x}"] <> "")
-					$final_address_details[] = base64_encode($_POST["detail{$x}"]);
+					$final_address_details[] = $_POST["detail{$x}"];
 				else
-					$final_address_details[] = base64_encode(sprintf("Entry added %s.", strftime("%T - %d.%m.%Y", time())));
+					$final_address_details[] = sprintf("Entry added %s.", strftime("%T - %d.%m.%Y", time()));
 			}
 		}
 		if ($wrongaliases <> "")
@@ -260,7 +260,7 @@ if ($_POST) {
 
 	if (!$input_errors) {
 		$alias['address'] = is_array($address) ? implode(" ", $address) : $address;
-		$alias['descr'] = base64_encode($_POST['descr']);
+		$alias['descr'] = $_POST['descr'];
 		$alias['type'] = $_POST['type'];
 		$alias['detail'] = implode("||", $final_address_details);
 
@@ -421,7 +421,7 @@ $jscriptstr .= <<<EOD
 function update_box_type() {
 	var indexNum = document.forms[0].type.selectedIndex;
 	var selected = document.forms[0].type.options[indexNum].text;
-	if(selected == '{$network_str}') {
+	if(selected == '{$networks_str}') {
 		document.getElementById ("addressnetworkport").firstChild.data = "{$networks_str}";
 		document.getElementById ("onecolumn").firstChild.data = "{$network_str}";
 		document.getElementById ("twocolumn").firstChild.data = "{$cidr_str}";
@@ -435,7 +435,7 @@ function update_box_type() {
 		document.getElementById ("threecolumn").firstChild.data = "{$description_str}";
 		document.getElementById ("itemhelp").firstChild.data = "{$hosts_help}";
 		document.getElementById ("addrowbutton").style.display = 'block';
-	} else if(selected == '{$port_str}') {
+	} else if(selected == '{$ports_str}') {
 		document.getElementById ("addressnetworkport").firstChild.data = "{$ports_str}";
 		document.getElementById ("onecolumn").firstChild.data = "{$port_str}";
 		document.getElementById ("twocolumn").firstChild.data = "";
@@ -581,7 +581,7 @@ EOD;
 											}
 
 										}
-										$item4 = base64_decode($item3[$counter]);
+										$item4 = $item3[$counter];
 										$tracker = $counter;
 								?>
 

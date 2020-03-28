@@ -398,7 +398,7 @@
 		<!-- <tcpidletimeout></tcpidletimeout> -->
 		<rule>
 			<type>pass</type>
-			<descr><![CDATA[QWxsb3cgYWNjZXNzIExBTg==]]></descr>
+			<descr><![CDATA[Allow access LAN]]></descr>
 			<interface>lan</interface>
 			<source>
 				<network>lan</network>

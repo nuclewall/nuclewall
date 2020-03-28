@@ -198,7 +198,7 @@ if ($_GET['act'] == "del") {
 											}
 										}
 										$timeFriendly = $starttime . "-" . $stoptime;
-										$description = base64_decode($timerange['rangedescr']);
+										$description = $timerange['rangedescr'];
 
 							?>
 							<tr>
@@ -209,7 +209,7 @@ if ($_GET['act'] == "del") {
 						</table>
 					</td>
 					<td class="cell description" ondblclick="document.location='firewall_schedule_edit.php?id=<?=$i;?>';">
-						<?=htmlspecialchars(base64_decode($schedule['descr']));?>
+						<?=htmlspecialchars($schedule['descr']);?>
 					</td>
 					<td valign="middle" class="cell tools" style="width:20px; max-width:20px;">
 						<a title="Edit" href="firewall_schedule_edit.php?id=<?=$i;?>">

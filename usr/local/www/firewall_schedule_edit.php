@@ -76,7 +76,7 @@ if (isset($_POST['id']))
 
 if (isset($id) && $a_schedules[$id]) {
 	$pconfig['name'] = $a_schedules[$id]['name'];
-	$pconfig['descr'] = base64_decode($a_schedules[$id]['descr']);
+	$pconfig['descr'] = $a_schedules[$id]['descr'];
 	$pconfig['timerange'] = $a_schedules[$id]['timerange'];
 	$pconfig['schedlabel'] = $a_schedules[$id]['schedlabel'];
 	$getSchedule = true;
@@ -111,7 +111,7 @@ if ($_POST) {
 	$schedule = array();
 
 	$schedule['name'] = $_POST['name'];
-	$schedule['descr'] = base64_encode($_POST['descr']);
+	$schedule['descr'] = $_POST['descr'];
 
 	$timerangeFound = false;
 	for ($x=0; $x<99; $x++){
@@ -123,7 +123,7 @@ if ($_POST) {
 			$timehourstr = $_POST['starttime' . $x];
 			$timehourstr .= "-";
 			$timehourstr .= $_POST['stoptime' . $x];
-			$timedescrstr = base64_encode(htmlentities($_POST['timedescr' . $x], ENT_QUOTES, 'UTF-8'));
+			$timedescrstr = htmlentities($_POST['timedescr' . $x], ENT_QUOTES, 'UTF-8');
 			$dashpos = strpos($timestr, '-');
 			if ($dashpos === false)
 			{
@@ -194,7 +194,7 @@ if ($_POST) {
 			$getSchedule = true;
 
 		$pconfig['name'] = $schedule['name'];
-		$pconfig['descr'] = base64_decode($schedule['descr']);
+		$pconfig['descr'] = $schedule['descr'];
 		$pconfig['timerange'] = $schedule['timerange'];
 	}
 
@@ -993,7 +993,7 @@ margin-left: 1px;
 									if ($timerange){
 										$dayFriendly = "";
 										$tempFriendlyTime = "";
-										$timedescr = base64_decode($timerange['rangedescr']);
+										$timedescr = $timerange['rangedescr'];
 
 										//get hours
 										$temptimerange = $timerange['hour'];
