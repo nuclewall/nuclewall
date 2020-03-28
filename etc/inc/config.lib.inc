@@ -94,7 +94,7 @@ function parse_config($parse = false)
 			if ($last_backup)
 				restore_backup("/cf/conf/backup/{$last_backup}");
 			else {
-				log_error("Could not restore config.xml.");
+				log_error(gettext("Could not restore config.xml."));
 				unlock($lockkey);
 				die("Config.xml is corrupted and is 0 bytes.  Could not restore a previous backup.");
 			}

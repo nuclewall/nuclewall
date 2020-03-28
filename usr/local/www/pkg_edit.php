@@ -236,7 +236,7 @@ if($pkg['title'] <> "") {
 	$title = $pkg['title'] . $edit;
 }
 else
-	$title = "Package Editor";
+	$title = gettext("Package Editor");
 
 $pgtitle = $title;
 include("head.inc");
@@ -865,7 +865,7 @@ function parse_package_templates() {
 
 function display_advanced_field($fieldname) {
 	$div = "<div id='showadv_" . $fieldname . "'>\n";
-	$div .= "<input type='button' onClick='show_" . $fieldname . "()' value='" . "Advanced" . "'></input> - " . "Show advanced option" ."</div>\n";
+	$div .= "<input type='button' onClick='show_" . $fieldname . "()' value='" . gettext("Advanced") . "'></input> - " . gettext("Show advanced option") ."</div>\n";
 	$div .= "<div id='show_" . $fieldname . "' style='display:none'>\n";
 	return $div;
 }

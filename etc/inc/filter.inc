@@ -165,7 +165,7 @@ function filter_configure_sync($delete_states_if_needed = true)
 	/* Get interface list to work with. */
 	filter_generate_optcfg_array();
 	if($g['booting'] == true)
-		echo "Gï¿½venlik duvarï¿½ ayarlanï¿½yor...";
+		echo "Güvenlik duvarý ayarlanýyor...";
 
 	/* generate aliases */
 	if($g['booting'] == true)
@@ -336,7 +336,7 @@ function filter_configure_sync($delete_states_if_needed = true)
 		echo ".";
 
 	if($delete_states_if_needed) {
-		update_filter_reload_status("Processing down interface states");
+		update_filter_reload_status(gettext("Processing down interface states"));
 		filter_delete_states_for_down_gateways();
 	}
 
