@@ -60,7 +60,7 @@ if($files_to_sign)
 		}
 
 		else if($signed == 'FAILED')
-			exec("/usr/local/bin/custom_logger 5651 'HATA: $file dosyası imzanamadı.'");
+			exec("/usr/local/bin/custom_logger 5651 'HATA: $file dosyası imzalanamadı.'");
 	}
 }
 
