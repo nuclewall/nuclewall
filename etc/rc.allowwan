@@ -43,7 +43,7 @@ if(!$rule_exists)
 	$filterent["statetype"] = "keep state";
 	$filterent["os"] = "";
 	$filterent["console"] = true;
-	$filterent["descr"] = "TlVDTEVXQUxMJ2EgV0FOIGFyYXnDvHrDvG5kZW4gZXJpxZ9pbWUgaXppbiB2ZXIu";
+	$filterent["descr"] = base64_encode("NUCLEWALL'a WAN arayüzünden eriþim izni.");
 	$config["filter"]["rule"][] = $filterent;
 }
 
