@@ -901,7 +901,7 @@ function rule_popup($src,$srcport,$dst,$dstport)
         foreach($config['aliases']['alias'] as $alias_name)
         {
             	$alias_addresses = explode (" ", $alias_name['address']);
-            	$alias_details = explode ("||", $alias_name['detail']);
+            	$alias_details = explode ("||", base64_decode($alias_name['detail']));
             	$alias_objects_with_details = "";
             	$counter = 0;
 		if ($alias_name['url']) {
@@ -920,9 +920,9 @@ function rule_popup($src,$srcport,$dst,$dstport)
             	//max character length for caption field
             	$maxlength = 60;
 
-            	$alias_descr_substr = $alias_name['descr'];
+            	$alias_descr_substr = base64_decode($alias_name['descr']);
             	$alias_content_text = htmlspecialchars($alias_objects_with_details);
-            	$alias_caption = htmlspecialchars($alias_descr_substr . ":");
+            	$alias_caption = htmlspecialchars($alias_descr_substr);
             	$strlength = strlen ($alias_caption);
             	if ($strlength >= $maxlength)
                     	$alias_caption = substr($alias_caption, 0, $maxlength) . "...";

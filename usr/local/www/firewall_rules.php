@@ -627,11 +627,11 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 																	}
 																}
 																$timeFriendly = $starttime . " - " . $stoptime;
-																$description = $timerange['rangedescr'];
+																$description = base64_decode($timerange['rangedescr']);
 																$sched_content .= $dayFriendly . "; " . $timeFriendly . "<br>";
 															}
 														}
-														$sched_caption_escaped = str_replace("'", "\'", $schedule['descr']);
+														$sched_caption_escaped = str_replace("'", "\'", base64_decode($schedule['descr']));
 														$schedule_span_begin = "<span onmouseover=\"domTT_activate(this, event, 'content', '<p>{$sched_caption_escaped}</p><p>{$sched_content}</p>', 'trail', true, 'delay', 0, 'fade', 'both', 'fadeMax', 93, 'styleClass', 'niceTitle');\" onmouseout=\"this.style.color = ''; domTT_mouseout(this, event);\"><U>";
 														$schedule_span_end = "</U></span>";
 													}
