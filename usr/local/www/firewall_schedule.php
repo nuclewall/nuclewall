@@ -60,7 +60,7 @@ if ($_GET['act'] == "del") {
 			foreach($config['filter']['rule'] as $rule) {
 				//check for this later once this is established
 				if ($rule['sched'] == $schedule_name){
-					$referenced_by = $rule['descr'];
+					$referenced_by = base64_decode($rule['descr']);
 					$is_schedule_referenced = true;
 					break;
 				}
@@ -68,7 +68,7 @@ if ($_GET['act'] == "del") {
 		}
 
 		if($is_schedule_referenced == true) {
-			$savemsg = sprintf("Zamanlama %s tarafından kullanıldığı için silinemiyor.",$referenced_by);
+			$savemsg = sprintf("Zamanlama '%s' tarafından kullanıldığı için silinemiyor.", $referenced_by);
 		} else {
 			unset($a_schedules[$_GET['id']]);
 			write_config();

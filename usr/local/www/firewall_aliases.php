@@ -94,7 +94,7 @@ if ($_GET['act'] == "del")
 		// Alias in an alias
 		find_alias_reference(array('aliases', 'alias'), array('address'), $alias_name, $is_alias_referenced, $referenced_by);
 		if($is_alias_referenced == true) {
-			$savemsg = sprintf("Takma ad şu anda silinemez. %s tarafından kullanılıyor", $referenced_by);
+			$savemsg = sprintf("Takma ad şu anda '%s' tarafından kullanıldığı için silinemiyor.", $referenced_by);
 		} else {
 			unset($a_aliases[$_GET['id']]);
 			write_config();
