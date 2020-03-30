@@ -70,7 +70,7 @@ if ($_GET['act'] == "del")
 		}
 
 		unset($a_gateway_groups[$_GET['id']]);
-		write_config("Gateway group deleted");
+		write_config("A gateway group deleted");
 		mark_subsystem_dirty('staticroutes');
 		header("Location: system_gateway_groups.php");
 		exit;

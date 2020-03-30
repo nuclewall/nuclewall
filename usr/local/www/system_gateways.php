@@ -107,7 +107,7 @@ if ($_GET['act'] == "del")
 				unset($config['interfaces'][$a_gateways[$_GET['id']]['friendlyiface']]['gateway']);
 
 			unset($a_gateway_item[$realid]);
-			write_config("Gateway deleted");
+			write_config("A gateway deleted");
 			mark_subsystem_dirty('staticroutes');
 			header("Location: system_gateways.php");
 			exit;

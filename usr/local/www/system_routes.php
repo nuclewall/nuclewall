@@ -78,7 +78,7 @@ if ($_GET['act'] == "del")
 	{
 		mwexec("/sbin/route delete " . escapeshellarg($a_routes[$_GET['id']]['network']));
 		unset($a_routes[$_GET['id']]);
-		write_config("Static route deleted");
+		write_config("A static route deleted");
 		header('Location: system_routes.php');
 		exit;
 	}

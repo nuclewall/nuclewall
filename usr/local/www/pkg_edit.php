@@ -197,7 +197,7 @@ if ($_POST) {
 		else
 			$a_pkg[] = $pkgarr;
 
-		write_config("Proxy Server configured");
+		write_config("Proxy And Filter service configured");
 		if($pkg['custom_add_php_command_late'] <> "") {
 			eval($pkg['custom_add_php_command_late']);
 		}

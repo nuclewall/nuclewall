@@ -119,7 +119,7 @@ else if ($_POST)
 				}
 			}
 		}
-		write_config("Interface assigned");
+		write_config("Interface assignments saved");
 	}
 }
 
@@ -170,7 +170,7 @@ if ($_GET['act'] == "del")
 			}
         }
 
-		write_config("An interface assignment deleted");
+		write_config("An interface deleted");
 
 		if($config['interfaces']['lan'] && $config['dhcpd']['wan'])
 		{
@@ -226,7 +226,7 @@ if ($_GET['act'] == "add" && (count($config['interfaces']) < count($portlist)))
 	}
 
 	mwexec("/bin/rm -f /tmp/config.cache");
-	write_config("An interface assignment added");
+	write_config("An interface added");
 
 	$savemsg = "Interface has been added.";
 

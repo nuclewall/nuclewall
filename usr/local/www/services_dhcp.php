@@ -237,7 +237,7 @@ if ($_POST)
 		$config['dhcpd'][$if]['denyunknown'] = ($_POST['denyunknown']) ? true : false;
 		$config['dhcpd'][$if]['enable'] = ($_POST['enable']) ? true : false;
 
-		write_config("DHCP Server configured");
+		write_config("DHCP Server service configured");
 
 		$retval = 0;
 		$retvaldhcp = 0;

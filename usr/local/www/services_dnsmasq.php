@@ -52,7 +52,7 @@ if ($_POST)
 
 	if (!$input_errors)
 	{
-		write_config("DNS Forwarder settings changed");
+		write_config("DNS Forwarder service configured");
 
 		$retval = 0;
 		$retval = services_dnsmasq_configure();
