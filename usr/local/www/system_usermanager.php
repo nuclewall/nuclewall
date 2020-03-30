@@ -4,7 +4,7 @@
     system_usermanager.php
     part of m0n0wall (http://m0n0.ch/wall)
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2008 Shrew Soft Inc.

@@ -3,7 +3,7 @@
 /*
 	system_gateways.php
 
-	Copyright (C) 2015 Ogün AÇIK
+	Copyright (C) 2020 Ogun Acik
 
 	Copyright (C) 2010 Seth Mos <seth.mos@dds.nl>.
 	All rights reserved.

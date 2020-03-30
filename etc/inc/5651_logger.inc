@@ -2,7 +2,7 @@
 /*
 	5651_logger.inc
 
-	Copyright (C) 2013-2020 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 */
@@ -64,7 +64,7 @@ for F in *.txt; do
 	    mv \$F \$SENT_DIR/\$TODAY/
 	    /usr/local/bin/custom_logger 5651 ""\$F" dosyası //$hostname/$folder Windows paylaşımına gönderildi."
 	else
-	    /usr/local/bin/custom_logger 5651 "HATA: //$hostname/$folder ile baglantı kurulamadı."
+	    /usr/local/bin/custom_logger 5651 "HATA: //$hostname/$folder ile bağlantı kurulamadı."
 	fi;
 done
 

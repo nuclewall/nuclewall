@@ -2,7 +2,7 @@
 /*
 	samba_status.php
 
-	Copyright (C) 2013-2020 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
     All rights reserved.
 
     # AJAX backend for smbclient connection status

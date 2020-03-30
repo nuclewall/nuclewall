@@ -3,7 +3,7 @@
 /*
 	diag_backup.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	Copyright (C) 2004-2009 Scott Ullrich

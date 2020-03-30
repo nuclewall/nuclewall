@@ -3,7 +3,7 @@
 /*
 	firewall_rules_edit.php
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
 	part of pfSense (http://www.pfsense.com)

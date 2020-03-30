@@ -2,7 +2,7 @@
 /*
 	hotspot.inc
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 */
 
@@ -366,7 +366,7 @@ function createDefaultJS($default_lang)
 	captiveportal-locale.js
 	This page is created automatically.
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 */
 
@@ -482,7 +482,7 @@ function createDefaultMobileJS($default_lang, $company)
 	captiveportal-locale-mobile.js
 	This page is created automatically.
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 */
 
@@ -609,7 +609,7 @@ function createCustomJS($default_lang, $ops)
 	captiveportal-locale.js
 	This page is created automatically.
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 */
 
@@ -828,7 +828,7 @@ function createCustomMobileJS($default_lang, $company, $ops)
 	captiveportal-locale-mobile.js
 	This page is created automatically.
 
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 */
 
