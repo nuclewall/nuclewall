@@ -39,12 +39,6 @@ require_once('captiveportal.inc');
 require_once('service-utils.inc');
 require_once('/usr/local/www/widgets/include/services_status.inc');
 
-
-if(isset($_POST['servicestatusfilter'])) {
-	$config['widgets']['servicestatusfilter'] = $_POST['servicestatusfilter'];
-	write_config();
-	header("Location: ../../index.php");
-}
 ?>
 
 <table class="grids sortable">
