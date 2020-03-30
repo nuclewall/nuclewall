@@ -58,7 +58,7 @@ if ($_POST)
 		$config['datasources']['mysql']['username_field'] = base64_encode($_POST['username_field']);
 		$config['datasources']['mysql']['password_field'] = base64_encode($_POST['password_field']);
 
-		write_config();
+		write_config("(Hotspot) MySQL external data source configured");
 
 		$savemsg = 'The changes have been applied successfully.';
 

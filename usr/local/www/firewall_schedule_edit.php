@@ -177,7 +177,7 @@ if ($_POST) {
 			$a_schedules[] = $schedule;
 		}
 		schedule_sort();
-		write_config();
+		write_config("A schedule added");
 
 		filter_configure();
 

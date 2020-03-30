@@ -554,7 +554,7 @@ if ($_POST) {
 
 		filter_rules_sort();
 
-		write_config();
+		write_config("A firewall rule changed");
 		mark_subsystem_dirty('filter');
 
 		if (isset($_POST['floating']))

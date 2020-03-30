@@ -189,7 +189,7 @@ if ($_GET['act'] == "del")
 			delete_nat_association($a_filter[$_GET['id']]['associated-rule-id']);
 		}
 		unset($a_filter[$_GET['id']]);
-		write_config();
+		write_config("A firewall rule deleted");
 		mark_subsystem_dirty('filter');
 		header("Location: firewall_rules.php?if=" . htmlspecialchars($if));
 		exit;

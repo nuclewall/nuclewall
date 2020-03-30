@@ -74,7 +74,7 @@ if ($_POST)
 		$config['digitalsign']['smbpassword'] = base64_encode($_POST['smbpassword']);
 		$config['digitalsign']['smbfolder'] = base64_encode($_POST['smbfolder']);
 
-		write_config();
+		write_config("5651 service configured");
 
 		if(isset($_POST['enable']))
 		{

@@ -185,7 +185,7 @@ if ($_POST) {
         $url = "{$prot}://{$host}/system_advanced_admin.php";
     }
 
-    write_config();
+    write_config("System access settings changed");
 
 	$retval = filter_configure();
 	$savemsg = get_std_save_message($retval);

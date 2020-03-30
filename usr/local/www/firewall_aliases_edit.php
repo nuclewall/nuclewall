@@ -315,7 +315,7 @@ if ($_POST) {
 
 		$a_aliases = msort($a_aliases, "name");
 
-		write_config();
+		write_config("An alias configured");
 
 		header("Location: firewall_aliases.php");
 		exit;

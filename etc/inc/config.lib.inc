@@ -272,7 +272,7 @@ function convert_config()
 	log_error("Ended Configuration upgrade at $now");
 
 	if ($prev_version != $config['version'])
-		write_config();
+		write_config("Config file converted");
 }
 
 function safe_write_file($file, $content, $force_binary)
@@ -423,7 +423,7 @@ function config_restore($conffile)
 
 	$config = parse_config(true);
 
-	write_config();
+	write_config("Config file restored");
 
 	return 0;
 }

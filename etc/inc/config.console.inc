@@ -174,7 +174,7 @@ EOD;
 
 		echo <<<EOD
 
-Proceed? [y|n]\n> 
+Proceed? [y|n]\n>
 EOD;
 			$key = chop(fgets($fp));
 	}
@@ -256,7 +256,7 @@ EODD;
 			unset($config['interfaces']['opt' . ($i+1)]);
 
 		echo "\nSaving settings...";
-		write_config();
+		write_config("Interface settings changed from console");
 		echo "Done.";
 
 		if($g['booting'])

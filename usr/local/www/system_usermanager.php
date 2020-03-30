@@ -87,8 +87,8 @@ if ($_GET['act'] == 'deluser')
 		local_user_del($a_user[$id]);
 		$userdeleted = $a_user[$id]['name'];
 		unset($a_user[$id]);
-		write_config();
-		$savemsg = "User {$userdeleted} deleted successfully.";
+		write_config("User " . $userdeleted . " deleted");
+		$savemsg = "User {$userdeleted} deleted";
 	}
 }
 
@@ -234,7 +234,7 @@ if ($_POST)
 		}
 
 		local_user_set($userent);
-		write_config();
+		write_config("New user " . $userent['name'] . " created");
 		header("system_usermanager.php");
 	}
 }

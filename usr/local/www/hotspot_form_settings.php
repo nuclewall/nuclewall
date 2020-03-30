@@ -190,7 +190,7 @@ if ($_POST)
 		$config['hotspot']['ru']['password'] = base64_encode($_POST['ru_password']);
 		$config['hotspot']['ru']['button'] = base64_encode($_POST['ru_button']);
 
-		write_config();
+		write_config("(Hotspot) Welcome page configured");
 
 		if($_POST['page_type'] == "default")
 		{

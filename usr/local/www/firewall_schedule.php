@@ -72,7 +72,7 @@ if ($_GET['act'] == "del") {
 			$savemsg = sprintf("Cannot delete Schedule. Currently in use by '%s'.", $referenced_by);
 		} else {
 			unset($a_schedules[$_GET['id']]);
-			write_config();
+			write_config("A schedule deleted");
 			header("Location: firewall_schedule.php");
 			exit;
 		}

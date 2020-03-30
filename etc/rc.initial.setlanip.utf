@@ -221,7 +221,7 @@ if(!$config['interfaces']['lan']) {
 
 $upperifname = strtoupper($interface);
 echo "\n    Saving changes for {$upperifname}...";
-write_config("{$interface} IP configuration from console menu.");
+write_config("{$interface} IP configuration from console menu");
 interface_reconfigure(strtolower($upperifname));
 filter_configure_sync();
 

@@ -257,7 +257,7 @@ function squid_install_cron($should_install)
 			}
 			if ($need_write) {
 				parse_config(true);
-				write_config("Adding Squid Cron Jobs");
+				write_config("Squid cron jobs added");
 			}
 		break;
 		case false:
@@ -271,7 +271,7 @@ function squid_install_cron($should_install)
 			}
 			if ($need_write) {
 				parse_config(true);
-				write_config("Removing Squid Cron Jobs");
+				write_config("Squid cron jobs removed");
 			}
 		break;
 	}

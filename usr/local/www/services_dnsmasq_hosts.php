@@ -39,7 +39,7 @@ if ($_GET['act'] == "del") {
 		if ($a_hosts[$_GET['id']])
 		{
 			unset($a_hosts[$_GET['id']]);
-			write_config();
+			write_config("A static DNS mapping deleted");
 			mark_subsystem_dirty('hosts');
 			header("Location: services_dnsmasq_hosts.php");
 			exit;

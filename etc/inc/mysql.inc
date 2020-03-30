@@ -288,7 +288,7 @@ EOF;
 
 	$config['captiveportal']['radiuskey'] = $pass;
 	$config['captiveportal']['radmac_secret'] = $pass;
-	write_config();
+	write_config("MySQL Server initialized");
 
 	return $conf;
 }

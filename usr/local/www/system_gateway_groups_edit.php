@@ -121,7 +121,7 @@ if ($_POST) {
 
 		mark_subsystem_dirty('staticroutes');
 
-		write_config();
+		write_config("Gateway group edited");
 
 		header("Location: system_gateway_groups.php");
 		exit;

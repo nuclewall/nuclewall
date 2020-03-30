@@ -204,7 +204,7 @@ if ($_POST)
 
 	$config['datasources']['external'] = $_POST['datasource'];
 
-	write_config();
+	write_config("(Hotspot) External data source configured");
 
 	if($_POST['datasource'] == 'mysql' and $mysql_available)
 	{

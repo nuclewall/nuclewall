@@ -161,7 +161,7 @@ if ($_POST) {
 
 		mark_subsystem_dirty('staticroutes');
 
-		write_config();
+		write_config("Static route added");
 
 		header("Location: system_routes.php");
 		exit;

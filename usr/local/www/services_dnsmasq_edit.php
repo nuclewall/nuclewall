@@ -109,7 +109,7 @@ if ($_POST) {
 
 		mark_subsystem_dirty('hosts');
 
-		write_config();
+		write_config("New Static DNS mapping added");
 
 		header("Location: services_dnsmasq_hosts.php");
 		exit;

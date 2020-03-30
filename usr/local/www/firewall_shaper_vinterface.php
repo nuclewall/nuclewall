@@ -105,7 +105,7 @@ if ($_GET)
 			if (!$input_errors)
 			{
 				$queue->delete_queue();
-				write_config();
+				write_config("A queue deleted");
 				mark_subsystem_dirty('shaper');
 				header("Location: firewall_shaper_vinterface.php");
 				exit;
@@ -176,7 +176,7 @@ if ($_GET)
 		if ($queue) {
 				$queue->SetEnabled("on");
 				$output_form .= $queue->build_form();
-				write_config();
+				write_config("A queue enabled");
 				mark_subsystem_dirty('shaper');
 		} else
 				$input_errors[] = "Queue not found.";
@@ -185,7 +185,7 @@ if ($_GET)
 		if ($queue) {
 				$queue->SetEnabled("");
 				$output_form .= $queue->build_form();
-				write_config();
+				write_config("A queue disabled");
 				mark_subsystem_dirty('shaper');
 		} else
 				$input_errors[] = "Queue not found.";

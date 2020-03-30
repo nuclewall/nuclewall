@@ -127,7 +127,7 @@ function set_password()
 
 					local_user_set_password($admin_user, $password);
 					local_user_set($admin_user);
-					write_config("New admin password is set.");
+					write_config("New admin password is set");
 
 					$success = true;
 					system("rm /etc/nuclewall/password_init");

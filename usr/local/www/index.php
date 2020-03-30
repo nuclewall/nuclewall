@@ -66,7 +66,7 @@ if (!is_array($config['widgets'])) {
 			}
 		}
 
-		write_config();
+		write_config("Widgets rearranged");
 		header("Location: index.php");
 		exit;
 	}
