@@ -69,7 +69,7 @@ if ($_GET['act'] == "del") {
 		}
 
 		if($is_schedule_referenced == true) {
-			$savemsg = sprintf("Cannot delete Schedule. Currently in use by %s.", $referenced_by);
+			$savemsg = sprintf("Cannot delete Schedule. Currently in use by '%s'.", $referenced_by);
 		} else {
 			unset($a_schedules[$_GET['id']]);
 			write_config();

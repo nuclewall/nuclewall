@@ -94,7 +94,7 @@ if ($_GET['act'] == "del")
 		// Alias in an alias
 		find_alias_reference(array('aliases', 'alias'), array('address'), $alias_name, $is_alias_referenced, $referenced_by);
 		if($is_alias_referenced == true) {
-			$savemsg = sprintf("Cannot delete alias. Currently in use by %s", $referenced_by);
+			$savemsg = sprintf("Cannot delete alias. Currently in use by '%s'.", $referenced_by);
 		} else {
 			unset($a_aliases[$_GET['id']]);
 			write_config();
