@@ -219,7 +219,7 @@ if(!$config['interfaces']['lan']) {
 
 $upperifname = strtoupper($interface);
 echo "\n    {$upperifname} arayüzü için ayarlar kaydediliyor...";
-write_config("{$interface} konsoldan ayarlandi.");
+write_config("{$interface} konsoldan ayarlandi");
 interface_reconfigure(strtolower($upperifname));
 filter_configure_sync();
 

@@ -74,7 +74,6 @@ if ($_POST)
 		$config['digitalsign']['smbpassword'] = base64_encode($_POST['smbpassword']);
 		$config['digitalsign']['smbfolder'] = base64_encode($_POST['smbfolder']);
 
-		write_config();
 
 		if(isset($_POST['enable']))
 		{
@@ -119,6 +118,7 @@ if ($_POST)
 			install_cron_job('/usr/local/bin/log_sender', false,  '*', '*', '*', '*', '*', 'root');
 		}
 
+		write_config("5651 servisi yapilandirildi");
 		$savemsg = 'Ayarlar başarıyla kaydedildi.';
 	}
 }

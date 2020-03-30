@@ -58,7 +58,7 @@ if ($_POST)
 		$config['syslog']['reverse'] = $_POST['reverse'] ? true : false;
 		$config['syslog']['nentries'] = (int)$_POST['nentries'];
 
-		write_config();
+		write_config("Olay Gunlukleri ayarlari degistirildi");
 
 		$retval = 0;
 		$retval = system_syslogd_start();

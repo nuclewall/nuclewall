@@ -41,7 +41,7 @@ if (isset($config['system']['enablesshd'])) {
 	if ($yn[0] == "e" || $yn[0] == "E")
 	{
 		unset($config['system']['enablesshd']);
-		write_config();
+		write_config("SSH servisi durduruldu");
 		echo "\n    Servis durduruluyor...";
 		exec("/etc/sshd");
 		echo "Tamam.\n";
@@ -60,7 +60,7 @@ else
 
 	if ($yn[0] == "e" || $yn[0] == "E") {
 		$config['system']['enablesshd'] = true;
-		write_config();
+		write_config("SSH servisi aktiflestirildi");
 		echo "\n    Servis başlatılıyor...";
 		exec("/etc/sshd");
 		echo "Tamam.\n";

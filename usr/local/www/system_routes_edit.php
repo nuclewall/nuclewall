@@ -161,7 +161,7 @@ if ($_POST) {
 
 		mark_subsystem_dirty('staticroutes');
 
-		write_config();
+		write_config("Bir sabit yonlendirme eklendi");
 
 		header("Location: system_routes.php");
 		exit;

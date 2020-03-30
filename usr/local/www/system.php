@@ -193,7 +193,7 @@ if ($_POST)
 			unset($config['system']['disablefilter']);
 
 		if ($changecount > 0)
-			write_config();
+			write_config("Genel sistem ayarlari degistirildi");
 
 		$retval = 0;
 		$retval = system_hostname_configure();

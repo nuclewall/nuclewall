@@ -129,7 +129,7 @@ function set_password()
 
 					local_user_set_password($admin_user, $password);
 					local_user_set($admin_user);
-					write_config("Yeni yonetici parolasi belirlendi.");
+					write_config("Yeni yonetici parolasi belirlendi");
 
 					$success = true;
 					system("rm /etc/nuclewall/password_init");

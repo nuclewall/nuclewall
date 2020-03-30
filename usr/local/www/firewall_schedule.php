@@ -71,7 +71,7 @@ if ($_GET['act'] == "del") {
 			$savemsg = sprintf("Zamanlama '%s' tarafından kullanıldığı için silinemiyor.", $referenced_by);
 		} else {
 			unset($a_schedules[$_GET['id']]);
-			write_config();
+			write_config("Bir zamanlama silindi");
 			header("Location: firewall_schedule.php");
 			exit;
 		}

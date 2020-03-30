@@ -119,7 +119,7 @@ else if ($_POST)
 				}
 			}
 		}
-		write_config();
+		write_config("Ag arayuzu-network karti eslestirmeleri kaydedildi");
 	}
 }
 
@@ -170,7 +170,7 @@ if ($_GET['act'] == "del")
 			}
         }
 
-		write_config();
+		write_config("Bir ag arayuzu silindi");
 
 		if($config['interfaces']['lan'] && $config['dhcpd']['wan'])
 		{
@@ -226,7 +226,7 @@ if ($_GET['act'] == "add" && (count($config['interfaces']) < count($portlist)))
 	}
 
 	mwexec("/bin/rm -f /tmp/config.cache");
-	write_config();
+	write_config("Bir ag arayuzu eklendi");
 
 	$savemsg = "Ağ arayüzü eklendi.";
 

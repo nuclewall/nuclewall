@@ -185,7 +185,7 @@ if ($_POST) {
         $url = "{$prot}://{$host}/system_advanced_admin.php";
     }
 
-    write_config();
+    write_config("Sistem erisim ayarlari yapilandirildi");
 
 	$retval = filter_configure();
 	$savemsg = get_std_save_message($retval);

@@ -52,7 +52,7 @@ if ($_POST)
 
 	if (!$input_errors)
 	{
-		write_config();
+		write_config("DNS Cozumleyici servisi yapilandirildi");
 
 		$retval = 0;
 		$retval = services_dnsmasq_configure();

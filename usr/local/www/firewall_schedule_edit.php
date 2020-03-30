@@ -178,7 +178,7 @@ if ($_POST) {
 			$a_schedules[] = $schedule;
 		}
 		schedule_sort();
-		write_config();
+		write_config("Bir zamanlama yapilandirildi");
 
 		filter_configure();
 

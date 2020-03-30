@@ -272,7 +272,7 @@ function convert_config()
 	log_error("Ended Configuration upgrade at $now");
 
 	if ($prev_version != $config['version'])
-		write_config();
+	write_config("Config dosyasi donusturuldu");
 }
 
 function safe_write_file($file, $content, $force_binary)

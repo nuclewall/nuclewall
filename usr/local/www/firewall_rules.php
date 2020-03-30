@@ -189,7 +189,7 @@ if ($_GET['act'] == "del")
 			delete_nat_association($a_filter[$_GET['id']]['associated-rule-id']);
 		}
 		unset($a_filter[$_GET['id']]);
-		write_config();
+		write_config("Bir guvenlik duvari kurali silindi");
 		mark_subsystem_dirty('filter');
 		header("Location: firewall_rules.php?if=" . htmlspecialchars($if));
 		exit;
@@ -273,7 +273,7 @@ else
 		}
 
 		$a_filter = $a_filter_new;
-		write_config();
+		write_config("Bir guvenlik duvari kuralinin sirasi degistirildi");
 		mark_subsystem_dirty('filter');
 		header("Location: firewall_rules.php?if=" . htmlspecialchars($if));
 		exit;

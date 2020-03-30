@@ -566,7 +566,7 @@ function capability_update_source() {
 			}
 		}
 
-		if ($conf_changed) write_config('Convert old ver. squidguard config.');
+		if ($conf_changed) write_config('SquidGuard yeniden yapilandirildi.');
 	}
 }
 

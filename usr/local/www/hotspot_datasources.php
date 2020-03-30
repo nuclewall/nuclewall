@@ -204,7 +204,7 @@ if ($_POST)
 
 	$config['datasources']['external'] = $_POST['datasource'];
 
-	write_config();
+		write_config("(Hotspot) Harici veri kaynaklari yapilandirildi");
 
 	if($_POST['datasource'] == 'mysql' and $mysql_available)
 	{

@@ -793,7 +793,7 @@ function update_alias_url_data()
 		}
 	}
 	if($updated)
-		write_config();
+		write_config("URL tablosu(Takma Ad) guncellendi");
 	unlock($lockkey);
 }
 

@@ -58,7 +58,7 @@ if ($_POST)
 		$config['datasources']['pgsql']['username_field'] = base64_encode($_POST['username_field']);
 		$config['datasources']['pgsql']['password_field'] = base64_encode($_POST['password_field']);
 
-		write_config();
+		write_config("(Hotspot) PostgreSQL harici veri kaynagi yapilandirildi");
 
 		$savemsg = 'Değişiklikler başarıyla kaydedildi.';
 

@@ -87,7 +87,7 @@ if ($_GET['act'] == 'deluser')
 		local_user_del($a_user[$id]);
 		$userdeleted = $a_user[$id]['name'];
 		unset($a_user[$id]);
-		write_config();
+		write_config($userent['name'] . " kullanicisi silindi");
 		$savemsg = "{$userdeleted} kullanıcısı başarıyla silindi.";
 	}
 }
@@ -234,7 +234,7 @@ if ($_POST)
 		}
 
 		local_user_set($userent);
-		write_config();
+		write_config($userent['name'] . " kullanicisi olusturuldu");
 		header("system_usermanager.php");
 	}
 }

@@ -97,7 +97,7 @@ if ($_GET['act'] == "del")
 			$savemsg = sprintf("Takma ad şu anda '%s' tarafından kullanıldığı için silinemiyor.", $referenced_by);
 		} else {
 			unset($a_aliases[$_GET['id']]);
-			write_config();
+			write_config("Bir Takma Ad silindi");
 			filter_configure();
 			mark_subsystem_dirty('aliases');
 			header("Location: firewall_aliases.php");

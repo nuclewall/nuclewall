@@ -945,7 +945,7 @@ function squidguard_setup_cron($task_key, $options, $on_off)
 		}
 
 		if ($flag_cron_upd === true) {
-			write_config("Installed cron task '$task_key' for 'squidGuard' package");
+			write_config("SquidGuard icin '$task_key' cron job olusturuldu");
 			configure_cron();
 		}
 	}
