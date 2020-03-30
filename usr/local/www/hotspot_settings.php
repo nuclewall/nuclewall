@@ -72,7 +72,7 @@ if ($_POST)
 		$config['captiveportal']['enable'] = $_POST['enable'] ? true : false;
 		$config['captiveportal']['allow_dns'] = $_POST['allow_dns'] ? true : false;
 
-		write_config("(Hotspot) General configuration changed");
+		write_config("(Hotspot) Service configured");
 
 		$retval = 0;
 		$retval = captiveportal_configure();
