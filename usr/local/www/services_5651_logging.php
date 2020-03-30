@@ -74,8 +74,6 @@ if ($_POST)
 		$config['digitalsign']['smbpassword'] = base64_encode($_POST['smbpassword']);
 		$config['digitalsign']['smbfolder'] = base64_encode($_POST['smbfolder']);
 
-		write_config("5651 service configured");
-
 		if(isset($_POST['enable']))
 		{
 			install_cron_job('/usr/local/bin/dhcp_logger', true, '58', '*', '*', '*', '*', 'root');
@@ -119,6 +117,7 @@ if ($_POST)
 			install_cron_job('/usr/local/bin/log_sender', false,  '*', '*', '*', '*', '*', 'root');
 		}
 
+		write_config("5651 service configured");
 		$savemsg = 'The changes have been applied successfully.';
 	}
 }

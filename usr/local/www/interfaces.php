@@ -139,7 +139,7 @@ if ($_POST['apply']) {
 else if ($_POST && $_POST['enable'] != "yes")
 {
 	unset($wancfg['enable']);
-	write_config("An interface enabled");
+	write_config("An interface disabled");
 	mark_subsystem_dirty('interfaces');
 	if (file_exists("{$g['tmp_path']}/.interfaces.apply"))
 		$toapplylist = unserialize(file_get_contents("{$g['tmp_path']}/.interfaces.apply"));
@@ -318,7 +318,7 @@ else if ($_POST)
 			else { unset($wancfg['mediaopt']); }
 		}
 
-		write_config("An interface added");
+		write_config("An interface configured");
 
 		if (file_exists("{$g['tmp_path']}/.interfaces.apply"))
 			$toapplylist = unserialize(file_get_contents("{$g['tmp_path']}/.interfaces.apply"));

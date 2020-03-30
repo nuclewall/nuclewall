@@ -119,7 +119,7 @@ else if ($_POST)
 				}
 			}
 		}
-		write_config();
+		write_config("Interface assigned");
 	}
 }
 

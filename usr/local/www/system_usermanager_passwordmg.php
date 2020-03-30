@@ -24,7 +24,7 @@ if (isset($_POST['save']))
 		$config['system']['user'][$userindex[$HTTP_SERVER_VARS['AUTH_USER']]]['password'] = crypt($_POST['passwordfld1']);
 		local_user_set($config['system']['user'][$userindex[$HTTP_SERVER_VARS['AUTH_USER']]]);
 
-		write_config("Password successfully changed");
+		write_config("Password changed");
 
 		$savemsg = "Password successfully changed.";
 	}

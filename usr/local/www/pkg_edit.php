@@ -197,7 +197,7 @@ if ($_POST) {
 		else
 			$a_pkg[] = $pkgarr;
 
-		write_config("Squid Proxy settings changed");
+		write_config("Proxy Server configured");
 		if($pkg['custom_add_php_command_late'] <> "") {
 			eval($pkg['custom_add_php_command_late']);
 		}

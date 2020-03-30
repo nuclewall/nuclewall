@@ -256,7 +256,7 @@ EODD;
 			unset($config['interfaces']['opt' . ($i+1)]);
 
 		echo "\nSaving settings...";
-		write_config("Interface settings changed from console");
+		write_config();
 		echo "Done.";
 
 		if($g['booting'])

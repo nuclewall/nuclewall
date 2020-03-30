@@ -155,7 +155,7 @@ if ($_POST) {
 			$a_maps[] = $mapent;
 		staticmaps_sort($if);
 
-		write_config("A static DHCP record added");
+		write_config("A static DHCP mapping added");
 
 		if(isset($config['dhcpd'][$if]['enable'])) {
 			mark_subsystem_dirty('staticmaps');

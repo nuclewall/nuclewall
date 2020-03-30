@@ -237,7 +237,7 @@ if ($_POST)
 		$config['dhcpd'][$if]['denyunknown'] = ($_POST['denyunknown']) ? true : false;
 		$config['dhcpd'][$if]['enable'] = ($_POST['enable']) ? true : false;
 
-		write_config("DHCP Server reconfigured");
+		write_config("DHCP Server configured");
 
 		$retval = 0;
 		$retvaldhcp = 0;
@@ -272,7 +272,7 @@ if ($_GET['act'] == 'del')
 	if ($a_maps[$_GET['id']])
 	{
 		unset($a_maps[$_GET['id']]);
-		write_config("A static DHCP record deleted");
+		write_config("A static DHCP mapping deleted");
 		if(isset($config['dhcpd'][$if]['enable']))
 		{
 			mark_subsystem_dirty('staticmaps');
