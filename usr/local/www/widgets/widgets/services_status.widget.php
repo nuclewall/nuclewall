@@ -39,6 +39,8 @@ require_once('captiveportal.inc');
 require_once('service-utils.inc');
 require_once('/usr/local/www/widgets/include/services_status.inc');
 
+?>
+
 <table class="grids sortable">
 	<tr>
 		<td class="listlr"><b>Service</b></td>
