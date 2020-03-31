@@ -158,7 +158,7 @@ if($leases)
 	else
 	{
 		$log = fopen($log_file_name, 'w');
-		$title = "IP address			Session Start Time		    Session End Time		    MAC Address\r\n";
+		$title = "IP address			    Session Start Time		    Session End Time		    MAC Address\r\n";
 		fwrite($log, $title);
 	}
 
