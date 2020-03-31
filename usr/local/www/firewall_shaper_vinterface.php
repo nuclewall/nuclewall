@@ -102,7 +102,7 @@ if ($_GET)
 			if (!$input_errors)
 			{
 				$queue->delete_queue();
-				write_config();
+				write_config("Bir hiz sinirlayici silindi");
 				mark_subsystem_dirty('shaper');
 				header("Location: firewall_shaper_vinterface.php");
 				exit;
@@ -209,7 +209,7 @@ else if ($_POST)
 			$tmppath[] = $dnpipe->GetQname();
 			$dnpipe->SetLink(&$tmppath);
 			$dnpipe->wconfig();
-			write_config();
+			write_config("Bir hiz sinirlayici eklendi");
 			mark_subsystem_dirty('shaper');
 			$can_enable = true;
        		     	$can_add = true;
@@ -240,7 +240,7 @@ else if ($_POST)
 	}
 	else if ($_POST['apply'])
 	{
-			write_config();
+		write_config("Hız sinirlayici ayarlari kaydedildi");
 
 			$retval = 0;
 			$retval = filter_configure();
@@ -268,7 +268,7 @@ else if ($_POST)
                 if (!$input_errors) {
                             	$queue->update_dn_data($_POST);
                             	$queue->wconfig();
-				write_config();
+				write_config("Bir hiz sinirlayici duzenlendi");
 				mark_subsystem_dirty('shaper');
 				$dontshow = false;
                 }
