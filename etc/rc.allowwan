@@ -43,20 +43,20 @@ if(!$rule_exists)
 	$filterent["statetype"] = "keep state";
 	$filterent["os"] = "";
 	$filterent["console"] = true;
-	$filterent["descr"] = base64_encode("NUCLEWALL'a WAN arayüzünden eriþim izni.");
+	$filterent["descr"] = base64_encode("NUCLEWALL'a WAN arayuzunden erisim izni.");
 	$config["filter"]["rule"][] = $filterent;
 }
 
 unset($config["interfaces"]["wan"]["blockpriv"]);
 unlink_if_exists("/tmp/config.cache");
-write_config("NUCLEWALL'a WAN arayuzunden erisime izin verildi");
+write_config("NUCLEWALL'a WAN arayuzunden erisim izin verildi");
 unlink_if_exists("/tmp/config.cache");
 unset($config['interfaces']['wan']['blockbogons']);
 
 $config = parse_config(true);
 echo "    Ayarlar yeniden yükleniyor...\n";
 filter_configure_sync();
-echo "    NUCLEWALL'a WAN arayüzünden eriþime izin verildi.\n\n    Devam etmek için <ENTER> a basýn. ";
+echo "    NUCLEWALL'a WAN arayüzünden eriþim izin verildi.\n\n    Devam etmek için <ENTER> a basýn. ";
 
 fgets($fp);
 fclose($fp);

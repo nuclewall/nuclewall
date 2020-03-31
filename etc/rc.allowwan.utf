@@ -49,14 +49,14 @@ if(!$rule_exists)
 
 unset($config["interfaces"]["wan"]["blockpriv"]);
 unlink_if_exists("/tmp/config.cache");
-write_config("NUCLEWALL'a WAN arayuzunden erisime izin verildi");
+write_config("NUCLEWALL'a WAN arayuzunden erisim izin verildi");
 unlink_if_exists("/tmp/config.cache");
 unset($config['interfaces']['wan']['blockbogons']);
 
 $config = parse_config(true);
 echo "    Ayarlar yeniden yükleniyor...\n";
 filter_configure_sync();
-echo "    NUCLEWALL'a WAN arayüzünden erişime izin verildi.\n\n    Devam etmek için <ENTER> a basın. ";
+echo "    NUCLEWALL'a WAN arayüzünden erişim izin verildi.\n\n    Devam etmek için <ENTER> a basın. ";
 
 fgets($fp);
 fclose($fp);

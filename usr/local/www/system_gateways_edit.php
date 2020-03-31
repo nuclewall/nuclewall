@@ -196,7 +196,7 @@ if ($_POST) {
 
 		mark_subsystem_dirty('staticroutes');
 
-		write_config("Ag gecitleri yapilandirildi");
+		write_config("Bir ag gecidi yapilandirildi");
 
 		if (!empty($reloadif))
 			send_event("interface reconfigure {$reloadif}");

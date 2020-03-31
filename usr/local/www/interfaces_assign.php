@@ -32,7 +32,7 @@
 	POSSIBILITY OF SUCH DAMAGE.
 */
 
-$pgtitle = array('AĞ ARAYÜZLERİ', 'ETHERNET KARTI-ARAYÜZLERİ İLİŞKİLENDİR');
+$pgtitle = array('AĞ ARAYÜZLERİ', 'AĞ KARTI-ARAYÜZLERİ İLİŞKİLENDİR');
 
 require('guiconfig.inc');
 require('functions.inc');
@@ -119,7 +119,7 @@ else if ($_POST)
 				}
 			}
 		}
-		write_config("Ag arayuzu-network karti eslestirmeleri kaydedildi");
+		write_config("Ag karti - arayuz eslestirmeleri kaydedildi");
 	}
 }
 
@@ -244,7 +244,7 @@ if(file_exists("/var/run/interface_mismatch_reboot_needed"))
 			$savemsg = "Sistemin yeniden başlatılması gerekiyor. Lütfen ayarlarınızı uygulayın.";
 	}
 	else
-		$savemsg = "Ethernet kartı-arayüz ilişkilendirmesi düzgün yapılmamış. Lütfen düzeltip yeniden deneyin.";
+		$savemsg = "Ağ kartı-arayüz ilişkilendirmesi düzgün yapılmamış. Lütfen düzeltip yeniden deneyin.";
 ?>
 
 
@@ -269,7 +269,7 @@ if(file_exists("/var/run/interface_mismatch_reboot_needed"))
 			<table width="100%" class="grids">
 				<tr>
 					<td class="head">Arayüz</td>
-					<td class="head">Ethernet Kartı</td>
+					<td class="head">Ağ Kartı</td>
 					<td class="head"></td>
 				</tr>
 					<?php foreach ($config['interfaces'] as $ifname => $iface):
@@ -321,7 +321,7 @@ if(file_exists("/var/run/interface_mismatch_reboot_needed"))
 </form>
 <div class="alert alert-warning">
 	<span>
-		Arayüz ve ethernet kartı ilişkilendirmelerini değiştirmek bağlantı sorunlarına yol açabilir.
+		Arayüz ve ağ kartı ilişkilendirmelerini değiştirmek bağlantı sorunlarına yol açabilir.
 	</span>
 </div>
 </div>

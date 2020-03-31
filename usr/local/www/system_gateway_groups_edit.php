@@ -121,7 +121,7 @@ if ($_POST) {
 
 		mark_subsystem_dirty('staticroutes');
 
-		write_config("Ag gecidi grubu yapilandirildi");
+		write_config("Bir ag gecidi grubu yapilandirildi");
 
 		header("Location: system_gateway_groups.php");
 		exit;
