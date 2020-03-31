@@ -177,8 +177,8 @@ if($leases)
 			else if($lease['type'] == 'static')
 			{
 				fwrite($log, format_ipaddr($lease['ip']));
-				fwrite($log, "\tSABİT IP\t\t\t\t\t\t");
-				fwrite($log, "SABİT IP\t\t\t\t\t\t\t");
+				fwrite($log, "\tSabit IP\t\t\t\t\t\t");
+				fwrite($log, "Sabit IP\t\t\t\t\t\t\t");
 				fwrite($log, $lease['mac'] . "\n");
 			}
 		}
