@@ -425,7 +425,7 @@ function captiveportal_prune_old()
 		if ($timedout)
 		{
 			captiveportal_disconnect($cpentry, $radiusservers,$term_cause,$stop_time);
-			captiveportal_logportalauth($cpentry[4], $cpentry[3], $cpentry[2], "TIMEOUT");
+			captiveportal_logportalauth($cpentry[4], $cpentry[3], $cpentry[2], "OTURUM SURESI DOLDU");
 			$unsetindexes[] = $cpentry[5];
 		}
 
@@ -1296,9 +1296,9 @@ function portal_allow($clientip,$clientmac,$username,$password = null, $attribut
 		if($cpentry[2] == $clientip)
 		{
 			if ($cpentry[3] == $clientmac)
-				captiveportal_logportalauth($cpentry[4],$cpentry[3],$cpentry[2],"CONCURRENT LOGIN - REUSING OLD SESSION");
+				captiveportal_logportalauth($cpentry[4],$cpentry[3],$cpentry[2],"OTURUM TEKRARI - ESKI OTURUM KULLANILIYOR");
 			else
-				captiveportal_logportalauth($cpentry[4],$cpentry[3],$cpentry[2],"CONCURRENT LOGIN - REUSING IP {$cpentry[2]} WITH DIFFERENT MAC ADDRESS {$cpentry[3]}");
+				captiveportal_logportalauth($cpentry[4],$cpentry[3],$cpentry[2],"OTURUM TEKRARI - {$cpentry[2]} IP ADRESI VE {$cpentry[3]} MAC ADRESIYLE");
 			$sessionid = $sid;
 			break;
 		}
