@@ -105,7 +105,7 @@ if ($_GET)
 			if (!$input_errors)
 			{
 				$queue->delete_queue();
-				write_config();
+				write_config("Network limiter deleted");
 				mark_subsystem_dirty('shaper');
 				header("Location: firewall_shaper_vinterface.php");
 				exit;
@@ -212,7 +212,7 @@ else if ($_POST)
 			$tmppath[] = $dnpipe->GetQname();
 			$dnpipe->SetLink(&$tmppath);
 			$dnpipe->wconfig();
-			write_config();
+			write_config("A network limiter added");
 			mark_subsystem_dirty('shaper');
 			$can_enable = true;
        		     	$can_add = true;
@@ -271,7 +271,7 @@ else if ($_POST)
                 if (!$input_errors) {
                             	$queue->update_dn_data($_POST);
                             	$queue->wconfig();
-				write_config();
+				write_config("A network limiter configured");
 				mark_subsystem_dirty('shaper');
 				$dontshow = false;
                 }
