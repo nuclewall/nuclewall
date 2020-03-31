@@ -534,8 +534,8 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 											$sched_caption_escaped = "";
 											$sched_content = "";
 											$schedstatus = false;
-											$dayArray = array ('Mon','Tues','Wed','Thur','Fri','Sat','Sun');
-											$monthArray = array ('January','February','March','April','May','June','July','August','September','October','November','December');
+											$dayArray = array ('Pts.','Salı','Çar.','Perş.','Cuma','Cts.','Pazar');
+											$monthArray = array ('Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık');
 											if($config['schedules']['schedule'] <> "" and is_array($config['schedules']['schedule'])) {
 												foreach ($a_schedules as $schedule)
 												{
@@ -693,7 +693,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 											} else if (isset($filterent['defaultqueue'])) {
 												$desc = $filterent['defaultqueue'];
 												echo "<a href=\"firewall_shaper_queues.php?queue={$filterent['defaultqueue']}&action=show\">{$desc}</a>"; }
-											else echo "none";
+											else echo "Yok";
 										?>
 										<?=$textse;?>
 									</td>
