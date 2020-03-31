@@ -901,7 +901,7 @@ function rule_popup($src,$srcport,$dst,$dstport)
         foreach($config['aliases']['alias'] as $alias_name)
         {
             	$alias_addresses = explode (" ", $alias_name['address']);
-            	$alias_details = explode ("||", base64_decode($alias_name['detail']));
+            	$alias_details = explode ("||", $alias_name['detail']);
             	$alias_objects_with_details = "";
             	$counter = 0;
 		if ($alias_name['url']) {
@@ -910,9 +910,9 @@ function rule_popup($src,$srcport,$dst,$dstport)
             	foreach($alias_addresses as $alias_ports_address)
             	{
                     	$alias_objects_with_details .= $alias_addresses[$counter];
-                    	$alias_detail_default = strpos ($alias_details[$counter],"Entry added");
+                    	$alias_detail_default = strpos ($alias_details[$counter], "Entry added");
                     	if ($alias_details[$counter] != "" && $alias_detail_default === False){
-                            	$alias_objects_with_details .=" - " . $alias_details[$counter];
+                            	$alias_objects_with_details .=" - " . base64_decode($alias_details[$counter]);
                     	}
                     	$alias_objects_with_details .= "<br>";
                     	$counter++;
