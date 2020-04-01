@@ -252,7 +252,6 @@ function filter_configure_sync($delete_states_if_needed = true)
 	$rules .= "\n";
 	/* NOTE: Disabled until we catch up with dummynet changes. */
 	//$rules .= "{$dummynet_rules}\n";
-	$rules .= "{$altq_queues}\n";
 	$rules .= "{$natrules}\n";
 	$rules .= "{$pfrules}\n";
 
