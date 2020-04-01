@@ -962,14 +962,13 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 		</tr>
 
 		<tr>
-			<td valign="top" class="vncell">Günlük</td>
+			<td valign="top" class="vncell">Olay Kaydı</td>
 			<td class="vtable">
 				<input name="log" type="checkbox" id="log" value="yes" <?php if ($pconfig['log']) echo "checked"; ?>>
-				<b>	Bu kural tarafından işlenen paketleri günlükle </b>
+				<b>	Bu kural tarafından işlenen paketlerin kaydını tut</b>
 				<br>
 				<span>
-					<b>İpucu:</b> Güvenlik duvarının yerel günlük alanı kısıtlıdır. Her şeyi günlüğe kaydetmeyin.
-					<br>Eğer çok sayıda günlükleme faaliyeti olacaksa bir uzak syslog sunucu kullanabilirsiniz.
+					<b>İpucu:</b> Yerel günlük kayıt alanı kısıtlıdır.
 				</span>
 			</td>
 		</tr>
@@ -1158,7 +1157,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 		</tr>
 
 		<tr>
-			<td valign="top" class="vncell">Gelen/Giden</td>
+			<td valign="top" class="vncell">Hız Sınırı (Gelen/Giden)</td>
 			<td class="vtable">
 				<div id="showadvinoutbox" <?php if (!empty($pconfig['dnpipe'])) echo "style='display:none'"; ?>>
 					<input class="btn btn-mini" type="button" onClick="show_advanced_inout()" value="Göster">

@@ -567,11 +567,11 @@ class dnpipe_class extends dummynet_class {
 		$form .= "<option value=\"srcaddress\"";
 		if ($this->GetMask() == "srcaddress")
 			$form .= " selected=\"yes\"";
-		$form .= ">Kanyak Adresi</option>";
+		$form .= ">Gelen</option>";
 		$form .= "<option value=\"dstaddress\"";
 		if ($this->GetMask() == "dstaddress")
 			$form .= " selected=\"yes\"";
-		$form .= ">Hedef Adresi</option>";
+		$form .= ">Giden</option>";
 		$form .= "</select>";
 		$form .= "</td></tr>";
 
