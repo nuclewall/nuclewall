@@ -1156,7 +1156,7 @@ $pgtitle = array('FIREWALL ', 'RULES', 'EDIT');
 		</tr>
 
 		<tr>
-			<td valign="top" class="vncell">In/Out</td>
+			<td valign="top" class="vncell">Limiter (In/Out)</td>
 			<td class="vtable">
 				<div id="showadvinoutbox" <?php if (!empty($pconfig['dnpipe'])) echo "style='display:none'"; ?>>
 					<input class="btn btn-mini" type="button" onClick="show_advanced_inout()" value="Show">

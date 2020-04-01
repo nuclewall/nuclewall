@@ -534,7 +534,7 @@ class dnpipe_class extends dummynet_class {
 		$form .= "<input type=\"hidden\" id=\"name\" name=\"name\" value=\"";
 		$form .= $this->GetQname()."\">";
 		$form .= "</td></tr>";
-		$form .= "<tr><td class=\"vncell\">Queue";
+		$form .= "<tr><td class=\"vncell\">Limit";
 		$form .= "</td><td class=\"vtable\">";
 		$form .= "<input type=\"text\" id=\"bandwidth\" name=\"bandwidth\" value=\"";
 		$form .= $this->GetBandwidth() . "\">";
@@ -567,11 +567,11 @@ class dnpipe_class extends dummynet_class {
 		$form .= "<option value=\"srcaddress\"";
 		if ($this->GetMask() == "srcaddress")
 			$form .= " selected=\"yes\"";
-		$form .= ">Source</option>";
+		$form .= ">In</option>";
 		$form .= "<option value=\"dstaddress\"";
 		if ($this->GetMask() == "dstaddress")
 			$form .= " selected=\"yes\"";
-		$form .= ">Dest.</option>";
+		$form .= ">Out</option>";
 		$form .= "</select>";
 		$form .= "</td></tr>";
 
