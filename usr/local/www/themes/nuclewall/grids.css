@@ -78,10 +78,11 @@ vertical-align: middle;
 
 .wall.description {
 background-color: #EFEFEF;
-overflow: hidden;
+overflow: auto;
 line-height: 15px;
 max-height: 20px;
-min-width: 120px;
+min-width: 140px;
+max-width: 140px;
 }
 
 .wall.tools {
