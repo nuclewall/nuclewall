@@ -354,7 +354,6 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<td class="headw">Destination</td>
 								<td class="headw">Port</td>
 								<td class="headw">Gateway</td>
-								<td class="headw">Limiter</td>
 								<td class="headw">Schedule</td>
 								<?php
 									pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/pre_desc_tablehead");
@@ -405,7 +404,6 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<td class="wall"><?= $alports ?></td>
 								<td class="wall">*</td>
 								<td class="wall">*</td>
-								<td class="wall"></td>
 								<td class="wall description">Anti-Lockout Rule</td>
 								<td class="wall tools">
 									<a title="Edit" href="system_advanced_admin.php">
@@ -430,7 +428,6 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<td class="wall">*</td>
 								<td class="wall">*</td>
 								<td class="wall">*</td>
-								<td class="wall"></td>
 								<td class="wall description">Block private networks</td>
 								<td class="wall tools">
 									<a href="interfaces.php?if=<?=htmlspecialchars($if)?>#rfc1918">
@@ -455,7 +452,6 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<td class="wall" >*</td>
 								<td class="wall" >*</td>
 								<td class="wall" >*</td>
-								<td class="wall" ></td>
 								<td class="wall description">Block bogon networks</td>
 								<td class="wall tools">
 									<a title="Edit" href="interfaces.php?if=<?=htmlspecialchars($if)?>#rfc1918">
@@ -685,21 +681,6 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 										<?=$textse;?>
 									</td>
 									<td class="wall" onClick="fr_toggle(<?=$nrules;?>)" id="frd<?=$nrules;?>" ondblclick="document.location='firewall_rules_edit.php?id=<?=$i;?>';">
-									<?=$textss;?>
-										<?php
-											if (isset($filterent['ackqueue']) && isset($filterent['defaultqueue'])) {
-												$desc = $filterent['ackqueue'] ;
-												echo "<a href=\"firewall_shaper_queues.php?queue={$filterent['ackqueue']}&action=show\">{$desc}</a>";
-												$desc = $filterent['defaultqueue'];
-												echo "/<a href=\"firewall_shaper_queues.php?queue={$filterent['defaultqueue']}&action=show\">{$desc}</a>";
-											} else if (isset($filterent['defaultqueue'])) {
-												$desc = $filterent['defaultqueue'];
-												echo "<a href=\"firewall_shaper_queues.php?queue={$filterent['defaultqueue']}&action=show\">{$desc}</a>"; }
-											else echo "none";
-										?>
-										<?=$textse;?>
-									</td>
-									<td class="wall" onClick="fr_toggle(<?=$nrules;?>)" id="frd<?=$nrules;?>" ondblclick="document.location='firewall_rules_edit.php?id=<?=$i;?>';">
 										<?php if ($printicon) { ?>
 											<?php } ?>
 											<?=$textss;?>
@@ -747,7 +728,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<?php
 									pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/pre_id_tr_belowtable");
 								?>
-								<td class="wall" colspan="12"></td>
+								<td class="wall" colspan="11"></td>
 								<td class="wall tools" style="padding-bottom: 4px;">
 									<?php if ($nrules != 0): ?>
 										<input name="move_<?=$i;?>" type="image" src="./themes/nuclewall/images/icons/icon_top.png" title="Move selected rules to end" onMouseOver="fr_insline(<?=$nrules;?>, true)" onMouseOut="fr_insline(<?=$nrules;?>, false)">
