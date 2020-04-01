@@ -65,7 +65,7 @@ else
 <?php	if ($gateways_status[$gname])
 	echo $gateways_status[$gname]['delay'];
 else
-	echo 'Gathering data...';
+	echo 'Checking...';
 ?>
 	<?php $counter++; ?>
 </td>
@@ -73,7 +73,7 @@ else
 <?php	if ($gateways_status[$gname])
 	echo $gateways_status[$gname]['loss'];
 else
-	echo 'Gathering data...';
+	echo 'Checking...';
 ?>
 	<?php $counter++; ?>
 </td>
@@ -93,7 +93,7 @@ else
 							$class = 'label label-success';
 	}
 } else {
-	$online = 'Gathering data...';
+	$online = 'Checking...';
 	$class = 'label';
 }
 echo "<span class=\"{$class}\">{$online}</span>\n";

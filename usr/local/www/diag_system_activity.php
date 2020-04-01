@@ -91,7 +91,7 @@ if($_REQUEST['getactivity']) {
 							<tr>
 								<td>
 									<div name='cpuactivitydiv' id='cpuactivitydiv'>
-										Gathering data...
+										Checking...
 									</div>
 								</td>
 							</tr>

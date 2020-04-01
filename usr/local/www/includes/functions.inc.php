@@ -51,14 +51,14 @@ function get_gatewaystats() {
 				$class = 'label label-warning';
 				break;
 			default:
-				$online = 'Gathering data...';
+				$online = 'Checking...';
 				break;
 			}
 		} else {
-			$online = 'Gathering data...';
+			$online = 'Checking...';
 			$class = 'label';
 		}
-		$data .= ($online == 'Gathering data...') ? "{$online},{$online}," : "{$gws['delay']},{$gws['loss']},";
+		$data .= ($online == 'Checking...') ? "{$online},{$online}," : "{$gws['delay']},{$gws['loss']},";
 		$data .= "<span class=\"{$class}\">{$online}</span>";
 	}
 	return $data;

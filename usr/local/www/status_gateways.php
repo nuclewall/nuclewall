@@ -92,7 +92,7 @@ $pgtitle = array('STATUS ', 'GATEWAYS');
 										if ($gateways_status[$gname])
 											echo $gateways_status[$gname]['delay'];
 										else
-											echo "Gathering data...";
+											echo "Checking...";
 									?>
 									<?php $counter++; ?>
 								</td>
@@ -101,7 +101,7 @@ $pgtitle = array('STATUS ', 'GATEWAYS');
 										if ($gateways_status[$gname])
 											echo $gateways_status[$gname]['loss'];
 										else
-											echo "Gathering data...";
+											echo "Checking...";
 									?>
 									<?php $counter++; ?>
 								</td>
@@ -128,7 +128,7 @@ $pgtitle = array('STATUS ', 'GATEWAYS');
 											$online = "Online";
 											$bgcolor = "label-success";
 										} else {
-											$online = "Gathering data...";
+											$online = "Checking...";
 											$bgcolor = "label-success";
 										}
 									echo	"<span class=\"label $bgcolor\">$online</span>";
