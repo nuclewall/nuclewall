@@ -190,6 +190,8 @@ This block of code is only entered for OPTx interfaces that are configured for P
 }
 
 function interfaces_loopback_configure() {
+	global $g;
+
 	if($g['booting'])
 		echo "Configuring loopback interface...";
 	pfSense_interface_setaddress("lo0", "127.0.0.1");
