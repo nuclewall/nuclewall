@@ -121,43 +121,19 @@ if (isset($id) && $a_filter[$id]) {
 			$pconfig['tcpflags2'] = $a_filter[$id]['tcpflags2'];
 	}
 
-	if (isset($a_filter[$id]['tag']) && $a_filter[$id]['tag'] <> "")
-		$pconfig['tag'] = $a_filter[$id]['tag'];
-	if (isset($a_filter[$id]['tagged']) && $a_filter[$id]['tagged'] <> "")
-        	$pconfig['tagged'] = $a_filter[$id]['tagged'];
 	if (isset($a_filter[$id]['quick']) && $a_filter[$id]['quick'])
 		$pconfig['quick'] = $a_filter[$id]['quick'];
 	if (isset($a_filter[$id]['allowopts']))
-		$pconfig['allowopts'] = true;
-	if (isset($a_filter[$id]['disablereplyto']))
-		$pconfig['disablereplyto'] = true;
-
-	/* advanced */
-	$pconfig['max'] = $a_filter[$id]['max'];
-	$pconfig['max-src-nodes'] = $a_filter[$id]['max-src-nodes'];
-	$pconfig['max-src-conn'] = $a_filter[$id]['max-src-conn'];
-	$pconfig['max-src-states'] = $a_filter[$id]['max-src-states'];
-	$pconfig['statetype'] = $a_filter[$id]['statetype'];
-	$pconfig['statetimeout'] = $a_filter[$id]['statetimeout'];
-
-	/* advanced - new connection per second banning*/
-	$pconfig['max-src-conn-rate'] = $a_filter[$id]['max-src-conn-rate'];
-	$pconfig['max-src-conn-rates'] = $a_filter[$id]['max-src-conn-rates'];
 
 	/* Multi-WAN next-hop support */
 	$pconfig['gateway'] = $a_filter[$id]['gateway'];
 
 	/* Shaper support */
-	$pconfig['defaultqueue'] = $a_filter[$id]['defaultqueue'];
-	$pconfig['ackqueue'] = $a_filter[$id]['ackqueue'];
 	$pconfig['dnpipe'] = $a_filter[$id]['dnpipe'];
 	$pconfig['pdnpipe'] = $a_filter[$id]['pdnpipe'];
-	$pconfig['l7container'] = $a_filter[$id]['l7container'];
 
 	//schedule support
 	$pconfig['sched'] = $a_filter[$id]['sched'];
-	if (!isset($_GET['dup']))
-		$pconfig['associated-rule-id'] = $a_filter[$id]['associated-rule-id'];
 
 } else {
 	/* defaults */
@@ -175,17 +151,8 @@ if (isset($_GET['dup']))
 
 if ($_POST) {
 
-	if( isset($a_filter[$id]['associated-rule-id']) ) {
-		$_POST['proto'] = $pconfig['proto'];
-		if ($pconfig['proto'] == "icmp")
-			$_POST['icmptype'] = $pconfig['icmptype'];
-	}
-
 	if ($_POST['type'] == "reject" && $_POST['proto'] <> "tcp")
 		$input_errors[] = "Reject type rules only works when the protocol is set to TCP.";
-
-	if ($_POST['type'] == "match" && $_POST['defaultqueue'] == "none")
-		$input_errors[] = "Queue type rules only work with queues.";
 
 	if (($_POST['proto'] != "tcp") && ($_POST['proto'] != "udp") && ($_POST['proto'] != "tcp/udp")) {
 		$_POST['srcbeginport'] = 0;
@@ -243,33 +210,24 @@ if ($_POST) {
 
 	/* input validation */
 	$reqdfields = explode(" ", "type proto");
-	if ( isset($a_filter[$id]['associated-rule-id'])===false ) {
-		$reqdfields[] = "src";
-		$reqdfields[] = "dst";
-	}
+	$reqdfields[] = "src";
+	$reqdfields[] = "dst";
+
 	$reqdfieldsn = explode(",", "Type,Protocol");
-	if ( isset($a_filter[$id]['associated-rule-id'])===false ) {
-		$reqdfieldsn[] = "Source";
-		$reqdfieldsn[] = "Destination";
-	}
+	$reqdfieldsn[] = "Source";
+	$reqdfieldsn[] = "Destination";
 
-	if($_POST['statetype'] == "modulate state" or $_POST['statetype'] == "synproxy state") {
-		if( $_POST['proto'] != "tcp" )
-			$input_errors[] = sprintf("%s is only valid with protocol tcp.",$_POST['statetype']);
-		if(($_POST['statetype'] == "synproxy state") && ($_POST['gateway'] != ""))
-			$input_errors[] = sprintf("%s is only valid if the gateway is set to 'default'.", $_POST['statetype']);
-	}
 
-	if ( isset($a_filter[$id]['associated-rule-id'])===false &&
-	(!(is_specialnet($_POST['srctype']) || ($_POST['srctype'] == "single"))) ) {
+	if (!(is_specialnet($_POST['srctype']) || ($_POST['srctype'] == "single"))) {
 		$reqdfields[] = "srcmask";
 		$reqdfieldsn[] = "Source bit count";
 	}
-	if ( isset($a_filter[$id]['associated-rule-id'])===false &&
-	(!(is_specialnet($_POST['dsttype']) || ($_POST['dsttype'] == "single"))) ) {
+
+	if (!(is_specialnet($_POST['dsttype']) || ($_POST['dsttype'] == "single"))) {
 		$reqdfields[] = "dstmask";
 		$reqdfieldsn[] = "Destination bit count";
 	}
+
 
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
 
@@ -354,19 +312,13 @@ if ($_POST) {
 		if( $_POST['proto'] != "tcp" )
 			$input_errors[] = "OS detection is only valid with protocol tcp.";
 
-	if ($_POST['ackqueue'] && $_POST['ackqueue'] != "none") {
-		if ($_POST['defaultqueue'] == "none" )
-			$input_errors[] = "You have to select a queue when you select an acknowledge queue too.";
-		else if ($_POST['ackqueue'] == $_POST['defaultqueue'])
-			$input_errors[] = "Acknowledge queue and Queue cannot be the same.";
-	}
 	if (isset($_POST['floating']) && $_POST['pdnpipe'] != "none" && (empty($_POST['direction']) || $_POST['direction'] == "any"))
 		$input_errors[] = "You can not use limiters in Floating rules without choosing a direction.";
 	if (isset($_POST['floating']) && $_POST['gateway'] != "" && (empty($_POST['direction']) || $_POST['direction'] == "any"))
 		$input_errors[] = "You can not use gateways in Floating rules without choosing a direction..";
 	if ($_POST['pdnpipe'] && $_POST['pdnpipe'] != "none") {
 		if ($_POST['dnpipe'] == "none" )
-			$input_errors[] = "You must select a queue for the In direction before selecting one for Out too.";
+			$input_errors[] = "You must select a limiter for the In direction before selecting one for Out too.";
 		else if ($_POST['pdnpipe'] == $_POST['dnpipe'])
 			$input_errors[] = "In and Out Queue cannot be the same.";
 		else if ($pdnpipe[0] == "?" && $dnpipe[0] <> "?")
@@ -427,10 +379,6 @@ if ($_POST) {
 			}
 		}
 
-		if (isset($_POST['tag']))
-			$filterent['tag'] = $_POST['tag'];
-		if (isset($_POST['tagged']))
-			$filterent['tagged'] = $_POST['tagged'];
 		if ($if == "FloatingRules" || isset($_POST['floating'])) {
 			$filterent['direction'] = $_POST['direction'];
 			if (isset($_POST['quick']) && $_POST['quick'] <> "")
@@ -442,34 +390,9 @@ if ($_POST) {
 		}
 
 		/* Advanced options */
-		if ($_POST['allowopts'] == "yes")
-			$filterent['allowopts'] = true;
-		else
-			unset($filterent['allowopts']);
-		if ($_POST['disablereplyto'] == "yes")
-			$filterent['disablereplyto'] = true;
-		else
-			unset($filterent['disablereplyto']);
-		$filterent['max'] = $_POST['max'];
-		$filterent['max-src-nodes'] = $_POST['max-src-nodes'];
-		$filterent['max-src-conn'] = $_POST['max-src-conn'];
-		$filterent['max-src-states'] = $_POST['max-src-states'];
-		$filterent['statetimeout'] = $_POST['statetimeout'];
-		$filterent['statetype'] = $_POST['statetype'];
 		$filterent['os'] = $_POST['os'];
 
 		/* Nosync directive - do not xmlrpc sync this item */
-
-		$filterent['nosync'] = true;
-
-		/* unless both values are provided, unset the values - ticket #650 */
-		if($_POST['max-src-conn-rate'] <> "" and $_POST['max-src-conn-rates'] <> "") {
-			$filterent['max-src-conn-rate'] = $_POST['max-src-conn-rate'];
-			$filterent['max-src-conn-rates'] = $_POST['max-src-conn-rates'];
-		} else {
-			unset($filterent['max-src-conn-rate']);
-			unset($filterent['max-src-conn-rates']);
-		}
 
 		if ($_POST['proto'] != "any")
 			$filterent['protocol'] = $_POST['proto'];
@@ -504,40 +427,14 @@ if ($_POST) {
 			$filterent['gateway'] = $_POST['gateway'];
 		}
 
-		if (isset($_POST['defaultqueue']) && $_POST['defaultqueue'] != "none") {
-			$filterent['defaultqueue'] = $_POST['defaultqueue'];
-			if (isset($_POST['ackqueue']) && $_POST['ackqueue'] != "none")
-				$filterent['ackqueue'] = $_POST['ackqueue'];
-		}
-
 		if (isset($_POST['dnpipe']) && $_POST['dnpipe'] != "none") {
 			$filterent['dnpipe'] = $_POST['dnpipe'];
 			if (isset($_POST['pdnpipe']) && $_POST['pdnpipe'] != "none")
 				$filterent['pdnpipe'] = $_POST['pdnpipe'];
 		}
 
-		if (isset($_POST['l7container']) && $_POST['l7container'] != "none") {
-			$filterent['l7container'] = $_POST['l7container'];
-		}
-
 		if ($_POST['sched'] != "") {
 			$filterent['sched'] = $_POST['sched'];
-		}
-
-		// If we have an associated nat rule, make sure the source and destination doesn't change
-		if( isset($a_filter[$id]['associated-rule-id']) ) {
-			$filterent['interface'] = $a_filter[$id]['interface'];
-			if (isset($a_filter[$id]['protocol']))
-				$filterent['protocol'] = $a_filter[$id]['protocol'];
-			else if (isset($filterent['protocol']))
-				unset($filterent['protocol']);
-			if ($a_filter[$id]['protocol'] == "icmp" && $a_filter[$id]['icmptype'])
-				$filterent['icmptype'] = $a_filter[$id]['icmptype'];
-			else if (isset($filterent['icmptype']))
-				unset($filterent['icmptype']);
-			$filterent['source'] = $a_filter[$id]['source'];
-			$filterent['destination'] = $a_filter[$id]['destination'];
-			$filterent['associated-rule-id'] = $a_filter[$id]['associated-rule-id'];
 		}
 
 		// Allow extending of the firewall edit page and include custom input validation
@@ -633,36 +530,6 @@ $pgtitle = array('FIREWALL ', 'RULES', 'EDIT');
 
 		<?php endif; ?>
 		<?php $edit_disabled = ""; ?>
-		<?php if( isset($pconfig['associated-rule-id']) ): ?>
-
-		<tr>
-			<td valign="top" class="vncell">Associated filter rule</td>
-			<td class="vtable">
-				<span><b>Note:</b></span>This is associated to a NAT rule.<br>
-				You cannot edit the interface, protocol, source, or destination of associated filter rules.<br>
-
-				<?php
-					$edit_disabled = "disabled";
-					if (is_array($config['nat']['rule'])) {
-						foreach( $config['nat']['rule'] as $index => $nat_rule ) {
-							if( isset($nat_rule['associated-rule-id']) && $nat_rule['associated-rule-id']==$pconfig['associated-rule-id'] ) {
-								echo "<a href=\"firewall_nat_edit.php?id={$index}\">" . "View the NAT rule" . "</a><br>";
-								break;
-							}
-						}
-					}
-					echo "<input name='associated-rule-id' id='associated-rule-id' type='hidden' value='{$pconfig['associated-rule-id']}' >";
-					if (!empty($pconfig['interface']))
-						echo "<input name='interface' id='interface' type='hidden' value='{$pconfig['interface']}' >";
-				?>
-
-				<script type="text/javascript">
-				editenabled = 0;
-				</script>
-			</td>
-		</tr>
-
-		<?php endif; ?>
 
 		<tr>
 			<td valign="top" class="vncell">Interface</td>

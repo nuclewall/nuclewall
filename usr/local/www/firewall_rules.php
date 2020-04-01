@@ -41,20 +41,6 @@ require_once('shaper.inc');
 
 $pgtitle = array('FIREWALL', 'RULES');
 
-function delete_nat_association($id)
-{
-	global $config;
-
-	if (!$id || !is_array($config['nat']['rule']))
-		return;
-
-	$a_nat = &$config['nat']['rule'];
-
-	foreach ($a_nat as &$natent)
-		if ($natent['associated-rule-id'] == $id)
-			$natent['associated-rule-id'] = '';
-}
-
 if (!is_array($config['filter']['rule']))
 {
 	$config['filter']['rule'] = array();
@@ -184,10 +170,6 @@ if ($_GET['act'] == "del")
 {
 	if ($a_filter[$_GET['id']])
 	{
-		if (!empty($a_filter[$_GET['id']]['associated-rule-id']))
-		{
-			delete_nat_association($a_filter[$_GET['id']]['associated-rule-id']);
-		}
 		unset($a_filter[$_GET['id']]);
 
 		write_config("A firewall rule deleted");
@@ -208,7 +190,6 @@ if (isset($_POST['del_x']))
 	{
 		foreach ($_POST['rule'] as $rulei)
 		{
-			delete_nat_association($a_filter[$rulei]['associated-rule-id']);
 			unset($a_filter[$rulei]);
 		}
 
@@ -473,7 +454,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 										continue;
 									$isadvset = firewall_check_for_advanced_options($filterent);
 									if($isadvset)
-										$advanced_set = "<img src=\"./themes/nuclewall/images/icons/icon_advanced.gif\" title=\"" . "advanced settings applied" . ": {$isadvset}\" border=\"0\">";
+										$advanced_set = "<img src=\"./themes/nuclewall/images/icons/icon_advanced.gif\" title=\"" . "advanced settings applied" . ": {$isadvset}\">";
 									else
 										$advanced_set = "";
 								?>
@@ -505,8 +486,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 												if (isset($filterent['disabled']))
 													$iconfnlog .= "_d";
 											?>
-										<br>
-										<img src="./themes/nuclewall/images/icons/icon_<?=$iconfnlog;?>.gif">
+
 										<?php endif; ?>
 									</td>
 										<?php
