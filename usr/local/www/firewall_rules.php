@@ -41,19 +41,7 @@ require_once('shaper.inc');
 
 $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR');
 
-function delete_nat_association($id)
-{
-	global $config;
 
-	if (!$id || !is_array($config['nat']['rule']))
-		return;
-
-	$a_nat = &$config['nat']['rule'];
-
-	foreach ($a_nat as &$natent)
-		if ($natent['associated-rule-id'] == $id)
-			$natent['associated-rule-id'] = '';
-}
 
 if (!is_array($config['filter']['rule']))
 {
@@ -184,10 +172,6 @@ if ($_GET['act'] == "del")
 {
 	if ($a_filter[$_GET['id']])
 	{
-		if (!empty($a_filter[$_GET['id']]['associated-rule-id']))
-		{
-			delete_nat_association($a_filter[$_GET['id']]['associated-rule-id']);
-		}
 		unset($a_filter[$_GET['id']]);
 		write_config("Bir guvenlik duvari kurali silindi");
 		mark_subsystem_dirty('filter');
@@ -206,7 +190,6 @@ if (isset($_POST['del_x']))
 	{
 		foreach ($_POST['rule'] as $rulei)
 		{
-			delete_nat_association($a_filter[$rulei]['associated-rule-id']);
 			unset($a_filter[$rulei]);
 		}
 
@@ -416,7 +399,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 							<tr id="frrfc1918">
 								<td class="wall"></td>
 								<td class="wall">
-									<img src="./themes/nuclewall/images/icons/icon_block.gif" border="0">
+									<img src="./themes/nuclewall/images/icons/icon_block.gif">
 								</td>
 								<td class="wall"></td>
 								<td class="wall">*</td>
@@ -440,7 +423,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 							<tr id="frrfc1918">
 								<td class="wall"></td>
 								<td class="wall">
-									<img src="./themes/nuclewall/images/icons/icon_block.gif" border="0">
+									<img src="./themes/nuclewall/images/icons/icon_block.gif">
 								</td>
 								<td class="wall" ></td>
 								<td class="wall" >*</td>
@@ -469,7 +452,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 										continue;
 									$isadvset = firewall_check_for_advanced_options($filterent);
 									if($isadvset)
-										$advanced_set = "<img src=\"./themes/nuclewall/images/icons/icon_advanced.gif\" title=\"" . "gelişmiş ayar uygulandı" . ": {$isadvset}\" border=\"0\">";
+										$advanced_set = "<img src=\"./themes/nuclewall/images/icons/icon_advanced.gif\" title=\"" . "gelişmiş ayar uygulandı" . ": {$isadvset}\">";
 									else
 										$advanced_set = "";
 								?>
@@ -494,15 +477,13 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 											}
 										?>
 										<a href="?if=<?=htmlspecialchars($if);?>&act=toggle&id=<?=$i;?>">
-											<img src="./themes/nuclewall/images/icons/icon_<?=$iconfn;?>.gif" border="0">
+											<img src="./themes/nuclewall/images/icons/icon_<?=$iconfn;?>.gif">
 										</a>
 											<?php if (isset($filterent['log'])):
 												$iconfnlog = "log_s";
 												if (isset($filterent['disabled']))
 													$iconfnlog .= "_d";
 											?>
-										<br>
-										<img src="./themes/nuclewall/images/icons/icon_<?=$iconfnlog;?>.gif" border="0">
 										<?php endif; ?>
 									</td>
 										<?php

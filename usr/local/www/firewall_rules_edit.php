@@ -121,43 +121,18 @@ if (isset($id) && $a_filter[$id]) {
 			$pconfig['tcpflags2'] = $a_filter[$id]['tcpflags2'];
 	}
 
-	if (isset($a_filter[$id]['tag']) && $a_filter[$id]['tag'] <> "")
-		$pconfig['tag'] = $a_filter[$id]['tag'];
-	if (isset($a_filter[$id]['tagged']) && $a_filter[$id]['tagged'] <> "")
-        	$pconfig['tagged'] = $a_filter[$id]['tagged'];
 	if (isset($a_filter[$id]['quick']) && $a_filter[$id]['quick'])
 		$pconfig['quick'] = $a_filter[$id]['quick'];
-	if (isset($a_filter[$id]['allowopts']))
-		$pconfig['allowopts'] = true;
-	if (isset($a_filter[$id]['disablereplyto']))
-		$pconfig['disablereplyto'] = true;
-
-	/* advanced */
-	$pconfig['max'] = $a_filter[$id]['max'];
-	$pconfig['max-src-nodes'] = $a_filter[$id]['max-src-nodes'];
-	$pconfig['max-src-conn'] = $a_filter[$id]['max-src-conn'];
-	$pconfig['max-src-states'] = $a_filter[$id]['max-src-states'];
-	$pconfig['statetype'] = $a_filter[$id]['statetype'];
-	$pconfig['statetimeout'] = $a_filter[$id]['statetimeout'];
-
-	/* advanced - new connection per second banning*/
-	$pconfig['max-src-conn-rate'] = $a_filter[$id]['max-src-conn-rate'];
-	$pconfig['max-src-conn-rates'] = $a_filter[$id]['max-src-conn-rates'];
 
 	/* Multi-WAN next-hop support */
 	$pconfig['gateway'] = $a_filter[$id]['gateway'];
 
 	/* Shaper support */
-	$pconfig['defaultqueue'] = $a_filter[$id]['defaultqueue'];
-	$pconfig['ackqueue'] = $a_filter[$id]['ackqueue'];
 	$pconfig['dnpipe'] = $a_filter[$id]['dnpipe'];
 	$pconfig['pdnpipe'] = $a_filter[$id]['pdnpipe'];
-	$pconfig['l7container'] = $a_filter[$id]['l7container'];
 
 	//schedule support
 	$pconfig['sched'] = $a_filter[$id]['sched'];
-	if (!isset($_GET['dup']))
-		$pconfig['associated-rule-id'] = $a_filter[$id]['associated-rule-id'];
 
 } else {
 	/* defaults */
@@ -175,17 +150,9 @@ if (isset($_GET['dup']))
 
 if ($_POST) {
 
-	if( isset($a_filter[$id]['associated-rule-id']) ) {
-		$_POST['proto'] = $pconfig['proto'];
-		if ($pconfig['proto'] == "icmp")
-			$_POST['icmptype'] = $pconfig['icmptype'];
-	}
 
 	if ($_POST['type'] == "reject" && $_POST['proto'] <> "tcp")
 		$input_errors[] = "Reject türündeki kurallar sadece TCP protokolü ile kullanılabilir";
-
-	if ($_POST['type'] == "match" && $_POST['defaultqueue'] == "none")
-		$input_errors[] = "Queue türündeki kurallar sadece kuyruklarla kullanılabilir.";
 
 	if (($_POST['proto'] != "tcp") && ($_POST['proto'] != "udp") && ($_POST['proto'] != "tcp/udp")) {
 		$_POST['srcbeginport'] = 0;
@@ -243,32 +210,22 @@ if ($_POST) {
 
 	/* input validation */
 	$reqdfields = explode(" ", "type proto");
-	if ( isset($a_filter[$id]['associated-rule-id'])===false ) {
-		$reqdfields[] = "src";
-		$reqdfields[] = "dst";
-	}
-	$reqdfieldsn = explode(",", "Type,Protocol");
-	if ( isset($a_filter[$id]['associated-rule-id'])===false ) {
-		$reqdfieldsn[] = "Source";
-		$reqdfieldsn[] = "Destination";
-	}
+	$reqdfields[] = "src";
+	$reqdfields[] = "dst";
 
-	if($_POST['statetype'] == "modulate state" or $_POST['statetype'] == "synproxy state") {
-		if( $_POST['proto'] != "tcp" )
-			$input_errors[] = sprintf("%s sadece TCP protokolü ile geçerlidir.",$_POST['statetype']);
-		if(($_POST['statetype'] == "synproxy state") && ($_POST['gateway'] != ""))
-			$input_errors[] = sprintf("%s ağ geçidi 'varsayılan' olarak ayarlıysa geçerlidir.", $_POST['statetype']);
-	}
+	$reqdfieldsn = explode(",", "Type, Protocol");
+	$reqdfieldsn[] = "Kaynak";
+	$reqdfieldsn[] = "Hedef";
 
-	if ( isset($a_filter[$id]['associated-rule-id'])===false &&
-	(!(is_specialnet($_POST['srctype']) || ($_POST['srctype'] == "single"))) ) {
+
+	if (!(is_specialnet($_POST['srctype']) || ($_POST['srctype'] == "single"))) {
 		$reqdfields[] = "srcmask";
-		$reqdfieldsn[] = "Source bit count";
+		$reqdfieldsn[] = "Kaynak adres bit sayısı";
 	}
-	if ( isset($a_filter[$id]['associated-rule-id'])===false &&
-	(!(is_specialnet($_POST['dsttype']) || ($_POST['dsttype'] == "single"))) ) {
+
+	if (!(is_specialnet($_POST['dsttype']) || ($_POST['dsttype'] == "single"))) {
 		$reqdfields[] = "dstmask";
-		$reqdfieldsn[] = "Destination bit count";
+		$reqdfieldsn[] = "Hedef adres bit sayısı";
 	}
 
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, &$input_errors);
@@ -354,21 +311,15 @@ if ($_POST) {
 		if( $_POST['proto'] != "tcp" )
 			$input_errors[] = "OS tespiti sadece TCP protokolü ile yapılabilir.";
 
-	if ($_POST['ackqueue'] && $_POST['ackqueue'] != "none") {
-		if ($_POST['defaultqueue'] == "none" )
-			$input_errors[] = "Kabul kuyruğu seçtiğinizde başka bir kuyruk da seçmelisiniz.";
-		else if ($_POST['ackqueue'] == $_POST['defaultqueue'])
-			$input_errors[] = "Kabul kuyruğu ve kuyruk aynı olamaz.";
-	}
 	if (isset($_POST['floating']) && $_POST['pdnpipe'] != "none" && (empty($_POST['direction']) || $_POST['direction'] == "any"))
 		$input_errors[] = "Sınırlayıcıları bir hedef seçmeden değişen kurallarda kullanamazsınız.";
 	if (isset($_POST['floating']) && $_POST['gateway'] != "" && (empty($_POST['direction']) || $_POST['direction'] == "any"))
 		$input_errors[] = "Ağ geçitlerini bir hedef seçmeden değişen kurallarda kullanamazsınız.";
 	if ($_POST['pdnpipe'] && $_POST['pdnpipe'] != "none") {
 		if ($_POST['dnpipe'] == "none" )
-			$input_errors[] = "Çıkıştan önce giriş için bir kuyruk seçmelisiniz.";
+			$input_errors[] = "'Giden'den önce 'Gelen' için bir hız sınırlayıcı seçmelisiniz.";
 		else if ($_POST['pdnpipe'] == $_POST['dnpipe'])
-			$input_errors[] = "Giriş ve çıkış kuyruğu aynı olamaz.";
+			$input_errors[] = "Gelen ve Giden hız sınırlayıcı aynı olamaz.";
 		else if ($pdnpipe[0] == "?" && $dnpipe[0] <> "?")
 			$input_errors[] = "Giriş ve çıkışın için birini kuyruk, diğerini sanal arayüz seçemezsiniz. İkisi de aynı türde olmalıdır.";
 		else if ($dnpipe[0] == "?" && $pdnpipe[0] <> "?")
@@ -427,10 +378,6 @@ if ($_POST) {
 			}
 		}
 
-		if (isset($_POST['tag']))
-			$filterent['tag'] = $_POST['tag'];
-		if (isset($_POST['tagged']))
-			$filterent['tagged'] = $_POST['tagged'];
 		if ($if == "FloatingRules" || isset($_POST['floating'])) {
 			$filterent['direction'] = $_POST['direction'];
 			if (isset($_POST['quick']) && $_POST['quick'] <> "")
@@ -442,34 +389,7 @@ if ($_POST) {
 		}
 
 		/* Advanced options */
-		if ($_POST['allowopts'] == "yes")
-			$filterent['allowopts'] = true;
-		else
-			unset($filterent['allowopts']);
-		if ($_POST['disablereplyto'] == "yes")
-			$filterent['disablereplyto'] = true;
-		else
-			unset($filterent['disablereplyto']);
-		$filterent['max'] = $_POST['max'];
-		$filterent['max-src-nodes'] = $_POST['max-src-nodes'];
-		$filterent['max-src-conn'] = $_POST['max-src-conn'];
-		$filterent['max-src-states'] = $_POST['max-src-states'];
-		$filterent['statetimeout'] = $_POST['statetimeout'];
-		$filterent['statetype'] = $_POST['statetype'];
 		$filterent['os'] = $_POST['os'];
-
-		/* Nosync directive - do not xmlrpc sync this item */
-
-		$filterent['nosync'] = true;
-
-		/* unless both values are provided, unset the values - ticket #650 */
-		if($_POST['max-src-conn-rate'] <> "" and $_POST['max-src-conn-rates'] <> "") {
-			$filterent['max-src-conn-rate'] = $_POST['max-src-conn-rate'];
-			$filterent['max-src-conn-rates'] = $_POST['max-src-conn-rates'];
-		} else {
-			unset($filterent['max-src-conn-rate']);
-			unset($filterent['max-src-conn-rates']);
-		}
 
 		if ($_POST['proto'] != "any")
 			$filterent['protocol'] = $_POST['proto'];
@@ -504,40 +424,14 @@ if ($_POST) {
 			$filterent['gateway'] = $_POST['gateway'];
 		}
 
-		if (isset($_POST['defaultqueue']) && $_POST['defaultqueue'] != "none") {
-			$filterent['defaultqueue'] = $_POST['defaultqueue'];
-			if (isset($_POST['ackqueue']) && $_POST['ackqueue'] != "none")
-				$filterent['ackqueue'] = $_POST['ackqueue'];
-		}
-
 		if (isset($_POST['dnpipe']) && $_POST['dnpipe'] != "none") {
 			$filterent['dnpipe'] = $_POST['dnpipe'];
 			if (isset($_POST['pdnpipe']) && $_POST['pdnpipe'] != "none")
 				$filterent['pdnpipe'] = $_POST['pdnpipe'];
 		}
 
-		if (isset($_POST['l7container']) && $_POST['l7container'] != "none") {
-			$filterent['l7container'] = $_POST['l7container'];
-		}
-
 		if ($_POST['sched'] != "") {
 			$filterent['sched'] = $_POST['sched'];
-		}
-
-		// If we have an associated nat rule, make sure the source and destination doesn't change
-		if( isset($a_filter[$id]['associated-rule-id']) ) {
-			$filterent['interface'] = $a_filter[$id]['interface'];
-			if (isset($a_filter[$id]['protocol']))
-				$filterent['protocol'] = $a_filter[$id]['protocol'];
-			else if (isset($filterent['protocol']))
-				unset($filterent['protocol']);
-			if ($a_filter[$id]['protocol'] == "icmp" && $a_filter[$id]['icmptype'])
-				$filterent['icmptype'] = $a_filter[$id]['icmptype'];
-			else if (isset($filterent['icmptype']))
-				unset($filterent['icmptype']);
-			$filterent['source'] = $a_filter[$id]['source'];
-			$filterent['destination'] = $a_filter[$id]['destination'];
-			$filterent['associated-rule-id'] = $a_filter[$id]['associated-rule-id'];
 		}
 
 		// Allow extending of the firewall edit page and include custom input validation
@@ -633,36 +527,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 
 		<?php endif; ?>
 		<?php $edit_disabled = ""; ?>
-		<?php if( isset($pconfig['associated-rule-id']) ): ?>
 
-		<tr>
-			<td valign="top" class="vncell">İlişkili filtre kuralı</td>
-			<td class="vtable">
-				<span><b>Not:</b></span>Bu bir NAT kuralına ilişkilendirilmiş.<br>
-				İlişkilendirilmiş filtreleme kurallarının arayüz, protokol, kaynak ya da hedefini değiştiremezsiniz.<br>
-
-				<?php
-					$edit_disabled = "disabled";
-					if (is_array($config['nat']['rule'])) {
-						foreach( $config['nat']['rule'] as $index => $nat_rule ) {
-							if( isset($nat_rule['associated-rule-id']) && $nat_rule['associated-rule-id']==$pconfig['associated-rule-id'] ) {
-								echo "<a href=\"firewall_nat_edit.php?id={$index}\">" . "NAT kuralını göster" . "</a><br>";
-								break;
-							}
-						}
-					}
-					echo "<input name='associated-rule-id' id='associated-rule-id' type='hidden' value='{$pconfig['associated-rule-id']}' >";
-					if (!empty($pconfig['interface']))
-						echo "<input name='interface' id='interface' type='hidden' value='{$pconfig['interface']}' >";
-				?>
-
-				<script type="text/javascript">
-				editenabled = 0;
-				</script>
-			</td>
-		</tr>
-
-		<?php endif; ?>
 
 		<tr>
 			<td valign="top" class="vncell">Arayüz</td>
@@ -931,8 +796,8 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 						<td>Başlangıç</td>
 						<td style="padding:5px;">
 							<select <?=$edit_disabled;?> name="dstbeginport" onchange="dst_rep_change();ext_change()">
-								<option value="">(other)</option>
-								<option value="any" <?php $bfound = 0; if ($pconfig['dstbeginport'] == "any") { echo "selected"; $bfound = 1; } ?>>any</option>
+								<option value="">(diğer)</option>
+								<option value="any" <?php $bfound = 0; if ($pconfig['dstbeginport'] == "any") { echo "selected"; $bfound = 1; } ?>>hepsi</option>
 								<?php foreach ($wkports as $wkport => $wkportdesc): ?>
 								<option value="<?=$wkport;?>" <?php if ($wkport == $pconfig['dstbeginport']) { echo "selected"; $bfound = 1; }?>><?=htmlspecialchars($wkportdesc);?></option>
 								<?php endforeach; ?>
@@ -944,8 +809,8 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 						<td>Bitiş</td>
 						<td style="padding:5px;">
 							<select <?=$edit_disabled;?> name="dstendport" onchange="ext_change()">
-								<option value="">(other)</option>
-								<option value="any" <?php $bfound = 0; if ($pconfig['dstendport'] == "any") { echo "selected"; $bfound = 1; } ?>>any</option>
+								<option value="">(diğer)</option>
+								<option value="any" <?php $bfound = 0; if ($pconfig['dstendport'] == "any") { echo "selected"; $bfound = 1; } ?>>hepsi</option>
 								<?php foreach ($wkports as $wkport => $wkportdesc): ?>
 								<option value="<?=$wkport;?>" <?php if ($wkport == $pconfig['dstendport']) { echo "selected"; $bfound = 1; } ?>><?=htmlspecialchars($wkportdesc);?></option>
 								<?php endforeach; ?>
@@ -966,10 +831,6 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 			<td class="vtable">
 				<input name="log" type="checkbox" id="log" value="yes" <?php if ($pconfig['log']) echo "checked"; ?>>
 				<b>	Bu kural tarafından işlenen paketlerin kaydını tut</b>
-				<br>
-				<span>
-					<b>İpucu:</b> Yerel günlük kayıt alanı kısıtlıdır.
-				</span>
 			</td>
 		</tr>
 		<tr>
@@ -1009,7 +870,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 					<select name="os" id="os">
 					<?php
 						$ostypes = array(
-							 "" => "any",
+							 "" => "hepsi",
 							"AIX" => "AIX",
 							"Linux" => "Linux",
 							"FreeBSD" => "FreeBSD",
@@ -1043,8 +904,8 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 								$setflags = explode(",", $pconfig['tcpflags1']);
 								$outofflags = explode(",", $pconfig['tcpflags2']);
 								$header = "<td width='40' ></td>";
-								$tcpflags1 = "<td width='60' >ayarlı</td>";
-								$tcpflags2 = "<td width='60' >haricinde</td>";
+								$tcpflags1 = "<td width='60' >Aktif</td>";
+								$tcpflags2 = "<td width='60' >Haricinde</td>";
 								foreach ($tcpflags as $tcpflag) {
 									$header .= "<td  width='40' ><b>" . strtoupper($tcpflag) . "</b></td>\n";
 									$tcpflags1 .= "<td  width='40' > <input type='checkbox' name='tcpflags1_{$tcpflag}' value='on' ";
@@ -1063,7 +924,7 @@ $pgtitle = array('GÜVENLİK DUVARI', 'KURALLAR', 'DÜZENLE');
 						</table><!-- inline5 end -->
 					</div>
 					<p>
-					<input onClick='tcpflags_anyclick(this);' type='checkbox' name='tcpflags_any' value='on' <?php if ($pconfig['tcpflags_any']) echo "checked"; ?>><strong>Tüm bayraklar</strong>
+					<input onClick='tcpflags_anyclick(this);' type='checkbox' name='tcpflags_any' value='on' <?php if ($pconfig['tcpflags_any']) echo "checked"; ?>><strong>Hepsi</strong>
 					<br>
 					Bu kuralın eşleşmesi için 1 ya da 0 yapılacak TCP bayraklarını belirlemek için kullanabilirsiniz.
 					</p>
