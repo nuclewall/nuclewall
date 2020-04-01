@@ -446,12 +446,13 @@ function system_syslogd_start()
 		$facilitylist = implode(',', array_unique($separatelogfacilities));
 		/* write syslog.conf */
 		$fd = fopen("{$g['varetc_path']}/syslog.conf", "w");
+
 		if (!$fd) {
 			printf("Error: cannot open syslog.conf in system_syslogd_start().\n");
 			return 1;
 		}
 
-
+		$syslogconf = "";
 		$syslogconf .= "!relayd\n";
 		if (!isset($syslogcfg['disablelocallogging']))
 			$syslogconf .= "*.* 								{$log_directive}{$g['varlog_path']}/relayd.log\n";
