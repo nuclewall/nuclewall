@@ -352,8 +352,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<td class="headw">Hedef</td>
 								<td class="headw">Port</td>
 								<td class="headw">Ağ Geçidi</td>
-								<td class="headw">Sıra</td>
-								<td class="headw">Plan</td>
+								<td class="headw">Zaman</td>
 								<?php
 									pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/pre_desc_tablehead");
 								?>
@@ -390,7 +389,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 							<tr id="antilockout">
 							<td class="wall"></td>
 								<td class="wall">
-									<img src="./themes/nuclewall/images/icons/icon_pass.gif" border="0">
+									<img src="./themes/nuclewall/images/icons/icon_pass.gif">
 								</td>
 								<td class="wall"></td>
 								<?php
@@ -403,7 +402,6 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<td class="wall"><?= $alports ?></td>
 								<td class="wall">*</td>
 								<td class="wall">*</td>
-								<td class="wall"></td>
 								<td class="wall description">Temel erişim kuralı</td>
 								<td class="wall tools">
 									<a title="Düzenle" href="system_advanced_admin.php">
@@ -428,7 +426,6 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<td class="wall">*</td>
 								<td class="wall">*</td>
 								<td class="wall">*</td>
-								<td class="wall"></td>
 								<td class="wall description">Özel ağları engelle</td>
 								<td class="wall tools">
 									<a href="interfaces.php?if=<?=htmlspecialchars($if)?>#rfc1918">
@@ -453,7 +450,6 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<td class="wall" >*</td>
 								<td class="wall" >*</td>
 								<td class="wall" >*</td>
-								<td class="wall" ></td>
 								<td class="wall description">Sahte ağları engelle</td>
 								<td class="wall tools">
 									<a title="Düzenle" href="interfaces.php?if=<?=htmlspecialchars($if)?>#rfc1918">
@@ -683,21 +679,6 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 										<?=$textse;?>
 									</td>
 									<td class="wall" onClick="fr_toggle(<?=$nrules;?>)" id="frd<?=$nrules;?>" ondblclick="document.location='firewall_rules_edit.php?id=<?=$i;?>';">
-									<?=$textss;?>
-										<?php
-											if (isset($filterent['ackqueue']) && isset($filterent['defaultqueue'])) {
-												$desc = $filterent['ackqueue'] ;
-												echo "<a href=\"firewall_shaper_queues.php?queue={$filterent['ackqueue']}&action=show\">{$desc}</a>";
-												$desc = $filterent['defaultqueue'];
-												echo "/<a href=\"firewall_shaper_queues.php?queue={$filterent['defaultqueue']}&action=show\">{$desc}</a>";
-											} else if (isset($filterent['defaultqueue'])) {
-												$desc = $filterent['defaultqueue'];
-												echo "<a href=\"firewall_shaper_queues.php?queue={$filterent['defaultqueue']}&action=show\">{$desc}</a>"; }
-											else echo "Yok";
-										?>
-										<?=$textse;?>
-									</td>
-									<td class="wall" onClick="fr_toggle(<?=$nrules;?>)" id="frd<?=$nrules;?>" ondblclick="document.location='firewall_rules_edit.php?id=<?=$i;?>';">
 										<?php if ($printicon) { ?>
 											<?php } ?>
 											<?=$textss;?>
@@ -744,7 +725,7 @@ echo "<script type=\"text/javascript\" language=\"javascript\" src=\"/javascript
 								<?php
 									pfSense_handle_custom_code("/usr/local/pkg/firewall_rules/pre_id_tr_belowtable");
 								?>
-								<td class="wall" colspan="12"></td>
+								<td class="wall" colspan="11"></td>
 								<td class="wall tools" style="padding-bottom: 4px;">
 									<?php if ($nrules != 0): ?>
 										<input name="move_<?=$i;?>" type="image" src="./themes/nuclewall/images/icons/icon_top.png" title="Seçili kuralları sona taşı" onMouseOver="fr_insline(<?=$nrules;?>, true)" onMouseOut="fr_insline(<?=$nrules;?>, false)">
