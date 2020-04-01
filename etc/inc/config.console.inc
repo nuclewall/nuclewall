@@ -60,12 +60,12 @@ function set_networking_interfaces_ports() {
 		$auto_assign = false;
 
 	echo <<<EOD
-Ethernet kartlarý:
+Að kartlarý:
 \n
 EOD;
 
 	if(!is_array($iflist)) {
-		echo "Ethernet kartý bulunamadý!\n";
+		echo "Að kartý bulunamadý!\n";
 		$iflist = array();
 	} else {
 		foreach ($iflist as $iface => $ifa) {
@@ -80,20 +80,20 @@ EOD;
 
 
 		do {
-			echo "\nWAN arayüzü için ethernet kartý ismini girin:\n> ";
+			echo "\nWAN arayüzü için að kartý ismini girin:\n> ";
 			$wanif = chop(fgets($fp));
 			if ($wanif === '') {
 				return;
 			}
 			if (!array_key_exists($wanif, $iflist)) {
-				echo "\n'{$wanif}' geçersiz bir ethernet kartý ismi\n";
+				echo "\n'{$wanif}' geçersiz bir að kartý ismi\n";
 				unset($wanif);
 				continue;
 			}
 		} while (!$wanif);
 
 		do {
-			echo "\nLAN arayüzü için ethernet kartý ismini girin:\n> ";
+			echo "\nLAN arayüzü için að kartý ismini girin:\n> ";
 
 			$lanif = chop(fgets($fp));
 
@@ -111,7 +111,7 @@ EOD;
 			}
 
 			if (!array_key_exists($lanif, $iflist)) {
-				echo "\n'{$lanif}' geçersiz bir ethernet kartý ismi\n";
+				echo "\n'{$lanif}' geçersiz bir að kartý ismi\n";
 				unset($lanif);
 				continue;
 			}
@@ -129,13 +129,13 @@ EOD;
 				if($config['interfaces']['opt' . $i1]['descr'])
 					echo "\nFazladan bir að arayüzü bulundu: {$config['interfaces']['opt' . $i1]['descr']}";
 
-				echo "\nÝsteðe baðlý bir ethernet kartý girebilirsiniz. Yoksa boþ býrakýn.\n> ";
+				echo "\nÝsteðe baðlý bir að kartý girebilirsiniz. Yoksa boþ býrakýn.\n> ";
 
 				$optif[$i] = chop(fgets($fp));
 
 				if ($optif[$i]) {
 					if (!array_key_exists($optif[$i], $iflist)) {
-						echo "\n'{$optif[$i]}' geçersiz bir ethernet kartý ismi\n";
+						echo "\n'{$optif[$i]}' geçersiz bir að kartý ismi\n";
 						unset($optif[$i]);
 						continue;
 					}
@@ -154,7 +154,7 @@ EOD;
 				if ($ifarr[$i] == $ifarr[$j]) {
 					echo <<<EOD
 
-Hata: Ayný ethernet kartýný 2 ayrý arayüze tanýmlayamazsýnýz.
+Hata: Ayný að kartýný 2 ayrý arayüze tanýmlayamazsýnýz.
 
 EOD;
 					fclose($fp);
@@ -163,7 +163,7 @@ EOD;
 			}
 		}
 
-		echo "\nEthernet kartý-arayüz eþleþtirmeleri aþaðýdaki gibi olacak: \n\n";
+		echo "\nAð kartý-arayüz eþleþtirmeleri aþaðýdaki gibi olacak: \n\n";
 
 		echo "WAN  -> " . $wanif . "\n";
 		if ($lanif != "")

@@ -60,12 +60,12 @@ function set_networking_interfaces_ports() {
 		$auto_assign = false;
 
 	echo <<<EOD
-Ethernet kartları:
+Ağ kartları:
 \n
 EOD;
 
 	if(!is_array($iflist)) {
-		echo "Ethernet kartı bulunamadı!\n";
+		echo "Ağ kartı bulunamadı!\n";
 		$iflist = array();
 	} else {
 		foreach ($iflist as $iface => $ifa) {
@@ -80,20 +80,20 @@ EOD;
 
 
 		do {
-			echo "\nWAN arayüzü için ethernet kartı ismini girin:\n> ";
+			echo "\nWAN arayüzü için ağ kartı ismini girin:\n> ";
 			$wanif = chop(fgets($fp));
 			if ($wanif === '') {
 				return;
 			}
 			if (!array_key_exists($wanif, $iflist)) {
-				echo "\n'{$wanif}' geçersiz bir ethernet kartı ismi\n";
+				echo "\n'{$wanif}' geçersiz bir ağ kartı ismi\n";
 				unset($wanif);
 				continue;
 			}
 		} while (!$wanif);
 
 		do {
-			echo "\nLAN arayüzü için ethernet kartı ismini girin:\n> ";
+			echo "\nLAN arayüzü için ağ kartı ismini girin:\n> ";
 
 			$lanif = chop(fgets($fp));
 
@@ -111,7 +111,7 @@ EOD;
 			}
 
 			if (!array_key_exists($lanif, $iflist)) {
-				echo "\n'{$lanif}' geçersiz bir ethernet kartı ismi\n";
+				echo "\n'{$lanif}' geçersiz bir ağ kartı ismi\n";
 				unset($lanif);
 				continue;
 			}
@@ -129,13 +129,13 @@ EOD;
 				if($config['interfaces']['opt' . $i1]['descr'])
 					echo "\nFazladan bir ağ arayüzü bulundu: {$config['interfaces']['opt' . $i1]['descr']}";
 
-				echo "\nİsteğe bağlı bir ethernet kartı girebilirsiniz. Yoksa boş bırakın.\n> ";
+				echo "\nİsteğe bağlı bir ağ kartı girebilirsiniz. Yoksa boş bırakın.\n> ";
 
 				$optif[$i] = chop(fgets($fp));
 
 				if ($optif[$i]) {
 					if (!array_key_exists($optif[$i], $iflist)) {
-						echo "\n'{$optif[$i]}' geçersiz bir ethernet kartı ismi\n";
+						echo "\n'{$optif[$i]}' geçersiz bir ağ kartı ismi\n";
 						unset($optif[$i]);
 						continue;
 					}
@@ -154,7 +154,7 @@ EOD;
 				if ($ifarr[$i] == $ifarr[$j]) {
 					echo <<<EOD
 
-Hata: Aynı ethernet kartını 2 ayrı arayüze tanımlayamazsınız.
+Hata: Aynı ağ kartını 2 ayrı arayüze tanımlayamazsınız.
 
 EOD;
 					fclose($fp);
@@ -163,7 +163,7 @@ EOD;
 			}
 		}
 
-		echo "\nEthernet kartı-arayüz eşleştirmeleri aşağıdaki gibi olacak: \n\n";
+		echo "\Ağ kartı-arayüz eşleştirmeleri aşağıdaki gibi olacak: \n\n";
 
 		echo "WAN  -> " . $wanif . "\n";
 		if ($lanif != "")
@@ -174,7 +174,7 @@ EOD;
 
 		echo <<<EOD
 
-Onaylıyor musunuz? [e|h]\n> 
+Onaylıyor musunuz? [e|h]\n>
 EOD;
 			$key = chop(fgets($fp));
 	}
@@ -194,7 +194,7 @@ echo <<<EODD
 LAN arayüzünü silmeyi seçtiniz.
 
 LAN arayüzünü silmek ve IP adresini kaldırmak
-istiyor musunuz? [e|h]\n> 
+istiyor musunuz? [e|h]\n>
 EODD;
 
 				if (strcasecmp(chop(fgets($fp)), "e") == 0) {

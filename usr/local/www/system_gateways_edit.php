@@ -101,7 +101,7 @@ if ($_POST) {
 		if (!empty($config['interfaces'][$_POST['interface']]['ipaddr']))
 		{
 			if (is_ipaddr($config['interfaces'][$_POST['interface']]['ipaddr']) && (empty($_POST['gateway']) || $_POST['gateway'] == "dynamic"))
-				$input_errors[] = "Sabit IP adresi verilmiş ethernet kartlarına dinamik ağ geçidi değerleri verilemez.";
+				$input_errors[] = "Sabit IP adresi verilmiş ağ kartlarına dinamik ağ geçidi değerleri verilemez.";
 		}
 
 		$parent_ip = get_interface_ip($_POST['interface']);
@@ -110,7 +110,7 @@ if ($_POST) {
 		{
 			$parent_sn = get_interface_subnet($_POST['interface']);
 			if(!ip_in_subnet($_POST['gateway'], gen_subnet($parent_ip, $parent_sn) . "/" . $parent_sn) && !ip_in_interface_alias_subnet($_POST['interface'], $_POST['gateway'])) {
-				$input_errors[] = sprintf("%s adresi seçtiğiniz ethernet kartındaki bir ağa ait değil.", $_POST['gateway']);
+				$input_errors[] = sprintf("%s adresi seçtiğiniz ağ kartındaki bir ağa ait değil.", $_POST['gateway']);
 			}
 		}
 	}
@@ -243,7 +243,7 @@ function monitor_change() {
 					<td colspan="2" valign="top" class="listtopic">AĞ GEÇİDİNİ DÜZENLE</td>
 				</tr>
                 <tr>
-                  <td valign="top" class="vncell">Ethernet Kartı</td>
+                  <td valign="top" class="vncell">Ağ Kartı</td>
                   <td class="vtable">
 		 	<select name='interface'>
 
@@ -258,7 +258,7 @@ function monitor_change() {
 
 				?>
                     </select> <br>
-                    Ağ Geçidinin hangi ethernet kartına uygulanacağını seçin.
+                    Ağ Geçidinin hangi ağ kartına uygulanacağını seçin.
 					</td>
                 </tr>
                 <tr>

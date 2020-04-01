@@ -300,11 +300,11 @@ function prot_change()
 						<input name="noantilockout" type="checkbox" id="noantilockout" value="yes" <?php if ($pconfig['noantilockout']) echo "checked"; ?> />
 						<b>Engelleme koruma kuralını kaldır</b>
 						<br>
-						<?php printf("İşaretsiz olduğu zaman, %s etherneti üzerinden web arayüzüne erişime " .
+						<?php printf("İşaretsiz olduğu zaman, %s ağ karı üzerinden web arayüzüne erişime " .
 						"kullanıcıların eklediği engelleme kurallarına bakmaksızın izin verilecektir. " .
 						"Otomatik olarak eklenen bu kuralı kaldırmak için kontrol düğmesini işaretleyin. " .
 						"Böylece web arayüzüne erişim, kullanıcı tarafından eklenen kurallara göre olacaktır.", $lockout_interface); ?>
-						<br><em> Yanlışlıkla, erişimi engelleyen bir kural ekleyip web arayüzüne erişemezseniz, konsol menüsünden etherneti yeniden yapılandırın. </em>
+						<br><em> Yanlışlıkla, erişimi engelleyen bir kural ekleyip web arayüzüne erişemezseniz, konsol menüsünden arayüzü yeniden yapılandırın. </em>
 					</td>
 				</tr>
 				<tr>

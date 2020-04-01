@@ -61,7 +61,7 @@ fi
 echo ""
 echo ""
 echo ""
-echo "    ETHERNET KARTLARI		WEB ARAYÜZÜ"
+echo "    AÐ KARTLARI		        WEB ARAYÜZÜ"
 echo "      1) Ýliþkilendir		  3) Yeniden baþlat"
 echo "      2) IP adreslerini belirle	  4) WAN arayüzünden eriþime izin ver"
 echo ""

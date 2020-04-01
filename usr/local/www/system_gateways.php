@@ -151,7 +151,7 @@ $pgtitle = array('SİSTEM', 'AĞ GEÇİTLERİ');
 						<table class="grids">
 							<tr>
 								<td class="head">Ad</td>
-								<td class="head">Ethernet Kartı</td>
+								<td class="head">Ağ Kartı</td>
 								<td class="head">Ağ Geçidi</td>
 								<td class="head">Takip IP'si</td>
 								<td class="head">Açıklama</td>

@@ -120,7 +120,7 @@ $pgtitle = array('SİSTEM', 'SABİT YÖNLENDİRMELER');
 							<tr>
 								<td class="head">Ağ</td>
 								<td class="head">Ağ Geçidi</td>
-								<td class="head">Ethernet Kartı</td>
+								<td class="head">Ağ Kartı</td>
 								<td class="head">Açıklama</td>
 								<td class="head"></td>
 							</tr>

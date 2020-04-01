@@ -164,7 +164,7 @@ parse_config_bootup();
 
 while(is_interface_mismatch() == true)
 {
-	echo "\n\nEthernet kartý-arayüz iliþkilendirmeleri yapýlmamýþ. Þimdi yapýlmasý gerekiyor.\n\n";
+	echo "\n\nAð kartý-arayüz iliþkilendirmeleri yapýlmamýþ. Þimdi yapýlmasý gerekiyor.\n\n";
 	$ifaces = get_interface_list();
 	if (is_array($ifaces))
 	{
