@@ -128,8 +128,8 @@ $pgtitle = array('DURUM', 'AĞ GEÇİTLERİ');
 											$online = "Aktif";
 											$bgcolor = "label-success";
 										} else {
-											$online = "Veril alınıyor...";
-											$bgcolor = "label-success";
+											$online = "Veri alınıyor...";
+											$bgcolor = "label";
 										}
 									echo	"<span class=\"label $bgcolor\">$online</span>";
 
