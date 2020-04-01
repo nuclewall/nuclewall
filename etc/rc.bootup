@@ -88,6 +88,8 @@ require_once('/usr/local/pkg/squidguard_configurator.inc');
 
 function set_password()
 {
+	global $g;
+
 	if(file_exists("/etc/nuclewall/password_init") and $g['platform'] == 'pfSense')
 	{
 		$success = false;
@@ -232,7 +234,6 @@ system_dhcpleases_configure();
 
 filter_configure_sync();
 
-
 if ($g['platform'] == 'pfSense')
 {
 	openssl_init();
@@ -245,7 +246,6 @@ if ($g['platform'] == 'pfSense')
 	    start_radius();
     }
 }
-
 
 captiveportal_configure();
 
