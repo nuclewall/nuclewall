@@ -186,8 +186,6 @@ system_hostname_configure();
 
 system_hosts_generate();
 
-interfaces_loopback_configure();
-
 mwexec_bg("/etc/sshd");
 
 setup_microcode();
