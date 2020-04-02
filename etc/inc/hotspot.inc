@@ -1073,7 +1073,7 @@ function hotspot_init()
 {
 	$initFile = '/etc/nuclewall/hotspot_init';
 
-	if(file_exists($initFile) and ($g['platform'] == 'pfSense'))
+	if(file_exists($initFile))
 	{
 		initHtmlFiles();
 		createDefaultJS('tr');

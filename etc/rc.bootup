@@ -232,18 +232,20 @@ system_dhcpleases_configure();
 
 filter_configure_sync();
 
-openssl_init();
 
-hotspot_init();
-
-mysql_init();
-
-start_mysql();
-
-if (isset($config['captiveportal']['enable']))
+if ($g['platform'] == 'pfSense')
 {
-	start_radius();
+	openssl_init();
+    hotspot_init();
+    mysql_init();
+	start_mysql();
+
+	if (isset($config['captiveportal']['enable']))
+    {
+	    start_radius();
+    }
 }
+
 
 captiveportal_configure();
 

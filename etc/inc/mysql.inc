@@ -11,7 +11,7 @@ function mysql_init()
 	$initFile = '/etc/nuclewall/mysql_init';
 	$mysqlDir = '/var/db/mysql';
 
-	if(file_exists($initFile) and ($g['platform'] == 'pfSense'))
+	if(file_exists($initFile))
 	{
 		if(is_dir('/var/db/mysql'))
 			exec("rm -rf /var/db/mysql");
