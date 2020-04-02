@@ -240,12 +240,12 @@ if ($g['platform'] == 'pfSense')
 	if (isset($config['captiveportal']['enable']))
     {
 	    start_radius();
-    }
+	}
+
+	squid_init();
 }
 
 captiveportal_configure();
-
-squid_init();
 
 system_do_shell_commands();
 
