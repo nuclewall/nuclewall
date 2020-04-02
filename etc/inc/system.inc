@@ -1105,26 +1105,6 @@ function system_enable_arp_wrong_if()
 	mwexec("/sbin/sysctl -n net.link.ether.inet.log_arp_movements=1");
 }
 
-function system_check_reset_button()
-{
-	global $g;
-
-	$retval = mwexec("/usr/local/sbin/" . $specplatform['name'] . "resetbtn");
-
-	if ($retval == 99)
-	{
-		echo <<<EOD
-
-EOD;
-
-		reset_factory_defaults();
-		system_reboot_sync();
-		exit(0);
-	}
-
-	return 0;
-}
-
 function system_get_dmesg_boot()
 {
 	global $g;
