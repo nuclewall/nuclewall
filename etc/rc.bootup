@@ -88,9 +88,7 @@ require_once('/usr/local/pkg/squidguard_configurator.inc');
 
 function set_password()
 {
-	$platform = trim(file_get_contents('/etc/platform'));
-
-	if(file_exists("/etc/nuclewall/password_init") and $platform == 'pfSense')
+	if(file_exists("/etc/nuclewall/password_init") and $g['platform'] == 'pfSense')
 	{
 		$success = false;
 		$fp = fopen('php://stdin', 'r');

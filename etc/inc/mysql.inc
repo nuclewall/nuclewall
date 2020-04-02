@@ -8,11 +8,10 @@
 
 function mysql_init()
 {
-	$platform = trim(file_get_contents('/etc/platform'));
 	$initFile = '/etc/nuclewall/mysql_init';
 	$mysqlDir = '/var/db/mysql';
 
-	if(file_exists($initFile) and ($platform == 'pfSense'))
+	if(file_exists($initFile) and ($g['platform'] == 'pfSense'))
 	{
 		if(is_dir('/var/db/mysql'))
 			exec("rm -rf /var/db/mysql");

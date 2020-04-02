@@ -1071,10 +1071,9 @@ function initHtmlFiles()
 
 function hotspot_init()
 {
-	$platform = trim(file_get_contents('/etc/platform'));
 	$initFile = '/etc/nuclewall/hotspot_init';
 
-	if(file_exists($initFile) and ($platform == 'pfSense'))
+	if(file_exists($initFile) and ($g['platform'] == 'pfSense'))
 	{
 		initHtmlFiles();
 		createDefaultJS('tr');
