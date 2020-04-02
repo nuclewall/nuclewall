@@ -129,7 +129,7 @@ $pgtitle = array('STATUS ', 'GATEWAYS');
 											$bgcolor = "label-success";
 										} else {
 											$online = "Checking...";
-											$bgcolor = "label-success";
+											$bgcolor = "label";
 										}
 									echo	"<span class=\"label $bgcolor\">$online</span>";
 
