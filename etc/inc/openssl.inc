@@ -51,7 +51,7 @@ function openssl_init()
 {
 	$initFile = '/etc/nuclewall/ssl_init';
 
-	if(file_exists($initFile) and ($g['platform'] == 'pfSense'))
+	if(file_exists($initFile))
 	{
 		echo "Creating OpenSSL certificates...";
 		openSSLConfigInit();
