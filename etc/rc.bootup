@@ -143,8 +143,6 @@ function set_password()
 
 system_dmesg_save();
 
-system_check_reset_button();
-
 mute_kernel_msgs();
 
 start_devd();
