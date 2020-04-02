@@ -592,15 +592,6 @@
 			<command>/usr/local/sbin/ntpdate_sync_once.sh</command>
 		</item>
 		<item>
-			<minute>*</minute>
-			<hour>*/2</hour>
-			<mday>*</mday>
-			<month>*</month>
-			<wday>*</wday>
-			<who>root</who>
-			<command>/usr/bin/nice -n20 /usr/local/bin/blacklist_updater</command>
-		</item>
-		<item>
 			<minute>0</minute>
 			<hour>*</hour>
 			<mday>*</mday>

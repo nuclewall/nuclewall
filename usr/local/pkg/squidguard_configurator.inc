@@ -1,5 +1,7 @@
 <?php
+
 require_once('squid.inc');
+require_once("services.inc");
 
 ini_set('max_execution_time', '3600');
 ini_set('max_input_time', '3600');
@@ -1320,7 +1322,8 @@ function squid_init()
 	if ($conf['squid_enabled'] == 'on' and $conf['squidguard_enabled'] == 'on')
 	{
 		squidguard_resync();
-	    exec(sprintf("%s > %s 2>&1 & echo $! >> %s", $ub_cmd, $ub_log, $ub_pid));
+		exec(sprintf("%s > %s 2>&1 & echo $! >> %s", $ub_cmd, $ub_log, $ub_pid));
+		install_cron_job('/usr/bin/nice -n20 /usr/local/bin/blacklist_updater', true, '*', '*/2', '*', '*', '*', 'root');
 	}
 
 	else if ($conf['squid_enabled'] == 'on' and !$conf['squidguard_enabled'] == 'on')
