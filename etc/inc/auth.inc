@@ -40,8 +40,7 @@
 	POSSIBILITY OF SUCH DAMAGE.
 */
 
-if(!$do_not_include_config_gui_inc)
-	require_once("config.gui.inc");
+require_once("config.gui.inc");
 
 $security_passed = true;
 
