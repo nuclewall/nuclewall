@@ -2,7 +2,7 @@
 # About
 
 - An experimental FreeBSD distribution developed for learning.
-- It’s a one-person project and NOT commercial.
+- It's a one-person project and NOT commercial.
 - Forked from pfSense 2.0.
 - It is open-sourced to let others curious about Unix systems, open-source and free software world can make use of it.
 - It is intended to be Turkish as possible except its name.
@@ -20,7 +20,6 @@
 - Added MySQL, PostgreSQL and SQL Server clients, and developed web interface for connection management.
   HOTSPOT users can be an external data source, generally a hotel software.
 - Redesigned the HOTSPOT user welcome page, added support for mobile and i18n.
-- Added Squid and SquidGuard packages that enable data saving and content filtering features.
 - Redesigned the Web gui with jQuery and Bootstrap.
 - Redesigned the command line interface.
 - Removed embedded(NanoBSD) and VPN features.

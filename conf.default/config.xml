@@ -649,58 +649,6 @@
 	<widgets>
 		<sequence>system-container:col1:show,gateways-container:col1:show,interfaces-container:col1:show,services_status-container:col2:show,interface_statistics-container:col2:show</sequence>
 	</widgets>
-	<installedpackages>
-		<squid>
-			<config>
-				<startup/>
-				<active_interface>lan</active_interface>
-				<defined_ip_proxy_off/>
-				<defined_ip_proxy_off_dest/>
-				<log_enabled>on</log_enabled>
-				<log_dir>/var/squid/logs</log_dir>
-				<log_rotate>5</log_rotate>
-				<proxy_port>3128</proxy_port>
-				<visible_hostname>nuclewall</visible_hostname>
-				<admin_email>admin@nuclewall</admin_email>
-				<error_language>Turkish</error_language>
-				<custom_options>tcp_outgoing_address 127.0.0.1</custom_options>
-			</config>
-		</squid>
-		<squidcache>
-			<config>
-				<harddisk_cache_size>4096</harddisk_cache_size>
-				<harddisk_cache_location>/var/squid/cache</harddisk_cache_location>
-				<memory_cache_size>256</memory_cache_size>
-				<minimum_object_size>0</minimum_object_size>
-				<maximum_object_size>512</maximum_object_size>
-				<maximum_objsize_in_mem>1024</maximum_objsize_in_mem>
-				<level1_subdirs>16</level1_subdirs>
-			</config>
-		</squidcache>
-		<squidguardgeneral>
-			<config>
-				<squidguard_enable/>
-				<enable_guilog/>
-				<enable_log/>
-				<log_rotation/>
-				<adv_blankimg/>
-				<blacklist>on</blacklist>
-				<blacklist_proxy/>
-			</config>
-		</squidguardgeneral>
-		<squidguarddefault>
-			<config>
-				<dest>all</dest>
-				<notallowingip/>
-				<deniedmessage/>
-				<redirect_mode>rmod_int</redirect_mode>
-				<redirect/>
-				<safesearch/>
-				<rewrite/>
-				<enablelog/>
-			</config>
-		</squidguarddefault>
-	</installedpackages>
 	<cert>
 		<refid>54d0fcf097967</refid>
 		<descr><![CDATA[nuclewall-cert]]></descr>

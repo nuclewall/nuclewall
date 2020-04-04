@@ -115,50 +115,6 @@ require_once('/usr/local/www/widgets/include/services_status.inc');
 	</tr>
 	<tr>
 		<?php
-			$squidrunning = is_process_running("squid");
-		?>
-		<td class="listlr">
-			squid
-		</td>
-		<td class="listr">
-			Squid HTTP proxy sunucusu
-		</td>
-		<td class="listr center">
-		<?php if($squidrunning) : ?>
-			<span title="Çalışıyor" class="label service blue">
-				<i class="icon-play icon-white"></i>
-			</span>
-		<?php else: ?>
-			<span title="Durduruldu" class="label service red">
-				<i class="icon-stop icon-white"></i>
-			</span>
-		<?php endif; ?>
-		</td>
-	</tr>
-	<tr>
-		<?php
-			$squidgrunning = is_process_running("squidGuard");
-		?>
-		<td class="listlr">
-			squidGuard
-		</td>
-		<td class="listr">
-			SquidGuard web filtreleme
-		</td>
-		<td class="listr center">
-		<?php if($squidgrunning) : ?>
-			<span title="Çalışıyor" class="label service blue">
-				<i class="icon-play icon-white"></i>
-			</span>
-		<?php else: ?>
-			<span title="Durduruldu" class="label service red">
-				<i class="icon-stop icon-white"></i>
-			</span>
-		<?php endif; ?>
-		</td>
-	</tr>
-	<tr>
-		<?php
 			$dhcpdrunning = is_process_running("dhcpd");
 		?>
 		<td class="listlr">

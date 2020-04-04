@@ -29,7 +29,6 @@ admin:*:0:
 audit:*:77:
 _ntp:*:123:
 _relayd:*:913:
-squid:*:100:
 freeradius:*:133:
 mysql:*:88:
 pgsql:*:70:

@@ -99,7 +99,6 @@ $services_menu[] = array("Hotspot", "/hotspot_settings.php");
 $services_menu[] = array("5651 Kayýt Tutma", "/services_5651_logging.php");
 $services_menu[] = array("DNS Çözümleyici", "/services_dnsmasq.php");
 $services_menu[] = array("DHCP Sunucu", "/services_dhcp.php");
-$services_menu[] = array("Proxy ve Filtreleme", "/pkg_edit.php?xml=squid.xml&amp;id=0");
 $services_menu = array_merge($services_menu, return_ext_menu("Services"));
 
 
