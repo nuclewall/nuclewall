@@ -77,8 +77,6 @@ $priv_list['page-services-menu']['match'][] = 'services_dnsmasq_hosts.php*';
 $priv_list['page-services-menu']['match'][] = 'services_dnsmasq_edit.php*';
 $priv_list['page-services-menu']['match'][] = 'services_dhcp.php*';
 $priv_list['page-services-menu']['match'][] = 'services_dhcp_edit.php*';
-$priv_list['page-services-menu']['match'][] = 'pkg_edit.php*';
-$priv_list['page-services-menu']['match'][] = 'pkg.php*';
 
 $priv_list['page-status-menu'] = array();
 $priv_list['page-status-menu']['name'] = 'DURUM';

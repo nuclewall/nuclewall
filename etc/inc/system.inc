@@ -434,15 +434,7 @@ function system_syslogd_start()
 
 	if (isset($syslogcfg)) {
 		$separatelogfacilities = array('relayd');
-		if($config['installedpackages']['package']) {
-			foreach($config['installedpackages']['package'] as $package) {
-				if($package['logging']) {
-					array_push($separatelogfacilities, $package['logging']['facilityname']);
-					mwexec("{$log_create_directive} 10240 {$g['varlog_path']}/{$package['logging']['logfilename']}");
-					$syslogconf .= "!{$package['logging']['facilityname']}\n*.*\t\t\t\t\t\t {$log_directive}{$g['varlog_path']}/{$package['logging']['logfilename']}\n";
-				}
-			}
-		}
+
 		$facilitylist = implode(',', array_unique($separatelogfacilities));
 		/* write syslog.conf */
 		$fd = fopen("{$g['varetc_path']}/syslog.conf", "w");
