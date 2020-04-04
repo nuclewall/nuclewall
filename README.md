@@ -1,7 +1,8 @@
+[![Download nuclewall](https://img.shields.io/sourceforge/dt/nuclewall.svg)](https://sourceforge.net/projects/nuclewall/files/latest/download)
 # About
 
 - An experimental FreeBSD distribution developed for learning.
-- It’s a one-person project and NOT commercial.
+- It's a one-person project and NOT commercial.
 - Forked from pfSense 2.0.
 - It is open-sourced to let others curious about Unix systems, open-source and free software world can make use of it.
 - It is intended to be Turkish as possible except its name.
@@ -17,7 +18,6 @@
 - A samba server interface is developed that enables sending access logs to Windows machines over SMB protocol.
 - HOTSPOT user management is restructured with FreeRADIUS and MySQL to implement Authentication, Authorization and Accounting protocols seamlessly.
 - MySQL, PostgreSQL and SQL Server clients are supported. HOTSPOT users can be an external data source, generally a hotel software.
-- HOTSPOT user welcome page is redesigned, mobile page and i8n are supported.
-- Squid and SquidGuard that enables data saving and content filtering features are supported.
+- HOTSPOT user welcome page is redesigned, mobile page and i18n are supported.
 - Web gui is redesigned with jQuery and Bootstrap.
 - Command line interface is redesigned.

@@ -17,43 +17,6 @@ if (empty($pagename)) {
 	$pagename = "index.php";
 }
 
-if (($pagename == 'pkg.php') || ($pagename == 'pkg_edit.php'))
-{
-	$param_split = explode('&', $uri_split[2]);
-	foreach ($param_split as $param) {
-		if (substr($param, 0, 4) == "xml=") {
-			$xmlfile = explode('=', $param);
-			$pagename = $xmlfile[1];
-		}
-	}
-}
-
-function return_ext_menu($section) {
-	global $config;
-	$htmltext = "";
-	$extarray = array();
-	if($config['installedpackages']['menu'] <> "") {
-		foreach($config['installedpackages']['menu'] as $menuitem) {
-			if($menuitem['section'] != $section) continue;
-			if($menuitem['url'] <> "") {
-			 	$addresswithport = getenv("HTTP_HOST");
-				$colonpos = strpos($addresswithport, ":");
-				if ($colonpos !== False){
-					//my url is actually just the IP address of the pfsense box
-					$myurl = substr($addresswithport, 0, $colonpos);
-				} else {
-					$myurl = $addresswithport;
-				}
-				$description = str_replace('$myurl', $myurl, $menuitem['url']);
-			} else {
-				$description = '/pkg.php?xml=' . $menuitem['configfile'];
-			}
-			$extarray[] = array($menuitem['name'], $description);
-		}
-	}
-	return $extarray;
-}
-
 function output_menu($arrayitem, $target="")
 {
 	$targetinfo = '';
@@ -74,7 +37,6 @@ if (!isAllowedPage("system_usermanager.php*"))
 	$system_menu[] = array("User Management", "/system_usermanager_passwordmg.php");
 else
 	$system_menu[] = array("User Management", "/system_usermanager.php");
-$system_menu = array_merge($system_menu, return_ext_menu("System"));
 
 // Interfaces
 $interfaces_menu = array();
@@ -84,7 +46,6 @@ $opts = get_configured_interface_with_descr(false, true);
 foreach ($opts as $oif => $odescr)
 	if (!isset($config['interfaces'][$oif]['ovpn']))
 		$interfaces_menu[] = array(htmlspecialchars($odescr), "/interfaces.php?if={$oif}");
-$interfaces_menu = msort(array_merge($interfaces_menu, return_ext_menu("Interfaces")),0);
 
 // Firewall
 $firewall_menu = array();
@@ -99,8 +60,6 @@ $services_menu[] = array("Hotspot", "/hotspot_settings.php");
 $services_menu[] = array("5651 Logging", "/services_5651_logging.php");
 $services_menu[] = array("DNS Forwarder", "/services_dnsmasq.php");
 $services_menu[] = array("DHCP Server", "/services_dhcp.php");
-$services_menu[] = array("Proxy and Filter", "/pkg_edit.php?xml=squid.xml&amp;id=0");
-$services_menu = array_merge($services_menu, return_ext_menu("Services"));
 
 // Status
 $status_menu = array();

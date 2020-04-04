@@ -98,50 +98,6 @@ $pgtitle = array('STATUS ', 'SERVICES');
 							</tr>
 							<tr>
 								<?php
-									$squidrunning = is_process_running("squid");
-								?>
-								<td class="cell">
-									squid
-								</td>
-								<td class="cell description sv">
-									Squid HTTP Proxy Server
-								</td>
-								<td class="cell status">
-								<?php if($squidrunning) : ?>
-									<span title="Running" class="label service blue">
-										<i class="icon-play icon-white"></i>
-									</span>
-								<?php else: ?>
-									<span title="Stopped" class="label service red">
-										<i class="icon-stop icon-white"></i>
-									</span>
-								<?php endif; ?>
-								</td>
-							</tr>
-							<tr>
-								<?php
-									$squidgrunning = is_process_running("squidGuard");
-								?>
-								<td class="cell">
-									squidGuard
-								</td>
-								<td class="cell description sv">
-									SquidGuard Web Filter (part of Squid)
-								</td>
-								<td class="cell status">
-								<?php if($squidgrunning) : ?>
-									<span title="Running" class="label service blue">
-										<i class="icon-play icon-white"></i>
-									</span>
-								<?php else: ?>
-									<span title="Stopped" class="label service red">
-										<i class="icon-stop icon-white"></i>
-									</span>
-								<?php endif; ?>
-								</td>
-							</tr>
-							<tr>
-								<?php
 									$dhcpdrunning = is_process_running('dhcpd');
 								?>
 								<td class="cell">

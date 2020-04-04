@@ -79,10 +79,10 @@ require_once('/etc/inc/filter.inc');
 require_once('/etc/inc/shaper.inc');
 require_once('/etc/inc/captiveportal.inc');
 require_once('/etc/inc/pfsense-utils.inc');
+require_once('/etc/inc/service-utils.inc');
 require_once('/etc/inc/mysql.inc');
 require_once('/etc/inc/hotspot.inc');
 require_once('/etc/inc/openssl.inc');
-require_once('/usr/local/pkg/squidguard_configurator.inc');
 
 function set_password()
 {
@@ -244,8 +244,6 @@ if ($g['platform'] == 'pfSense')
 
 
 captiveportal_configure();
-
-squid_init();
 
 system_do_shell_commands();
 
