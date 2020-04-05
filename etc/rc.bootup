@@ -86,6 +86,8 @@ require_once('/etc/inc/openssl.inc');
 
 function set_password()
 {
+	global $g;
+
 	if(file_exists("/etc/nuclewall/password_init") and $g['platform'] == 'pfSense')
 	{
 		$success = false;
