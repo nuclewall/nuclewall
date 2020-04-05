@@ -184,8 +184,6 @@ system_hostname_configure();
 
 system_hosts_generate();
 
-interfaces_loopback_configure();
-
 mwexec_bg("/etc/sshd");
 
 setup_microcode();
@@ -230,7 +228,6 @@ system_dhcpleases_configure();
 
 filter_configure_sync();
 
-
 if ($g['platform'] == 'pfSense')
 {
 	openssl_init();
@@ -243,7 +240,6 @@ if ($g['platform'] == 'pfSense')
 	    start_radius();
     }
 }
-
 
 captiveportal_configure();
 
