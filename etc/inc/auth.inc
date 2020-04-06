@@ -1,9 +1,9 @@
 <?php
 /*
-	Copyright (C) 2013-2015 Ogün AÇIK
+	Copyright (C) 2013-2020 Ogun Acik
 	All rights reserved.
 
-	Copyright (C) 2010 Ermal Luçi
+	Copyright (C) 2010 Ermal Luci
 	All rights reserved.
 
 	Copyright (C) 2007, 2008 Scott Ullrich <sullrich@gmail.com>

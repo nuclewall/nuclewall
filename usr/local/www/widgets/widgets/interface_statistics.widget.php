@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2013 Ogün Açık
+	Copyright 2013-2020 Ogun Acik
 
 	Copyright 2007 Scott Dale
 	Part of pfSense widgets (www.pfsense.com)

@@ -1,6 +1,6 @@
 <?php
 /*
-		Copyright (C) 2013 Ogün AÇIK
+		Copyright (C) 2013-2020 Ogun Acik
 		All rights reserved.
 
 		Copyright (C) 2008 Shrew Soft Inc
