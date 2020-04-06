@@ -12,6 +12,7 @@ require('filter.inc');
 require('shaper.inc');
 require('captiveportal.inc');
 require('service-utils.inc');
+require('local_connection.inc');
 
 $pgtitle = array('SERVİSLER', 'HOTSPOT ', ' GENEL AYARLAR');
 
@@ -50,6 +51,15 @@ if ($_POST)
 	else
 	{
 		stop_radius();
+
+		captiveportal_configure();
+
+		/* Delete sessions from radacct table */
+	    $delsessions = $pdo->prepare("
+	        TRUNCATE TABLE radacct;
+        ");
+
+        $delsessions->execute();
 	}
 
 	if ($_POST['timeout'] && (!is_numeric($_POST['timeout']) || ($_POST['timeout'] < 1)))
