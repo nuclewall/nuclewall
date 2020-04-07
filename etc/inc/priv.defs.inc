@@ -80,31 +80,29 @@ $priv_list['page-services-menu']['match'][] = 'services_dhcp_edit.php*';
 
 $priv_list['page-status-menu'] = array();
 $priv_list['page-status-menu']['name'] = 'DURUM';
-$priv_list['page-status-menu']['match'] = array();
-$priv_list['page-status-menu']['match'] = 'status_gateways.php*';
-$priv_list['page-status-menu']['match'] = 'status_gateway_groups.php*';
-$priv_list['page-status-menu']['match'] = 'status_dhcp_leases.php*';
-$priv_list['page-status-menu']['match'] = 'diag_arp.php*';
-$priv_list['page-status-menu']['match'] = 'status_services.php*';
-$priv_list['page-status-menu']['match'] = 'diag_routes.php*';
-$priv_list['page-status-menu']['match'] = 'diag_logs.php*';
-$priv_list['page-status-menu']['match'] = 'diag_logs_filter.php*';
-$priv_list['page-status-menu']['match'] = 'diag_logs_dhcp.php*';
-$priv_list['page-status-menu']['match'] = 'diag_logs_mysql.php*';
-$priv_list['page-status-menu']['match'] = 'diag_logs_radius.php*';
-$priv_list['page-status-menu']['match'] = 'diag_logs_settings.php*';
-$priv_list['page-status-menu']['match'] = 'status_graph.php*';
-$priv_list['page-status-menu']['match'] = 'bandwidth_by_ip.php*';
-$priv_list['page-status-menu']['match'] = 'ifstats.php*';
-$priv_list['page-status-menu']['match'] = 'graph.php*';
+$priv_list['page-status-menu']['match'][] = array();
+$priv_list['page-status-menu']['match'][] = 'status_gateways.php*';
+$priv_list['page-status-menu']['match'][] = 'status_gateway_groups.php*';
+$priv_list['page-status-menu']['match'][] = 'status_dhcp_leases.php*';
+$priv_list['page-status-menu']['match'][] = 'diag_arp.php*';
+$priv_list['page-status-menu']['match'][] = 'status_services.php*';
+$priv_list['page-status-menu']['match'][] = 'diag_routes.php*';
+$priv_list['page-status-menu']['match'][] = 'diag_logs.php*';
+$priv_list['page-status-menu']['match'][] = 'diag_logs_filter.php*';
+$priv_list['page-status-menu']['match'][] = 'diag_logs_dhcp.php*';
+$priv_list['page-status-menu']['match'][] = 'diag_logs_mysql.php*';
+$priv_list['page-status-menu']['match'][] = 'diag_logs_radius.php*';
+$priv_list['page-status-menu']['match'][] = 'diag_logs_settings.php*';
+$priv_list['page-status-menu']['match'][] = 'status_graph.php*';
+$priv_list['page-status-menu']['match'][] = 'bandwidth_by_ip.php*';
+$priv_list['page-status-menu']['match'][] = 'ifstats.php*';
+$priv_list['page-status-menu']['match'][] = 'graph.php*';
 
 $priv_list['page-tools-menu'] = array();
 $priv_list['page-tools-menu']['name'] = 'ARAÇLAR';
-$priv_list['page-tools-menu']['match'] = array();
-$priv_list['page-tools-menu']['match'] = 'diag_backup.php*';
-$priv_list['page-tools-menu']['match'] = 'diag_confbak.php*';
-$priv_list['page-tools-menu']['match'] = 'diag_defaults.php*';
-
-$priv_rmvd = array();
+$priv_list['page-tools-menu']['match'][] = array();
+$priv_list['page-tools-menu']['match'][] = 'diag_backup.php*';
+$priv_list['page-tools-menu']['match'][] = 'diag_confbak.php*';
+$priv_list['page-tools-menu']['match'][] = 'diag_defaults.php*';
 
 ?>
