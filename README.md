@@ -1,8 +1,7 @@
 [![Download nuclewall](https://img.shields.io/sourceforge/dt/nuclewall.svg)](https://sourceforge.net/projects/nuclewall/files/latest/download)
 # About
 
-- An experimental FreeBSD distribution developed for learning.
-- It's a one-person project and NOT commercial.
+- Developed by [OGÜN AÇIK](https://acik.me)
 - Forked from pfSense 2.0.
 - It is open-sourced to let others curious about Unix systems, open-source and free software world can make use of it.
 - It is intended to be Turkish as possible except its name.
@@ -12,7 +11,7 @@
 
 # Some technical changes
 
-- Reviewed the most of functions and algorithms, made more robust and efficient.
+- Refactored most of the algorithms, made more robust and efficient.
 - Implemented IP-MAC access logging compatible with the law of Turkey internet (5651).
 - Developed an OpenSSL based Timestamp Authority to sign IP-MAC Address logs, compatible with the law of Turkey internet. (5651)
 - Developed a samba server interface that enables sending access logs to Windows machines over SMB protocol.
