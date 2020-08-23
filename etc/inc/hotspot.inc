@@ -95,7 +95,7 @@ function createHtml()
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <p><a target="_blank" href="https://nuclewall.github.io/nuclewall/index_en.html">NUCLEWALL</a></p>
+        <p><a target="_blank" href="https://nuclewall.site/index_en.html">NUCLEWALL</a></p>
       </div>
     </div>
   </div>
@@ -191,7 +191,7 @@ function createHtmlErr()
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <p><a target="_blank" href="https://nuclewall.github.io/nuclewall/index_en.html">NUCLEWALL</a></p>
+        <p><a target="_blank" href="https://nuclewall.site/index_en.html">NUCLEWALL</a></p>
       </div>
     </div>
   </div>
@@ -265,7 +265,7 @@ function createMobileHtml()
         </center>
 	</div>
 	<div style="text-align:center;margin-top:20px;" data-theme="b" data-role="footer">
-		<a style="font-size:11px;" href="https://nuclewall.github.io/nuclewall/index_en.html" target="_blank" data-role="button">NUCLEWALL</a>
+		<a style="font-size:11px;" href="https://nuclewall.site/index_en.html" target="_blank" data-role="button">NUCLEWALL</a>
 	</div>
 </div>
 <script type="text/javascript" src="pages/js/captiveportal-locale-mobile.js?cache={$GLOBALS['js_mobile_cache']}"></script>
@@ -342,7 +342,7 @@ function createMobileHtmlErr()
 		</fieldset>
 	</center>
 	<div style="text-align:center;margin-top:20px;" data-theme="b" data-role="footer">
-		<a style="font-size:11px;" href="https://nuclewall.github.io/nuclewall/index_en.html" target="_blank" data-role="button">NUCLEWALL</a>
+		<a style="font-size:11px;" href="https://nuclewall.site/index_en.html" target="_blank" data-role="button">NUCLEWALL</a>
 	</div>
 </div>
 

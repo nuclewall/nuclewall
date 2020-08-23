@@ -29,7 +29,7 @@
 	    "xml_rootobj" => "nuclewall",
 	    "admin_group" => "admins",
 	    "product_name" => "NUCLEWALL",
-	    "product_copyright_url" => "https://nuclewall.github.io/nuclewall",
+	    "product_copyright_url" => "https://nuclewall.site",
 	    "debug" => false,
 	    "latest_config" => "8.0",
 	    "nopkg_platforms" => array("cdrom"),
