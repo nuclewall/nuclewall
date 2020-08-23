@@ -318,14 +318,17 @@ if ($_GET['order'])
 
 								else
 								{
-									foreach ($config['dhcpd'] as $dhcpif => $dhcpifconf)
-									{
-										if (($lip >= ip2ulong($dhcpifconf['range']['from'])) && ($lip <= ip2ulong($dhcpifconf['range']['to'])))
-										{
-											$data['if'] = $dhcpif;
-											break;
-										}
-									}
+                                    if($config['dhcpd'])
+                                    {
+                                       foreach ($config['dhcpd'] as $dhcpif => $dhcpifconf)
+                                       {
+                                            if (($lip >= ip2ulong($dhcpifconf['range']['from'])) && ($lip <= ip2ulong($dhcpifconf['range']['to'])))
+                                            {
+                                                $data['if'] = $dhcpif;
+                                                break;
+                                            }
+                                        }
+                                    }
 								}
 
 								echo "<tr>\n";
