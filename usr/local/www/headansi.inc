@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="themes/nuclewall/grids.css" media="all"/>
 	<link rel="stylesheet" href="themes/nuclewall/new_tab_menu.css" media="all"/>
 	<link rel="stylesheet" href="themes/nuclewall/bootstrap/css/bootstrap.min.css" media="all"/>
+	<link rel="shortcut icon" type="image/x-icon" href="themes/nuclewall/favicon.ico"/>
 
 	<script type="text/javascript" src="javascript/scriptaculous/prototype.js"></script>
 	<script type="text/javascript" src="javascript/jquery-2.1.3.min.js"></script>
